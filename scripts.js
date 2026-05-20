@@ -237,6 +237,38 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
+  // 4b. Smooth Scroll & Focus for Waitlist Signups
+  const scrollElements = document.querySelectorAll('.scroll-to-signup');
+  scrollElements.forEach(el => {
+    el.addEventListener('click', (e) => {
+      e.preventDefault();
+      
+      // Locate the first available newsletter form and its input
+      const targetForm = document.getElementById('heroNewsletterForm') || document.querySelector('.newsletter-form');
+      const emailInput = targetForm ? targetForm.querySelector('.form-input') : null;
+      
+      if (targetForm && emailInput) {
+        targetForm.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        
+        // Focus and spotlight animation after scrolling finishes
+        setTimeout(() => {
+          emailInput.focus();
+          // Add temporary glow effect to card or sidebar widget
+          const container = targetForm.closest('.newsletter-card') || targetForm.closest('.sidebar-widget');
+          if (container) {
+            container.style.transition = 'box-shadow 0.3s ease';
+            container.style.boxShadow = '0 0 40px rgba(6, 182, 212, 0.4)';
+            setTimeout(() => {
+              container.style.boxShadow = '';
+            }, 1500);
+          }
+        }, 650);
+      }
+    });
+  });
+
+
+
   // 5. Cookie Consent Banner Injection & Logic
   const checkCookieConsent = () => {
     const hasConsented = localStorage.getItem('cookie_consent');
