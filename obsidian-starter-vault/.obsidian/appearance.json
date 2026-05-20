@@ -1,0 +1,9 @@
+{
+  "theme": "system",
+  "cssTheme": "",
+  "enabledCssSnippets": [
+    "techsimpld-style"
+  ],
+  "accentColor": "",
+  "baseFontSize": 16
+}
