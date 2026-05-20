@@ -1,0 +1,27 @@
+# OS Metadata
+.DS_Store
+Thumbs.db
+desktop.ini
+$RECYCLE.BIN/
+
+# IDE and Editors
+.vscode/
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.swp
+
+# Logs and temp files
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Obsidian internal files (exclude local workspace layout & search cache)
+# This keeps the repository clean when you open the vault folder locally
+obsidian-starter-vault/.obsidian/workspace.json
+obsidian-starter-vault/.obsidian/workspace-mobile.json
+obsidian-starter-vault/.obsidian/cache/
+obsidian-starter-vault/.obsidian/backups/
