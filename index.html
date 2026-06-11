@@ -3,12 +3,18 @@
 
 <head>
   <!-- Google tag (gtag.js) -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-1KFGHVDB66"></script>
   <script>
     window.dataLayer = window.dataLayer || [];
     function gtag() { dataLayer.push(arguments); }
+    if(localStorage.getItem('cookie_consent') === 'true') {
+      gtag('consent', 'default', { 'ad_storage': 'granted', 'analytics_storage': 'granted', 'ad_user_data': 'granted', 'ad_personalization': 'granted' });
+    } else {
+      gtag('consent', 'default', { 'ad_storage': 'denied', 'analytics_storage': 'denied', 'ad_user_data': 'denied', 'ad_personalization': 'denied' });
+    }
+  </script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-1KFGHVDB66"></script>
+  <script>
     gtag('js', new Date());
-
     gtag('config', 'G-1KFGHVDB66');
   </script>
 
@@ -50,7 +56,11 @@
 
       <ul class="nav-menu">
         <li><a href="index.html" class="nav-link active">Home</a></li>
+        <li><a href="about.html" class="nav-link">About</a></li>
+        <li><a href="tutorials.html" class="nav-link">Tutorials</a></li>
         <li><a href="resources.html" class="nav-link">Resources</a></li>
+        <li><a href="gear.html" class="nav-link">Gear</a></li>
+        <li><a href="contact.html" class="nav-link">Contact</a></li>
         <li><a href="https://youtube.com/@TechSimpld" target="_blank" class="nav-link">YouTube</a></li>
       </ul>
 
@@ -65,7 +75,6 @@
       </div>
     </div>
   </header>
-
   <!-- Main Content Layout -->
   <main class="main-layout">
 
@@ -73,7 +82,7 @@
     <section class="hero">
       <div class="badge">
         <span class="logo-dot" style="background-color: var(--accent-purple); box-shadow: var(--glow-accent);"></span>
-        YouTube Channel Launching in 2026
+        Subscribe to our YouTube Channel
       </div>
       <h1 class="hero-title">Software & Productivity, <span>Simplified</span></h1>
       <p class="hero-tagline" style="margin-bottom: 2rem;">
@@ -154,6 +163,7 @@
               </svg>
               Download Vault (ZIP)
             </a>
+            <a href="tutorials/obsidian-starter-vault-tutorial.html" class="btn btn-outline">View Tutorial</a>
             <a href="resources.html" class="btn btn-outline">All Resources</a>
           </div>
         </div>
@@ -183,7 +193,13 @@
         <h4 class="footer-heading">Navigation</h4>
         <ul class="footer-links">
           <li><a href="index.html">Home</a></li>
+          <li><a href="about.html">About</a></li>
+        <li><a href="about.html" class="nav-link">About</a></li>
+          <li><a href="tutorials.html">Tutorials</a></li>
           <li><a href="resources.html">Resources</a></li>
+          <li><a href="gear.html">Gear</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        <li><a href="contact.html" class="nav-link">Contact</a></li>
           <li><a href="https://youtube.com/@TechSimpld" target="_blank">YouTube Channel</a></li>
         </ul>
       </div>
@@ -191,8 +207,8 @@
         <h4 class="footer-heading">Contact & Legal</h4>
         <ul class="footer-links">
           <li><a href="mailto:techsimpld@gmail.com">techsimpld@gmail.com</a></li>
-          <li><a href="#">Privacy Policy</a></li>
-          <li><a href="#">Terms of Service</a></li>
+          <li><a href="privacy-policy.html">Privacy Policy</a></li>
+          <li><a href="terms-of-service.html">Terms of Service</a></li>
         </ul>
       </div>
     </div>

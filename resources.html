@@ -3,12 +3,18 @@
 
 <head>
   <!-- Google tag (gtag.js) -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-1KFGHVDB66"></script>
   <script>
     window.dataLayer = window.dataLayer || [];
     function gtag() { dataLayer.push(arguments); }
+    if(localStorage.getItem('cookie_consent') === 'true') {
+      gtag('consent', 'default', { 'ad_storage': 'granted', 'analytics_storage': 'granted', 'ad_user_data': 'granted', 'ad_personalization': 'granted' });
+    } else {
+      gtag('consent', 'default', { 'ad_storage': 'denied', 'analytics_storage': 'denied', 'ad_user_data': 'denied', 'ad_personalization': 'denied' });
+    }
+  </script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-1KFGHVDB66"></script>
+  <script>
     gtag('js', new Date());
-
     gtag('config', 'G-1KFGHVDB66');
   </script>
 
@@ -49,7 +55,11 @@
 
       <ul class="nav-menu">
         <li><a href="index.html" class="nav-link">Home</a></li>
+        <li><a href="about.html" class="nav-link">About</a></li>
+        <li><a href="tutorials.html" class="nav-link">Tutorials</a></li>
         <li><a href="resources.html" class="nav-link active">Resources</a></li>
+        <li><a href="gear.html" class="nav-link">Gear</a></li>
+        <li><a href="contact.html" class="nav-link">Contact</a></li>
         <li><a href="https://youtube.com/@TechSimpld" target="_blank" class="nav-link">YouTube</a></li>
       </ul>
 
@@ -156,40 +166,21 @@
       <h2 style="margin-bottom: 1.5rem;">All Free Templates</h2>
       <div class="tutorials-grid">
 
-        <!-- Automation Card -->
-        <article class="card">
-          <div class="card-image-wrapper">
-            <img class="card-image" src="images/automation-flow.png" alt="Automation Blueprint Preview">
-          </div>
-          <div class="card-content">
-            <div class="card-meta">
-              <span class="card-category" style="color: var(--accent-cyan);">Make Blueprint</span>
-              <span>•</span>
-              <span style="color: #fbbf24; font-weight: 600;">Coming Soon</span>
-            </div>
-            <h3 class="card-title">Obsidian Automated Vault Backup Blueprint</h3>
-            <p class="card-excerpt">
-              Importable automation templates to sync and secure your local markdown vault to free cloud storage
-              automatically.
-            </p>
-            <div class="card-footer"
-              style="border-top: 1px solid var(--border-color); padding-top: 1rem; margin-top: auto;">
-              <span class="card-date">Releasing in 2026</span>
-            </div>
-          </div>
-        </article>
+
 
         <!-- Obsidian Keyboard Poster -->
         <article class="card">
           <div class="card-image-wrapper">
-            <img class="card-image" src="images/obsidian-vault.png" style="filter: hue-rotate(60deg);"
-              alt="Keyboard Shortcut PDF Preview">
+            <a href="images/obsidian-cheatsheet.png" download>
+              <img class="card-image" src="images/obsidian-cheatsheet.png"
+                alt="Keyboard Shortcut Cheatsheet Preview">
+            </a>
           </div>
           <div class="card-content">
             <div class="card-meta">
-              <span class="card-category">Obsidian PDF</span>
+              <span class="card-category">Obsidian Resource</span>
               <span>•</span>
-              <span style="color: #fbbf24; font-weight: 600;">Coming Soon</span>
+              <span style="color: #10b981; font-weight: 600;">Available Now</span>
             </div>
             <h3 class="card-title">Obsidian Hotkeys Cheatsheet Poster</h3>
             <p class="card-excerpt">
@@ -198,7 +189,7 @@
             </p>
             <div class="card-footer"
               style="border-top: 1px solid var(--border-color); padding-top: 1rem; margin-top: auto;">
-              <span class="card-date">Releasing in 2026</span>
+              <a href="images/obsidian-cheatsheet.png" download class="btn btn-primary btn-sm" style="width: 100%; text-align: center; display: inline-block;">Download Cheatsheet</a>
             </div>
           </div>
         </article>
@@ -226,7 +217,13 @@
         <h4 class="footer-heading">Navigation</h4>
         <ul class="footer-links">
           <li><a href="index.html">Home</a></li>
+          <li><a href="about.html">About</a></li>
+        <li><a href="about.html" class="nav-link">About</a></li>
+          <li><a href="tutorials.html">Tutorials</a></li>
           <li><a href="resources.html">Resources</a></li>
+          <li><a href="gear.html">Gear</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        <li><a href="contact.html" class="nav-link">Contact</a></li>
           <li><a href="https://youtube.com/@TechSimpld" target="_blank">YouTube Channel</a></li>
         </ul>
       </div>
@@ -234,8 +231,8 @@
         <h4 class="footer-heading">Contact & Legal</h4>
         <ul class="footer-links">
           <li><a href="mailto:techsimpld@gmail.com">techsimpld@gmail.com</a></li>
-          <li><a href="#">Privacy Policy</a></li>
-          <li><a href="#">Terms of Service</a></li>
+          <li><a href="privacy-policy.html">Privacy Policy</a></li>
+          <li><a href="terms-of-service.html">Terms of Service</a></li>
         </ul>
       </div>
     </div>

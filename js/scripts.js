@@ -270,7 +270,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // 5. Cookie Consent Banner Injection & Logic
   const checkCookieConsent = () => {
     const hasConsented = localStorage.getItem('cookie_consent');
-    if (hasConsented === 'true') return;
+    if (hasConsented !== null) return;
 
     // Create banner
     const banner = document.createElement('div');
@@ -300,10 +300,19 @@ document.addEventListener('DOMContentLoaded', () => {
 
     acceptBtn.addEventListener('click', () => {
       localStorage.setItem('cookie_consent', 'true');
+      if (typeof gtag === 'function') {
+        gtag('consent', 'update', {
+          'ad_storage': 'granted',
+          'analytics_storage': 'granted',
+          'ad_user_data': 'granted',
+          'ad_personalization': 'granted'
+        });
+      }
       hideBanner(banner);
     });
 
     rejectBtn.addEventListener('click', () => {
+      localStorage.setItem('cookie_consent', 'false');
       hideBanner(banner);
     });
   };
