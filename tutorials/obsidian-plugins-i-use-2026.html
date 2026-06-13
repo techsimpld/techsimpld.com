@@ -6,7 +6,7 @@
   <script>
     window.dataLayer = window.dataLayer || [];
     function gtag() { dataLayer.push(arguments); }
-    if(localStorage.getItem('cookie_consent') === 'true') {
+    if (localStorage.getItem('cookie_consent') === 'true') {
       gtag('consent', 'default', { 'ad_storage': 'granted', 'analytics_storage': 'granted', 'ad_user_data': 'granted', 'ad_personalization': 'granted' });
     } else {
       gtag('consent', 'default', { 'ad_storage': 'denied', 'analytics_storage': 'denied', 'ad_user_data': 'denied', 'ad_personalization': 'denied' });
@@ -167,44 +167,66 @@
           </div>
         </header>
 
-        <img src="../images/003%20Obsidian%20Plugins%20I%20Use%202026.png" alt="Obsidian Plugins 2026 Banner" style="width: 100%; border-radius: 8px; margin-bottom: 2rem;">
+        <!-- Video Player Container (YouTube Iframe Embed) -->
+        <div class="video-container">
+          <iframe src="https://www.youtube-nocookie.com/embed/zpqJfBVppTg" title="Tech Simpld YouTube Tutorial Player"
+            frameborder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            allowfullscreen>
+          </iframe>
+        </div>
 
         <!-- Article Content -->
         <div class="prose">
           <p>
-            Out of the box, Obsidian is just a plain text editor. If you don't know how to customize it, your notes will quickly turn into a cluttered, unorganized mess that feels impossible to navigate.
+            Out of the box, Obsidian is just a plain text editor. If you don't know how to customize it, your notes will
+            quickly turn into a cluttered, unorganized mess that feels impossible to navigate.
           </p>
           <p>
-            But the real magic of Obsidian happens when you unlock community plugins. In today's guide, I'm going to show you a few of the plugins I use to completely transform Obsidian from a basic notepad into a fully automated, visual project management system — all in under 10 minutes. No complex code or steep learning curves. Just the essentials. Let’s get into it.
+            But the real magic of Obsidian happens when you unlock community plugins. In today's guide, I'm going to
+            show you a few of the plugins I use to completely transform Obsidian from a basic notepad into a fully
+            automated, visual project management system — all in under 10 minutes. No complex code or steep learning
+            curves. Just the essentials. Let’s get into it.
           </p>
 
           <h2>Step 1: The Kanban Plugin (Visual Project Management)</h2>
           <p>
-            First up is the Kanban plugin. If you've ever used Trello, you already know how powerful this layout is. Once enabled, you can turn any plain note into a visual project board.
+            First up is the Kanban plugin. If you've ever used Trello, you already know how powerful this layout is.
+            Once enabled, you can turn any plain note into a visual project board.
           </p>
           <p>
-            You can create lists for your tasks, type out your cards, and literally drag-and-drop your ideas across your custom workflow. It's the absolute best way to manage video scripts, content calendars, or daily habits inside Obsidian without leaving the app.
+            You can create lists for your tasks, type out your cards, and literally drag-and-drop your ideas across your
+            custom workflow. It's the absolute best way to manage video scripts, content calendars, or daily habits
+            inside Obsidian without leaving the app.
           </p>
 
           <h2>Step 2: Dataview (The Automated Search Engine)</h2>
           <p>
-            Next is Dataview, which is widely considered the ultimate powerhouse plugin for Obsidian. Think of Dataview as a search engine that treats your entire vault like a private database.
+            Next is Dataview, which is widely considered the ultimate powerhouse plugin for Obsidian. Think of Dataview
+            as a search engine that treats your entire vault like a private database.
           </p>
           <p>
-            Instead of manually linking or looking for your notes, a simple one-line query will automatically gather, sort, and display every single file matching a specific criteria—like listing every book review you wrote this month or every task that's still outstanding.
+            Instead of manually linking or looking for your notes, a simple one-line query will automatically gather,
+            sort, and display every single file matching a specific criteria—like listing every book review you wrote
+            this month or every task that's still outstanding.
           </p>
 
           <h2>Step 3: Templater (Infinite Workflow Automation)</h2>
           <p>
-            To tie this all together, you need Templater. This plugin completely automates new note creation by inserting dynamic variables like dates, times, and pre-set structures the exact second you open a file.
+            To tie this all together, you need Templater. This plugin completely automates new note creation by
+            inserting dynamic variables like dates, times, and pre-set structures the exact second you open a file.
           </p>
           <p>
-            <strong>Pro-Tip:</strong> When you back up Templater with a Stream Deck shortcut, you can launch a perfectly formatted daily note, complete with your dynamic Dataview query and project trackers, with a single button press.
+            <strong>Pro-Tip:</strong> When you back up Templater with a Stream Deck shortcut, you can launch a perfectly
+            formatted daily note, complete with your dynamic Dataview query and project trackers, with a single button
+            press.
           </p>
 
           <h2>Conclusion</h2>
           <p>
-            If you want to skip the trial-and-error of configuring these plugins yourself, check out my free <a href="../resources.html">2026 Obsidian Starter Vault</a>. It comes with Kanban, Dataview, and Templater completely pre-installed and configured so you can start organizing your life right away.
+            If you want to skip the trial-and-error of configuring these plugins yourself, check out my free <a
+              href="../resources.html">2026 Obsidian Starter Vault</a>. It comes with Kanban, Dataview, and Templater
+            completely pre-installed and configured so you can start organizing your life right away.
           </p>
         </div>
 
