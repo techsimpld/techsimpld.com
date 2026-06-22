@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "10 Notes/Organized notes go here.md",
+                "file": "00 Inbox/Place notes here.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "Organized notes go here"
+              "title": "Place notes here"
             }
           }
         ]
@@ -186,10 +186,12 @@
   },
   "active": "b4cd623dfba9f92a",
   "lastOpenFiles": [
-    "00 Inbox/cvb.md",
     "10 Notes/Organized notes go here.md",
     "20 Templates/Daily Note Template.md",
+    "20 Templates/Meeting Note Template.md",
+    "20 Templates/Project Note Template.md",
     "Welcome to Tech Simpld.md",
+    "00 Inbox/cvb.md",
     "Untitled 1.canvas",
     "Untitled.canvas"
   ]
