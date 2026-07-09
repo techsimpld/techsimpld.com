@@ -36,32 +36,47 @@
     <priority>0.3</priority>
   </url>
   <url>
-    <loc>https://techsimpld.com/tutorials.html</loc>
+    <loc>https://techsimpld.com/posts.html</loc>
     <changefreq>daily</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://techsimpld.com/tutorials/3-obsidian-settings-you-must-change.html</loc>
+    <loc>https://techsimpld.com/posts/3-obsidian-settings-you-must-change.html</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://techsimpld.com/tutorials/obsidian-plugins-i-use-2026.html</loc>
+    <loc>https://techsimpld.com/posts/obsidian-plugins-i-use-2026.html</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://techsimpld.com/tutorials/obsidian-second-brain-setup.html</loc>
+    <loc>https://techsimpld.com/posts/obsidian-second-brain-setup.html</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://techsimpld.com/tutorials/obsidian-starter-vault-tutorial.html</loc>
+    <loc>https://techsimpld.com/posts/obsidian-starter-vault-tutorial.html</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://techsimpld.com/tutorials/pihole-installation-guide.html</loc>
+    <loc>https://techsimpld.com/posts/pihole-installation-guide.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://techsimpld.com/posts/pihole-smart-blocking-custom-lists.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://techsimpld.com/posts/pihole-youtube-ads-truth.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://techsimpld.com/posts/docker-vs-podman.html</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
