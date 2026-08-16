@@ -2,6 +2,21 @@
 <html lang="en">
 
 <head>
+  <!-- Google tag (gtag.js) -->
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { dataLayer.push(arguments); }
+    if(localStorage.getItem('cookie_consent') === 'true') {
+      gtag('consent', 'default', { 'ad_storage': 'granted', 'analytics_storage': 'granted', 'ad_user_data': 'granted', 'ad_personalization': 'granted' });
+    } else {
+      gtag('consent', 'default', { 'ad_storage': 'denied', 'analytics_storage': 'denied', 'ad_user_data': 'denied', 'ad_personalization': 'denied' });
+    }
+  </script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-1KFGHVDB66"></script>
+  <script>
+    gtag('js', new Date());
+    gtag('config', 'G-1KFGHVDB66');
+  </script>
 
   <!-- Google AdSense -->
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5214277715351322"
@@ -23,14 +38,14 @@
   <meta property="og:title" content="Obsidian Starter Vault: Ultimate Setup Guide | Tech Simpld">
   <meta property="og:description"
     content="Set up your Obsidian vault from scratch with templates, customized CSS styling, and plugins.">
-  <meta property="og:image" content="https://techsimpld.com/images/001%20Obsidian%20for%20Absolute%20Beginners%20(2026%20Guide).png">
+  <meta property="og:image" content="https://techsimpld.com/images/Obsidian%20for%20Absolute%20Beginners%20(2026%20Guide).png">
 
   <!-- Twitter Card -->
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="Obsidian Starter Vault: Ultimate Setup Guide | Tech Simpld">
   <meta name="twitter:description"
     content="A comprehensive tutorial on configuring your Obsidian vault for optimal productivity. Includes folder mapping, templates, and plugins.">
-  <meta name="twitter:image" content="https://techsimpld.com/images/001%20Obsidian%20for%20Absolute%20Beginners%20(2026%20Guide).png">
+  <meta name="twitter:image" content="https://techsimpld.com/images/Obsidian%20for%20Absolute%20Beginners%20(2026%20Guide).png">
 
   <!-- Structured Data (JSON-LD) -->
   <script type="application/ld+json">
@@ -39,7 +54,7 @@
     "@type": "Article",
     "headline": "Obsidian Starter Vault: Ultimate Setup Guide",
     "image": [
-      "https://techsimpld.com/images/001%20Obsidian%20for%20Absolute%20Beginners%20(2026%20Guide).png"
+      "https://techsimpld.com/images/Obsidian%20for%20Absolute%20Beginners%20(2026%20Guide).png"
     ],
     "datePublished": "2026-05-26T08:00:00+08:00",
     "dateModified": "2026-05-26T08:00:00+08:00",

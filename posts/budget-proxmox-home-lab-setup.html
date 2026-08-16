@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <!-- Google tag (gtag.js) -->
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { dataLayer.push(arguments); }
+    if(localStorage.getItem('cookie_consent') === 'true') {
+      gtag('consent', 'default', { 'ad_storage': 'granted', 'analytics_storage': 'granted', 'ad_user_data': 'granted', 'ad_personalization': 'granted' });
+    } else {
+      gtag('consent', 'default', { 'ad_storage': 'denied', 'analytics_storage': 'denied', 'ad_user_data': 'denied', 'ad_personalization': 'denied' });
+    }
+  </script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-1KFGHVDB66"></script>
+  <script>
+    gtag('js', new Date());
+    gtag('config', 'G-1KFGHVDB66');
+  </script>
+
+  <!-- Google AdSense -->
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5214277715351322"
+    crossorigin="anonymous"></script>
+
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Ultimate Budget Proxmox Home Lab Tour: 3-Node Cluster on a Budget | Tech Simpld</title>
+  <meta name="description"
+    content="Tour a resilient, high-performance 3-node Proxmox home lab cluster built from cheap used Dell OptiPlex desktops. Learn about Ceph storage, VLANs, LXC containers, and PBS backups.">
+  <link rel="canonical" href="https://techsimpld.com/posts/budget-proxmox-home-lab-setup.html">
+  <meta name="robots" content="index, follow">
+
+  <!-- Open Graph / SEO -->
+  <meta property="og:locale" content="en_US">
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="Tech Simpld">
+  <meta property="og:url" content="https://techsimpld.com/posts/budget-proxmox-home-lab-setup.html">
+  <meta property="og:title" content="The Ultimate Budget Proxmox Home Lab Tour: 3-Node Cluster on a Budget | Tech Simpld">
+  <meta property="og:description"
+    content="Tour a resilient, high-performance 3-node Proxmox home lab cluster built from cheap used Dell OptiPlex desktops. Learn about Ceph storage, VLANs, LXC containers, and PBS backups.">
+  <meta property="og:image" content="https://techsimpld.com/images/budget-proxmox-home-lab.png">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="The Ultimate Budget Proxmox Home Lab Tour: 3-Node Cluster on a Budget | Tech Simpld">
+  <meta name="twitter:description"
+    content="Tour a resilient, high-performance 3-node Proxmox home lab cluster built from cheap used Dell OptiPlex desktops. Learn about Ceph storage, VLANs, LXC containers, and PBS backups.">
+  <meta name="twitter:image" content="https://techsimpld.com/images/budget-proxmox-home-lab.png">
+
+  <!-- Structured Data (JSON-LD) -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "The Ultimate Budget Proxmox Home Lab Tour: 3-Node Cluster on a Budget",
+    "image": [
+      "https://techsimpld.com/images/budget-proxmox-home-lab.png"
+    ],
+    "datePublished": "2026-07-15T08:00:00+08:00",
+    "dateModified": "2026-07-15T08:00:00+08:00",
+    "author": {
+      "@type": "Person",
+      "name": "Tech Simpld",
+      "url": "https://techsimpld.com/about.html"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "Tech Simpld",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://techsimpld.com/images/obsidian-vault.png"
+      }
+    },
+    "description": "Tour a resilient, high-performance 3-node Proxmox home lab cluster built from cheap used Dell OptiPlex desktops. Learn about Ceph storage, VLANs, LXC containers, and PBS backups."
+  }
+  </script>
+
+  <!-- DNS Prefetch & Preconnect for Speed -->
+  <link rel="dns-prefetch" href="https://www.googletagmanager.com">
+  <link rel="preconnect" href="https://www.googletagmanager.com" crossorigin>
+  <link rel="dns-prefetch" href="https://pagead2.googlesyndication.com">
+  <link rel="preconnect" href="https://pagead2.googlesyndication.com" crossorigin>
+
+  <!-- Favicons -->
+  <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+  <link rel="alternate icon" type="image/png" href="../favicon.png">
+
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="../css/styles.css">
+</head>
+
+<body>
+
+  <!-- Navigation Header -->
+  <header class="navbar" id="navbar">
+    <div class="nav-container">
+      <a href="../index.html" class="logo-link">
+        Tech Simpld<span class="logo-dot"></span>
+      </a>
+
+      <button class="menu-toggle" id="menuToggle" aria-label="Toggle Navigation Menu">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+
+      <ul class="nav-menu">
+        <li><a href="../index.html" class="nav-link">Home</a></li>
+        <li><a href="../about.html" class="nav-link">About</a></li>
+        <li><a href="../posts.html" class="nav-link active">Posts</a></li>
+        <li><a href="../resources.html" class="nav-link">Resources</a></li>
+        <li><a href="../gear.html" class="nav-link">Gear</a></li>
+        <li><a href="../contact.html" class="nav-link">Contact</a></li>
+        <li><a href="https://youtube.com/@TechSimpld" target="_blank" class="nav-link">YouTube</a></li>
+      </ul>
+
+      <div class="nav-actions">
+        <a href="https://youtube.com/@TechSimpld" target="_blank" class="btn btn-primary btn-sm" id="subscribeHeaderBtn">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+            <path
+              d="M23.498 6.163a3.003 3.003 0 0 0-2.11-2.11C19.517 3.545 12 3.545 12 3.545s-7.517 0-9.388.508a3.003 3.003 0 0 0-2.11 2.11C0 8.033 0 12 0 12s0 3.967.502 5.837a3.003 3.003 0 0 0 2.11 2.11c1.871.508 9.388.508 9.388.508s7.517 0 9.388-.508a3.003 3.003 0 0 0 2.11-2.11C24 15.967 24 12 24 12s0-3.967-.502-5.837zM9.545 15.568V8.432L15.818 12l-6.273 3.568z" />
+          </svg>
+          Subscribe
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content Layout -->
+  <main class="main-layout">
+
+    <!-- 2-Column Blog Layout -->
+    <div class="blog-container">
+
+      <!-- Main Article Column -->
+      <article class="blog-main">
+
+        <header class="article-header">
+          <div class="badge">Proxmox Home Lab</div>
+          <h1 class="article-title">The Ultimate Budget Proxmox Home Lab Tour: Building a 3-Node Cluster</h1>
+
+          <div class="article-meta">
+            <div class="article-meta-item">
+              <div class="author-avatar">TS</div>
+              <span>By <strong>Tech Simpld</strong></span>
+            </div>
+            <span>•</span>
+            <div class="article-meta-item">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                stroke-linecap="round" stroke-linejoin="round">
+                <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                <line x1="16" y1="2" x2="16" y2="6"></line>
+                <line x1="8" y1="2" x2="8" y2="6"></line>
+                <line x1="3" y1="10" x2="21" y2="10"></line>
+              </svg>
+              <span>Available Now</span>
+            </div>
+            <span>•</span>
+            <div class="article-meta-item">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="10"></circle>
+                <polyline points="12 6 12 12 16 14"></polyline>
+              </svg>
+              <span>11 Min Read</span>
+            </div>
+          </div>
+        </header>
+
+        <!-- Video Player Container (Mock YouTube Iframe Embed) -->
+        <div class="video-container">
+          <iframe src="https://www.youtube-nocookie.com/embed/o5Pkc4bE6Pg" title="Budget Proxmox Cluster Video Tour"
+            frameborder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            allowfullscreen>
+          </iframe>
+        </div>
+
+        <!-- Article Content -->
+        <div class="prose">
+          <p>
+            When most people picture a home lab, they imagine a massive 42U server rack, jet-engine fans screaming in a basement, and an electricity bill that rivals a small factory. 
+          </p>
+          <p>
+            Here’s the reality: <strong>you do not need enterprise rack servers to build a resilient, high-availability self-hosted environment</strong>. In fact, for hobby developers, homelab beginners, and self-hosters, big rack servers are often a huge trap—they draw 300+ watts of power at idle, generate massive heat, and take up huge amounts of physical space.
+          </p>
+          <p>
+            In this architecture tour, we’re breaking down my <strong>3-node Proxmox VE cluster</strong>. Built entirely from cheap, refurbished Dell OptiPlex mini desktops picked up on eBay, this entire setup cost less than a single mid-range graphics card, runs whisper quiet on a corner of my desk, and pulls less than 45 watts total at idle.
+          </p>
+          <p>
+            Let's walk through the hardware choices, network segmentation over a managed switch, Ceph hyper-converged storage, Linux Containers (LXCs), and automated nightly disaster recovery with Proxmox Backup Server (PBS).
+          </p>
+
+          <h2>1. The Hardware: Why Dell OptiPlex Desktops are the Sweet Spot</h2>
+          <p>
+            The foundation of this budget cluster is three refurbished <strong>Dell OptiPlex 9020</strong> small-form-factor / micro units. Why choose off-lease office PCs over custom mini PCs or Raspberry Pis?
+          </p>
+          <ul>
+            <li><strong>Unbeatable Value:</strong> Corporations dump thousands of these onto eBay and local liquidators every month. You can routinely find them for $60 to $90 each with an Intel quad-core processor and power brick included.</li>
+            <li><strong>x86 Compatibility:</strong> Unlike ARM boards (like Raspberry Pis), x86 Intel CPUs run every Docker container, VM image, and Linux distribution without compatibility issues.</li>
+            <li><strong>Expandability:</strong> Standard SATA drive bays, M.2 slots (or PCIe adapter options), and dual DDR3/DDR4 RAM slots that easily scale up to 16GB or 32GB per node.</li>
+            <li><strong>Low Power & Silence:</strong> Idle power draw is around 12 to 15 watts per machine. The entire 3-node stack consumes less power than a single traditional light bulb.</li>
+          </ul>
+
+          <h2>2. The 3-Node Rule: Why You Need 3 Nodes (Not 2)</h2>
+          <p>
+            A common mistake beginners make is buying two mini PCs and trying to create a cluster. 
+          </p>
+          <p>
+            In Proxmox VE (and clustering systems in general), clusters rely on <strong>Quorum</strong> to make decisions. Quorum is a simple mathematical vote: a cluster is only healthy if more than 50% of the nodes agree on the state of the system (the <code>2n + 1</code> rule).
+          </p>
+          <p>
+            If you have only 2 nodes and one network cable gets unplugged, each node thinks the other node is dead. Because neither node has more than 50% of the vote (each has exactly 50%), the cluster enters a "split-brain" state and freezes all virtual machines to prevent data corruption.
+          </p>
+          <p>
+            With <strong>3 nodes</strong>, if Node 1 goes down or reboots for kernel updates, Node 2 and Node 3 still have 2 out of 3 votes (66%), allowing your services to stay online with zero downtime!
+          </p>
+
+          <h2>3. Network Segmentation & VLANs: Keeping Traffic Clean</h2>
+          <p>
+            To prevent storage sync traffic from choking out regular home network devices, all three nodes connect through an <strong>8-Port Managed Smart Switch</strong> segmented into three distinct VLANs:
+          </p>
+          <ul>
+            <li><strong>VLAN 0 (Personal Home Network):</strong> The default, untagged native network for personal everyday devices—family laptops, smartphones, streaming boxes, and smart TVs.</li>
+            <li><strong>VLAN 100 (Home Lab Network):</strong> The dedicated playground for our Proxmox nodes, management web interface (port 8006), LXC containers, virtual machines, and self-hosted developer tools.</li>
+            <li><strong>VLAN 200 (Ceph Backend Storage Highway):</strong> An isolated, high-speed network purely dedicated to Ceph backend storage traffic, cluster replication, and disk sync between nodes without competing with regular LAN bandwidth.</li>
+          </ul>
+
+          <h2>4. Storage: Hyper-Converged Redundancy with Ceph & ZFS</h2>
+          <p>
+            Traditional home labs rely on a separate Network Attached Storage (NAS) box running TrueNAS or Synology. The risk? If your single NAS crashes or loses power, every single compute server loses its hard drives.
+          </p>
+          <p>
+            With Proxmox VE, you can use <strong>Ceph</strong> or <strong>ZFS Storage Replication</strong> to create hyper-converged storage. This pools the SSDs inside all three Dell OptiPlex machines into a single unified storage pool. If an entire computer suddenly dies, the virtual disk image is already replicated on the other two nodes, allowing Proxmox to automatically spin the workload back up in seconds.
+          </p>
+
+          <h2>5. VMs vs. LXCs: The Secret to Maximum Density</h2>
+          <p>
+            When running on older or budget hardware, RAM is your most precious resource. 
+          </p>
+          <p>
+            A full <strong>Virtual Machine (VM)</strong> must emulate an entire virtual hardware motherboard, CPU, BIOS, and dedicated operating system kernel. A simple Ubuntu Server VM running Pi-hole will happily consume 1GB to 2GB of RAM just idling.
+          </p>
+          <p>
+            <strong>Linux Containers (LXCs)</strong> share the host Linux kernel directly while providing isolated root environments. An LXC container running Pi-hole or Nginx uses as little as <strong>35MB to 60MB of RAM</strong>!
+          </p>
+          <p>
+            By converting 80% of our homelab services into lightweight LXC containers, our 48GB cluster easily runs 25+ simultaneous isolated services with RAM to spare. (See our <a href="pihole-installation-guide.html">Pi-hole Proxmox LXC Guide</a> for a step-by-step example).
+          </p>
+
+          <h2>6. Disaster Recovery: Nightly Backups with PBS</h2>
+          <p>
+            The greatest benefit of a home lab is having a sandbox where you can learn by breaking things. But that only works if you can restore a broken container in 30 seconds.
+          </p>
+          <p>
+            We run an instance of <strong>Proxmox Backup Server (PBS)</strong> on an external USB hard drive or secondary backup target. PBS utilizes block-level deduplication and incremental backups. Every night at 3:00 AM, Proxmox snapshots every container and VM. Because it only copies newly changed data blocks, 25 container backups complete in under two minutes!
+          </p>
+          <blockquote>
+            <p>"If an update goes wrong or you accidentally delete a configuration file, you can roll back to last night's snapshot in a single click."</p>
+          </blockquote>
+
+          <h2>Summary: Start Small, Think Resilient</h2>
+          <p>
+            You don’t need an enterprise budget or a data center rack to learn enterprise-grade virtualization, networking, and high availability. Three cheap refurbished Dell OptiPlex desktops, an inexpensive managed switch, and Proxmox VE give you a resilient, quiet, and power-efficient playground that will teach you more about modern infrastructure than any simulator.
+          </p>
+          <p>
+            Ready to deploy your first container? Check out our guides on <a href="docker-vs-podman.html">Docker vs. Podman</a> and <a href="cloudflare-zero-trust-tunnel-guide.html">Setting Up Cloudflare Zero Trust Tunnels</a>.
+          </p>
+        </div>
+
+      </article>
+
+      <!-- Sidebar Column -->
+      <aside class="blog-sidebar">
+
+        <!-- Widget: About Channel -->
+        <div class="sidebar-widget">
+          <h4 class="widget-title">About Tech Simpld</h4>
+          <p style="font-size: 0.9rem; margin-bottom: 1rem;">
+            Software and productivity, simplified. We build and share direct, step-by-step guides for homelab enthusiasts and digital creators.
+          </p>
+          <a href="https://youtube.com/@TechSimpld" target="_blank" id="sidebarYoutubeBtn" class="btn btn-outline btn-sm" style="width: 100%;">
+            Visit YouTube Channel
+          </a>
+        </div>
+
+        <!-- Widget: Recommended Posts -->
+        <div class="sidebar-widget">
+          <h4 class="widget-title">Related Tutorials</h4>
+          <ul style="list-style: none; padding: 0; margin: 0; font-size: 0.9rem; line-height: 1.6;">
+            <li style="margin-bottom: 0.75rem;">
+              <a href="pihole-installation-guide.html" style="color: var(--accent-cyan); text-decoration: none;">• Deploy Pi-hole on Proxmox LXC</a>
+            </li>
+            <li style="margin-bottom: 0.75rem;">
+              <a href="cloudflare-zero-trust-tunnel-guide.html" style="color: var(--accent-cyan); text-decoration: none;">• Cloudflare Zero Trust Remote Access</a>
+            </li>
+            <li style="margin-bottom: 0.75rem;">
+              <a href="docker-vs-podman.html" style="color: var(--accent-cyan); text-decoration: none;">• Docker vs. Podman: Complete Guide</a>
+            </li>
+            <li style="margin-bottom: 0.75rem;">
+              <a href="alexandrie-hub-self-hosted-notes.html" style="color: var(--accent-cyan); text-decoration: none;">• Alexandrie Hub Knowledge Base</a>
+            </li>
+          </ul>
+        </div>
+
+        <!-- Widget: Workspace Gear -->
+        <div class="sidebar-widget">
+          <h4 class="widget-title">Tech Simpld Workspace</h4>
+          <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 0.75rem;">
+            Gear used in this setup and video production:
+          </p>
+          <ul style="list-style: none; padding: 0; margin: 0; font-size: 0.85rem; line-height: 1.6;">
+            <li>🎙️ <a href="https://amzn.to/4tTOzuP" target="_blank" rel="noopener noreferrer">FIFINE AM8T Boom Mic</a></li>
+            <li>🎛️ <a href="https://amzn.to/4ulbNeh" target="_blank" rel="noopener noreferrer">Elgato Stream Deck MK.2</a></li>
+            <li>📅 <a href="https://amzn.to/4fxvSt9" target="_blank" rel="noopener noreferrer">Skylight 2 Calendar</a></li>
+            <li>⌨️ <a href="https://amzn.to/4tL71p9" target="_blank" rel="noopener noreferrer">Redragon K556 Keyboard</a></li>
+            <li>🖱️ <a href="https://amzn.to/4o1FkYh" target="_blank" rel="noopener noreferrer">Redragon M612 Mouse</a></li>
+          </ul>
+        </div>
+
+      </aside>
+
+    </div>
+  </main>
+
+  <!-- Footer Section -->
+  <footer class="footer">
+    <div class="footer-container">
+      <div>
+        <a href="../index.html" class="footer-logo">
+          Tech Simpld<span class="logo-dot"></span>
+        </a>
+        <p class="footer-desc">
+          Software and productivity, simplified. Clean, no-fluff tutorials and templates for digital creators and
+          builders.
+        </p>
+      </div>
+      <div>
+        <h4 class="footer-heading">Navigation</h4>
+        <ul class="footer-links">
+          <li><a href="../index.html">Home</a></li>
+          <li><a href="../about.html">About</a></li>
+          <li><a href="../posts.html">Posts</a></li>
+          <li><a href="../resources.html">Resources</a></li>
+          <li><a href="../gear.html">Gear</a></li>
+          <li><a href="../contact.html">Contact</a></li>
+          <li><a href="https://youtube.com/@TechSimpld" target="_blank">YouTube Channel</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4 class="footer-heading">Contact & Legal</h4>
+        <ul class="footer-links">
+          <li><a href="mailto:techsimpld@gmail.com">techsimpld@gmail.com</a></li>
+          <li><a href="../privacy-policy.html">Privacy Policy</a></li>
+          <li><a href="../terms-of-service.html">Terms of Service</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div>© 2026 Tech Simpld. All rights reserved. Built for lightning-fast speeds.</div>
+      <div class="footer-socials">
+        <a href="https://youtube.com/@TechSimpld" class="social-link" aria-label="YouTube">YouTube</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="../js/scripts.js"></script>
+</body>
+
+</html>

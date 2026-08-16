@@ -2,6 +2,21 @@
 <html lang="en">
 
 <head>
+  <!-- Google tag (gtag.js) -->
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { dataLayer.push(arguments); }
+    if(localStorage.getItem('cookie_consent') === 'true') {
+      gtag('consent', 'default', { 'ad_storage': 'granted', 'analytics_storage': 'granted', 'ad_user_data': 'granted', 'ad_personalization': 'granted' });
+    } else {
+      gtag('consent', 'default', { 'ad_storage': 'denied', 'analytics_storage': 'denied', 'ad_user_data': 'denied', 'ad_personalization': 'denied' });
+    }
+  </script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-1KFGHVDB66"></script>
+  <script>
+    gtag('js', new Date());
+    gtag('config', 'G-1KFGHVDB66');
+  </script>
 
   <!-- Google AdSense -->
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5214277715351322"
@@ -23,14 +38,14 @@
   <meta property="og:title" content="3 Obsidian Plugins I Use in 2026 | Tech Simpld">
   <meta property="og:description"
     content="Transform Obsidian from a basic notepad into a fully automated, visual project management system using Kanban, Dataview, and Templater.">
-  <meta property="og:image" content="https://techsimpld.com/images/003%20Obsidian%20Plugins%20I%20Use%202026.png">
+  <meta property="og:image" content="https://techsimpld.com/images/Obsidian%20Plugins%20I%20Use%202026.png">
 
   <!-- Twitter Card -->
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="3 Obsidian Plugins I Use in 2026 | Tech Simpld">
   <meta name="twitter:description"
     content="Transform Obsidian from a basic notepad into a fully automated, visual project management system using Kanban, Dataview, and Templater.">
-  <meta name="twitter:image" content="https://techsimpld.com/images/003%20Obsidian%20Plugins%20I%20Use%202026.png">
+  <meta name="twitter:image" content="https://techsimpld.com/images/Obsidian%20Plugins%20I%20Use%202026.png">
 
   <!-- Structured Data (JSON-LD) -->
   <script type="application/ld+json">
@@ -39,7 +54,7 @@
     "@type": "Article",
     "headline": "3 Obsidian Plugins I Use in 2026",
     "image": [
-      "https://techsimpld.com/images/003%20Obsidian%20Plugins%20I%20Use%202026.png"
+      "https://techsimpld.com/images/Obsidian%20Plugins%20I%20Use%202026.png"
     ],
     "datePublished": "2026-06-05T08:00:00+08:00",
     "dateModified": "2026-06-05T08:00:00+08:00",

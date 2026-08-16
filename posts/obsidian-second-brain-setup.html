@@ -2,6 +2,21 @@
 <html lang="en">
 
 <head>
+  <!-- Google tag (gtag.js) -->
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { dataLayer.push(arguments); }
+    if(localStorage.getItem('cookie_consent') === 'true') {
+      gtag('consent', 'default', { 'ad_storage': 'granted', 'analytics_storage': 'granted', 'ad_user_data': 'granted', 'ad_personalization': 'granted' });
+    } else {
+      gtag('consent', 'default', { 'ad_storage': 'denied', 'analytics_storage': 'denied', 'ad_user_data': 'denied', 'ad_personalization': 'denied' });
+    }
+  </script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-1KFGHVDB66"></script>
+  <script>
+    gtag('js', new Date());
+    gtag('config', 'G-1KFGHVDB66');
+  </script>
 
   <!-- Google AdSense -->
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5214277715351322"
@@ -23,14 +38,14 @@
   <meta property="og:title" content="My Obsidian Second Brain Setup in 2026 | Tech Simpld">
   <meta property="og:description"
     content="Build a local-first knowledge base. Manage daily journals, project milestones, and action items in one linked environment.">
-  <meta property="og:image" content="https://techsimpld.com/images/002%20Obsidian%20Second%20Brain%20Setup.png">
+  <meta property="og:image" content="https://techsimpld.com/images/Obsidian%20Second%20Brain%20Setup.png">
 
   <!-- Twitter Card -->
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="My Obsidian Second Brain Setup in 2026 | Tech Simpld">
   <meta name="twitter:description"
     content="Configure a high-performance second brain in Obsidian. Learn how to connect daily logs, project tracking, meeting blueprints, and automated Dataview indexes.">
-  <meta name="twitter:image" content="https://techsimpld.com/images/002%20Obsidian%20Second%20Brain%20Setup.png">
+  <meta name="twitter:image" content="https://techsimpld.com/images/Obsidian%20Second%20Brain%20Setup.png">
 
   <!-- Structured Data (JSON-LD) -->
   <script type="application/ld+json">
@@ -39,7 +54,7 @@
     "@type": "Article",
     "headline": "My Obsidian Second Brain Setup in 2026",
     "image": [
-      "https://techsimpld.com/images/002%20Obsidian%20Second%20Brain%20Setup.png"
+      "https://techsimpld.com/images/Obsidian%20Second%20Brain%20Setup.png"
     ],
     "datePublished": "2026-05-26T08:00:00+08:00",
     "dateModified": "2026-05-26T08:00:00+08:00",

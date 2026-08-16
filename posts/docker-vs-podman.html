@@ -2,6 +2,21 @@
 <html lang="en">
 
 <head>
+  <!-- Google tag (gtag.js) -->
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { dataLayer.push(arguments); }
+    if(localStorage.getItem('cookie_consent') === 'true') {
+      gtag('consent', 'default', { 'ad_storage': 'granted', 'analytics_storage': 'granted', 'ad_user_data': 'granted', 'ad_personalization': 'granted' });
+    } else {
+      gtag('consent', 'default', { 'ad_storage': 'denied', 'analytics_storage': 'denied', 'ad_user_data': 'denied', 'ad_personalization': 'denied' });
+    }
+  </script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-1KFGHVDB66"></script>
+  <script>
+    gtag('js', new Date());
+    gtag('config', 'G-1KFGHVDB66');
+  </script>
 
   <!-- Google AdSense -->
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5214277715351322"
@@ -31,6 +46,34 @@
   <meta name="twitter:description"
     content="Compare Docker and Podman for your home lab setup. Learn the key differences in security, rootless containers, daemon dependency, and ease of use.">
   <meta name="twitter:image" content="https://techsimpld.com/images/docker-vs-podman.png">
+
+  <!-- Structured Data (JSON-LD) -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "Docker vs. Podman: Which is Better for Your Home Lab?",
+    "image": [
+      "https://techsimpld.com/images/docker-vs-podman.png"
+    ],
+    "datePublished": "2026-06-25T08:00:00+08:00",
+    "dateModified": "2026-06-25T08:00:00+08:00",
+    "author": {
+      "@type": "Person",
+      "name": "Tech Simpld",
+      "url": "https://techsimpld.com/about.html"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "Tech Simpld",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://techsimpld.com/images/obsidian-vault.png"
+      }
+    },
+    "description": "Compare Docker and Podman for your home lab setup. Learn the key differences in security, rootless containers, daemon dependency, and ease of use."
+  }
+  </script>
 
   <!-- DNS Prefetch & Preconnect for Speed -->
   <link rel="dns-prefetch" href="https://www.googletagmanager.com">

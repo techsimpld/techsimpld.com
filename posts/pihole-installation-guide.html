@@ -2,6 +2,21 @@
 <html lang="en">
 
 <head>
+  <!-- Google tag (gtag.js) -->
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { dataLayer.push(arguments); }
+    if(localStorage.getItem('cookie_consent') === 'true') {
+      gtag('consent', 'default', { 'ad_storage': 'granted', 'analytics_storage': 'granted', 'ad_user_data': 'granted', 'ad_personalization': 'granted' });
+    } else {
+      gtag('consent', 'default', { 'ad_storage': 'denied', 'analytics_storage': 'denied', 'ad_user_data': 'denied', 'ad_personalization': 'denied' });
+    }
+  </script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-1KFGHVDB66"></script>
+  <script>
+    gtag('js', new Date());
+    gtag('config', 'G-1KFGHVDB66');
+  </script>
 
   <!-- Google AdSense -->
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5214277715351322"
@@ -23,14 +38,14 @@
   <meta property="og:title" content="Stop Network Ads: Deploy Pi-hole on Proxmox LXC | Tech Simpld">
   <meta property="og:description"
     content="Deploy Pi-hole inside a lightweight Linux Container (LXC) on Proxmox VE. Block ads network-wide, improve page load speeds, and secure your home lab.">
-  <meta property="og:image" content="https://techsimpld.com/images/005%20Stop%20Network%20Ads%20Deploy%20Pi-hole.png">
+  <meta property="og:image" content="https://techsimpld.com/images/Stop%20Network%20Ads%20Deploy%20Pi-hole.png">
 
   <!-- Twitter Card -->
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="Stop Network Ads: Deploy Pi-hole on Proxmox LXC | Tech Simpld">
   <meta name="twitter:description"
     content="Deploy Pi-hole inside a lightweight Linux Container (LXC) on Proxmox VE. Block ads network-wide, improve page load speeds, and secure your home lab.">
-  <meta name="twitter:image" content="https://techsimpld.com/images/005%20Stop%20Network%20Ads%20Deploy%20Pi-hole.png">
+  <meta name="twitter:image" content="https://techsimpld.com/images/Stop%20Network%20Ads%20Deploy%20Pi-hole.png">
 
   <!-- Structured Data (JSON-LD) -->
   <script type="application/ld+json">
@@ -39,7 +54,7 @@
     "@type": "Article",
     "headline": "Stop Network Ads: Deploy Pi-hole on Proxmox LXC",
     "image": [
-      "https://techsimpld.com/images/005%20Stop%20Network%20Ads%20Deploy%20Pi-hole.png"
+      "https://techsimpld.com/images/Stop%20Network%20Ads%20Deploy%20Pi-hole.png"
     ],
     "datePublished": "2026-06-12T08:00:00+08:00",
     "dateModified": "2026-06-12T08:00:00+08:00",

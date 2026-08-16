@@ -2,6 +2,21 @@
 <html lang="en">
 
 <head>
+  <!-- Google tag (gtag.js) -->
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { dataLayer.push(arguments); }
+    if(localStorage.getItem('cookie_consent') === 'true') {
+      gtag('consent', 'default', { 'ad_storage': 'granted', 'analytics_storage': 'granted', 'ad_user_data': 'granted', 'ad_personalization': 'granted' });
+    } else {
+      gtag('consent', 'default', { 'ad_storage': 'denied', 'analytics_storage': 'denied', 'ad_user_data': 'denied', 'ad_personalization': 'denied' });
+    }
+  </script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-1KFGHVDB66"></script>
+  <script>
+    gtag('js', new Date());
+    gtag('config', 'G-1KFGHVDB66');
+  </script>
 
   <!-- Google AdSense -->
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5214277715351322"
@@ -9,9 +24,9 @@
 
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Free Productivity Resources & Templates | Tech Simpld</title>
+  <title>Free Home Lab & Productivity Resources, Cheatsheets & Downloads | Tech Simpld</title>
   <meta name="description"
-    content="Download free Obsidian starter vaults and automated workflow blueprints. 100% free plans and no-fluff guides.">
+    content="Download free pre-configured Obsidian starter vaults, Home Lab Docker Compose starter packs, Proxmox cheatsheets, and Pi-hole blocklists. 100% free with no paywalls.">
   <link rel="canonical" href="https://techsimpld.com/resources.html">
   <meta name="robots" content="index, follow">
 
@@ -20,15 +35,16 @@
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="Tech Simpld">
   <meta property="og:url" content="https://techsimpld.com/resources.html">
-  <meta property="og:title" content="Free Productivity Resources & Templates | Tech Simpld">
-  <meta property="og:description" content="Get direct, free downloads of high-conversion productivity configurations.">
+  <meta property="og:title" content="Free Home Lab & Productivity Resources, Cheatsheets & Downloads | Tech Simpld">
+  <meta property="og:description"
+    content="Download free pre-configured Obsidian starter vaults, Home Lab Docker Compose starter packs, Proxmox cheatsheets, and Pi-hole blocklists. 100% free with no paywalls.">
   <meta property="og:image" content="https://techsimpld.com/images/obsidian-vault.png">
 
   <!-- Twitter Card -->
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="Free Productivity Resources & Templates | Tech Simpld">
+  <meta name="twitter:title" content="Free Home Lab & Productivity Resources | Tech Simpld">
   <meta name="twitter:description"
-    content="Download free Obsidian starter vaults and automated workflow blueprints. 100% free plans and no-fluff guides.">
+    content="Download free pre-configured Obsidian starter vaults, Home Lab Docker Compose packs, Proxmox cheatsheets, and Pi-hole blocklists.">
   <meta name="twitter:image" content="https://techsimpld.com/images/obsidian-vault.png">
 
   <!-- DNS Prefetch & Preconnect for Speed -->
@@ -87,27 +103,25 @@
 
     <!-- Page Hero Title -->
     <section class="hero" style="padding: 2rem 0 3rem;">
-      <div class="badge badge-cyan">Free Asset Downloads</div>
-      <h1 class="hero-title">File Hosting <span>Center</span></h1>
+      <div class="badge badge-cyan">Free Downloads & Blueprints</div>
+      <h1 class="hero-title">Home Lab & Productivity <span>Resources</span></h1>
       <p class="hero-tagline" style="max-width: 650px; margin: 0 auto;">
-        Grab our pre-configured productivity setups, vault environments, and automation blueprints. No paywalls, no
-        clutter—just simplified templates to build your system faster.
+        Grab our tested configuration packs, starter vaults, Docker compose bundles, and command cheatsheets. No paywalls, no email lock-in—just clean resources to build your setup faster.
       </p>
     </section>
 
-
-
-    <!-- Obsidian Starter Vault Featured Block -->
+    <!-- Featured Resource 1: Obsidian Starter Vault -->
     <section style="margin-top: 2rem;">
-      <h2 style="margin-bottom: 1.5rem;">Featured Resource</h2>
-      <div class="featured-resource">
+      <div class="section-header">
+        <h2 class="section-title">Featured Configurations</h2>
+      </div>
+      
+      <div class="featured-resource" style="margin-bottom: 2rem;">
         <div class="resource-info">
           <div class="badge">Obsidian Config</div>
-          <h2>The Tech Simpld Obsidian Starter Vault</h2>
+          <h2>The Tech Simpld Obsidian Starter Vault (2026 Edition)</h2>
           <p>
-            The exact vault setup we use in our Obsidian deep-dive series. Comes preloaded with custom styling
-            properties, folder groupings, templates for quick notes, and selected open-source plugins optimized for
-            zero-lag performance.
+            The exact vault setup featured across our YouTube tutorial series. Pre-configured with our strict 4-folder organization structure, daily logging templates, Dataview indexing blocks, and custom dark mode CSS snippets for zero-lag productivity.
           </p>
           <ul class="resource-features">
             <li>
@@ -116,7 +130,7 @@
                 <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
                 <polyline points="22 4 12 14.01 9 11.01"></polyline>
               </svg>
-              <strong>Daily Notes Template:</strong> Structured prompts for daily planning, logging, and reviewing.
+              <strong>Clean 4-Folder Architecture:</strong> 00 Inbox, 10 Notes, 20 Templates, and 90 System assets.
             </li>
             <li>
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
@@ -124,7 +138,7 @@
                 <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
                 <polyline points="22 4 12 14.01 9 11.01"></polyline>
               </svg>
-              <strong>Vault CSS Styling:</strong> Dark-themed modern workspace setup with clean fonts.
+              <strong>Daily Notes Blueprint:</strong> Pre-built Templater logic with date links and structured logging sections.
             </li>
             <li>
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
@@ -132,32 +146,35 @@
                 <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
                 <polyline points="22 4 12 14.01 9 11.01"></polyline>
               </svg>
-              <strong>Dataview Configurations:</strong> Automated indexes that display your notes by tag or date.
+              <strong>Automated Dataview Queries:</strong> Auto-indexes your notes by modified date, project tags, and status.
             </li>
           </ul>
 
           <div class="resource-stats">
             <div class="stat-item">
-              <span class="stat-label">Status</span>
-              <span class="stat-value" style="color: var(--accent-cyan); font-weight: 600;">Available</span>
+              <span class="stat-label">Format</span>
+              <span class="stat-value" style="color: var(--accent-cyan); font-weight: 600;">ZIP Archive (.zip)</span>
             </div>
             <div class="stat-item">
-              <span class="stat-label">Release Date</span>
-              <span class="stat-value">May 2026</span>
+              <span class="stat-label">Guide</span>
+              <span class="stat-value"><a href="posts/obsidian-starter-vault-tutorial.html" style="color: var(--text-primary); text-decoration: underline;">Read Tutorial</a></span>
             </div>
           </div>
 
-          <div style="margin-top: 1.5rem;">
+          <div style="margin-top: 1.5rem; display: flex; gap: 1rem; flex-wrap: wrap;">
             <a href="obsidian-starter-vault.zip" download id="downloadObsidianStarterVaultBtn" class="btn btn-primary btn-download"
               data-resource="Obsidian Starter Vault"
               style="display: inline-flex; align-items: center; justify-content: center;">
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                stroke-linecap="round" stroke-linejoin="round" style="margin-right: 0.5rem; vertical-align: middle;">
+                stroke-linecap="round" stroke-linejoin="round" style="margin-right: 0.5rem;">
                 <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
                 <polyline points="7 10 12 15 17 10"></polyline>
                 <line x1="12" y1="15" x2="12" y2="3"></line>
               </svg>
               Download Starter Vault (ZIP)
+            </a>
+            <a href="posts/obsidian-starter-vault-tutorial.html" class="btn btn-outline btn-sm" style="display: inline-flex; align-items: center;">
+              View Setup Tutorial &rarr;
             </a>
           </div>
         </div>
@@ -166,16 +183,94 @@
             alt="Obsidian Vault Template Preview Screenshot">
         </div>
       </div>
+
+      <!-- Featured Resource 2: Home Lab Docker Compose Starter Pack -->
+      <div class="featured-resource">
+        <div class="resource-info">
+          <div class="badge" style="background: rgba(16, 185, 129, 0.15); color: #10b981; border: 1px solid rgba(16, 185, 129, 0.3);">Docker & Self-Hosting</div>
+          <h2>Home Lab Docker Compose Starter Pack (2026 Edition)</h2>
+          <p>
+            A curated, production-ready bundle of clean <code>docker-compose.yml</code> templates for all services featured on our channel. Includes persistent folder volume structures, environment variables, and correct permission commands.
+          </p>
+          <ul class="resource-features">
+            <li>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                stroke-linecap="round" stroke-linejoin="round">
+                <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                <polyline points="22 4 12 14.01 9 11.01"></polyline>
+              </svg>
+              <strong>Obsidian in Browser:</strong> LinuxServer.io image with KasmVNC streaming on port 3000.
+            </li>
+            <li>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                stroke-linecap="round" stroke-linejoin="round">
+                <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                <polyline points="22 4 12 14.01 9 11.01"></polyline>
+              </svg>
+              <strong>Cloudflare Zero Trust Tunnel:</strong> Outbound-only connector for secure remote access.
+            </li>
+            <li>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                stroke-linecap="round" stroke-linejoin="round">
+                <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                <polyline points="22 4 12 14.01 9 11.01"></polyline>
+              </svg>
+              <strong>Pi-hole & Alexandrie Hub:</strong> Network DNS ad-blocking and web-first Markdown knowledge base.
+            </li>
+            <li>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                stroke-linecap="round" stroke-linejoin="round">
+                <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                <polyline points="22 4 12 14.01 9 11.01"></polyline>
+              </svg>
+              <strong>Portainer & Watchtower:</strong> Visual Docker container dashboard and automated container updates.
+            </li>
+          </ul>
+
+          <div class="resource-stats">
+            <div class="stat-item">
+              <span class="stat-label">Format</span>
+              <span class="stat-value" style="color: #10b981; font-weight: 600;">ZIP Archive (.zip)</span>
+            </div>
+            <div class="stat-item">
+              <span class="stat-label">Compatibility</span>
+              <span class="stat-value">Docker & Docker Compose</span>
+            </div>
+          </div>
+
+          <div style="margin-top: 1.5rem; display: flex; gap: 1rem; flex-wrap: wrap;">
+            <a href="homelab-docker-compose-pack.zip" download id="downloadDockerPackBtn" class="btn btn-primary btn-download"
+              data-resource="Docker Compose Starter Pack"
+              style="display: inline-flex; align-items: center; justify-content: center; background: linear-gradient(135deg, #10b981 0%, #06b6d4 100%);">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                stroke-linecap="round" stroke-linejoin="round" style="margin-right: 0.5rem;">
+                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                <polyline points="7 10 12 15 17 10"></polyline>
+                <line x1="12" y1="15" x2="12" y2="3"></line>
+              </svg>
+              Download Docker Pack (ZIP)
+            </a>
+            <a href="posts/docker-vs-podman.html" class="btn btn-outline btn-sm" style="display: inline-flex; align-items: center;">
+              Read Container Guide &rarr;
+            </a>
+          </div>
+        </div>
+        <div class="resource-preview">
+          <img class="resource-preview-img" src="images/docker-vs-podman.png"
+            alt="Docker Compose Starter Pack Preview">
+        </div>
+      </div>
     </section>
 
-    <!-- Additional Templates Grid -->
+    <!-- Cheatsheets & Reference Guides Grid -->
     <section style="margin: 4rem 0;">
-      <h2 style="margin-bottom: 1.5rem;">All Free Templates</h2>
+      <div class="section-header">
+        <h2 class="section-title">Cheatsheets & Reference Guides</h2>
+      </div>
+      
       <div class="tutorials-grid">
 
-
-
-        <!-- Obsidian Keyboard Poster -->
+        <!-- Card 1: Obsidian Keyboard Poster -->
         <article class="card">
           <div class="card-image-wrapper">
             <a href="images/obsidian-cheatsheet.png" download>
@@ -185,26 +280,154 @@
           </div>
           <div class="card-content">
             <div class="card-meta">
-              <span class="card-category">Obsidian Resource</span>
+              <span class="card-category" style="color: var(--accent-purple);">Obsidian Wallpaper</span>
               <span>•</span>
-              <span style="color: #10b981; font-weight: 600;">Available Now</span>
+              <span style="color: #10b981; font-weight: 600;">Free Image</span>
             </div>
             <h3 class="card-title">Obsidian Hotkeys Cheatsheet Poster</h3>
             <p class="card-excerpt">
-              A high-resolution, vector-designed wallpaper and printable poster showing the essential keyboard shortcuts
-              for Obsidian.
+              A high-resolution, vector-designed dark wallpaper and printable reference sheet of all essential shortcuts for quick note creation, split panes, and search.
             </p>
             <div class="card-footer"
-              style="border-top: 1px solid var(--border-color); padding-top: 1rem; margin-top: auto;">
-              <a href="images/obsidian-cheatsheet.png" download id="downloadCheatsheetBtn" class="btn btn-primary btn-sm" style="width: 100%; text-align: center; display: inline-block;">Download Cheatsheet</a>
+              style="border-top: 1px solid var(--border-color); padding-top: 1rem; margin-top: auto; display: flex; justify-content: space-between; align-items: center; width: 100%;">
+              <span class="card-date">PNG 4K</span>
+              <a href="images/obsidian-cheatsheet.png" download id="downloadCheatsheetBtn" class="btn btn-outline btn-sm">Download PNG</a>
+            </div>
+          </div>
+        </article>
+
+        <!-- Card 2: Proxmox VE Rookie Cheatsheet -->
+        <article class="card">
+          <div class="card-image-wrapper">
+            <a href="posts/budget-proxmox-home-lab-setup.html">
+              <img class="card-image" src="images/resource-proxmox-cheatsheet.jpg"
+                alt="Proxmox VE Cheatsheet Preview">
+            </a>
+          </div>
+          <div class="card-content">
+            <div class="card-meta">
+              <span class="card-category" style="color: #10b981;">Proxmox Reference</span>
+              <span>•</span>
+              <span style="color: var(--accent-cyan); font-weight: 600;">CLI Guide</span>
+            </div>
+            <h3 class="card-title">Proxmox VE Rookie Command Cheatsheet</h3>
+            <p class="card-excerpt">
+              Essential CLI commands for Proxmox VE: LXC container management (<code>pct</code>), VM controls (<code>qm</code>), Ceph health diagnostics, quorum monitoring, and storage status.
+            </p>
+            <div class="card-footer"
+              style="border-top: 1px solid var(--border-color); padding-top: 1rem; margin-top: auto; display: flex; justify-content: space-between; align-items: center; width: 100%;">
+              <span class="card-date">3-Node Tour</span>
+              <a href="posts/budget-proxmox-home-lab-setup.html" class="btn btn-outline btn-sm">View Cheatsheet</a>
+            </div>
+          </div>
+        </article>
+
+        <!-- Card 3: Pi-hole Blocklists & Whitelist Sheet -->
+        <article class="card">
+          <div class="card-image-wrapper">
+            <a href="posts/pihole-smart-blocking-custom-lists.html">
+              <img class="card-image" src="images/resource-pihole-blocklists.jpg"
+                alt="Pi-hole Blocklists Directory Preview">
+            </a>
+          </div>
+          <div class="card-content">
+            <div class="card-meta">
+              <span class="card-category" style="color: #10b981;">Ad Blocking</span>
+              <span>•</span>
+              <span style="color: var(--accent-cyan); font-weight: 600;">Curated Lists</span>
+            </div>
+            <h3 class="card-title">Pi-hole Curated Adlists & Safe Whitelists</h3>
+            <p class="card-excerpt">
+              Tested community blocklists that block telemetry, smart TV trackers, and malware without breaking home banking, streaming video platforms, or Apple/Google services.
+            </p>
+            <div class="card-footer"
+              style="border-top: 1px solid var(--border-color); padding-top: 1rem; margin-top: auto; display: flex; justify-content: space-between; align-items: center; width: 100%;">
+              <span class="card-date">Updated 2026</span>
+              <a href="posts/pihole-smart-blocking-custom-lists.html" class="btn btn-outline btn-sm">View Adlists</a>
+            </div>
+          </div>
+        </article>
+
+        <!-- Card 4: Dataview & Templater Snippets -->
+        <article class="card">
+          <div class="card-image-wrapper">
+            <a href="posts/obsidian-plugins-i-use-2026.html">
+              <img class="card-image" src="images/resource-dataview-snippets.jpg"
+                alt="Obsidian Dataview Snippets Preview">
+            </a>
+          </div>
+          <div class="card-content">
+            <div class="card-meta">
+              <span class="card-category" style="color: var(--accent-cyan);">Obsidian Code</span>
+              <span>•</span>
+              <span style="color: var(--accent-cyan); font-weight: 600;">Code Snippets</span>
+            </div>
+            <h3 class="card-title">Dataview & Templater Query Snippets Pack</h3>
+            <p class="card-excerpt">
+              Ready-to-copy Dataview queries for rolling up weekly open tasks, indexing the 10 most recently modified notes, and building milestone progress tables in Markdown.
+            </p>
+            <div class="card-footer"
+              style="border-top: 1px solid var(--border-color); padding-top: 1rem; margin-top: auto; display: flex; justify-content: space-between; align-items: center; width: 100%;">
+              <span class="card-date">Plugins Guide</span>
+              <a href="posts/obsidian-plugins-i-use-2026.html" class="btn btn-outline btn-sm">View Snippets</a>
+            </div>
+          </div>
+        </article>
+
+        <!-- Card 5: Cloudflare Zero Trust Checklist -->
+        <article class="card">
+          <div class="card-image-wrapper">
+            <a href="posts/cloudflare-zero-trust-tunnel-guide.html">
+              <img class="card-image" src="images/resource-cloudflare-checklist.jpg"
+                alt="Cloudflare Zero Trust Checklist Preview">
+            </a>
+          </div>
+          <div class="card-content">
+            <div class="card-meta">
+              <span class="card-category" style="color: #10b981;">Network Security</span>
+              <span>•</span>
+              <span style="color: var(--accent-cyan); font-weight: 600;">Checklist</span>
+            </div>
+            <h3 class="card-title">Cloudflare Zero Trust Setup Checklist</h3>
+            <p class="card-excerpt">
+              Step-by-step verification checklist for provisioning secure tunnels, configuring local HTTP origins, and locking down private web services behind Google/Email OTP gates.
+            </p>
+            <div class="card-footer"
+              style="border-top: 1px solid var(--border-color); padding-top: 1rem; margin-top: auto; display: flex; justify-content: space-between; align-items: center; width: 100%;">
+              <span class="card-date">Tunnel Guide</span>
+              <a href="posts/cloudflare-zero-trust-tunnel-guide.html" class="btn btn-outline btn-sm">View Checklist</a>
+            </div>
+          </div>
+        </article>
+
+        <!-- Card 6: Alexandrie Hub Self-Hosted Notes -->
+        <article class="card">
+          <div class="card-image-wrapper">
+            <a href="posts/alexandrie-hub-self-hosted-notes.html">
+              <img class="card-image" src="images/resource-alexandrie-blueprint.jpg"
+                alt="Alexandrie Hub Blueprint Preview">
+            </a>
+          </div>
+          <div class="card-content">
+            <div class="card-meta">
+              <span class="card-category" style="color: var(--accent-purple);">Knowledge Base</span>
+              <span>•</span>
+              <span style="color: var(--accent-cyan); font-weight: 600;">Docker Blueprint</span>
+            </div>
+            <h3 class="card-title">Alexandrie Hub Deployment Blueprint</h3>
+            <p class="card-excerpt">
+              Deploy a gorgeous, open-source web-first Markdown knowledge base with built-in interactive graph views and Mermaid flowchart diagramming in under 5 minutes.
+            </p>
+            <div class="card-footer"
+              style="border-top: 1px solid var(--border-color); padding-top: 1rem; margin-top: auto; display: flex; justify-content: space-between; align-items: center; width: 100%;">
+              <span class="card-date">Docker Stack</span>
+              <a href="posts/alexandrie-hub-self-hosted-notes.html" class="btn btn-outline btn-sm">View Blueprint</a>
             </div>
           </div>
         </article>
 
       </div>
     </section>
-
-
 
   </main>
 
