@@ -105,4 +105,24 @@
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
+  <url>
+    <loc>https://techsimpld.com/posts/gotify-self-hosted-push-notifications.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://techsimpld.com/posts/infrastructure-as-code-terraform-homelab.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://techsimpld.com/posts/uptime-kuma-server-monitoring-setup.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://techsimpld.com/posts/nextcloud-proxmox-cloudflare-tunnel-setup.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
 </urlset>

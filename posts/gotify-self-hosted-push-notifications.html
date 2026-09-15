@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <!-- Google tag (gtag.js) -->
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { dataLayer.push(arguments); }
+    if(localStorage.getItem('cookie_consent') === 'true') {
+      gtag('consent', 'default', { 'ad_storage': 'granted', 'analytics_storage': 'granted', 'ad_user_data': 'granted', 'ad_personalization': 'granted' });
+    } else {
+      gtag('consent', 'default', { 'ad_storage': 'denied', 'analytics_storage': 'denied', 'ad_user_data': 'denied', 'ad_personalization': 'denied' });
+    }
+  </script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-1KFGHVDB66"></script>
+  <script>
+    gtag('js', new Date());
+    gtag('config', 'G-1KFGHVDB66');
+  </script>
+
+  <!-- Google AdSense -->
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5214277715351322"
+    crossorigin="anonymous"></script>
+
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Stop Relying on Paid Alerts: Deploy Gotify for Instant Phone Notifications | Tech Simpld</title>
+  <meta name="description"
+    content="Learn how to install Gotify using Docker Compose and send instant, self-hosted push notifications to your phone when home lab services crash, backups finish, or Proxmox triggers an alert.">
+  <link rel="canonical" href="https://techsimpld.com/posts/gotify-self-hosted-push-notifications.html">
+  <meta name="robots" content="index, follow">
+
+  <!-- Open Graph / SEO -->
+  <meta property="og:locale" content="en_US">
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="Tech Simpld">
+  <meta property="og:url" content="https://techsimpld.com/posts/gotify-self-hosted-push-notifications.html">
+  <meta property="og:title" content="Stop Relying on Paid Alerts: Deploy Gotify for Instant Phone Notifications | Tech Simpld">
+  <meta property="og:description"
+    content="Learn how to install Gotify using Docker Compose and send instant, self-hosted push notifications to your phone when home lab services crash, backups finish, or Proxmox triggers an alert.">
+  <meta property="og:image" content="https://techsimpld.com/images/Stop%20Relying%20on%20Paid%20Alerts%20Deploy%20Gotify%20for%20Instant%20Phone%20Notifications.jpg">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Stop Relying on Paid Alerts: Deploy Gotify for Instant Phone Notifications | Tech Simpld">
+  <meta name="twitter:description"
+    content="Learn how to install Gotify using Docker Compose and send instant, self-hosted push notifications to your phone when home lab services crash, backups finish, or Proxmox triggers an alert.">
+  <meta name="twitter:image" content="https://techsimpld.com/images/Stop%20Relying%20on%20Paid%20Alerts%20Deploy%20Gotify%20for%20Instant%20Phone%20Notifications.jpg">
+
+  <!-- Structured Data (JSON-LD) -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "Stop Relying on Paid Alerts: Deploy Gotify for Instant Phone Notifications",
+    "image": [
+      "https://techsimpld.com/images/Stop%20Relying%20on%20Paid%20Alerts%20Deploy%20Gotify%20for%20Instant%20Phone%20Notifications.jpg"
+    ],
+    "datePublished": "2026-09-15T08:00:00-04:00",
+    "dateModified": "2026-09-15T08:00:00-04:00",
+    "author": {
+      "@type": "Person",
+      "name": "Tech Simpld",
+      "url": "https://techsimpld.com/about.html"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "Tech Simpld",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://techsimpld.com/images/obsidian-vault.png"
+      }
+    },
+    "description": "Learn how to install Gotify using Docker Compose and send instant, self-hosted push notifications to your phone when home lab services crash, backups finish, or Proxmox triggers an alert."
+  }
+  </script>
+
+  <!-- DNS Prefetch & Preconnect for Speed -->
+  <link rel="dns-prefetch" href="https://www.googletagmanager.com">
+  <link rel="preconnect" href="https://www.googletagmanager.com" crossorigin>
+  <link rel="dns-prefetch" href="https://pagead2.googlesyndication.com">
+  <link rel="preconnect" href="https://pagead2.googlesyndication.com" crossorigin>
+
+  <!-- Favicons -->
+  <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+  <link rel="alternate icon" type="image/png" href="../favicon.png">
+
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="../css/styles.css">
+</head>
+
+<body>
+
+  <!-- Navigation Header -->
+  <header class="navbar" id="navbar">
+    <div class="nav-container">
+      <a href="../index.html" class="logo-link">
+        Tech Simpld<span class="logo-dot"></span>
+      </a>
+
+      <button class="menu-toggle" id="menuToggle" aria-label="Toggle Navigation Menu">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+
+      <ul class="nav-menu">
+        <li><a href="../index.html" class="nav-link">Home</a></li>
+        <li><a href="../about.html" class="nav-link">About</a></li>
+        <li><a href="../posts.html" class="nav-link active">Posts</a></li>
+        <li><a href="../resources.html" class="nav-link">Resources</a></li>
+        <li><a href="../gear.html" class="nav-link">Gear</a></li>
+        <li><a href="../contact.html" class="nav-link">Contact</a></li>
+        <li><a href="https://youtube.com/@TechSimpld" target="_blank" class="nav-link">YouTube</a></li>
+      </ul>
+
+      <div class="nav-actions">
+        <a href="https://youtube.com/@TechSimpld" target="_blank" class="btn btn-primary btn-sm" id="subscribeHeaderBtn">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+            <path
+              d="M23.498 6.163a3.003 3.003 0 0 0-2.11-2.11C19.517 3.545 12 3.545 12 3.545s-7.517 0-9.388.508a3.003 3.003 0 0 0-2.11 2.11C0 8.033 0 12 0 12s0 3.967.502 5.837a3.003 3.003 0 0 0 2.11 2.11c1.871.508 9.388.508 9.388.508s7.517 0 9.388-.508a3.003 3.003 0 0 0 2.11-2.11C24 15.967 24 12 24 12s0-3.967-.502-5.837zM9.545 15.568V8.432L15.818 12l-6.273 3.568z" />
+          </svg>
+          Subscribe
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content Layout -->
+  <main class="main-layout">
+
+    <div class="blog-container">
+
+      <!-- Main Article Column -->
+      <article class="blog-main">
+
+        <header class="article-header">
+          <div class="badge">Self-Hosted Alerts</div>
+          <h1 class="article-title">Stop Relying on Paid Alerts: Deploy Gotify for Instant Phone Notifications</h1>
+
+          <div class="article-meta">
+            <div class="article-meta-item">
+              <div class="author-avatar">TS</div>
+              <span>By <strong>Tech Simpld</strong></span>
+            </div>
+            <span>•</span>
+            <div class="article-meta-item">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                stroke-linecap="round" stroke-linejoin="round">
+                <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                <line x1="16" y1="2" x2="16" y2="6"></line>
+                <line x1="8" y1="2" x2="8" y2="6"></line>
+                <line x1="3" y1="10" x2="21" y2="10"></line>
+              </svg>
+              <span>September 2026</span>
+            </div>
+            <span>•</span>
+            <div class="article-meta-item">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="10"></circle>
+                <polyline points="12 6 12 12 16 14"></polyline>
+              </svg>
+              <span>9 Min Read</span>
+            </div>
+          </div>
+        </header>
+
+        <!-- Video Player Container -->
+        <div class="video-container">
+          <iframe src="https://www.youtube-nocookie.com/embed/6OkKh-RFRWk" title="Stop Relying on Paid Alerts Deploy Gotify for Instant Phone Notifications"
+            frameborder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            allowfullscreen>
+          </iframe>
+        </div>
+
+        <!-- Article Content -->
+        <div class="prose">
+          <p>
+            When something breaks in your home lab, how long does it take you to find out? If you are like most people who run servers at home, you only notice when a family member texts you that Plex is down, your Nextcloud files stop syncing, or you log into Proxmox days later and realize a backup job has been silently failing.
+          </p>
+
+          <p>
+            For a long time, the standard fix was either signing up for commercial push services like Pushover or Twilio, or hacking together an email notification chain through an SMTP relay. But paid notification services add yet another subscription or per-message fee to your plate, and email alerts get lost in your spam folder or buried under marketing junk.
+          </p>
+
+          <p>
+            That is where <strong>Gotify</strong> comes in. Gotify is a completely free, open-source, self-hosted notification server written in Go. It uses minimal system resources, has a clean web UI, supports an official Android app, and lets you push real-time alerts straight to your phone with a single line of <code>curl</code>.
+          </p>
+
+          <p>
+            In this guide, we will walk through deploying Gotify with Docker Compose, testing it with a quick terminal script, and hooking it into Proxmox and your custom scripts so you always know the second a service hiccups.
+          </p>
+
+          <h2>Why Gotify Beats Traditional Alerting in a Home Lab</h2>
+          <p>
+            Before we fire up Docker, here is why Gotify has become a staple in modern self-hosted stacks:
+          </p>
+
+          <ul>
+            <li><strong>Zero Ongoing Costs:</strong> No monthly fee, no credit system, and no arbitrary limits on how many messages you can push.</li>
+            <li><strong>Insanely Lightweight:</strong> Written in Go, Gotify runs comfortably on 30 MB of RAM. You can spin it up on an old mini PC, a Raspberry Pi, or inside an unprivileged LXC container without noticing any resource drain.</li>
+            <li><strong>Direct WebSockets:</strong> It does not rely on third-party cloud brokers to deliver messages. The Android app maintains a persistent WebSocket connection directly to your server, giving you sub-second delivery.</li>
+            <li><strong>Clean API:</strong> Anything that can send an HTTP POST request can trigger a notification. That means shell scripts, Python scripts, Home Assistant, Uptime Kuma, and Proxmox can all talk to it natively.</li>
+            <li><strong>Priority System:</strong> You can assign priority numbers (0 to 10) to every alert. Low-priority messages silently update in your notification drawer, while high-priority emergency alerts vibrate and sound alarms.</li>
+          </ul>
+
+          <h2>Deploying Gotify with Docker Compose</h2>
+          <p>
+            The cleanest way to get Gotify running is through Docker Compose. Create a new directory for your Gotify project on your server:
+          </p>
+
+          <pre><code>mkdir -p ~/gotify && cd ~/gotify</code></pre>
+
+          <p>
+            Create a file named <code>docker-compose.yml</code> in that directory and paste in the following configuration:
+          </p>
+
+          <pre><code>services:
+  gotify:
+    image: gotify/server
+    container_name: gotify
+    restart: unless-stopped
+    ports:
+      - "8080:80"
+    environment:
+      - GOTIFY_DEFAULTUSER_PASS=ChangeThisPassword123
+      - TZ=America/New_York
+    volumes:
+      - ./gotify_data:/app/data
+</code></pre>
+
+          <h3>Understanding the Configuration:</h3>
+          <ul>
+            <li><code>image: gotify/server</code>: Pulls the official, stable Gotify container image.</li>
+            <li><code>ports: 8080:80</code>: Maps internal port 80 to port 8080 on your host machine. If you already have another service running on 8080, change the left number (for example, <code>8085:80</code>).</li>
+            <li><code>GOTIFY_DEFAULTUSER_PASS</code>: Sets the default password for the built-in <code>admin</code> user on first boot. Make sure to change this to a strong, unique password before running the container.</li>
+            <li><code>TZ=America/New_York</code>: Sets your local time zone so your timestamps align properly in message logs.</li>
+            <li><code>volumes: ./gotify_data:/app/data</code>: Binds a local folder on your host to persist Gotify’s SQLite database, uploaded icons, and message history. This ensures your data survives container updates.</li>
+          </ul>
+
+          <p>
+            Once you have saved your file, spin up the container in detached mode:
+          </p>
+
+          <pre><code>docker compose up -d</code></pre>
+
+          <p>
+            To verify that Gotify is running, run <code>docker ps</code>. You should see the <code>gotify</code> container in a healthy running state.
+          </p>
+
+          <h2>First Login and Generating an Application Token</h2>
+          <p>
+            Open your web browser and navigate to your server's local IP address on port 8080 (for example, <code>http://192.168.1.50:8080</code>).
+          </p>
+
+          <p>
+            Log in using the default credentials:
+          </p>
+          <ul>
+            <li><strong>Username:</strong> <code>admin</code></li>
+            <li><strong>Password:</strong> The password you specified in <code>GOTIFY_DEFAULTUSER_PASS</code></li>
+          </ul>
+
+          <p>
+            Once logged in, your first stop is the <strong>Apps</strong> tab in the top navigation bar. In Gotify terminology, an "App" is a sender. You will create a separate App for each service that sends alerts (for example, one for Proxmox, one for Backup Scripts, and one for Uptime Kuma).
+          </p>
+
+          <ol>
+            <li>Click <strong>Create Application</strong>.</li>
+            <li>Give it a descriptive name, such as <code>Homelab Backups</code>.</li>
+            <li>Click <strong>Create</strong>.</li>
+            <li>Gotify will generate a secret <strong>App Token</strong> (a string starting with <code>A</code>). Copy this key and save it somewhere safe—you will need it for your scripts.</li>
+          </ol>
+
+          <h2>Testing Your First Alert with curl</h2>
+          <p>
+            To prove how simple Gotify is to work with, open any terminal on your local network (or on the server itself) and run this test command:
+          </p>
+
+          <pre><code>curl "http://YOUR-SERVER-IP:8080/message" \
+  -H "X-Gotify-Key: YOUR_APP_KEY_HERE" \
+  -F "title=Server Alert" \
+  -F "message=System backup completed without errors!" \
+  -F "priority=0"</code></pre>
+
+          <p>
+            Replace <code>YOUR-SERVER-IP:8080</code> with your Gotify instance address, and replace <code>YOUR_APP_KEY_HERE</code> with the token you just copied from the web UI.
+          </p>
+
+          <p>
+            As soon as you hit Enter, you will receive a JSON confirmation response in your terminal, and the new message will pop up instantly on your Gotify dashboard.
+          </p>
+
+          <h3>How Priority Levels Work in Gotify</h3>
+          <p>
+            Notice the <code>-F "priority=0"</code> flag in our test script. Gotify uses this number to determine how the receiving client should react:
+          </p>
+          <ul>
+            <li><strong>Priority 0 to 3 (Low):</strong> Subtle background notifications. Great for routine automated tasks like daily backups completing, disk scrub confirmations, or container health checks.</li>
+            <li><strong>Priority 4 to 7 (Normal):</strong> Standard mobile push notification with sound. Ideal for non-critical warnings, like high memory usage or a service restarting automatically.</li>
+            <li><strong>Priority 8 to 10 (High / Critical):</strong> Triggers maximum alert sound, vibration, and locks onto your lock screen. Perfect for power outages on your UPS, disk failures, or total server crashes.</li>
+          </ul>
+
+          <h2>Setting Up the Gotify Mobile App</h2>
+          <p>
+            Getting alerts on your desktop dashboard is helpful, but the real power of Gotify is receiving push notifications on your phone while you are away from your desk.
+          </p>
+
+          <ol>
+            <li>Download the official <strong>Gotify</strong> client from Google Play Store or F-Droid.</li>
+            <li>Open the app and enter your server URL (for example, <code>https://gotify.yourdomain.com</code> or your internal IP if connected over WireGuard / Tailscale).</li>
+            <li>Log in with your <code>admin</code> credentials (or create a standard client user in Gotify).</li>
+            <li>Give the client a recognizable name, like <code>Pixel 8</code>.</li>
+            <li>Under your phone's Android settings, make sure to disable battery optimization for Gotify. This prevents Android from putting the background WebSocket connection to sleep.</li>
+          </ol>
+
+          <blockquote>
+            <p><strong>Note for iOS Users:</strong> While the official Gotify project focuses on Android, iOS users can easily receive Gotify notifications using lightweight compatible client apps like <em>Forwarder</em> or bridging Gotify Webhooks to Apple-compatible push tools.</p>
+          </blockquote>
+
+          <h2>Integrating Gotify with Proxmox VE</h2>
+          <p>
+            One of the best uses for Gotify in a home lab is monitoring your Proxmox hypervisor. Starting in Proxmox VE 8.1, Proxmox introduced a revamped notification system that natively supports Gotify without requiring any custom wrapper scripts!
+          </p>
+
+          <h3>Step-by-Step Proxmox Setup:</h3>
+          <ol>
+            <li>In the Proxmox web interface, click on <strong>Datacenter</strong> in the left tree.</li>
+            <li>Navigate to <strong>Notifications</strong> &rarr; <strong>Notification Targets</strong>.</li>
+            <li>Click <strong>Add</strong> and select <strong>Gotify</strong> from the dropdown.</li>
+            <li>Fill out the configuration fields:
+              <ul>
+                <li><strong>Name:</strong> <code>gotify-alerts</code></li>
+                <li><strong>Server:</strong> <code>http://192.168.1.50:8080</code> (or your HTTPS reverse proxy domain)</li>
+                <li><strong>Token:</strong> The Application Token you created specifically for Proxmox.</li>
+              </ul>
+            </li>
+            <li>Click <strong>Test</strong>. If configured correctly, your phone and Gotify web dashboard will immediately receive a test ping from Proxmox!</li>
+            <li>Click <strong>Add</strong> to save the target.</li>
+          </ol>
+
+          <p>
+            Now you can edit your <strong>Notification Matchers</strong> in Proxmox to route backup failure alerts, package upgrade notifications, and replication errors directly to your Gotify target. You will never have to wonder if last night's VM snapshot completed successfully.
+          </p>
+
+          <h2>Automating Custom Bash Script Alerts</h2>
+          <p>
+            You can embed Gotify notifications inside any custom backup or maintenance script using simple shell functions. Here is a practical example of wrapping a backup script:
+          </p>
+
+          <pre><code>#!/bin/bash
+
+GOTIFY_URL="http://192.168.1.50:8080"
+GOTIFY_TOKEN="Axxxxxxxxxxxxxx"
+
+send_alert() {
+  local TITLE="$1"
+  local MESSAGE="$2"
+  local PRIORITY="$3"
+
+  curl -s -X POST "$GOTIFY_URL/message" \
+    -H "X-Gotify-Key: $GOTIFY_TOKEN" \
+    -F "title=$TITLE" \
+    -F "message=$MESSAGE" \
+    -F "priority=$PRIORITY" > /dev/null
+}
+
+# Example task
+echo "Starting database backup..."
+if tar -czf /backups/data_$(date +%F).tar.gz /var/lib/data; then
+  send_alert "Backup Success" "Daily data backup finished cleanly." 2
+else
+  send_alert "BACKUP FAILED" "Critical: Daily backup failed to write to disk!" 9
+fi
+</code></pre>
+
+          <h2>Security and Remote Access Best Practices</h2>
+          <p>
+            If you want notifications delivered to your phone when you are away from your home Wi-Fi network, you have two primary choices:
+          </p>
+
+          <ul>
+            <li><strong>Cloudflare Zero Trust Tunnel:</strong> Create a private tunnel pointing to port 8080. It gives you automatic SSL/TLS without forwarding any router ports. (Check out our Cloudflare Zero Trust guide on the blog for full steps).</li>
+            <li><strong>VPN (Tailscale / WireGuard):</strong> If you prefer not to expose Gotify to public DNS at all, keep Gotify on your internal subnet and keep your phone connected via an always-on WireGuard or Tailscale tunnel.</li>
+          </ul>
+
+          <p>
+            If you are running Gotify behind Nginx Proxy Manager, Caddy, or Traefik, ensure that your reverse proxy passes <strong>WebSocket upgrade headers</strong> (<code>Upgrade $http_upgrade</code> and <code>Connection "upgrade"</code>), otherwise real-time phone pushes may disconnect when the screen is locked.
+          </p>
+
+          <h2>Wrapping Up</h2>
+          <p>
+            Gotify solves one of the most frustrating parts of homelabbing: knowing when things go wrong before they cause real headaches. With a single, lightweight Docker container, you get private, instant phone alerts without subscriptions or third-party email hops.
+          </p>
+
+          <p>
+            Deploy it on your server today, link your Proxmox node, and sleep a little easier knowing your home lab has a voice.
+          </p>
+        </div>
+
+      </article>
+
+      <!-- Sidebar Column -->
+      <aside class="blog-sidebar">
+        <div class="sidebar-widget">
+          <h4 class="widget-title">About Tech Simpld</h4>
+          <p style="font-size: 0.9rem; margin-bottom: 1rem;">
+            Software, home labs, and self-hosted tools simplified. Direct, step-by-step guides with zero fluff.
+          </p>
+          <a href="https://youtube.com/@TechSimpld" target="_blank" class="btn btn-outline btn-sm" style="width: 100%;">
+            Visit YouTube Channel
+          </a>
+        </div>
+
+        <div class="sidebar-widget">
+          <h4 class="widget-title">Related Tutorials</h4>
+          <ul style="list-style: none; padding: 0; margin: 0; font-size: 0.9rem; line-height: 1.8;">
+            <li><a href="uptime-kuma-server-monitoring-setup.html" style="color: var(--accent-cyan);">Uptime Kuma Server Monitoring</a></li>
+            <li><a href="cloudflare-zero-trust-tunnel-guide.html" style="color: var(--text-color);">Cloudflare Zero Trust Tunnels</a></li>
+            <li><a href="budget-proxmox-home-lab-setup.html" style="color: var(--text-color);">Budget Proxmox Cluster Guide</a></li>
+          </ul>
+        </div>
+      </aside>
+
+    </div>
+  </main>
+
+  <!-- Footer Section -->
+  <footer class="footer">
+    <div class="footer-container">
+      <div>
+        <a href="../index.html" class="footer-logo">
+          Tech Simpld<span class="logo-dot"></span>
+        </a>
+        <p class="footer-desc">
+          Software and productivity, simplified. Clean, no-fluff tutorials and templates for digital creators and builders.
+        </p>
+      </div>
+      <div>
+        <h4 class="footer-heading">Navigation</h4>
+        <ul class="footer-links">
+          <li><a href="../index.html">Home</a></li>
+          <li><a href="../about.html">About</a></li>
+          <li><a href="../posts.html">Posts</a></li>
+          <li><a href="../resources.html">Resources</a></li>
+          <li><a href="../gear.html">Gear</a></li>
+          <li><a href="../contact.html">Contact</a></li>
+          <li><a href="https://youtube.com/@TechSimpld" target="_blank">YouTube Channel</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4 class="footer-heading">Contact & Legal</h4>
+        <ul class="footer-links">
+          <li><a href="mailto:techsimpld@gmail.com">techsimpld@gmail.com</a></li>
+          <li><a href="../privacy-policy.html">Privacy Policy</a></li>
+          <li><a href="../terms-of-service.html">Terms of Service</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div>© 2026 Tech Simpld. All rights reserved. Built for lightning-fast speeds.</div>
+      <div class="footer-socials">
+        <a href="https://youtube.com/@TechSimpld" class="social-link" aria-label="YouTube">YouTube</a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="../js/scripts.js"></script>
+</body>
+
+</html>
