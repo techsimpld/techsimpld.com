@@ -189,7 +189,7 @@
             If you work in an office where corporate IT restricts you from installing unauthorized <code>.exe</code> software, or if you use a lightweight Chromebook or tablet, accessing your personal knowledge base can feel nearly impossible.
           </p>
           <p>
-            In this guide, we are solving that problem permanently. By hosting Obsidian inside a lightweight Docker container using the official <strong>LinuxServer.io</strong> image, you can stream the full desktop Obsidian interface—including custom themes, community plugins, hotkeys, and interactive graph view—directly inside <strong>any standard web browser</strong>!
+            In this guide, I am solving that problem permanently. By hosting Obsidian inside a lightweight Docker container using the official <strong>LinuxServer.io</strong> image, you can stream the full desktop Obsidian interface—including custom themes, community plugins, hotkeys, and interactive graph view—directly inside <strong>any standard web browser</strong>!
           </p>
 
           <h2>How It Works Behind the Scenes</h2>
@@ -272,7 +272,7 @@ chmod -R 775 ./vaults ./config
           </ol>
 
           <div class="callout callout-info" style="background: rgba(6, 182, 212, 0.08); border-left: 4px solid var(--accent-cyan); padding: 1rem; border-radius: 4px; margin: 1.5rem 0;">
-            <strong>Want a Pre-Built Workspace?</strong> Unzip our free <a href="../downloads/obsidian-starter-vault.zip">2026 Obsidian Starter Vault</a> directly into your <code>./vaults</code> folder on the server. When you open the web interface, your entire folder structure, templates, and styling will load instantly!
+            <strong>Want a Pre-Built Workspace?</strong> Unzip my free <a href="../downloads/obsidian-starter-vault.zip">2026 Obsidian Starter Vault</a> directly into your <code>./vaults</code> folder on the server. When you open the web interface, your entire folder structure, templates, and styling will load instantly!
           </div>
 
           <h2>How to Access Your Web Obsidian Securely from Anywhere</h2>
@@ -283,31 +283,26 @@ chmod -R 775 ./vaults ./config
             Instead of risking your network with dangerous router port forwarding, pair this setup with a <strong>Cloudflare Zero Trust Tunnel</strong>. 
           </p>
           <p>
-            By linking port <code>3000</code> to a custom subdomain like <code>vault.yourdomain.com</code> and enabling Cloudflare email OTP protection, you can safely log into your full desktop Obsidian workspace from any hotel, coffee shop, or restricted corporate device in the world with enterprise-grade security. (Read our complete <a href="cloudflare-zero-trust-tunnel-guide.html">Cloudflare Zero Trust Tunnel Setup Guide</a>).
+            By linking port <code>3000</code> to a custom subdomain like <code>vault.yourdomain.com</code> and enabling Cloudflare email OTP protection, you can safely log into your full desktop Obsidian workspace from any hotel, coffee shop, or restricted corporate device in the world with enterprise-grade security. (Read my complete <a href="cloudflare-zero-trust-tunnel-guide.html">Cloudflare Zero Trust Tunnel Setup Guide</a>).
           </p>
 
-          <h2>Frequently Asked Questions</h2>
+          <h2>Troubleshooting & Edge Cases</h2>
           <p>
-            <strong>Does Graph View and community plugins work in the browser?</strong><br>
-            Yes! Because this container runs the actual desktop Electron build of Obsidian, all WebGL graph animations, community plugins (Dataview, Templater, Excalidraw), and custom CSS snippets render 100% identically to native desktop.
+            If you run into issues, check these first:
           </p>
-          <p>
-            <strong>How much RAM does the container use?</strong><br>
-            When actively streaming, the LinuxServer Obsidian container typically consumes between <strong>180MB to 350MB of RAM</strong>, making it exceptionally lightweight even on budget servers or Proxmox nodes.
-          </p>
-          <p>
-            <strong>Can I sync notes to my phone simultaneously?</strong><br>
-            Yes! Because the <code>./vaults</code> directory contains standard <code>.md</code> files, you can point Syncthing, Git, or Nextcloud at that same directory to keep your mobile Obsidian app in perfect synchronization.
-          </p>
+          <ul>
+            <li><strong>Blank Screen / Connection Refused:</strong> This usually means the KasmVNC server hasn't finished booting. Check your docker logs (<code>docker compose logs -f</code>) to ensure it isn't stuck waiting for permissions on the <code>/config</code> directory.</li>
+            <li><strong>Clipboard Doesn't Work:</strong> Copy and paste between your host OS and the browser window relies on KasmVNC's internal clipboard sync. Look for the small control panel tab on the left side of the browser window to manually send text to the clipboard if the keyboard shortcuts fail.</li>
+          </ul>
 
           <h2>Summary: Note-Taking Freedom Without Compromise</h2>
           <p>
             Running Obsidian inside a Docker container provides the ultimate productivity bridge: you get the uncompromised privacy and speed of a local-first markdown vault, combined with the universal accessibility of a cloud-based web app.
           </p>
           <p>
-            Check out our <a href="3-obsidian-settings-you-must-change.html">3 Must-Change Obsidian Settings</a> and our <a href="obsidian-plugins-i-use-2026.html">Essential Plugins Guide</a> to finish customizing your vault!
+            Check out my <a href="3-obsidian-settings-you-must-change.html">3 Must-Change Obsidian Settings</a> and my <a href="obsidian-plugins-i-use-2026.html">Essential Plugins Guide</a> to finish customizing your vault!
           </p>
-        </div>
+        </div></div>
 
       </article>
 
@@ -344,22 +339,8 @@ chmod -R 775 ./vaults ./config
           </ul>
         </div>
 
-        <!-- Widget: Workspace Gear -->
-        <div class="sidebar-widget">
-          <h4 class="widget-title">Tech Simpld Workspace</h4>
-          <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 0.75rem;">
-            Gear used in our recording workflows and lab setups:
-          </p>
-          <ul style="list-style: none; padding: 0; margin: 0; font-size: 0.85rem; line-height: 1.6;">
-            <li>🎙️ <a href="https://amzn.to/4tTOzuP" target="_blank" rel="noopener noreferrer">FIFINE AM8T Boom Mic</a></li>
-            <li>🎛️ <a href="https://amzn.to/4ulbNeh" target="_blank" rel="noopener noreferrer">Elgato Stream Deck MK.2</a></li>
-            <li>📅 <a href="https://amzn.to/4fxvSt9" target="_blank" rel="noopener noreferrer">Skylight 2 Calendar</a></li>
-            <li>⌨️ <a href="https://amzn.to/4tL71p9" target="_blank" rel="noopener noreferrer">Redragon K556 Keyboard</a></li>
-            <li>🖱️ <a href="https://amzn.to/4o1FkYh" target="_blank" rel="noopener noreferrer">Redragon M612 Mouse</a></li>
-          </ul>
-        </div>
 
-      </aside>
+</aside>
 
     </div>
   </main>

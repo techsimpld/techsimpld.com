@@ -180,59 +180,49 @@
         <!-- Article Content -->
         <div class="prose">
           <p>
-            If you are active in the self-hosting or personal knowledge management (PKM) communities, you already know the never-ending struggle of finding the <em>perfect</em> note-taking system. 
+            If you hang around the self-hosting community long enough, you'll eventually realize that finding the "perfect" note-taking system is a never-ending obsession. 
           </p>
           <p>
-            On one side, you have cloud-based proprietary tools like Notion or Evernote. While they look gorgeous and work across every web browser out of the box, you are trusting a third-party company with your personal notes, ideas, and data. On the other side, local-first powerhouses like <strong>Obsidian</strong> and Logseq give you 100% data ownership in raw Markdown files—but accessing your notes seamlessly across locked-down work laptops, tablets, and web browsers requires custom sync setups or extra container configurations.
+            For years, I bounced between extremes. Cloud apps like Notion look great but force you to surrender your data to a third party. Local-first apps like <strong>Obsidian</strong> are incredibly powerful and secure, but syncing them across locked-down work laptops and mobile devices requires custom sync servers or iCloud workarounds. 
           </p>
           <p>
-            That is where <strong>Alexandrie Hub</strong> enters the scene. Developed as an open-source, web-first self-hosted knowledge base, Alexandrie Hub combines the visual elegance of a modern web app with the privacy and control of self-hosting your own Markdown engine. 
+            I needed something in the middle: a self-hosted, web-first Markdown engine that I fully control. That's when I deployed <strong>Alexandrie Hub</strong>.
           </p>
           <p>
-            In this guide, we'll dive into what makes Alexandrie Hub special, review its best built-in features, compare it directly to tools like Obsidian and BookStack, and show you how easy it is to spin up inside your home lab.
-          </p>
-
-          <h2>What is Alexandrie Hub?</h2>
-          <p>
-            <strong>Alexandrie Hub</strong> is an open-source web application crafted specifically for building personal knowledge bases, team documentation, and daily technical notes. Created by developer <a href="https://github.com/Smaug6739/Alexandrie" target="_blank" rel="noopener noreferrer">Smaug6739</a>, the project was inspired by the legendary Library of Alexandria—aiming to create a central, resilient sanctuary for all your accumulated knowledge.
-          </p>
-          <p>
-            Unlike heavy enterprise wiki platforms that require complex relational databases and slow PHP runtimes, Alexandrie Hub is built on modern web technologies. It is lightweight, blazingly fast, and designed from day one to live happily inside a standard Docker container on your home server, Proxmox cluster, or Raspberry Pi.
+            In this guide, I'll show you exactly why Alexandrie Hub is rapidly becoming my favorite web-based knowledge base, how it stacks up against Obsidian, and how you can deploy it in your home lab in under five minutes.
           </p>
 
-          <h2>5 Standout Features That Make Alexandrie Hub Shine</h2>
+          <h2>Why Alexandrie Hub? (The Core Features)</h2>
           <p>
-            Testing out Alexandrie Hub in a rookie home lab reveals several killer features that immediately stand out compared to traditional wiki alternatives:
+            Alexandrie Hub is a lightweight, open-source web application designed specifically for personal knowledge management (PKM). It drops the bloated PHP runtimes of traditional wikis like BookStack and focuses on speed, Markdown, and visual design.
+          </p>
+          <p>
+            Here are the features that actually matter when you deploy it:
           </p>
 
-          <h3>1. Clean, Distraction-Free Live Markdown Editing</h3>
+          <h3>1. Native Web-First Architecture</h3>
           <p>
-            If you enjoy writing in pure Markdown syntax—headers with <code>#</code>, lists with <code>-</code>, and code fences with triple backticks—Alexandrie provides a smooth real-time editor that renders your formatting without clunky page refreshes. You get the speed of plain text combined with rich visual formatting.
+            This is the killer feature. Because it's a web service running on a Docker container in my Proxmox lab, I don't need a desktop client. I open Chrome on my work laptop, type in my local IP, and my entire knowledge base is instantly there. No syncing conflicts, no iCloud delays.
           </p>
 
-          <h3>2. Interactive Knowledge Graph Visualization</h3>
+          <h3>2. Flawless Markdown Editing</h3>
           <p>
-            One of the biggest reasons people love tools like Obsidian is the visual <strong>Graph View</strong>—seeing how your ideas, technical tutorials, and project notes connect in an interactive node web. Alexandrie Hub brings this interactive graph view directly into your web browser, letting you explore interconnected notebooks effortlessly.
+            I write exclusively in Markdown. Alexandrie offers a distraction-free, real-time editor that renders headers, code blocks, and bullet points instantly without requiring a page refresh. 
           </p>
 
-          <h3>3. Built-In Diagramming (Mermaid & Visual Charts)</h3>
+          <h3>3. Built-In Graph Visualization</h3>
           <p>
-            Home lab builders and software developers frequently create network diagrams, workflow flowcharts, and system architecture sketches. Alexandrie Hub has native support for <strong>Mermaid diagrams</strong>, allowing you to turn simple text blocks into beautiful, glowing flowcharts without needing third-party drawing plugins.
+            Obsidian made the "Graph View" famous—a visual web showing how all your notes connect to each other. Alexandrie Hub brings this directly into the web browser. It's built-in natively, requiring zero plugin configuration.
           </p>
 
-          <h3>4. Native Web-First Architecture</h3>
+          <h3>4. Mermaid Diagram Support</h3>
           <p>
-            Because Alexandrie Hub is a web service running on your server, you don't have to install desktop client software on every machine you touch. Open Google Chrome, Firefox, or Safari on your desktop, laptop, iPad, or phone, log into your instance, and your entire knowledge base is immediately ready.
+            As a home labber, I draw a lot of network diagrams. Alexandrie supports Mermaid syntax out of the box, letting me generate flowcharts using pure text.
           </p>
 
-          <h3>5. Simple Notebook & Tag Organization</h3>
+          <h2>Alexandrie Hub vs. The Competition</h2>
           <p>
-            Rather than forcing you into rigid folder trees, Alexandrie balances intuitive notebook groupings with flexible tagging. Whether you are cataloging home server IP addresses, documenting Docker Compose snippets, or drafting personal journal entries, your content stays organized and instantly searchable.
-          </p>
-
-          <h2>Alexandrie Hub vs. Obsidian vs. BookStack</h2>
-          <p>
-            To help you decide where Alexandrie fits into your personal tech stack, here is how it stacks up against the most popular alternatives:
+            How does it compare to the heavyweights?
           </p>
 
           <div style="overflow-x: auto; margin: 1.5rem 0;">
@@ -247,42 +237,36 @@
               </thead>
               <tbody>
                 <tr style="border-bottom: 1px solid var(--border-color);">
-                  <td style="padding: 0.75rem 0.5rem; font-weight: 600;">Hosting Model</td>
+                  <td style="padding: 0.75rem 0.5rem; font-weight: 600;">Architecture</td>
                   <td style="padding: 0.75rem 0.5rem;">Self-Hosted Web Server</td>
-                  <td style="padding: 0.75rem 0.5rem;">Local-First Desktop/Mobile</td>
+                  <td style="padding: 0.75rem 0.5rem;">Local Desktop App</td>
                   <td style="padding: 0.75rem 0.5rem;">Self-Hosted Web Server</td>
                 </tr>
                 <tr style="border-bottom: 1px solid var(--border-color);">
                   <td style="padding: 0.75rem 0.5rem; font-weight: 600;">Data Format</td>
                   <td style="padding: 0.75rem 0.5rem;">Markdown + DB</td>
-                  <td style="padding: 0.75rem 0.5rem;">Plain <code>.md</code> Files</td>
+                  <td style="padding: 0.75rem 0.5rem;">Raw <code>.md</code> Files</td>
                   <td style="padding: 0.75rem 0.5rem;">HTML / Database</td>
                 </tr>
                 <tr style="border-bottom: 1px solid var(--border-color);">
-                  <td style="padding: 0.75rem 0.5rem; font-weight: 600;">Browser Access</td>
-                  <td style="padding: 0.75rem 0.5rem; color: #10b981;">Native (Instant)</td>
-                  <td style="padding: 0.75rem 0.5rem; color: var(--accent-cyan);">Requires Container GUI</td>
-                  <td style="padding: 0.75rem 0.5rem; color: #10b981;">Native (Instant)</td>
-                </tr>
-                <tr style="border-bottom: 1px solid var(--border-color);">
-                  <td style="padding: 0.75rem 0.5rem; font-weight: 600;">Graph Visualization</td>
-                  <td style="padding: 0.75rem 0.5rem; color: #10b981;">Built-in</td>
-                  <td style="padding: 0.75rem 0.5rem; color: #10b981;">Built-in</td>
+                  <td style="padding: 0.75rem 0.5rem; font-weight: 600;">Graph View</td>
+                  <td style="padding: 0.75rem 0.5rem; color: #10b981;">Yes (Native)</td>
+                  <td style="padding: 0.75rem 0.5rem; color: #10b981;">Yes (Native)</td>
                   <td style="padding: 0.75rem 0.5rem; color: #ef4444;">No</td>
                 </tr>
                 <tr style="border-bottom: 1px solid var(--border-color);">
                   <td style="padding: 0.75rem 0.5rem; font-weight: 600;">Plugin Ecosystem</td>
-                  <td style="padding: 0.75rem 0.5rem;">Curated / Growing</td>
-                  <td style="padding: 0.75rem 0.5rem; color: #10b981;">Thousands of Plugins</td>
-                  <td style="padding: 0.75rem 0.5rem;">Limited (Themes/Auth)</td>
+                  <td style="padding: 0.75rem 0.5rem;">Minimal</td>
+                  <td style="padding: 0.75rem 0.5rem; color: #10b981;">Massive</td>
+                  <td style="padding: 0.75rem 0.5rem;">Limited</td>
                 </tr>
               </tbody>
             </table>
           </div>
 
-          <h2>How to Deploy Alexandrie Hub with Docker Compose</h2>
+          <h2>Deployment: The Docker Compose Setup</h2>
           <p>
-            Deploying Alexandrie Hub on your home server takes less than five minutes using Docker Compose. Here is a starter configuration you can use to launch your instance:
+            Deploying this is trivial. Here is the exact <code>docker-compose.yml</code> I use to spin it up:
           </p>
 
           <pre><code class="language-yaml">services:
@@ -300,59 +284,29 @@
 </code></pre>
 
           <p>
-            Save this file as <code>docker-compose.yml</code> in a dedicated folder on your server (for example, <code>~/docker/alexandrie</code>), then launch it in the background:
+            Run <code>docker compose up -d</code>, navigate to port 3000, and you're in. 
           </p>
 
-          <pre><code class="language-bash">docker compose up -d</code></pre>
-
+          <h2>Troubleshooting & Edge Cases</h2>
           <p>
-            Once the container finishes starting up, open your favorite browser and navigate to <code>http://YOUR-SERVER-IP:3000</code> to complete your initial account registration.
-          </p>
-
-          <h2>Who is Alexandrie Hub Best For?</h2>
-          <p>
-            <strong>Alexandrie Hub is the ideal choice if:</strong>
+            If you're deploying this in a lab, keep these things in mind:
           </p>
           <ul>
-            <li>You want a clean, zero-configuration web interface that you can access from any work machine or Chromebook without installing software.</li>
-            <li>You love the visual aesthetic of modern SaaS platforms but demand 100% self-hosted data ownership.</li>
-            <li>You want visual graph views and Mermaid diagramming out of the box without tweaking dozens of community plugins.</li>
+            <li><strong>Data Portability:</strong> Unlike Obsidian, Alexandrie stores your notes inside a database, not as raw <code>.md</code> files on your file system. If you want to migrate away later, you must rely on the application's export tools. Ensure you are backing up the entire <code>/app/data</code> volume.</li>
+            <li><strong>Reverse Proxy Issues:</strong> If you are placing Alexandrie behind Nginx Proxy Manager or Cloudflare Tunnels, ensure you are passing WebSocket connections. The real-time editor and graph views rely on WebSockets, and failing to pass them will result in constant disconnect errors.</li>
           </ul>
 
+          <h2>Conclusion & Next Steps</h2>
           <p>
-            <strong>Stick with Obsidian if:</strong>
+            If you require thousands of custom plugins and raw local files, stick with Obsidian. But if you want a beautiful, zero-configuration Markdown knowledge base that you can access instantly from any browser in the world, Alexandrie Hub is phenomenal. It strikes the perfect balance between design and self-hosted control.
           </p>
+
+          <h2>Official Resources</h2>
           <ul>
-            <li>You want raw <code>.md</code> text files stored on your local hard drive that you can edit even when completely offline without an internet or server connection.</li>
-            <li>You rely heavily on complex community plugins like Dataview, Templater, or Kanban boards. (Check out our <a href="obsidian-plugins-i-use-2026.html">Obsidian Plugins Guide</a> and <a href="3-more-obsidian-plugins-2026.html">Part 2 Plugins Tutorial</a>).</li>
+            <li><a href="https://github.com/Smaug6739/Alexandrie" target="_blank" rel="noopener noreferrer">Alexandrie GitHub Repository</a></li>
+            <li><a href="https://alexandrie-hub.fr/" target="_blank" rel="noopener noreferrer">Alexandrie Official Demo</a></li>
           </ul>
-
-          <h2>Frequently Asked Questions</h2>
-          <p>
-            <strong>Is Alexandrie Hub completely free?</strong><br>
-            Yes! Alexandrie Hub is 100% open-source software distributed under a permissive license. You can deploy it for personal or team use with zero subscription fees.
-          </p>
-          <p>
-            <strong>Can I expose Alexandrie Hub securely to the internet?</strong><br>
-            Yes! Instead of opening firewall ports, we recommend routing your traffic through a secure tunnel. Check out our step-by-step tutorial on <a href="cloudflare-zero-trust-tunnel-guide.html">Setting Up Your First Cloudflare Zero Trust Tunnel</a> to access Alexandrie securely from anywhere in the world.
-          </p>
-          <p>
-            <strong>How do I backup my Alexandrie data?</strong><br>
-            All persistent notes, configurations, and uploaded assets are saved in the directory mapped to <code>/app/data</code> in your Docker Compose file. Simply include this folder in your regular Proxmox or server backup schedule.
-          </p>
-
-          <h2>Official Links & Project Resources</h2>
-          <ul>
-            <li><a href="https://github.com/Smaug6739/Alexandrie" target="_blank" rel="noopener noreferrer">Alexandrie GitHub Repository (Source Code & Releases)</a></li>
-            <li><a href="https://alexandrie-hub.fr/" target="_blank" rel="noopener noreferrer">Alexandrie Official Website & Live Demo</a></li>
-            <li><a href="../resources.html">Tech Simpld Home Lab Resources & Templates</a></li>
-          </ul>
-
-          <h2>Summary: A Promising Contender for Self-Hosted Notes</h2>
-          <p>
-            Alexandrie Hub brings a breath of fresh air to the self-hosted note-taking space. With its slick modern UI, built-in graph mapping, and simple Docker deployment, it bridges the gap between complex enterprise wikis and bare-bones text editors. If you are looking to expand your home lab capabilities this year, give Alexandrie Hub a spin!
-          </p>
-        </div>
+        </div></div>
 
       </article>
 
@@ -389,22 +343,8 @@
           </ul>
         </div>
 
-        <!-- Widget: Workspace Gear -->
-        <div class="sidebar-widget">
-          <h4 class="widget-title">Tech Simpld Workspace</h4>
-          <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 0.75rem;">
-            Gear used to produce our videos and build our home lab tutorials:
-          </p>
-          <ul style="list-style: none; padding: 0; margin: 0; font-size: 0.85rem; line-height: 1.6;">
-            <li>🎙️ <a href="https://amzn.to/4tTOzuP" target="_blank" rel="noopener noreferrer">FIFINE AM8T Boom Mic</a></li>
-            <li>🎛️ <a href="https://amzn.to/4ulbNeh" target="_blank" rel="noopener noreferrer">Elgato Stream Deck MK.2</a></li>
-            <li>📅 <a href="https://amzn.to/4fxvSt9" target="_blank" rel="noopener noreferrer">Skylight 2 Calendar</a></li>
-            <li>⌨️ <a href="https://amzn.to/4tL71p9" target="_blank" rel="noopener noreferrer">Redragon K556 Keyboard</a></li>
-            <li>🖱️ <a href="https://amzn.to/4o1FkYh" target="_blank" rel="noopener noreferrer">Redragon M612 Mouse</a></li>
-          </ul>
-        </div>
 
-      </aside>
+</aside>
 
     </div>
   </main>

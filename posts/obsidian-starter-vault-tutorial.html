@@ -180,24 +180,21 @@
         <!-- Article Content -->
         <div class="prose">
           <p>
-            Let's be completely honest for a second. Obsidian is easily one of the most powerful note-taking apps available today. It runs locally on your computer, which means it is incredibly fast, you actually own all of your files, and you don't have to rely on an internet connection to view your thoughts. 
+            I'll be honest. When I first installed Obsidian, I stared at a blank, blinking cursor for twenty minutes before closing the app. It's wildly powerful, running locally so it's lightning-fast and you actually own your files, but out of the box? It's a black void. Unlike Notion or Evernote, there's no hand-holding. I spent my first two weeks drowning in plugin configurations and CSS tweaks instead of actually writing a single useful note. 
           </p>
           <p>
-            However, because it starts as a completely blank slate, it can feel incredibly intimidating for beginners. If you download Notion or Evernote, you get templates, onboarding screens, and a guided tour. When you download Obsidian, you get a black screen with blinking text cursor. Because of this, most people spend dozens of hours tweaking settings, downloading a million themes, and installing complicated plugins they don't understand, rather than actually writing notes. By the end of the week, they feel overwhelmed and give up.
+            If you're reading this, you probably want to skip the frustration and get straight to a working productivity system. In this guide, I'm going to walk you through the exact setup I use daily. I'll show you how to structure your folders so you never lose data, which community plugins are actually worth installing (and which are just noise), and how to apply styling that turns Obsidian into a premium, focused workspace.
           </p>
           <p>
-            In this guide, we are going to eliminate that friction. We are going to simplify the entire setup process. We will look at how to properly organize your directories so you never lose a file, how to install only the absolute must-have plugins, and how to utilize styles to transform Obsidian from a basic text editor into a premium, focused workspace. 
-          </p>
-          <p>
-            If you want to skip all the manual building and just get straight to work, our completely pre-configured <strong>Obsidian Starter Vault</strong> configuration file is available to download at the bottom of this page. Let's build your workspace.
+            Don't want to build this yourself? I've packaged my entire configuration into an <strong>Obsidian Starter Vault</strong> that you can download at the bottom of this page. Let's get your workspace running.
           </p>
 
-          <h2>Step 1: Downloading and Creating Your Vault</h2>
+          <h2>Prerequisites: Getting the Foundation Right</h2>
           <p>
-            Before you can configure anything, you need to understand what Obsidian actually is. Unlike other apps that store your data in a mysterious cloud server, Obsidian stores your data in a regular folder on your computer. This folder is called a "Vault." All your notes are just plain text files (Markdown files) inside that folder. 
+            Obsidian stores your data locally in a standard folder called a "Vault." All your notes are plain Markdown files. Because it's local, you don't rely on someone else's server staying online. 
           </p>
           <p>
-            First, download the installer directly from the official website. Obsidian is completely free for personal use and is available across Windows, macOS, Linux, iOS, and Android.
+            First, grab the installer from the official site. It's free for personal use across Windows, macOS, and Linux.
           </p>
           <div style="margin: 1.5rem 0 2.5rem 0;">
             <a href="https://obsidian.md/download" target="_blank" id="goToObsidianDownloadBtn" class="btn btn-outline" style="display: inline-flex; align-items: center; justify-content: center;">
@@ -211,42 +208,28 @@
             </a>
           </div>
           <p>
-            Once you install and open the app, you will be greeted by a screen asking you to "Create a new vault." Click that button. 
+            When you launch it, click "Create a new vault." Keep the name simple, like "My Notes." Save it somewhere safe. If you plan to sync it to your phone later via iCloud or Google Drive, create the vault directly inside that syncing folder now to prevent major headaches later.
+          </p>
+
+          <h2>Step 1: The 4-Folder Organization Strategy</h2>
+          <p>
+            A chaotic sidebar kills focus. If you dump files randomly, you'll eventually have hundreds of notes you can't find. I use a strict, minimalist 4-folder structure, numbered so they stay in exactly this order:
           </p>
           <ul>
-            <li><strong>Name your vault:</strong> Keep it simple. Something like "My Notes" or "Second Brain."</li>
-            <li><strong>Choose a location:</strong> Pick a place on your computer where you won't accidentally delete it. If you want to access these notes on your phone later, you should place this folder inside a cloud syncing drive like iCloud Drive, Google Drive, or Dropbox.</li>
+            <li><strong>00 Inbox:</strong> Your capture zone. When you need to quickly write something down, it goes here. Don't worry about tagging or formatting. Just get it out of your head. I clean this out every Friday afternoon.</li>
+            <li><strong>10 Notes:</strong> Your permanent knowledge base. This holds your projects, journals, and refined notes. Keep sub-folders to a minimum; rely on links instead.</li>
+            <li><strong>20 Templates:</strong> Write a meeting agenda once, save it here, and reuse it forever.</li>
+            <li><strong>90 System:</strong> The junk drawer you never look at. Hide your image attachments, PDFs, and custom CSS here so they don't clog your workflow.</li>
           </ul>
 
-          <h2>Step 2: The Foundation (Folder Organization)</h2>
+          <h2>Step 2: Installing Essential Plugins</h2>
           <p>
-            A clutter-free sidebar is crucial to maintaining focus. If you just start creating files randomly, your sidebar will turn into a massive, unreadable list of hundreds of files. You will never be able to find anything. 
-          </p>
-          <p>
-            We recommend a strict, minimalist 4-folder structure to keep files tidy. You'll notice we use numbers at the beginning of the folder names. This is a neat trick to force Obsidian to sort the folders in the exact order we want, rather than alphabetically. 
-          </p>
-          <ul>
-            <li><strong>00 Inbox</strong>: This is your landing pad. Whenever you are in a rush and need to jot down a quick idea, save a web clip, or write a raw thought, it goes here. The goal is to not worry about organizing when you are capturing information. Just get it out of your head. Once a week, you should look through this folder, clean up the notes, and move them to their permanent home.</li>
-            <li><strong>10 Notes</strong>: This is the main repository where your permanent, organized knowledge is stored. This is where your project plans, book summaries, and daily journals live. You can create a few sub-folders in here (like "Projects" and "Journal"), but try not to go too deep.</li>
-            <li><strong>20 Templates</strong>: This is storage for all your pre-written structures. Instead of typing out the same meeting agenda every single day, you write it once, save it here, and tell Obsidian to insert it whenever you need it.</li>
-            <li><strong>90 System</strong>: This is the folder you almost never look at. It holds all the behind-the-scenes files that make your vault work. Put your image attachments, PDFs, custom CSS stylesheets, and random vault assets in here so they don't clutter up your workspace.</li>
-          </ul>
-
-          <blockquote>
-            <p>"Keep your folder structure shallow. Lean on links and tags rather than nested subfolders to construct your web of knowledge. If you have to click through six folders to find a note, your system is too complicated."</p>
-          </blockquote>
-
-          <h2>Step 3: Installing Essential Plugins</h2>
-          <p>
-            Obsidian's true power comes from its community plugins. To expand Obsidian's functionality without slowing it down, we are going to rely on three core plugins. First, make sure you turn off "Safe Mode" in your settings under the Community Plugins tab so you can actually download these.
+            Plugins are where Obsidian flexes. But don't install twenty of them. You only need three core plugins to start. (Turn off "Safe Mode" in settings to install these).
           </p>
           
-          <h3>1. Dataview</h3>
+          <h3>1. Dataview (The Database Engine)</h3>
           <p>
-            Dataview allows you to treat your notes like a database. It is arguably the most important plugin in the entire Obsidian ecosystem. Instead of manually updating a master list of all your projects, Dataview writes a query to index lists automatically. 
-          </p>
-          <p>
-            For example, let's say you tag all your project notes with the tag <code>#project</code>. To automatically list all those notes, sorted by the date you last touched them, you simply type this block of code into any note:
+            Dataview turns your notes into a queryable database. I rely on this to automatically generate lists of active projects. If I tag notes with <code>#project</code>, I don't maintain a manual list. I just use this query:
           </p>
           <pre><code class="language-markdown">```dataview
 TABLE file.folder AS "Folder", file.mtime AS "Last Modified"
@@ -254,49 +237,33 @@ FROM #project
 SORT file.mtime DESC
 ```</code></pre>
           <p>
-            The moment you click away, that code turns into a beautiful, automatically updating table. You never have to manually organize a list again.
+            Click away, and it renders a live, updating table. It's a game-changer.
           </p>
 
-          <h3>2. Templater</h3>
+          <h3>2. Templater (Dynamic Note Creation)</h3>
           <p>
-            While Obsidian has a built-in template feature, the community plugin <strong>Templater</strong> is much better. It generates dynamic variables when creating new notes. 
-          </p>
-          <p>
-            For example, if you create a daily journal template, you can put the code <code>&lt;% tp.date.now("YYYY-MM-DD") %&gt;</code> at the top. When you actually use the template to create a new note, Templater will magically replace that code with today's actual date. It saves you from having to manually type out dates, times, and titles.
+            The default template feature is okay, but <strong>Templater</strong> is vastly superior because it injects dynamic data. If I drop <code>&lt;% tp.date.now("YYYY-MM-DD") %&gt;</code> into a template, it automatically stamps today's date when I use it. No more typing dates manually.
           </p>
 
-          <h3>3. Style Settings</h3>
+          <h3>3. Style Settings (The Aesthetic Fix)</h3>
           <p>
-            Finally, we need to make Obsidian look good. The <strong>Style Settings</strong> plugin unlocks deep customization adjustments for custom themes directly in the settings menu. If you download a popular theme like Minimal or AnuPpuccin, this plugin lets you change the exact colors, fonts, and window styles without needing to know any CSS coding. You just use sliders and color pickers.
+            Obsidian shouldn't look like a 90s terminal. I use the <strong>Style Settings</strong> plugin combined with a clean theme (like Minimal). It gives you sliders to change colors and fonts without touching any CSS code.
           </p>
 
-          <h2>Step 4: Using the Starter Vault (Available Now)</h2>
+          <h2>Troubleshooting & Common Pitfalls</h2>
           <p>
-            We just covered a lot of ground. Setting all of this up manually—creating the folders, configuring the plugin settings, writing the Dataview queries, and designing the templates—can easily take a few hours of trial and error.
-          </p>
-          <p>
-            To skip these manual steps, you can utilize our pre-built configuration file. We have done all the heavy lifting for you. We have mapped out the entire folder structure perfectly, loaded the custom CSS theme styling so it looks beautiful out of the box, and set up all the advanced Templater presets into a single package.
-          </p>
-          <p>
-            <strong>How to use it:</strong>
-          </p>
-          <ol>
-            <li>Download the ZIP file using the button below.</li>
-            <li>Extract (unzip) the folder anywhere on your computer.</li>
-            <li>Open the Obsidian app, click "Open folder as vault," and select the folder you just extracted.</li>
-            <li>That's it. You are immediately ready to start taking notes in a perfectly optimized environment.</li>
-          </ol>
-
-          <h2>Official Resources & External Links</h2>
-          <p>
-            Check out these official external resources for Obsidian installation links and community documentation:
+            I've seen plenty of setups break. Here are the most common issues you'll hit:
           </p>
           <ul>
-            <li><a href="https://obsidian.md/" target="_blank" rel="noopener noreferrer">Obsidian Official Website & Downloads</a></li>
-            <li><a href="https://help.obsidian.md/" target="_blank" rel="noopener noreferrer">Obsidian Official Help Center</a></li>
-            <li><a href="https://blacksmithgu.github.io/obsidian-dataview/" target="_blank" rel="noopener noreferrer">Dataview Plugin Documentation</a></li>
-            <li><a href="https://silentvoid13.github.io/Templater/" target="_blank" rel="noopener noreferrer">Templater Plugin Documentation</a></li>
+            <li><strong>Files aren't syncing to my phone:</strong> Usually, this happens because you created the vault on your Desktop, then tried to drag it into iCloud later. Always create the vault directly inside your cloud provider's folder from the start.</li>
+            <li><strong>Dataview tables are empty:</strong> Double-check your tags. Dataview is case-sensitive and strict. <code>#Project</code> is not the same as <code>#project</code>. Also, ensure you closed the code block with three backticks (```).</li>
+            <li><strong>Templates aren't applying dates:</strong> If Templater isn't injecting data, ensure you triggered it via the Templater command (Alt/Option + N) rather than the default Obsidian template button.</li>
           </ul>
+
+          <h2>Conclusion & Next Steps</h2>
+          <p>
+            You now have a robust, organized, and powerful Obsidian vault. The key is to start actually writing notes rather than endlessly tweaking the system. If you want to bypass all the manual folder creation and plugin setup, grab my pre-built configuration below. 
+          </p>
           
           <div style="margin: 2rem 0;">
             <a href="../downloads/obsidian-starter-vault.zip" download id="downloadObsidianStarterVaultBtn" class="btn btn-primary btn-download"

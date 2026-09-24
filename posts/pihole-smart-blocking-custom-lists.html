@@ -177,104 +177,96 @@
         <!-- Article Content -->
         <div class="prose">
           <p>
-            If you've followed our previous guide, you likely already have Pi-hole up and running inside a lightweight container on your network, and it is doing a fantastic job blocking network-wide ads. But here is the problem a lot of home users run into: blanket ad-blocking does not work perfectly for every device or everyone in the house.
+            If you followed my <a href="pihole-installation-guide.html">Pi-hole Proxmox deployment guide</a>, you've already eliminated network-wide ads. But blanket blocking has a major flaw: it treats every device exactly the same.
           </p>
           <p>
-            For instance, you might want extremely strict blocking on your kids' tablets to keep them safe from distracting sites, but you definitely don't want your spouse’s favorite shopping links breaking when they try to click a promotional email. Or, maybe you are running a separate test network lab like I am, and you want to lock it down completely without messing with your main household devices.
+            I ran into this immediately. I wanted strict blocklists to protect my lab environment and kids' devices, but those same aggressive rules completely broke legitimate shopping links and marketing emails on my wife's phone. This causes immediate friction. 
           </p>
           <p>
-            Today, we are going to fix that exact problem. We are going to dive into Pi-hole’s incredibly powerful <strong>Group Management</strong> feature so you can tailor different blocking rules for specific devices. Then, we are going to look at how to supercharge your blocking using some incredible, free custom lists curated by the tech community. Let’s jump right in.
-          </p>
-
-          <h2>Step 1: Setting Up Your Custom Groups</h2>
-          <p>
-            First things first, you will need to log into your Pi-hole web admin dashboard. Once you are in, navigate over to the left sidebar and click on <strong>Group Management</strong>, then select <strong>Groups</strong>.
-          </p>
-          <p>
-            By default, everything in your Pi-hole system belongs to the 'Default' group. We want to make a brand new one. Let’s say we want a group specifically for kids' devices where we can block distracting sites or extra tracking.
-          </p>
-          <p>
-            In the <strong>Name</strong> box at the top, simply type something like 'Kids Devices'. You can leave the description plain or add a quick note. Hit the <strong>Add</strong> button. Just like that, your new group is created and ready to use.
+            The solution isn't to disable Pi-hole; the solution is <strong>Group Management</strong>. In this guide, I'll show you exactly how to use Pi-hole's advanced features to assign custom blocklists to specific devices. We'll also cover the absolute best community blocklists you should be using to stop telemetry without breaking the internet.
           </p>
 
-          <h2>Step 2: Assigning Devices to Your Group</h2>
+          <h2>Step 1: Create Custom Groups</h2>
           <p>
-            Now that the group exists, we need to tell Pi-hole which physical devices actually belong to it.
+            By default, every device on your network is assigned to the 'Default' group. We need to create segmented groups so we can apply different rules.
           </p>
           <ul>
-            <li>On the left sidebar under Group Management, click on <strong>Clients</strong>.</li>
-            <li>Pi-hole makes this incredibly easy. If your devices are already active on your Wi-Fi network, you can click the <strong>Known clients</strong> dropdown menu. You will see a list of your smart TVs, phones, laptops, and tablets.</li>
-            <li>Select the specific device you want—let's say the kids' tablet—and click <strong>Add</strong>.</li>
+            <li>Log into your Pi-hole admin dashboard.</li>
+            <li>Navigate to <strong>Group Management &gt; Groups</strong> on the left sidebar.</li>
+            <li>In the <strong>Name</strong> field, enter a specific name (e.g., <code>Kids Devices</code> or <code>Strict Lab</code>).</li>
+            <li>Click <strong>Add</strong>.</li>
+          </ul>
+
+          <h2>Step 2: Assign Clients to Groups</h2>
+          <p>
+            Now we need to tell Pi-hole which physical devices belong to the group we just created.
+          </p>
+          <ul>
+            <li>Navigate to <strong>Group Management &gt; Clients</strong>.</li>
+            <li>Click the <strong>Known clients</strong> dropdown. You'll see the IPs and MAC addresses of active devices on your network. Select the device (e.g., the kids' tablet) and click <strong>Add</strong>.</li>
+            <li>Look at the list of configured clients below. In the <strong>Group assignment</strong> column, uncheck <code>Default</code>, check your new <code>Kids Devices</code> group, and click <strong>Apply</strong>.</li>
           </ul>
           <p>
-            At this point, if you look at the list below, you will see it still says the device belongs to the 'Default' group under the Group Assignment column. To fix this, click that dropdown, uncheck 'Default', check your new 'Kids Devices' group, and hit <strong>Apply</strong>. Now, whatever rules we apply to the Kids group will affect only that tablet.
+            This device is now isolated. Any rules applied to the Default group will no longer affect it, and vice versa.
           </p>
 
-          <h2>Step 3: Blocking Specific Domains by Group</h2>
+          <h2>Step 3: Supercharge with Community Blocklists</h2>
           <p>
-            So how do we actually block something just for that one specific group? Let’s head over to <strong>Domains</strong> under the Group Management menu.
+            Pi-hole's default StevenBlack list is good, but it misses a lot of modern telemetry and smart TV trackers. You need to pull in curated lists from the community.
           </p>
           <p>
-            Let's say we want to block YouTube or a gaming site during homework hours. Type the domain name in—like <code>youtube.com</code>—and make sure <strong>Exact blocking</strong> is selected. 
+            <strong>The Golden Rule:</strong> Only use tested lists. If you grab random lists from GitHub, you <em>will</em> break legitimate websites (like banking logins or streaming services). I rely exclusively on two sources:
           </p>
-          <p>
-            <strong>Crucial Step:</strong> Before you click Add, look at the bottom where it says <em>Group assignment</em>. Uncheck Default, check 'Kids Devices', and hit <strong>Add to Blacklist</strong>.
-          </p>
-          <p>
-            That is it. YouTube is now blocked on the tablet, but it completely works on your desktop or TV. This allows you to selectively parent devices without punishing the entire household. You can do the exact same thing with massive blocklists, which brings us to the next part of our setup.
-          </p>
+          <ul>
+            <li><strong>Firebog (The Ticked Lists):</strong> <a href="https://firebog.net" target="_blank">Firebog.net</a> curates adlists. Only use the lists highlighted in green (ticked). These are guaranteed not to interfere with normal browsing.</li>
+            <li><strong>HaGezi's DNS Blocklists:</strong> Available on GitHub, HaGezi's "Multi Normal" list is the gold standard for balancing aggressive tracker blocking with low false-positives.</li>
+          </ul>
 
-          <h2>Step 4: Supercharging with Community Blocklists</h2>
+          <h2>Step 4: Applying Custom Blocklists to Groups</h2>
           <p>
-            Out of the box, Pi-hole comes with one standard blocklist, which is great. But the real power of Pi-hole comes from lists maintained by amazing people in the home tech community.
-          </p>
-          <h3>The Firebog Lists</h3>
-          <p>
-            The absolute best place for a home user to start is a website called <a href="https://firebog.net" target="_blank">Firebog.net</a>. What makes Firebog so special is that they carefully categorize their lists. If you look at their website, they have lists highlighted in green. These are "ticked lists," meaning they are heavily tested and almost never break regular everyday websites or shopping apps. If you want a trouble-free home network, stick to the green ones.
-          </p>
-          <h3>HaGezi's Blocklists</h3>
-          <p>
-            Another massive shoutout needs to go to a creator named HaGezi. They maintain some of the most meticulously updated DNS blocklists on GitHub. For home users, their "Multi Light" or "Multi Normal" lists are phenomenal for catching modern telemetry and phishing attempts without interrupting your day-to-day browsing. 
-          </p>
-
-          <h2>Step 5: Adding Lists to Pi-hole</h2>
-          <p>
-            Once you find a list you want to use from Firebog or HaGezi, simply copy the URL. 
+            Let's apply an aggressive blocklist exclusively to our newly created group.
           </p>
           <ol>
-            <li>Go back to your Pi-hole and click <strong>Adlists</strong> under Group Management.</li>
-            <li>Paste that URL right into the <strong>Address</strong> box. You can add a comment like 'Firebog Ads' so you remember what it is.</li>
-            <li>Notice the group assignment at the bottom! If you want this list to apply to the whole house, leave it on 'Default'. If you only want it on your lab network or specific devices, assign it to that specific group instead.</li>
+            <li>Copy the raw URL of the blocklist you want to use (e.g., from Firebog).</li>
+            <li>In Pi-hole, navigate to <strong>Group Management &gt; Adlists</strong>.</li>
+            <li>Paste the URL into the <strong>Address</strong> field.</li>
+            <li><strong>Critical Step:</strong> In the <strong>Group assignment</strong> checklist, uncheck <code>Default</code> and check <code>Kids Devices</code> (or whichever specific group you want to target).</li>
             <li>Click <strong>Add</strong>.</li>
           </ol>
-
-          <h2>Step 6: Updating Gravity (Don't Skip This!)</h2>
           <p>
-            Once you have pasted your new lists, there is one last step you cannot forget. We have to tell Pi-hole to go out to the internet and actually download them.
-          </p>
-          <p>
-            Go to <strong>Tools</strong> on the left sidebar, click <strong>Update Gravity</strong>, and hit that big Update button. Pi-hole will crawl those links, grab the latest data, and your network protection is officially upgraded.
+            Now, this aggressive list will only filter traffic for the devices assigned to that group. Your main network remains unaffected.
           </p>
 
-          <h2>Official Resources & External Links</h2>
+          <h2>Step 5: Update Gravity</h2>
           <p>
-            To discover reputable adlists and learn more about Pi-hole group management, check out these official external resources:
+            Adding a URL to the Adlists page doesn't do anything until Pi-hole actually downloads the data.
+          </p>
+          <p>
+            Go to <strong>Tools &gt; Update Gravity</strong> and click the big <strong>Update</strong> button. Pi-hole will parse the new lists, compile the domains, and restart the DNS resolver. Your new rules are now active.
+          </p>
+
+          <h2>Troubleshooting & Edge Cases</h2>
+          <p>
+            When you start messing with custom blocklists, things will occasionally break. Here's how to fix it:
           </p>
           <ul>
-            <li><a href="https://pi-hole.net/" target="_blank" rel="noopener noreferrer">Pi-hole Official Website</a></li>
-            <li><a href="https://docs.pi-hole.net/database/gravity/groups/" target="_blank" rel="noopener noreferrer">Pi-hole Official Group Management Documentation</a></li>
-            <li><a href="https://firebog.net/" target="_blank" rel="noopener noreferrer">The Firebog - Curated Pi-hole Adlists</a></li>
-            <li><a href="https://github.com/hagezi/dns-blocklists" target="_blank" rel="noopener noreferrer">HaGezi DNS Blocklists GitHub Repository</a></li>
+            <li><strong>A legitimate website won't load (False Positive):</strong> If a site breaks for a specific device, log into Pi-hole, go to <strong>Query Log</strong>, and filter by the IP of the device. Find the blocked domain (it will be highlighted in red) and click the <strong>Whitelist</strong> button next to it.</li>
+            <li><strong>Devices aren't respecting group rules:</strong> If a device seems to be ignoring its assigned group, check if it's using a VPN or if Apple's "Private Wi-Fi Address" (MAC randomization) is turned on. Pi-hole tracks devices by MAC/IP, so if the device randomizes its MAC address daily, Pi-hole will treat it as a new "Default" device. Disable MAC randomization for your home network.</li>
+            <li><strong>Update Gravity fails:</strong> If the gravity update crashes or hangs, your Pi-hole container might be out of disk space or RAM. Check your LXC resources in Proxmox.</li>
           </ul>
 
-          <h2>Conclusion</h2>
+          <h2>Conclusion & Next Steps</h2>
           <p>
-            And that is how you take full control over your home network traffic without frustrating the people you live with. By utilizing Group Management, you can finely tune who sees what, and by integrating custom blocklists, you guarantee that your Pi-hole is catching the latest telemetry and ads. 
+            Group management is the difference between a frustrating ad-blocker that causes arguments and a silent, invisible network shield. By utilizing custom lists and targeting them precisely, you maintain maximum security for your lab and kids without breaking the internet for everyone else.
           </p>
-          <p>
-            Enjoy your cleaner, faster, and much more customizable network!
-          </p>
-        </div>
+
+          <h2>Official Resources</h2>
+          <ul>
+            <li><a href="https://docs.pi-hole.net/database/gravity/groups/" target="_blank" rel="noopener noreferrer">Pi-hole Group Management Docs</a></li>
+            <li><a href="https://firebog.net/" target="_blank" rel="noopener noreferrer">Firebog Adlist Collection</a></li>
+            <li><a href="https://github.com/hagezi/dns-blocklists" target="_blank" rel="noopener noreferrer">HaGezi Blocklists Repository</a></li>
+          </ul>
+        </div></div>
 
       </article>
 

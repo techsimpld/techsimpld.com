@@ -191,7 +191,7 @@
           </p>
 
           <p>
-            In this guide, we will cut through the tech jargon and explain what Infrastructure as Code actually is, how Terraform works, and how you can start using it to automate your home servers.
+            In this guide, I will cut through the tech jargon and explain what Infrastructure as Code actually is, how Terraform works, and how you can start using it to automate your home servers based on my own lab workflow.
           </p>
 
           <h2>The Problem with "ClickOps"</h2>
@@ -400,23 +400,23 @@ resource "proxmox_virtual_environment_container" "monitoring_lxc" {
             Testing a temporary service or sandbox environment? When you are done, run <code>terraform destroy</code>. Terraform reads its state file and cleans up every VM, network bridge, or disk it previously created—no leftover garbage cluttering your storage pools.
           </p>
 
-          <h2>Common Beginner Pitfalls to Avoid</h2>
+          <h2>Troubleshooting & Common Pitfalls to Avoid</h2>
           <p>
-            When bringing Terraform into your home lab, keep these three rules in mind:
+            When bringing Terraform into your home lab, keep these rules in mind:
           </p>
 
           <ol>
-            <li><strong>Never commit API tokens to Git:</strong> Keep your Proxmox API secrets in environment variables or a <code>terraform.tfvars</code> file, and make sure that file is included in your <code>.gitignore</code>.</li>
-            <li><strong>Back up your <code>terraform.tfstate</code> file:</strong> If you delete your local state file, Terraform forgets which real-world Proxmox containers belong to your code. Back up your repository regularly.</li>
+            <li><strong>Never commit API tokens to Git:</strong> Keep your Proxmox API secrets in environment variables or a <code>terraform.tfvars</code> file, and make sure that file is included in your <code>.gitignore</code>. Hardcoding secrets is the #1 beginner mistake.</li>
+            <li><strong>Back up your <code>terraform.tfstate</code> file:</strong> If you delete your local state file, Terraform forgets which real-world Proxmox containers belong to your code. If you work from multiple computers, look into remote state storage (like an S3 bucket or Terraform Cloud).</li>
             <li><strong>Start small:</strong> Don’t try to convert your entire 50-container home lab into Terraform on day one. Start by automating one disposable testing VM or a single LXC container. Once you feel comfortable with the workflow, expand from there.</li>
           </ol>
 
           <h2>Where Does Ansible Fit In?</h2>
           <p>
-            A common question beginners ask is: <em>"Should I use Terraform or Ansible?"</em>
+            A common question I get is: <em>"Should I use Terraform or Ansible?"</em>
           </p>
           <p>
-            The answer is that they work together:
+            The answer is that they work together perfectly:
           </p>
           <ul>
             <li><strong>Terraform</strong> handles the <em>infrastructure</em> (provisioning the VM, assigning RAM, creating the virtual disk, configuring the network).</li>
@@ -424,14 +424,14 @@ resource "proxmox_virtual_environment_container" "monitoring_lxc" {
           </ul>
 
           <p>
-            By combining both, you can spin up a bare metal machine, have Terraform provision three virtual machines, and have Ansible automatically configure them into a running Kubernetes or Docker cluster without touching a keyboard.
+            By combining both, I can spin up a bare metal machine, have Terraform provision three virtual machines, and have Ansible automatically configure them into a running Kubernetes or Docker cluster without touching a keyboard.
           </p>
 
           <h2>Summary</h2>
           <p>
             Infrastructure as Code isn't just an enterprise corporate buzzword—it is the cleanest, most reliable way to run a personal home lab. It turns server deployments into repeatable code, gives you built-in disaster recovery, and frees you from the endless cycle of manual web UI clicking.
           </p>
-        </div>
+        </div></div>
 
       </article>
 

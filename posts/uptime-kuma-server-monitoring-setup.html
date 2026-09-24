@@ -191,7 +191,7 @@
           </p>
 
           <p>
-            In this guide, we will build a dedicated Uptime Kuma instance on an Ubuntu server (or inside a Proxmox LXC container) using Node.js and PM2, configure your first service monitors, and set up instant alert routing.
+            In this guide, I will show you how to build a dedicated Uptime Kuma instance on an Ubuntu server (or inside a Proxmox LXC container) using Node.js and PM2, configure your first service monitors, and set up instant alert routing.
           </p>
 
           <h2>Why Run Uptime Kuma via Node.js and PM2?</h2>
@@ -326,35 +326,20 @@ pm2 startup
             You can now expose this status page through a Cloudflare Tunnel or local reverse proxy, giving everyone a clear, real-time look at service uptime.
           </p>
 
-          <h2>Tracking SSL Certificate Expiration Automatically</h2>
+          <h2>Troubleshooting & Common Pitfalls</h2>
           <p>
-            One underrated feature of Uptime Kuma is built-in <strong>SSL Certificate Expiry Monitoring</strong>.
+            If you encounter problems during setup, check these two areas:
           </p>
-          <p>
-            When you monitor an HTTPS endpoint, Uptime Kuma automatically inspects the TLS certificate and displays the days remaining before expiration. You can configure it to notify you 7, 14, or 30 days before a certificate expires, giving you plenty of time to renew Let's Encrypt certificates if an automated ACME cron job ever fails.
-          </p>
-
-          <h2>Maintenance and Updating</h2>
-          <p>
-            Updating Uptime Kuma on Ubuntu takes less than a minute. Whenever a new release is published on GitHub, run:
-          </p>
-
-          <pre><code class="language-bash">cd /opt/uptime-kuma
-git fetch --all
-git checkout 1.23.16 --force # Replace with the latest tag
-npm install --production
-npm run setup
-pm2 restart uptime-kuma</code></pre>
-
-          <p>
-            All your monitors, history, and settings are stored in SQLite inside <code>/opt/uptime-kuma/data/kuma.db</code>. Back up this single file periodically (or let Proxmox backup the LXC container) and your monitoring setup will be completely protected.
-          </p>
+          <ul>
+            <li><strong>Ping Monitors Failing in Docker:</strong> If you do decide to run Uptime Kuma in Docker (instead of PM2), remember that the container's user needs root permissions to send ICMP pings. If your pings fail instantly, it's a permissions issue, which is exactly why I recommend the PM2 LXC route in this guide.</li>
+            <li><strong>Database Corruption:</strong> Do not just yank power from the server running Uptime Kuma. The SQLite database (<code>kuma.db</code>) is active almost constantly. Always shut down cleanly to prevent database corruption.</li>
+          </ul>
 
           <h2>Final Thoughts</h2>
           <p>
             Setting up Uptime Kuma turns your home lab from an unpredictable guessing game into a reliable, professional environment. By running it on Ubuntu with PM2 and pairing it with instant push notifications, you will always be the first to know when something breaks—and exactly when it comes back online.
           </p>
-        </div>
+        </div></div>
 
       </article>
 

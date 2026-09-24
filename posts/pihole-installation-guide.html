@@ -181,145 +181,97 @@
         <!-- Article Content -->
         <div class="prose">
           <p>
-            Let's be real for a second: the modern internet is almost unusable without some form of ad blocking. Ads have gotten completely out of hand. They are no longer just simple banners at the top of a page. They are auto-playing videos that pop out at you, massive overlays that cover the text you are trying to read, and invisible trackers that silently follow you from website to website, recording your every move to sell your data to the highest bidder. They slow down your browsing speed, eat up your bandwidth, and turn basic web surfing into an absolute minefield.
+            Let's be blunt: the modern internet is hostile. It's no longer just banner ads; it's auto-playing videos, screen-covering popups, and invisible tracking pixels that follow you across the web. They choke your bandwidth, slow down page loads, and turn basic browsing into a miserable experience.
           </p>
           <p>
-            If you are browsing on a laptop or desktop computer, you probably already use a browser extension like uBlock Origin to fix this. That is great for your computer. But what about your smart TV? What about your mobile phone apps? What about your streaming devices, smart fridges, and IoT gadgets? You cannot install a traditional browser ad-blocker on those devices. 
+            If you're on a PC, uBlock Origin handles this. But what about your smart TV? Your phone? Your IoT devices? You can't install browser extensions on a refrigerator.
           </p>
           <p>
-            That is exactly where <strong>Pi-hole</strong> comes in. Pi-hole is a network-wide ad blocker. Instead of blocking ads on a single device, it acts as a black hole for advertisements across your entire home network. It intercepts ad requests at the DNS level before they even have a chance to download to your devices. 
+            That's why I deployed <strong>Pi-hole</strong>. It's a network-wide ad blocker. Instead of fighting ads device-by-device, Pi-hole sits at the edge of your network and acts as a black hole for telemetry and advertisements. It intercepts requests at the DNS level before the ads can even download.
           </p>
           <p>
-            Traditionally, people run Pi-hole on a small physical computer called a Raspberry Pi. But since you already have a powerful Proxmox server running in your home lab, buying extra hardware is a waste of money. Today, we are going to deploy Pi-hole inside a lightweight Linux Container (or LXC) directly on your Proxmox server. Let's get into it.
-          </p>
-
-          <h2>Understanding the Magic: How Does Pi-hole Work?</h2>
-          <p>
-            Before we install anything, it is really important to understand exactly what you are building. It sounds complicated, but it is actually very simple.
-          </p>
-          <p>
-            Every time you type a website name (like google.com) into your browser, your computer doesn't actually know where that is. It has to ask a <strong>DNS server</strong>. Think of a DNS server like a giant internet phonebook. Your computer says, "Hey, what is the IP address for google.com?" The DNS server looks it up, replies with a string of numbers, and your computer connects to the site.
-          </p>
-          <p>
-            When you visit a news website, that website also tries to load ads. Your computer says, "Hey, what is the IP address for tracking-ads-server.com?" 
-          </p>
-          <p>
-            When you install Pi-hole, you are forcing every device in your house to use the Pi-hole as its primary phonebook. Pi-hole has a massive, constantly updating list of known ad servers and tracking domains. When your smart TV tries to load an ad, it asks the Pi-hole for the address. The Pi-hole checks its list, sees that it's a known tracker, and instead of giving the real address, it essentially replies with "That number doesn't exist." The ad request drops into a black hole, the ad never downloads, and your webpage loads twice as fast. It is brilliant.
+            Most people buy a Raspberry Pi for this. Since I already have a Proxmox VE server running in my home lab, buying extra hardware is a waste. In this guide, I'll show you exactly how I deployed Pi-hole inside a lightweight Linux Container (LXC) on Proxmox to secure my entire home network.
           </p>
 
-          <h2>Why an LXC instead of a Virtual Machine?</h2>
+          <h2>Why LXC over a Virtual Machine?</h2>
           <p>
-            If you are new to Proxmox, you might be wondering why we are using a Linux Container (LXC) instead of creating a full Virtual Machine (VM) like we do for Windows or heavy Linux servers.
+            If you're new to Proxmox, you might default to spinning up a full Virtual Machine (VM). Don't. A VM simulates entire hardware layers—motherboard, BIOS, disks. It's heavy.
           </p>
           <p>
-            The answer is efficiency. A full VM has to simulate an entire computer—motherboard, BIOS, hard drives, and all. That takes up a lot of system resources. An LXC, on the other hand, just borrows the host's core operating system (the kernel) to run. 
-          </p>
-          <p>
-            Because Pi-hole is basically just a text-based phonebook, it requires almost zero processing power. By running it as an LXC container, it boots instantly and uses less than 512 megabytes of RAM. This leaves the vast majority of your Proxmox server's resources completely free for your heavier, more demanding self-hosting workloads.
+            An LXC (Linux Container) shares the host's kernel. Because Pi-hole is essentially just a text-based phonebook for IP addresses, it needs almost no processing power. My LXC container boots instantly and consumes less than 512MB of RAM, leaving the rest of my server free for heavier workloads.
           </p>
 
-          <h2>Step 1: Open the Proxmox Shell</h2>
+          <h2>Step 1: The Proxmox Shell</h2>
           <p>
-            Normally, setting up a container involves downloading an operating system template, manually assigning resources, creating a user, and running dozens of update commands. 
-          </p>
-          <p>
-            To get this running flawlessly and quickly, we are going to use a streamlined shortcut: the community helper scripts. These scripts automate the entire boring setup process.
+            Building containers manually (downloading templates, configuring networks, creating users) is tedious. I don't do it. Instead, I use the Proxmox VE Helper Scripts to automate the grunt work.
           </p>
           <ul>
-            <li>First, open your web browser and log into your <strong>Proxmox web interface</strong>.</li>
-            <li>Look at the left sidebar and click on your main node (it is usually called "pve" unless you renamed it).</li>
-            <li>Once your node is selected, look at the main window area and click the button that says <strong>Shell</strong>. This will open up a black terminal window with a blinking cursor. You are now inside the brain of your server.</li>
+            <li>Log into your <strong>Proxmox web interface</strong>.</li>
+            <li>Select your main node on the left (usually <code>pve</code>).</li>
+            <li>Click the <strong>Shell</strong> button. This drops you into the server's root terminal.</li>
           </ul>
 
-          <h2>Step 2: Execute the Creator Script</h2>
+          <h2>Step 2: Executing the Helper Script</h2>
           <p>
-            Next, we need to run the automatic setup command. We are using the legendary Proxmox VE Helper Scripts created by tteck. These scripts are safe, open-source, and used by thousands of home lab enthusiasts every single day.
-          </p>
-          <p>
-            Highlight the command below, copy it, paste it directly into your Proxmox terminal, and press Enter:
+            We're using the highly trusted Pi-hole script by tteck. Paste this command directly into your Proxmox shell and hit Enter:
           </p>
           <pre><code class="language-bash">bash -c "$(wget -qLO - https://github.com/tteck/Proxmox/raw/main/ct/pihole.sh)"</code></pre>
-
-          <h2>Step 3: Follow the Configuration Wizard</h2>
           <p>
-            The moment you press enter, the script wizard will pop up in the terminal. It is going to ask you a series of very simple questions.
+            The wizard will prompt you. Answer "Yes" to create the LXC and "Yes" to use Default Settings (1 Core, 512MB RAM is perfect). The script will automatically download the Debian template, build the container, and install the Pi-hole framework in under a minute.
+          </p>
+
+          <h2>Step 3: Pi-hole Core Configuration</h2>
+          <p>
+            During the automated install, the blue Pi-hole configuration screens will appear:
           </p>
           <ul>
-            <li><strong>Create a new Pi-hole LXC?</strong> Hit Yes.</li>
-            <li><strong>Use Default Settings?</strong> For 99% of home networks, the default allocation settings (usually 1 core and 512MB of RAM) are absolutely perfect. Select Yes.</li>
+            <li><strong>Upstream DNS:</strong> This is the "real" phonebook Pi-hole queries when a legitimate request is made. I use Cloudflare (1.1.1.1) for speed, but Google (8.8.8.8) works fine.</li>
+            <li><strong>Blocklists:</strong> Accept the default StevenBlack list. It blocks millions of trackers out of the box.</li>
+            <li><strong>Static IP:</strong> <em>Crucial step.</em> Set a static IP for the container. If your Pi-hole's IP changes later, your entire house loses internet access. Confirm the suggested IP.</li>
           </ul>
+
+          <h2>Step 4: Save Your Credentials</h2>
           <p>
-            Now, just sit back and watch the text fly by. The script is automatically downloading a clean, lightweight Linux template, creating the container, allocating the system resources, updating the operating system, and pulling down the latest Pi-hole framework. It does ten minutes of manual labor in about thirty seconds.
+            When the script finishes, the terminal will display your Pi-hole's IP address and a generated <strong>Admin Password</strong>. Write this down immediately. You need it to access the dashboard.
           </p>
 
-          <h2>Step 4: The Pi-hole Setup Prompts</h2>
+          <h2>Step 5: Reroute Network Traffic</h2>
           <p>
-            During the installation, the official Pi-hole setup screens will appear (these are usually blue and gray text boxes). 
+            Your Pi-hole is running, but it's invisible to your network. You must force your router to use it.
           </p>
           <ul>
-            <li><strong>Upstream DNS Provider:</strong> It will ask you to choose an upstream DNS provider. This is the "real" phonebook Pi-hole will use when it doesn't know an address. You can pick Google (8.8.8.8) or Cloudflare (1.1.1.1). Cloudflare is generally considered faster and slightly more privacy-focused.</li>
-            <li><strong>Blocklists:</strong> It will ask if you want to use StevenBlack's default blocklist. Say Yes. This list blocks millions of known ad domains right out of the box.</li>
-            <li><strong>Static IP Address:</strong> This is critical. It will ask to set a static IP address for the container. Say Yes and confirm the IP it suggests. If your Pi-hole's IP address ever changes, your entire house will lose internet access, so it must be static!</li>
+            <li>Log into your main router's admin panel (e.g., <code>192.168.1.1</code>).</li>
+            <li>Locate the <strong>DHCP / LAN Settings</strong>.</li>
+            <li>Change the <strong>Primary DNS</strong> to your Pi-hole's static IP address.</li>
+            <li>Leave the <strong>Secondary DNS</strong> empty. If you put Google here, devices will bypass Pi-hole and you'll still see ads.</li>
+            <li>Save and reboot your router.</li>
           </ul>
 
-          <h2>Step 5: Save Your Login Credentials</h2>
+          <h2>Troubleshooting & Common Pitfalls</h2>
           <p>
-            Once the installation finishes, the terminal will spit out a final summary screen. It will explicitly list your container's newly assigned <strong>IP Address</strong> and a randomly generated <strong>Admin Password</strong>. 
-          </p>
-          <p>
-            Make sure you write these down on a piece of paper or take a quick screenshot immediately. If you lose that password, getting back into the system is a headache.
-          </p>
-
-          <h2>Step 6: Route Your Network Traffic</h2>
-          <p>
-            Your Pi-hole is now alive, running, and ready to block ads. But right now, it isn't doing anything because none of the devices in your house know it exists.
-          </p>
-          <p>
-            Open up a new browser tab, type in the IP address you just wrote down followed by <code>/admin</code> (for example: <code>192.168.1.50/admin</code>), and log in using your new password. Welcome to your ad-blocking command center. You will see a beautiful dashboard showing total queries and blocked domains.
-          </p>
-          <p>
-            The final, crucial step to make this work for your entire household is to route your traffic through it. You have to tell your main home router to use the Pi-hole as the one and only DNS server.
+            Here are the issues I see people hit constantly:
           </p>
           <ul>
-            <li>Log into your home router's settings gateway (usually by going to <code>192.168.1.1</code> or <code>10.0.0.1</code> in your browser).</li>
-            <li>Look through the menus for <strong>DHCP Settings</strong> or <strong>LAN Setup</strong>. Every router brand (Netgear, Asus, Unifi) is slightly different, but you are looking for the DNS fields.</li>
-            <li>You will likely see Primary DNS and Secondary DNS. Change the Primary DNS to the IP address of your new Pi-hole. Leave the Secondary DNS completely blank. (If you put a secondary DNS like Google, your devices might bypass the Pi-hole and you will still see ads).</li>
-            <li>Save the settings and restart your router.</li>
+            <li><strong>My house lost internet access!</strong> You likely set a secondary DNS on your router, or the Pi-hole container is off. Log into your router, change DNS back to "Automatic," and troubleshoot the container.</li>
+            <li><strong>I'm still seeing YouTube ads.</strong> Pi-hole operates at the DNS level. YouTube serves ads from the exact same domain as the video itself (<code>googlevideo.com</code>). If Pi-hole blocks it, the video breaks. You still need uBlock Origin on your PC for YouTube.</li>
+            <li><strong>A legitimate website won't load.</strong> Sometimes the blocklist is too aggressive. Log into the Pi-hole dashboard (<code>http://your-pihole-ip/admin</code>), check the Query Log, and "Whitelist" the blocked domain.</li>
           </ul>
 
-          <h2>Common Questions (FAQ)</h2>
+          <h2>Conclusion & Next Steps</h2>
           <p>
-            <strong>Will Pi-hole block YouTube ads?</strong><br>
-            No. This is the most common misconception. Pi-hole blocks ads by looking at the domain name. If an ad comes from <code>ads.google.com</code>, Pi-hole blocks it. But YouTube serves its video ads from the exact same domain name as the actual video you want to watch. If Pi-hole blocks the ad, it blocks the video too. To block YouTube ads, you still need a browser extension like uBlock Origin on your PC.
-          </p>
-          <p>
-            <strong>What happens if my Proxmox server goes offline?</strong><br>
-            If your server loses power or crashes, the Pi-hole turns off. Because your router is pointing all traffic to the Pi-hole, if the Pi-hole is dead, your entire house will instantly lose the ability to load webpages. If you need to do maintenance on your server, simply log back into your router and change the DNS back to "Automatic" to restore the internet.
-          </p>
-          <p>
-            <strong>Can I see what my family is browsing?</strong><br>
-            Technically, yes. The Pi-hole dashboard will show a log of every DNS request made by every device on your network. However, you can configure the privacy settings in the Pi-hole admin panel to anonymize the data if you don't want to see individual logs.
+            Your network is now defended. Every device connected to your Wi-Fi is stripped of telemetry and massive ad payloads before they even reach the screen. It's one of the highest ROI projects you can run in a home lab. Monitor your dashboard, tweak your whitelists, and enjoy a faster internet.
           </p>
 
           <h2>Official Resources & External Links</h2>
           <p>
-            To learn more about network security, Proxmox virtualization, and official installation scripts, check out these official links:
+            For further reading on configurations and scripts, reference these sources:
           </p>
           <ul>
             <li><a href="https://pi-hole.net/" target="_blank" rel="noopener noreferrer">Pi-hole Official Website</a></li>
-            <li><a href="https://docs.pi-hole.net/" target="_blank" rel="noopener noreferrer">Pi-hole Official Documentation</a></li>
-            <li><a href="https://www.proxmox.com/" target="_blank" rel="noopener noreferrer">Proxmox VE Official Website</a></li>
-            <li><a href="https://tteck.github.io/Proxmox/" target="_blank" rel="noopener noreferrer">Proxmox VE Helper Scripts Official Directory</a></li>
+            <li><a href="https://docs.pi-hole.net/" target="_blank" rel="noopener noreferrer">Pi-hole Documentation</a></li>
+            <li><a href="https://tteck.github.io/Proxmox/" target="_blank" rel="noopener noreferrer">Proxmox VE Helper Scripts</a></li>
           </ul>
-
-          <h2>Conclusion</h2>
-          <p>
-            Congratulations. Whenever any device on your network—from your phone, to your laptop, to your smart TV—tries to load an application or webpage, your router quietly points it to the Pi-hole. If it’s a tracking pixel, a malware domain, or a massive banner ad, it gets blocked instantly. If it’s real content, it passes right through flawlessly.
-          </p>
-          <p>
-            Your network is now significantly faster, visually cleaner, and much more private—and it's all running smoothly on a tiny fraction of your Proxmox server's footprint. Enjoy the ad-free experience.
-          </p>
-        </div>
+        </div></div>
 
 
 

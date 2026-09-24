@@ -186,7 +186,7 @@
             Here’s the reality: <strong>you do not need enterprise rack servers to build a resilient, high-availability self-hosted environment</strong>. In fact, for hobby developers, homelab beginners, and self-hosters, big rack servers are often a huge trap—they draw 300+ watts of power at idle, generate massive heat, and take up huge amounts of physical space.
           </p>
           <p>
-            In this architecture tour, we’re breaking down my <strong>3-node Proxmox VE cluster</strong>. Built entirely from cheap, refurbished Dell OptiPlex mini desktops picked up on eBay, this entire setup cost less than a single mid-range graphics card, runs whisper quiet on a corner of my desk, and pulls less than 45 watts total at idle.
+            In this architecture tour, I’m breaking down my <strong>3-node Proxmox VE cluster</strong>. Built entirely from cheap, refurbished Dell OptiPlex mini desktops picked up on eBay, this entire setup cost less than a single mid-range graphics card, runs whisper quiet on a corner of my desk, and pulls less than 45 watts total at idle.
           </p>
           <p>
             Let's walk through the hardware choices, network segmentation over a managed switch, Ceph hyper-converged storage, Linux Containers (LXCs), and automated nightly disaster recovery with Proxmox Backup Server (PBS).
@@ -194,7 +194,7 @@
 
           <h2>1. The Hardware: Why Dell OptiPlex Desktops are the Sweet Spot</h2>
           <p>
-            The foundation of this budget cluster is three refurbished <strong>Dell OptiPlex 9020</strong> small-form-factor / micro units. Why choose off-lease office PCs over custom mini PCs or Raspberry Pis?
+            The foundation of my budget cluster is three refurbished <strong>Dell OptiPlex 9020</strong> small-form-factor / micro units. Why choose off-lease office PCs over custom mini PCs or Raspberry Pis?
           </p>
           <ul>
             <li><strong>Unbeatable Value:</strong> Corporations dump thousands of these onto eBay and local liquidators every month. You can routinely find them for $60 to $90 each with an Intel quad-core processor and power brick included.</li>
@@ -219,7 +219,7 @@
 
           <h2>3. Network Segmentation & VLANs: Keeping Traffic Clean</h2>
           <p>
-            To prevent storage sync traffic from choking out regular home network devices, all three nodes connect through an <strong>8-Port Managed Smart Switch</strong> segmented into three distinct VLANs:
+            To prevent storage sync traffic from choking out regular home network devices, I connect all three nodes through an <strong>8-Port Managed Smart Switch</strong> segmented into three distinct VLANs:
           </p>
           <ul>
             <li><strong>VLAN 0 (Personal Home Network):</strong> The default, untagged native network for personal everyday devices—family laptops, smartphones, streaming boxes, and smart TVs.</li>
@@ -246,7 +246,7 @@
             <strong>Linux Containers (LXCs)</strong> share the host Linux kernel directly while providing isolated root environments. An LXC container running Pi-hole or Nginx uses as little as <strong>35MB to 60MB of RAM</strong>!
           </p>
           <p>
-            By converting 80% of our homelab services into lightweight LXC containers, our 48GB cluster easily runs 25+ simultaneous isolated services with RAM to spare. (See our <a href="pihole-installation-guide.html">Pi-hole Proxmox LXC Guide</a> for a step-by-step example).
+            By converting 80% of my homelab services into lightweight LXC containers, my 48GB cluster easily runs 25+ simultaneous isolated services with RAM to spare. (See my <a href="pihole-installation-guide.html">Pi-hole Proxmox LXC Guide</a> for a step-by-step example).
           </p>
 
           <h2>6. Disaster Recovery: Nightly Backups with PBS</h2>
@@ -254,20 +254,26 @@
             The greatest benefit of a home lab is having a sandbox where you can learn by breaking things. But that only works if you can restore a broken container in 30 seconds.
           </p>
           <p>
-            We run an instance of <strong>Proxmox Backup Server (PBS)</strong> on an external USB hard drive or secondary backup target. PBS utilizes block-level deduplication and incremental backups. Every night at 3:00 AM, Proxmox snapshots every container and VM. Because it only copies newly changed data blocks, 25 container backups complete in under two minutes!
+            I run an instance of <strong>Proxmox Backup Server (PBS)</strong> on an external USB hard drive or secondary backup target. PBS utilizes block-level deduplication and incremental backups. Every night at 3:00 AM, Proxmox snapshots every container and VM. Because it only copies newly changed data blocks, 25 container backups complete in under two minutes!
           </p>
-          <blockquote>
-            <p>"If an update goes wrong or you accidentally delete a configuration file, you can roll back to last night's snapshot in a single click."</p>
-          </blockquote>
 
-          <h2>Summary: Start Small, Think Resilient</h2>
+          <h2>Troubleshooting & Common Pitfalls</h2>
+          <p>
+            If you are building your own cluster, watch out for these gotchas:
+          </p>
+          <ul>
+            <li><strong>Ceph Network Bottlenecks:</strong> If you use Ceph over 1Gbps networking instead of 2.5Gbps or 10Gbps, performance will suffer significantly during cluster rebalancing. Stick to ZFS replication if you only have 1GbE ports.</li>
+            <li><strong>Quorum Loss:</strong> Never shut down two nodes at the same time for maintenance! You will lose quorum and your entire cluster will freeze until a second node is powered back on.</li>
+          </ul>
+
+          <h2>Summary & Next Steps</h2>
           <p>
             You don’t need an enterprise budget or a data center rack to learn enterprise-grade virtualization, networking, and high availability. Three cheap refurbished Dell OptiPlex desktops, an inexpensive managed switch, and Proxmox VE give you a resilient, quiet, and power-efficient playground that will teach you more about modern infrastructure than any simulator.
           </p>
           <p>
-            Ready to deploy your first container? Check out our guides on <a href="docker-vs-podman.html">Docker vs. Podman</a> and <a href="cloudflare-zero-trust-tunnel-guide.html">Setting Up Cloudflare Zero Trust Tunnels</a>.
+            Ready to deploy your first container? Check out my guides on <a href="docker-vs-podman.html">Docker vs. Podman</a> and <a href="cloudflare-zero-trust-tunnel-guide.html">Setting Up Cloudflare Zero Trust Tunnels</a>.
           </p>
-        </div>
+        </div></div>
 
       </article>
 
@@ -304,22 +310,8 @@
           </ul>
         </div>
 
-        <!-- Widget: Workspace Gear -->
-        <div class="sidebar-widget">
-          <h4 class="widget-title">Tech Simpld Workspace</h4>
-          <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 0.75rem;">
-            Gear used in this setup and video production:
-          </p>
-          <ul style="list-style: none; padding: 0; margin: 0; font-size: 0.85rem; line-height: 1.6;">
-            <li>🎙️ <a href="https://amzn.to/4tTOzuP" target="_blank" rel="noopener noreferrer">FIFINE AM8T Boom Mic</a></li>
-            <li>🎛️ <a href="https://amzn.to/4ulbNeh" target="_blank" rel="noopener noreferrer">Elgato Stream Deck MK.2</a></li>
-            <li>📅 <a href="https://amzn.to/4fxvSt9" target="_blank" rel="noopener noreferrer">Skylight 2 Calendar</a></li>
-            <li>⌨️ <a href="https://amzn.to/4tL71p9" target="_blank" rel="noopener noreferrer">Redragon K556 Keyboard</a></li>
-            <li>🖱️ <a href="https://amzn.to/4o1FkYh" target="_blank" rel="noopener noreferrer">Redragon M612 Mouse</a></li>
-          </ul>
-        </div>
 
-      </aside>
+</aside>
 
     </div>
   </main>

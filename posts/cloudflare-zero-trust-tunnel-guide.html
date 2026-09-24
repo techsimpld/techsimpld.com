@@ -192,7 +192,7 @@
             While port forwarding works, <strong>it is one of the riskiest things a beginner can do to their home network</strong>. The second you open a port on your consumer router, automated internet bots, malicious port scanners (like Shodan), and brute-force scripts will start hammering your home firewall within minutes. Furthermore, if your ISP uses CGNAT (Carrier-Grade NAT, common with Starlink and 5G home internet), port forwarding won't work at all.
           </p>
           <p>
-            The modern, secure solution is a <strong>Cloudflare Zero Trust Tunnel</strong> (powered by <code>cloudflared</code>). In this guide, we’ll explain how tunnels work, why they make your home network practically invisible to hackers, and walk through the complete step-by-step setup in under 10 minutes.
+            The modern, secure solution is a <strong>Cloudflare Zero Trust Tunnel</strong> (powered by <code>cloudflared</code>). In this guide, I’ll explain how tunnels work, why they make your home network practically invisible to hackers, and walk through the complete step-by-step setup in under 10 minutes based on how I run my own lab.
           </p>
 
           <h2>Why Traditional Port Forwarding is Dangerous</h2>
@@ -320,6 +320,15 @@
             Now, when anyone visits <code>notes.myhomelab.com</code>, they are met with a sleek Cloudflare login screen. Cloudflare will email a one-time 6-digit pin code to your inbox. No one else on the entire internet can even view your application’s login page!
           </p>
 
+          <h2>Troubleshooting & Common Pitfalls</h2>
+          <p>
+            If your tunnel isn't working, check these common issues:
+          </p>
+          <ul>
+            <li><strong>Bad Gateway (502 Error):</strong> This almost always means the Cloudflare tunnel daemon (<code>cloudflared</code>) cannot reach your internal service. Double check that the internal IP and port you entered in Step 3 are perfectly correct. If running the tunnel in a Docker container, it may need to be on the same Docker network as your app.</li>
+            <li><strong>Too Many Redirects (ERR_TOO_MANY_REDIRECTS):</strong> If your internal service uses HTTPS with a self-signed certificate (like Proxmox UI), Cloudflare's strict SSL settings will loop. In the Public Hostname settings under "Additional application settings" > "TLS", turn on <strong>"No TLS Verify"</strong>.</li>
+          </ul>
+
           <h2>Important: Cloudflare Terms of Service & Video Streaming</h2>
           <div class="callout callout-warning" style="background: rgba(239, 68, 68, 0.08); border-left: 4px solid #ef4444; padding: 1rem; border-radius: 4px; margin: 1.5rem 0;">
             <strong>Heads Up on Plex & Jellyfin:</strong> Cloudflare’s free tier terms of service prohibit streaming large video files (like 4K movies through Plex or Jellyfin) through their CDN proxies. Use Cloudflare Tunnels for web apps, Home Assistant, dashboards, Nextcloud, and note vaults. For heavy video streaming, consider setting up Tailscale or WireGuard instead!
@@ -330,9 +339,9 @@
             Setting up a Cloudflare Zero Trust Tunnel is hands-down the cleanest, safest way for rookie home lab builders to access their self-hosted projects on the go. You eliminate port scans, bypass CGNAT restrictions, get free automated SSL certificates, and protect your home network with world-class DDoS mitigation and identity authentication.
           </p>
           <p>
-            Want to learn more about containerizing your apps? Read our tutorial on <a href="docker-vs-podman.html">Docker vs. Podman</a> and our guide on <a href="obsidian-in-web-browser-docker.html">Running Obsidian in Any Web Browser</a>.
+            Want to learn more about containerizing your apps? Read my tutorial on <a href="docker-vs-podman.html">Docker vs. Podman</a> and my guide on <a href="obsidian-in-web-browser-docker.html">Running Obsidian in Any Web Browser</a>.
           </p>
-        </div>
+        </div></div>
 
       </article>
 
@@ -369,22 +378,8 @@
           </ul>
         </div>
 
-        <!-- Widget: Workspace Gear -->
-        <div class="sidebar-widget">
-          <h4 class="widget-title">Tech Simpld Workspace</h4>
-          <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 0.75rem;">
-            Gear used to produce our videos and homelab guides:
-          </p>
-          <ul style="list-style: none; padding: 0; margin: 0; font-size: 0.85rem; line-height: 1.6;">
-            <li>🎙️ <a href="https://amzn.to/4tTOzuP" target="_blank" rel="noopener noreferrer">FIFINE AM8T Boom Mic</a></li>
-            <li>🎛️ <a href="https://amzn.to/4ulbNeh" target="_blank" rel="noopener noreferrer">Elgato Stream Deck MK.2</a></li>
-            <li>📅 <a href="https://amzn.to/4fxvSt9" target="_blank" rel="noopener noreferrer">Skylight 2 Calendar</a></li>
-            <li>⌨️ <a href="https://amzn.to/4tL71p9" target="_blank" rel="noopener noreferrer">Redragon K556 Keyboard</a></li>
-            <li>🖱️ <a href="https://amzn.to/4o1FkYh" target="_blank" rel="noopener noreferrer">Redragon M612 Mouse</a></li>
-          </ul>
-        </div>
 
-      </aside>
+</aside>
 
     </div>
   </main>

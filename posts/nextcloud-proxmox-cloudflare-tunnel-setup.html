@@ -191,7 +191,7 @@
           </p>
 
           <p>
-            In this guide, we will walk through setting up <strong>Nextcloud All-in-One (AIO)</strong> inside an Ubuntu LXC container on Proxmox, and exposing it securely over the internet using <strong>Cloudflare Tunnels</strong>—with zero open router ports and zero port forwarding headaches.
+            In this guide, I will walk you through setting up <strong>Nextcloud All-in-One (AIO)</strong> inside an Ubuntu LXC container on Proxmox, and exposing it securely over the internet using <strong>Cloudflare Tunnels</strong>—with zero open router ports and zero port forwarding headaches.
           </p>
 
           <h2>Why Nextcloud All-in-One (AIO) on Proxmox LXC?</h2>
@@ -358,57 +358,20 @@ volumes:
             <li><strong>Desktop Client (Windows, macOS, Linux):</strong> Install the desktop sync client. Select the folders you want synchronized locally, and use <em>Virtual Files</em> to save hard drive space on your laptop while keeping your entire archive accessible.</li>
           </ul>
 
-          <h2>Why Self-Hosting Your Cloud Storage Wins</h2>
+          <h2>Troubleshooting & Common Pitfalls</h2>
           <p>
-            Let's put this into perspective:
+            If you run into Nextcloud issues, check these first:
           </p>
-
-          <table style="width: 100%; border-collapse: collapse; margin: 1.5rem 0;">
-            <thead>
-              <tr style="border-bottom: 2px solid var(--border-color); text-align: left;">
-                <th style="padding: 0.75rem;">Feature</th>
-                <th style="padding: 0.75rem;">Google Drive / Commercial Cloud</th>
-                <th style="padding: 0.75rem;">Self-Hosted Nextcloud AIO</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr style="border-bottom: 1px solid var(--border-color);">
-                <td style="padding: 0.75rem;"><strong>Cost</strong></td>
-                <td style="padding: 0.75rem;">$24 to $120+ per year, perpetually increasing</td>
-                <td style="padding: 0.75rem;">$0 monthly fees. Pay once for hard drives</td>
-              </tr>
-              <tr style="border-bottom: 1px solid var(--border-color);">
-                <td style="padding: 0.75rem;"><strong>Storage Limits</strong></td>
-                <td style="padding: 0.75rem;">15 GB free, strict tiers thereafter</td>
-                <td style="padding: 0.75rem;">Unlimited (whatever drives your server holds)</td>
-              </tr>
-              <tr style="border-bottom: 1px solid var(--border-color);">
-                <td style="padding: 0.75rem;"><strong>Data Ownership</strong></td>
-                <td style="padding: 0.75rem;">Data stored on corporate servers; scanned by algorithms</td>
-                <td style="padding: 0.75rem;">100% private. Files live on physical disks in your home</td>
-              </tr>
-              <tr>
-                <td style="padding: 0.75rem;"><strong>Network Access</strong></td>
-                <td style="padding: 0.75rem;">Dependent on external cloud uptime</td>
-                <td style="padding: 0.75rem;">Works over local LAN at gigabit speeds even if internet drops</td>
-              </tr>
-            </tbody>
-          </table>
-
-          <h2>Maintenance and Backup Tips</h2>
-          <p>
-            Because your data is now your responsibility, follow these two backup habits:
-          </p>
-          <ol>
-            <li><strong>Enable AIO Built-in Backups:</strong> The AIO dashboard at port 8080 includes a daily automated BorgBackup scheduler. Point it to a separate secondary hard drive or remote NAS.</li>
-            <li><strong>Proxmox Backup Server (PBS) Snapshots:</strong> Set up a scheduled backup job in Proxmox to snapshot the entire LXC container every night. If an update ever fails, you can roll back your entire system in under 30 seconds.</li>
-          </ol>
+          <ul>
+            <li><strong>Uploads Time Out:</strong> If you can't upload files larger than 100MB, it's usually Cloudflare Tunnel's upload limit kicking in. You MUST go into the Cloudflare dashboard and increase the HTTP2 max upload size under the tunnel settings.</li>
+            <li><strong>Containers Won't Start:</strong> If the AIO setup wizard spins endlessly, SSH into the LXC and check if Docker is out of disk space or if DNS resolution failed during the image pull.</li>
+          </ul>
 
           <h2>Summary</h2>
           <p>
             Setting up Nextcloud on Proxmox with Cloudflare Tunnels gives you the ultimate self-hosted victory: enterprise-grade cloud storage, seamless mobile photo syncing, and full privacy—without paying a single monthly dime to big tech companies.
           </p>
-        </div>
+        </div></div>
 
       </article>
 
