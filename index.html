@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -88,7 +88,6 @@
         <li><a href="about.html" class="nav-link">About</a></li>
         <li><a href="posts.html" class="nav-link">Posts</a></li>
         <li><a href="resources.html" class="nav-link">Resources</a></li>
-        <li><a href="gear.html" class="nav-link">Gear</a></li>
         <li><a href="contact.html" class="nav-link">Contact</a></li>
         <li><a href="https://youtube.com/@TechSimpld" target="_blank" class="nav-link">YouTube</a></li>
       </ul>
@@ -111,19 +110,104 @@
     <section class="hero">
       <div class="badge">
         <span class="logo-dot" style="background-color: var(--accent-purple); box-shadow: var(--glow-accent);"></span>
-        Subscribe to our YouTube Channel
+        Real-World Home Lab Tutorials
       </div>
-      <h1 class="hero-title">Software & Productivity, <span>Simplified</span></h1>
-      <p class="hero-tagline" style="margin-bottom: 2rem;">
-        We are building step-by-step, no-fluff video tutorials for Obsidian and other freemium productivity software to
-        make technology simple to use daily.
+      <h1 class="hero-title">Build Your Home Lab.<br><span>Zero Fluff.</span></h1>
+      <p class="hero-tagline" style="margin-bottom: 2.5rem;">
+        I test, deploy, and break self-hosted software in my own lab so you do not have to. Get step-by-step, production-ready guides for Proxmox, Docker, and Obsidian—built for people who value their time and data privacy.
       </p>
+      <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
+        <a href="posts.html" class="btn btn-primary btn-lg">Read the Latest Guides</a>
+        <a href="resources.html" class="btn btn-outline btn-lg">Browse Free Resources</a>
+      </div>
     </section>
 
+    <!-- Recent Tutorials Section -->
+    <section id="recent-tutorials" style="margin: 4rem 0;">
+      <div class="section-header">
+        <h2 class="section-title">Latest Deployments & Guides</h2>
+        <a href="posts.html" class="section-link">
+          View All Posts
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="9 18 15 12 9 6"></polyline>
+          </svg>
+        </a>
+      </div>
+      
+      <div class="tutorials-grid">
+        <!-- Card 1 -->
+        <article class="card">
+          <div class="card-image-wrapper">
+            <a href="posts/gotify-self-hosted-push-notifications.html">
+              <img class="card-image" src="images/Stop%20Relying%20on%20Paid%20Alerts%20Deploy%20Gotify%20for%20Instant%20Phone%20Notifications.jpg" alt="Gotify Push Notifications">
+            </a>
+          </div>
+          <div class="card-content">
+            <div class="card-meta">
+              <span class="card-category" style="color: var(--accent-cyan);">Self-Hosted Alerts</span>
+              <span>•</span>
+              <span class="card-date">Sept 2026</span>
+            </div>
+            <h3 class="card-title"><a href="posts/gotify-self-hosted-push-notifications.html">Stop Relying on Paid Alerts: Deploy Gotify</a></h3>
+            <p class="card-excerpt">
+              I ripped out my paid notification services and deployed Gotify. Learn how to push real-time alerts from Proxmox and Bash scripts straight to your phone.
+            </p>
+            <div class="card-footer">
+              <a href="posts/gotify-self-hosted-push-notifications.html" class="card-readmore">Read Guide &rarr;</a>
+            </div>
+          </div>
+        </article>
 
+        <!-- Card 2 -->
+        <article class="card">
+          <div class="card-image-wrapper">
+            <a href="posts/nextcloud-proxmox-cloudflare-tunnel-setup.html">
+              <img class="card-image" src="images/obsidian-vault.png" alt="Nextcloud Setup">
+            </a>
+          </div>
+          <div class="card-content">
+            <div class="card-meta">
+              <span class="card-category" style="color: #10b981;">Cloud Storage</span>
+              <span>•</span>
+              <span class="card-date">Aug 2026</span>
+            </div>
+            <h3 class="card-title"><a href="posts/nextcloud-proxmox-cloudflare-tunnel-setup.html">Nextcloud in Proxmox + Cloudflare Tunnels</a></h3>
+            <p class="card-excerpt">
+              Take back your data. A complete walkthrough on deploying Nextcloud in an LXC container and securing it with a Zero Trust tunnel.
+            </p>
+            <div class="card-footer">
+              <a href="posts/nextcloud-proxmox-cloudflare-tunnel-setup.html" class="card-readmore">Read Guide &rarr;</a>
+            </div>
+          </div>
+        </article>
 
-    <!-- Featured Resource Section (Drives high resource page conversions) -->
-    <section id="featured-download" style="margin: 5rem 0 2rem;">
+        <!-- Card 3 -->
+        <article class="card">
+          <div class="card-image-wrapper">
+            <a href="posts/infrastructure-as-code-terraform-homelab.html">
+              <img class="card-image" src="images/obsidian-vault.png" alt="Terraform Homelab">
+            </a>
+          </div>
+          <div class="card-content">
+            <div class="card-meta">
+              <span class="card-category" style="color: var(--accent-purple);">Infrastructure</span>
+              <span>•</span>
+              <span class="card-date">Jul 2026</span>
+            </div>
+            <h3 class="card-title"><a href="posts/infrastructure-as-code-terraform-homelab.html">Infrastructure as Code: Terraform in the Homelab</a></h3>
+            <p class="card-excerpt">
+              Stop clicking through the Proxmox UI. Learn how to provision your VMs and containers programmatically using Terraform and code.
+            </p>
+            <div class="card-footer">
+              <a href="posts/infrastructure-as-code-terraform-homelab.html" class="card-readmore">Read Guide &rarr;</a>
+            </div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- Featured Resource Section -->
+    <section id="featured-download" style="margin: 5rem 0 4rem;">
       <div class="section-header">
         <h2 class="section-title">Featured Download</h2>
         <a href="resources.html" class="section-link">
@@ -140,8 +224,7 @@
           <div class="badge badge-cyan">Featured Configuration</div>
           <h2>The Tech Simpld Obsidian Starter Vault</h2>
           <p>
-            Skip the endless tweaking. Get our pre-configured Obsidian configuration file to unlock a fully designed
-            personal wiki environment containing optimized stylesheets, markdown templates, and hotkeys.
+            Skip the endless tweaking. Get my personal Obsidian configuration folder to unlock a fully designed personal wiki environment containing optimized stylesheets, markdown templates, and hotkeys.
           </p>
           <ul class="resource-features">
             <li>
@@ -176,13 +259,13 @@
               <span class="stat-value" style="color: var(--accent-cyan); font-weight: 600;">Available</span>
             </div>
             <div class="stat-item">
-              <span class="stat-label">Release Date</span>
-              <span class="stat-value">May 2026</span>
+              <span class="stat-label">Format</span>
+              <span class="stat-value">ZIP Archive</span>
             </div>
           </div>
 
           <div style="display: flex; gap: 1rem; flex-wrap: wrap; margin-top: 1.5rem;">
-            <a href="obsidian-starter-vault.zip" download class="btn btn-primary btn-download" id="downloadFeaturedVaultBtn"
+            <a href="downloads/obsidian-starter-vault.zip" download class="btn btn-primary btn-download" id="downloadFeaturedVaultBtn"
               data-resource="Obsidian Starter Vault">
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                 stroke-linecap="round" stroke-linejoin="round" style="margin-right: 0.5rem; vertical-align: middle;">
@@ -192,8 +275,7 @@
               </svg>
               Download Vault (ZIP)
             </a>
-            <a href="posts/obsidian-starter-vault-tutorial.html" id="viewStarterVaultPostBtn" class="btn btn-outline">View Post</a>
-            <a href="resources.html" id="viewAllResourcesBtn" class="btn btn-outline">All Resources</a>
+            <a href="posts/obsidian-starter-vault-tutorial.html" id="viewStarterVaultPostBtn" class="btn btn-outline">View Setup Guide</a>
           </div>
         </div>
         <div class="resource-preview">
@@ -225,7 +307,6 @@
           <li><a href="about.html">About</a></li>
           <li><a href="posts.html">Posts</a></li>
           <li><a href="resources.html">Resources</a></li>
-          <li><a href="gear.html">Gear</a></li>
           <li><a href="contact.html">Contact</a></li>
           <li><a href="https://youtube.com/@TechSimpld" target="_blank">YouTube Channel</a></li>
         </ul>

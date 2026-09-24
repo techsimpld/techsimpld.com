@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -85,6 +85,10 @@
   <link rel="icon" type="image/svg+xml" href="../favicon.svg">
   <link rel="alternate icon" type="image/png" href="../favicon.png">
 
+  <!-- Prism Syntax Highlighting -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" rel="stylesheet" />
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/toolbar/prism-toolbar.min.css" rel="stylesheet" />
+
   <!-- Stylesheets -->
   <link rel="stylesheet" href="../css/styles.css">
 </head>
@@ -109,7 +113,6 @@
         <li><a href="../about.html" class="nav-link">About</a></li>
         <li><a href="../posts.html" class="nav-link active">Posts</a></li>
         <li><a href="../resources.html" class="nav-link">Resources</a></li>
-        <li><a href="../gear.html" class="nav-link">Gear</a></li>
         <li><a href="../contact.html" class="nav-link">Contact</a></li>
         <li><a href="https://youtube.com/@TechSimpld" target="_blank" class="nav-link">YouTube</a></li>
       </ul>
@@ -178,49 +181,44 @@
         <!-- Article Content -->
         <div class="prose">
           <p>
-            When something breaks in your home lab, how long does it take you to find out? If you are like most people who run servers at home, you only notice when a family member texts you that Plex is down, your Nextcloud files stop syncing, or you log into Proxmox days later and realize a backup job has been silently failing.
+            I used to rely on Pushover and a messy chain of SMTP relays to know when my Proxmox cluster dropped a node or Nextcloud stopped syncing. The problem? Subscriptions add up, and emails get buried under spam. When my primary backup disk failed last year, I didn't find out until I went looking for a file two days later.
           </p>
 
           <p>
-            For a long time, the standard fix was either signing up for commercial push services like Pushover or Twilio, or hacking together an email notification chain through an SMTP relay. But paid notification services add yet another subscription or per-message fee to your plate, and email alerts get lost in your spam folder or buried under marketing junk.
+            That is when I ripped out the paid services and deployed Gotify. Gotify is a completely free, open-source, self-hosted notification server written in Go. It runs in the background using almost zero resources and pushes real-time alerts straight to your phone via WebSockets. You control the server, you control the data, and there are absolutely no usage limits or API fees.
           </p>
 
           <p>
-            That is where <strong>Gotify</strong> comes in. Gotify is a completely free, open-source, self-hosted notification server written in Go. It uses minimal system resources, has a clean web UI, supports an official Android app, and lets you push real-time alerts straight to your phone with a single line of <code>curl</code>.
+            In this guide, I will show you exactly how I deploy Gotify via Docker Compose, set up application tokens, hook it natively into Proxmox VE, and write custom bash scripts that alert you before a minor hiccup becomes a full-blown outage.
           </p>
 
+          <h2>Prerequisites / Environment</h2>
           <p>
-            In this guide, we will walk through deploying Gotify with Docker Compose, testing it with a quick terminal script, and hooking it into Proxmox and your custom scripts so you always know the second a service hiccups.
+            Before we dive into the deployment, ensure your home lab environment has the following pieces in place:
           </p>
-
-          <h2>Why Gotify Beats Traditional Alerting in a Home Lab</h2>
-          <p>
-            Before we fire up Docker, here is why Gotify has become a staple in modern self-hosted stacks:
-          </p>
-
           <ul>
-            <li><strong>Zero Ongoing Costs:</strong> No monthly fee, no credit system, and no arbitrary limits on how many messages you can push.</li>
-            <li><strong>Insanely Lightweight:</strong> Written in Go, Gotify runs comfortably on 30 MB of RAM. You can spin it up on an old mini PC, a Raspberry Pi, or inside an unprivileged LXC container without noticing any resource drain.</li>
-            <li><strong>Direct WebSockets:</strong> It does not rely on third-party cloud brokers to deliver messages. The Android app maintains a persistent WebSocket connection directly to your server, giving you sub-second delivery.</li>
-            <li><strong>Clean API:</strong> Anything that can send an HTTP POST request can trigger a notification. That means shell scripts, Python scripts, Home Assistant, Uptime Kuma, and Proxmox can all talk to it natively.</li>
-            <li><strong>Priority System:</strong> You can assign priority numbers (0 to 10) to every alert. Low-priority messages silently update in your notification drawer, while high-priority emergency alerts vibrate and sound alarms.</li>
+            <li><strong>A Home Server or VM:</strong> Running a modern Linux distribution (Debian, Ubuntu) with Docker and Docker Compose installed.</li>
+            <li><strong>Reverse Proxy (Optional but highly recommended):</strong> Caddy, Nginx Proxy Manager, or a Cloudflare Zero Trust Tunnel. You will need this to securely expose Gotify to the outside world if you want push notifications while away from your home Wi-Fi network without connecting to a VPN.</li>
+            <li><strong>Android Device:</strong> The official Gotify client is Android-only. If you use iOS, you will need a third-party client workaround like Forwarder, though this guide focuses on the native Android experience.</li>
           </ul>
 
-          <h2>Deploying Gotify with Docker Compose</h2>
+          <h2>Step-by-Step Implementation</h2>
+
+          <h3>1. Architecting the Docker Compose Stack</h3>
           <p>
-            The cleanest way to get Gotify running is through Docker Compose. Create a new directory for your Gotify project on your server:
+            I prefer to keep all my Docker container data organized in a single structure. Deploying Gotify via Docker Compose is the cleanest, most reproducible method. First, create the directory structure on your server:
           </p>
 
-          <pre><code>mkdir -p ~/gotify && cd ~/gotify</code></pre>
+          <pre><code class="language-bash">mkdir -p /opt/docker/gotify && cd /opt/docker/gotify</code></pre>
 
           <p>
-            Create a file named <code>docker-compose.yml</code> in that directory and paste in the following configuration:
+            Create a file named <code>docker-compose.yml</code> and paste in the following configuration:
           </p>
 
-          <pre><code>services:
+          <pre><code class="language-yaml">services:
   gotify:
-    image: gotify/server
-    container_name: gotify
+    image: gotify/server:latest
+    container_name: gotify-server
     restart: unless-stopped
     ports:
       - "8080:80"
@@ -228,175 +226,120 @@
       - GOTIFY_DEFAULTUSER_PASS=ChangeThisPassword123
       - TZ=America/New_York
     volumes:
-      - ./gotify_data:/app/data
+      - ./data:/app/data
 </code></pre>
 
-          <h3>Understanding the Configuration:</h3>
+          <p><strong>Why configure it this way?</strong></p>
           <ul>
-            <li><code>image: gotify/server</code>: Pulls the official, stable Gotify container image.</li>
-            <li><code>ports: 8080:80</code>: Maps internal port 80 to port 8080 on your host machine. If you already have another service running on 8080, change the left number (for example, <code>8085:80</code>).</li>
-            <li><code>GOTIFY_DEFAULTUSER_PASS</code>: Sets the default password for the built-in <code>admin</code> user on first boot. Make sure to change this to a strong, unique password before running the container.</li>
-            <li><code>TZ=America/New_York</code>: Sets your local time zone so your timestamps align properly in message logs.</li>
-            <li><code>volumes: ./gotify_data:/app/data</code>: Binds a local folder on your host to persist Gotify’s SQLite database, uploaded icons, and message history. This ensures your data survives container updates.</li>
+            <li><code>image</code>: I specify <code>gotify/server:latest</code> to ensure I am on the most stable branch.</li>
+            <li><code>environment</code>: The default admin password needs to be set immediately. Do not leave this as "admin". I also hardcode the Timezone (<code>TZ</code>) so message timestamps accurately reflect my local time. There is nothing worse than auditing server logs and trying to calculate UTC offsets in your head at 2 AM.</li>
+            <li><code>volumes</code>: Gotify uses a lightweight SQLite database stored in <code>/app/data</code>. By binding this to a local <code>./data</code> directory, I guarantee that my configuration, user accounts, and message history survive container updates and migrations.</li>
           </ul>
 
           <p>
-            Once you have saved your file, spin up the container in detached mode:
+            Run the container in detached mode:
           </p>
+          <pre><code class="language-bash">docker compose up -d</code></pre>
 
-          <pre><code>docker compose up -d</code></pre>
-
+          <h3>2. Initial Setup and App Tokens</h3>
           <p>
-            To verify that Gotify is running, run <code>docker ps</code>. You should see the <code>gotify</code> container in a healthy running state.
+            Navigate to <code>http://YOUR-SERVER-IP:8080</code> in your browser. Log in using <code>admin</code> and the password you defined in the Compose file.
           </p>
-
-          <h2>First Login and Generating an Application Token</h2>
           <p>
-            Open your web browser and navigate to your server's local IP address on port 8080 (for example, <code>http://192.168.1.50:8080</code>).
+            Gotify revolves around "Applications." Think of an Application as an individual sender. You do not want Proxmox and your Uptime Kuma instance sharing the same identity. By isolating them, you can revoke one token if it is compromised without breaking your entire alerting pipeline. It also allows you to give custom icons to different services.
           </p>
-
-          <p>
-            Log in using the default credentials:
-          </p>
-          <ul>
-            <li><strong>Username:</strong> <code>admin</code></li>
-            <li><strong>Password:</strong> The password you specified in <code>GOTIFY_DEFAULTUSER_PASS</code></li>
-          </ul>
-
-          <p>
-            Once logged in, your first stop is the <strong>Apps</strong> tab in the top navigation bar. In Gotify terminology, an "App" is a sender. You will create a separate App for each service that sends alerts (for example, one for Proxmox, one for Backup Scripts, and one for Uptime Kuma).
-          </p>
-
           <ol>
+            <li>Navigate to the <strong>Apps</strong> tab.</li>
             <li>Click <strong>Create Application</strong>.</li>
-            <li>Give it a descriptive name, such as <code>Homelab Backups</code>.</li>
-            <li>Click <strong>Create</strong>.</li>
-            <li>Gotify will generate a secret <strong>App Token</strong> (a string starting with <code>A</code>). Copy this key and save it somewhere safe—you will need it for your scripts.</li>
+            <li>Name it "Proxmox Cluster" and hit <strong>Create</strong>.</li>
+            <li>Gotify will generate a <strong>Token</strong> starting with <code>A</code>. Copy this; we need it for the next steps.</li>
           </ol>
 
-          <h2>Testing Your First Alert with curl</h2>
+          <h3>3. Native Integration with Proxmox VE</h3>
           <p>
-            To prove how simple Gotify is to work with, open any terminal on your local network (or on the server itself) and run this test command:
+            One of the massive wins for Gotify is its native integration in Proxmox VE 8.1 and higher. I no longer need to write custom wrapper scripts just to find out if a VM snapshot failed.
           </p>
-
-          <pre><code>curl "http://YOUR-SERVER-IP:8080/message" \
-  -H "X-Gotify-Key: YOUR_APP_KEY_HERE" \
-  -F "title=Server Alert" \
-  -F "message=System backup completed without errors!" \
-  -F "priority=0"</code></pre>
-
           <p>
-            Replace <code>YOUR-SERVER-IP:8080</code> with your Gotify instance address, and replace <code>YOUR_APP_KEY_HERE</code> with the token you just copied from the web UI.
+            Here is how I configure it on my cluster:
           </p>
-
-          <p>
-            As soon as you hit Enter, you will receive a JSON confirmation response in your terminal, and the new message will pop up instantly on your Gotify dashboard.
-          </p>
-
-          <h3>How Priority Levels Work in Gotify</h3>
-          <p>
-            Notice the <code>-F "priority=0"</code> flag in our test script. Gotify uses this number to determine how the receiving client should react:
-          </p>
-          <ul>
-            <li><strong>Priority 0 to 3 (Low):</strong> Subtle background notifications. Great for routine automated tasks like daily backups completing, disk scrub confirmations, or container health checks.</li>
-            <li><strong>Priority 4 to 7 (Normal):</strong> Standard mobile push notification with sound. Ideal for non-critical warnings, like high memory usage or a service restarting automatically.</li>
-            <li><strong>Priority 8 to 10 (High / Critical):</strong> Triggers maximum alert sound, vibration, and locks onto your lock screen. Perfect for power outages on your UPS, disk failures, or total server crashes.</li>
-          </ul>
-
-          <h2>Setting Up the Gotify Mobile App</h2>
-          <p>
-            Getting alerts on your desktop dashboard is helpful, but the real power of Gotify is receiving push notifications on your phone while you are away from your desk.
-          </p>
-
           <ol>
-            <li>Download the official <strong>Gotify</strong> client from Google Play Store or F-Droid.</li>
-            <li>Open the app and enter your server URL (for example, <code>https://gotify.yourdomain.com</code> or your internal IP if connected over WireGuard / Tailscale).</li>
-            <li>Log in with your <code>admin</code> credentials (or create a standard client user in Gotify).</li>
-            <li>Give the client a recognizable name, like <code>Pixel 8</code>.</li>
-            <li>Under your phone's Android settings, make sure to disable battery optimization for Gotify. This prevents Android from putting the background WebSocket connection to sleep.</li>
+            <li>Go to <strong>Datacenter</strong> &rarr; <strong>Notifications</strong> &rarr; <strong>Notification Targets</strong>.</li>
+            <li>Click <strong>Add</strong> and choose <strong>Gotify</strong>.</li>
+            <li>Name the target <code>gotify-alerts</code>.</li>
+            <li>Enter your Server URL (e.g., <code>http://192.168.1.50:8080</code>).</li>
+            <li>Paste your Application Token.</li>
+            <li>Click <strong>Test</strong>. You should instantly see a test message hit your Gotify dashboard.</li>
           </ol>
-
-          <blockquote>
-            <p><strong>Note for iOS Users:</strong> While the official Gotify project focuses on Android, iOS users can easily receive Gotify notifications using lightweight compatible client apps like <em>Forwarder</em> or bridging Gotify Webhooks to Apple-compatible push tools.</p>
-          </blockquote>
-
-          <h2>Integrating Gotify with Proxmox VE</h2>
           <p>
-            One of the best uses for Gotify in a home lab is monitoring your Proxmox hypervisor. Starting in Proxmox VE 8.1, Proxmox introduced a revamped notification system that natively supports Gotify without requiring any custom wrapper scripts!
+            Next, I set up a <strong>Notification Matcher</strong> in Proxmox to route critical events (like backup failures or HA fencing actions) directly to this target. 
           </p>
 
-          <h3>Step-by-Step Proxmox Setup:</h3>
-          <ol>
-            <li>In the Proxmox web interface, click on <strong>Datacenter</strong> in the left tree.</li>
-            <li>Navigate to <strong>Notifications</strong> &rarr; <strong>Notification Targets</strong>.</li>
-            <li>Click <strong>Add</strong> and select <strong>Gotify</strong> from the dropdown.</li>
-            <li>Fill out the configuration fields:
-              <ul>
-                <li><strong>Name:</strong> <code>gotify-alerts</code></li>
-                <li><strong>Server:</strong> <code>http://192.168.1.50:8080</code> (or your HTTPS reverse proxy domain)</li>
-                <li><strong>Token:</strong> The Application Token you created specifically for Proxmox.</li>
-              </ul>
-            </li>
-            <li>Click <strong>Test</strong>. If configured correctly, your phone and Gotify web dashboard will immediately receive a test ping from Proxmox!</li>
-            <li>Click <strong>Add</strong> to save the target.</li>
-          </ol>
-
+          <h3>4. Custom Script Alerts</h3>
           <p>
-            Now you can edit your <strong>Notification Matchers</strong> in Proxmox to route backup failure alerts, package upgrade notifications, and replication errors directly to your Gotify target. You will never have to wonder if last night's VM snapshot completed successfully.
+            The real beauty of Gotify is its raw REST API. Anything that can send an HTTP POST request can trigger an alert. Here is the exact bash function I drop into my maintenance scripts:
           </p>
 
-          <h2>Automating Custom Bash Script Alerts</h2>
-          <p>
-            You can embed Gotify notifications inside any custom backup or maintenance script using simple shell functions. Here is a practical example of wrapping a backup script:
-          </p>
-
-          <pre><code>#!/bin/bash
-
-GOTIFY_URL="http://192.168.1.50:8080"
-GOTIFY_TOKEN="Axxxxxxxxxxxxxx"
-
-send_alert() {
+          <pre><code class="language-bash">send_gotify_alert() {
   local TITLE="$1"
   local MESSAGE="$2"
   local PRIORITY="$3"
+  local URL="http://192.168.1.50:8080/message"
+  local TOKEN="Axxxxxxxxxxxxxx"
 
-  curl -s -X POST "$GOTIFY_URL/message" \
-    -H "X-Gotify-Key: $GOTIFY_TOKEN" \
+  curl -s -X POST "$URL" \
+    -H "X-Gotify-Key: $TOKEN" \
     -F "title=$TITLE" \
     -F "message=$MESSAGE" \
     -F "priority=$PRIORITY" > /dev/null
 }
 
-# Example task
-echo "Starting database backup..."
-if tar -czf /backups/data_$(date +%F).tar.gz /var/lib/data; then
-  send_alert "Backup Success" "Daily data backup finished cleanly." 2
+# Implementation example in a backup script
+echo "Starting rsync task..."
+if rsync -avz /data/ /backup/; then
+  send_gotify_alert "Backup Success" "Nightly rsync completed cleanly." 2
 else
-  send_alert "BACKUP FAILED" "Critical: Daily backup failed to write to disk!" 9
+  send_gotify_alert "BACKUP FAILURE" "Critical: rsync encountered an error." 9
 fi
 </code></pre>
-
-          <h2>Security and Remote Access Best Practices</h2>
           <p>
-            If you want notifications delivered to your phone when you are away from your home Wi-Fi network, you have two primary choices:
+            Notice the <code>priority</code> flag. Gotify uses this to dictate how your phone handles the alert. I use <code>2</code> for successful jobs—they silently drop into my notification drawer. I use <code>9</code> for failures, which override Do Not Disturb on my phone and trigger a loud, persistent alarm.
           </p>
 
-          <ul>
-            <li><strong>Cloudflare Zero Trust Tunnel:</strong> Create a private tunnel pointing to port 8080. It gives you automatic SSL/TLS without forwarding any router ports. (Check out our Cloudflare Zero Trust guide on the blog for full steps).</li>
-            <li><strong>VPN (Tailscale / WireGuard):</strong> If you prefer not to expose Gotify to public DNS at all, keep Gotify on your internal subnet and keep your phone connected via an always-on WireGuard or Tailscale tunnel.</li>
-          </ul>
-
+          <h2>Troubleshooting & Edge Cases</h2>
           <p>
-            If you are running Gotify behind Nginx Proxy Manager, Caddy, or Traefik, ensure that your reverse proxy passes <strong>WebSocket upgrade headers</strong> (<code>Upgrade $http_upgrade</code> and <code>Connection "upgrade"</code>), otherwise real-time phone pushes may disconnect when the screen is locked.
+            If you deploy this in a real home lab, you will eventually hit a snag. Here are the common pitfalls I have run into and exactly how to fix them:
           </p>
 
-          <h2>Wrapping Up</h2>
+          <p><strong>WebSocket Disconnections Behind a Reverse Proxy:</strong></p>
           <p>
-            Gotify solves one of the most frustrating parts of homelabbing: knowing when things go wrong before they cause real headaches. With a single, lightweight Docker container, you get private, instant phone alerts without subscriptions or third-party email hops.
+            If you expose Gotify via Nginx Proxy Manager or Caddy, you might notice notifications stop pushing to your phone after a few hours, requiring you to manually open the app to sync them. This happens because the reverse proxy isn't configured to pass WebSocket upgrade headers, causing the persistent connection to time out.
+          </p>
+          <p>
+            <em>The Fix:</em> Ensure <code>Upgrade $http_upgrade</code> and <code>Connection "upgrade"</code> are set in your proxy host configuration. In Nginx Proxy Manager, simply toggle the "WebSockets Support" switch to ON in your proxy host details.
           </p>
 
+          <p><strong>Android Battery Optimization Killing the App:</strong></p>
           <p>
-            Deploy it on your server today, link your Proxmox node, and sleep a little easier knowing your home lab has a voice.
+            Modern Android versions aggressively kill background apps to save battery life. Since the Gotify client maintains a persistent background WebSocket connection, Android will eventually sever it to save power.
+          </p>
+          <p>
+            <em>The Fix:</em> Go into your Android settings &rarr; Apps &rarr; Gotify &rarr; App Battery Usage &rarr; Set to "Unrestricted". This guarantees the OS leaves the connection alone.
+          </p>
+
+          <p><strong>Locked Out After a Container Update:</strong></p>
+          <p>
+            Occasionally, migrating to a new server or a major version bump in the Gotify Docker image can result in permissions issues reading the SQLite database, effectively locking you out.
+          </p>
+          <p>
+            <em>The Fix:</em> Always ensure the <code>./data</code> directory is owned by the correct user running the Docker daemon. Running <code>sudo chown -R 1000:1000 ./data</code> usually resolves permission mismatches.
+          </p>
+
+          <h2>Conclusion / Next Steps</h2>
+          <p>
+            Gotify is a set-and-forget piece of infrastructure that pays massive dividends the first time it alerts you to a failed drive or a downed container. It gives me absolute control over my data and removes my dependency on rate-limited cloud APIs.
+          </p>
+          <p>
+            Now that Gotify is running and tested locally, your next step should be exposing it securely. I highly recommend wrapping it in a Cloudflare Zero Trust Tunnel so you can receive alerts securely anywhere in the world without opening a single port on your router's firewall.
           </p>
         </div>
 
@@ -445,7 +388,6 @@ fi
           <li><a href="../about.html">About</a></li>
           <li><a href="../posts.html">Posts</a></li>
           <li><a href="../resources.html">Resources</a></li>
-          <li><a href="../gear.html">Gear</a></li>
           <li><a href="../contact.html">Contact</a></li>
           <li><a href="https://youtube.com/@TechSimpld" target="_blank">YouTube Channel</a></li>
         </ul>
@@ -466,6 +408,13 @@ fi
       </div>
     </div>
   </footer>
+
+  <!-- Prism Syntax Highlighting JS -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-bash.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-yaml.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/toolbar/prism-toolbar.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/copy-to-clipboard/prism-copy-to-clipboard.min.js"></script>
 
   <script src="../js/scripts.js"></script>
 </body>

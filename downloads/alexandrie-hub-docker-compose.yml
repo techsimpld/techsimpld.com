@@ -1,0 +1,13 @@
+services:
+  alexandrie:
+    image: ghcr.io/alexandrie-project/alexandrie:latest
+    container_name: alexandrie
+    restart: unless-stopped
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./data:/data
+    environment:
+      - TZ=America/New_York
+      # - TITLE=My Knowledge Base
+      # - URL=https://notes.mydomain.com
