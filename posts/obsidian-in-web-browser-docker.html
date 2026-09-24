@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -180,41 +180,44 @@
         <!-- Article Content -->
         <div class="prose">
           <p>
-            <strong>Obsidian</strong> is hands-down one of the most powerful and privacy-respecting note-taking tools available today. Because all your notes are stored locally as plain <code>.md</code> Markdown text files on your drive, you have complete ownership over your thoughts and data.
+            <strong>Obsidian</strong> is hands-down one of the most powerful, flexible, and privacy-respecting note-taking tools available today. Because all your notes are stored locally as plain <code>.md</code> Markdown text files directly on your hard drive, you have complete, uncompromising ownership over your thoughts and data. There is no proprietary database lock-in, and you don't have to worry about a cloud company arbitrarily raising their subscription fees and holding your data hostage.
           </p>
           <p>
-            However, Obsidian’s local-first architecture comes with one huge drawback for many users: <strong>it relies on native desktop and mobile applications</strong>. 
+            However, Obsidian’s fantastic local-first architecture comes with one massive, incredibly frustrating drawback for many professional users: <strong>it relies entirely on native desktop and mobile applications</strong>. 
           </p>
           <p>
-            If you work in an office where corporate IT restricts you from installing unauthorized <code>.exe</code> software, or if you use a lightweight Chromebook or tablet, accessing your personal knowledge base can feel nearly impossible.
+            If you work in a strict corporate office where IT tightly restricts you from installing unauthorized <code>.exe</code> software, or if you rely on a lightweight Chromebook, an iPad, or a restrictive tablet to get your work done, accessing your personal knowledge base can feel nearly impossible. You are effectively locked out of your own second brain.
           </p>
           <p>
-            In this guide, I am solving that problem permanently. By hosting Obsidian inside a lightweight Docker container using the official <strong>LinuxServer.io</strong> image, you can stream the full desktop Obsidian interface—including custom themes, community plugins, hotkeys, and interactive graph view—directly inside <strong>any standard web browser</strong>!
-          </p>
-
-          <h2>How It Works Behind the Scenes</h2>
-          <p>
-            The team at <a href="https://fleet.linuxserver.io/image?name=linuxserver/obsidian" target="_blank" rel="noopener noreferrer">LinuxServer.io</a> packages the full desktop version of Obsidian inside a container powered by KasmVNC. 
-          </p>
-          <p>
-            Instead of running a heavy virtual machine, the container renders the graphical application headlessly on your server and streams the interface to your web browser with ultra-low latency. You can type, drag and drop files, open split panes, and use keyboard shortcuts exactly as if Obsidian were installed directly on your machine.
+            In this comprehensive, deep-dive guide, I am solving that exact problem permanently. By hosting Obsidian inside a lightweight Docker container using the brilliantly engineered official <strong>LinuxServer.io</strong> image, you can stream the full, uncompromised desktop Obsidian interface—including custom themes, community plugins, keyboard hotkeys, and the interactive graphical node view—directly inside <strong>any standard web browser</strong> in the world. 
           </p>
 
-          <h2>Step 1: The Docker Compose Configuration</h2>
+          <h2>How It Works Behind the Scenes: The Magic of KasmVNC</h2>
           <p>
-            To get started, create a dedicated directory on your server (for example, <code>~/docker/obsidian</code>) and create a <code>docker-compose.yml</code> file:
+            You might be wondering how it is even technically possible to run a heavy desktop application inside a Google Chrome tab without significant lag. The talented team at <a href="https://fleet.linuxserver.io/image?name=linuxserver/obsidian" target="_blank" rel="noopener noreferrer">LinuxServer.io</a> has packaged the full Linux desktop version of Obsidian inside a container powered by an incredibly efficient display server technology called KasmVNC. 
+          </p>
+          <p>
+            Instead of running a bulky, resource-heavy virtual machine that requires dedicating massive amounts of RAM and CPU cycles, the Docker container renders the graphical application headlessly on your home server. It then streams that interface frame-by-frame to your web browser with ultra-low latency via HTML5 and WebSockets. 
+          </p>
+          <p>
+            The result is indistinguishable from magic. You can type at full speed, drag and drop files naturally, open complex split panes, and utilize complex keyboard shortcuts exactly as if Obsidian were installed natively on your local machine. Because the heavy lifting is done on the server, even the cheapest, lowest-powered Chromebook can comfortably run your massive, 10,000-note vault effortlessly.
+          </p>
+
+          <h2>Step 1: Architecting the Docker Compose Configuration</h2>
+          <p>
+            To get this incredible setup running, you need a home server running Linux and Docker (such as an old Dell OptiPlex, a Proxmox container, or a Raspberry Pi). First, open your terminal and create a dedicated directory on your server to cleanly house the deployment (for example, <code>mkdir -p ~/docker/obsidian</code>) and navigate into it. Then, create a <code>docker-compose.yml</code> file using your favorite editor and paste in the following production-ready configuration:
           </p>
 
           <pre><code class="language-yaml">services:
   obsidian:
     image: lscr.io/linuxserver/obsidian:latest
-    container_name: obsidian
+    container_name: obsidian-web
     environment:
       - PUID=1000
       - PGID=1000
-      - TZ=Etc/UTC
-      - CUSTOM_USER=admin
-      - PASSWORD=YourStrongPasswordHere
+      - TZ=America/New_York
+      - CUSTOM_USER=chucksadmin
+      - PASSWORD=ChangeThisHighlySecurePasswordImmediately123!
     volumes:
       - ./config:/config
       - ./vaults:/vaults
@@ -224,83 +227,85 @@
     restart: unless-stopped
 </code></pre>
 
-          <h3>Configuration Breakdown:</h3>
+          <h3>Configuration Breakdown and Best Practices:</h3>
           <ul>
-            <li><code>PUID</code> & <code>PGID</code>: Matches your host user and group IDs (run <code>id</code> in your terminal to check; <code>1000</code> is standard on Ubuntu/Debian).</li>
-            <li><code>CUSTOM_USER</code> & <code>PASSWORD</code>: Sets basic HTTP authentication so strangers cannot access your web session without entering your credentials.</li>
-            <li><code>./config</code>: Stores Obsidian's internal settings, themes, and community plugin files persistently on your host.</li>
-            <li><code>./vaults</code>: The folder where your actual markdown notes and starter vaults live.</li>
-            <li><code>3000 / 3001</code>: Web ports for HTTP and HTTPS access.</li>
+            <li><code>PUID</code> & <code>PGID</code>: This is absolutely critical for file permissions. It must perfectly match your host user and group IDs. Run the command <code>id</code> in your host terminal to verify; <code>1000</code> is the standard on Ubuntu and Debian systems. If you get this wrong, the container will not be able to save your notes.</li>
+            <li><code>CUSTOM_USER</code> & <code>PASSWORD</code>: This automatically sets up basic HTTP authentication in the KasmVNC layer so unauthorized strangers cannot easily access your private web session without entering your credentials. Do not leave the password field blank!</li>
+            <li><code>TZ</code>: Hardcoding your local timezone ensures that file creation and modification dates perfectly match your physical location, making file sorting highly accurate.</li>
+            <li><code>./config</code>: This volume persistently stores Obsidian's internal application settings, themes, and community plugin files natively on your host. If you delete the container to update it, this guarantees your settings survive.</li>
+            <li><code>./vaults</code>: The critically important folder where your actual raw markdown notes and starter vaults physically live on your hard drive.</li>
+            <li><code>3000 / 3001</code>: The web ports required for HTTP and HTTPS access to the graphical interface.</li>
           </ul>
 
-          <h2>Step 2: Set Correct Linux Folder Permissions</h2>
+          <h2>Step 2: Set the Correct Linux Folder Permissions</h2>
           <p>
-            Docker containers can fail to launch or save notes if the underlying host folders don't have the appropriate read/write permissions.
+            I cannot stress this enough: Docker containers will frequently fail to launch properly, or worse, silently fail to save your notes, if the underlying host folders don't have the appropriate read/write permissions mapped to the <code>PUID</code> you defined.
           </p>
           <p>
-            Before launching the container, run these two quick commands inside your directory:
+            Before you even think about launching the container, run these three quick commands inside your deployment directory to ensure the permissions are pristine:
           </p>
 
-          <pre><code class="language-bash"># Create the config and vaults folders
+          <pre><code class="language-bash"># Create the config and vaults folders explicitly
 mkdir -p config vaults
 
-# Ensure your local user owns the folders
+# Ensure your local host user completely owns the folders
 sudo chown -R 1000:1000 ./vaults ./config
 
-# Grant read/write execution permissions
-chmod -R 775 ./vaults ./config
+# Grant the necessary read, write, and execution permissions
+sudo chmod -R 775 ./vaults ./config
 </code></pre>
 
           <h2>Step 3: Launch Your Container</h2>
           <p>
-            Start your Obsidian container in detached background mode:
+            With the configuration perfect and permissions locked in, instruct Docker to pull the latest image layer and start your Obsidian container in detached background mode:
           </p>
 
           <pre><code class="language-bash">docker compose up -d</code></pre>
 
           <p>
-            Docker will download the latest LinuxServer image and initialize the container in about 15 to 30 seconds.
+            Docker will download the latest LinuxServer image package and initialize the headless X11 environment. Give it about 15 to 30 seconds to fully compile the graphical server before attempting to connect.
           </p>
 
           <h2>Step 4: Open Obsidian in Your Web Browser</h2>
           <ol>
-            <li>Open any web browser (Google Chrome, Firefox, Safari, or Microsoft Edge).</li>
-            <li>Navigate to <code>http://YOUR-SERVER-IP:3000</code> (or <code>https://YOUR-SERVER-IP:3001</code> for SSL).</li>
-            <li>Enter the username and password you defined in your <code>docker-compose.yml</code> file.</li>
-            <li>You will be greeted with the familiar Obsidian welcome screen!</li>
-            <li>Click <strong>Open folder as vault</strong> and choose <code>/vaults</code>.</li>
+            <li>Open any modern web browser (Google Chrome, Firefox, Safari, or Microsoft Edge) on any device connected to your network.</li>
+            <li>Navigate to <code>http://YOUR-SERVER-IP:3000</code> (or <code>https://YOUR-SERVER-IP:3001</code> if you have manually set up local SSL certificates).</li>
+            <li>You will be immediately prompted to authenticate. Enter the <code>CUSTOM_USER</code> and <code>PASSWORD</code> you defined in your <code>docker-compose.yml</code> file.</li>
+            <li>You will be greeted with the incredibly familiar Obsidian welcome screen streaming live in your browser tab!</li>
+            <li>Click <strong>Open folder as vault</strong>, navigate to the root directory, and select the <code>/vaults</code> folder you mapped earlier.</li>
           </ol>
 
           <div class="callout callout-info" style="background: rgba(6, 182, 212, 0.08); border-left: 4px solid var(--accent-cyan); padding: 1rem; border-radius: 4px; margin: 1.5rem 0;">
-            <strong>Want a Pre-Built Workspace?</strong> Unzip my free <a href="../downloads/obsidian-starter-vault.zip">2026 Obsidian Starter Vault</a> directly into your <code>./vaults</code> folder on the server. When you open the web interface, your entire folder structure, templates, and styling will load instantly!
+            <strong>Want a Pre-Built, Highly Optimized Workspace?</strong> Instead of starting from a blank screen, you can unzip my free <a href="../downloads/obsidian-starter-vault.zip">2026 Obsidian Starter Vault</a> directly into your <code>./vaults</code> folder on the host server. When you open the web interface, your entire complex folder structure, templates, dataview queries, and custom CSS styling will load instantly!
           </div>
 
-          <h2>How to Access Your Web Obsidian Securely from Anywhere</h2>
+          <h2>How to Access Your Web Obsidian Securely from Anywhere in the World</h2>
           <p>
-            Now that Obsidian is running inside your browser, how do you access it when you're away from home?
+            Now that Obsidian is running flawlessly inside your web browser on your home network, how do you securely access it when you're physically sitting at your office desk or waiting in an airport terminal?
           </p>
           <p>
-            Instead of risking your network with dangerous router port forwarding, pair this setup with a <strong>Cloudflare Zero Trust Tunnel</strong>. 
+            Historically, people would foolishly open a port on their router's firewall, which is incredibly dangerous and invites automated bots to hammer your server. Instead, you must pair this Docker deployment with an enterprise-grade <strong>Cloudflare Zero Trust Tunnel</strong>. 
           </p>
           <p>
-            By linking port <code>3000</code> to a custom subdomain like <code>vault.yourdomain.com</code> and enabling Cloudflare email OTP protection, you can safely log into your full desktop Obsidian workspace from any hotel, coffee shop, or restricted corporate device in the world with enterprise-grade security. (Read my complete <a href="cloudflare-zero-trust-tunnel-guide.html">Cloudflare Zero Trust Tunnel Setup Guide</a>).
+            By linking your local container's port <code>3000</code> to a custom external subdomain like <code>notes.yourdomain.com</code> and enforcing strict Cloudflare email OTP (One Time Password) authentication policies, you can safely log into your full desktop Obsidian workspace from any restricted corporate device in the world without requiring a VPN client. The tunnel makes your server completely invisible to internet scanners. If you haven't set one up yet, I highly recommend pausing here and reading my complete <a href="cloudflare-zero-trust-tunnel-guide.html">Cloudflare Zero Trust Tunnel Setup Guide</a>.
           </p>
 
-          <h2>Troubleshooting & Edge Cases</h2>
+          <h2>Advanced Troubleshooting & Edge Cases</h2>
           <p>
-            If you run into issues, check these first:
+            Deploying graphical applications via Docker can occasionally have minor hiccups. If you run into issues, systematically check these common pitfalls:
           </p>
           <ul>
-            <li><strong>Blank Screen / Connection Refused:</strong> This usually means the KasmVNC server hasn't finished booting. Check your docker logs (<code>docker compose logs -f</code>) to ensure it isn't stuck waiting for permissions on the <code>/config</code> directory.</li>
-            <li><strong>Clipboard Doesn't Work:</strong> Copy and paste between your host OS and the browser window relies on KasmVNC's internal clipboard sync. Look for the small control panel tab on the left side of the browser window to manually send text to the clipboard if the keyboard shortcuts fail.</li>
+            <li><strong>Blank Screen or Connection Refused:</strong> This almost always means the internal KasmVNC server hasn't finished booting up, or it encountered a fatal error reading the configuration volume. Check your live docker logs by running <code>docker compose logs -f</code> in the terminal to ensure it isn't completely stuck waiting for permissions on the <code>/config</code> directory.</li>
+            <li><strong>Clipboard Doesn't Sync Properly:</strong> Copying and pasting text between your physical host OS and the remote browser window heavily relies on KasmVNC's internal clipboard synchronization engine. If the standard <code>Ctrl+C</code> and <code>Ctrl+V</code> keyboard shortcuts fail, look for the small, semi-transparent KasmVNC control panel tab located on the far left side of the browser window. You can pop it out and manually paste text into the clipboard buffer to send it directly to the container.</li>
+            <li><strong>Mobile Touch Interface Clunkiness:</strong> While this setup technically works perfectly on an iPad browser, the desktop Obsidian application is fundamentally designed for a mouse pointer, not fat fingers. The KasmVNC layer will interpret your taps as mouse clicks, but resizing split panes and right-clicking can be highly tedious without a physical bluetooth mouse attached to your tablet.</li>
           </ul>
 
-          <h2>Summary: Note-Taking Freedom Without Compromise</h2>
+          <h2>Summary: Absolute Note-Taking Freedom Without Compromise</h2>
           <p>
-            Running Obsidian inside a Docker container provides the ultimate productivity bridge: you get the uncompromised privacy and speed of a local-first markdown vault, combined with the universal accessibility of a cloud-based web app.
+            Running Obsidian inside a LinuxServer.io Docker container provides the ultimate productivity bridge for tech professionals. You get the uncompromised data privacy, speed, and ownership of a fully local-first markdown vault, seamlessly combined with the universal accessibility and convenience of a cloud-based web app. You will never be locked out of your notes again, regardless of what corporate IT policy is forced upon you.
           </p>
           <p>
-            Check out my <a href="3-obsidian-settings-you-must-change.html">3 Must-Change Obsidian Settings</a> and my <a href="obsidian-plugins-i-use-2026.html">Essential Plugins Guide</a> to finish customizing your vault!
+            To continue optimizing your brand new workspace, I highly recommend checking out my <a href="3-obsidian-settings-you-must-change.html">3 Must-Change Obsidian Settings</a> and my <a href="obsidian-plugins-i-use-2026.html">Essential Plugins Guide</a> to finish customizing your vault for maximum efficiency!
           </p>
         </div></div>
 

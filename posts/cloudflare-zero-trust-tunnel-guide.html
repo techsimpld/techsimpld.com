@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -180,91 +180,97 @@
         <!-- Article Content -->
         <div class="prose">
           <p>
-            You’ve just set up your first home lab services—maybe Home Assistant for smart lights, an Obsidian note vault, or a self-hosted dashboard. Everything works beautifully when you’re connected to your home Wi-Fi. 
+            You’ve just spent the entire weekend setting up your first home lab services. You finally got Home Assistant humming along perfectly to control your smart lights, you’ve deployed a beautiful Obsidian note vault that syncs flawlessly, and you have a gorgeous, customized self-hosted dashboard tying it all together. Everything works beautifully when you’re sitting at your desk, connected to your secure home Wi-Fi. 
           </p>
           <p>
-            Then you leave the house, open your phone, and realize you can't access any of it.
+            Then you leave the house to go to work, open your phone to check a note, and reality hits you like a brick wall: you can't access any of it. Your local IP address (like <code>192.168.1.50</code>) means absolutely nothing once you disconnect from your home network and jump onto a public cellular connection.
           </p>
           <p>
-            In the past, the standard tutorial advice was simple: <em>"Just log into your home router and forward port 80 or 443 to your server."</em> 
+            In the past, the standard, ubiquitous tutorial advice on forums and YouTube was remarkably simple: <em>"Just log into your home internet router, go to the firewall settings, and forward port 80 or 443 directly to your server's IP address."</em> 
           </p>
           <p>
-            While port forwarding works, <strong>it is one of the riskiest things a beginner can do to their home network</strong>. The second you open a port on your consumer router, automated internet bots, malicious port scanners (like Shodan), and brute-force scripts will start hammering your home firewall within minutes. Furthermore, if your ISP uses CGNAT (Carrier-Grade NAT, common with Starlink and 5G home internet), port forwarding won't work at all.
+            While port forwarding does technically work, <strong>it is arguably one of the most dangerous, irresponsible things a beginner can do to their home network</strong>. The very second you open a port on your consumer router, automated internet bots, malicious port scanners (like Shodan), and brute-force scripts from across the globe will start hammering your home firewall. Within minutes, they will be testing your exposed services for known vulnerabilities. Furthermore, if your internet service provider (ISP) uses CGNAT (Carrier-Grade NAT, which is incredibly common with Starlink, T-Mobile 5G Home Internet, and many modern fiber providers), traditional port forwarding simply will not work at all because you don't even own a dedicated, public IPv4 address.
           </p>
           <p>
-            The modern, secure solution is a <strong>Cloudflare Zero Trust Tunnel</strong> (powered by <code>cloudflared</code>). In this guide, I’ll explain how tunnels work, why they make your home network practically invisible to hackers, and walk through the complete step-by-step setup in under 10 minutes based on how I run my own lab.
+            The modern, secure, enterprise-grade solution to this exact problem is deploying a <strong>Cloudflare Zero Trust Tunnel</strong> (powered by their lightweight <code>cloudflared</code> daemon). In this comprehensive, deep-dive guide, I will explain the complex networking theory behind how these tunnels actually work, clearly outline why they make your home network practically invisible to malicious hackers, and walk through the complete step-by-step setup in under 10 minutes based exactly on how I run my own secure home lab.
           </p>
 
-          <h2>Why Traditional Port Forwarding is Dangerous</h2>
+          <h2>The Architecture: Why Traditional Port Forwarding is Fundamentally Dangerous</h2>
           <p>
-            To understand why Zero Trust is a game-changer, let’s compare how connections reach your server:
+            To truly understand why the Zero Trust architecture is such a massive game-changer for the self-hosting community, we first need to compare how external network connections reach your internal server hardware under both paradigms:
           </p>
           <ul>
-            <li><strong>Port Forwarding (Inbound):</strong> You punch a hole directly through your router's firewall. Anyone on the public internet who knows or scans your public IP address can connect directly to your server hardware. If the software you are hosting has a security vulnerability, an attacker has a direct pathway into your local home network.</li>
-            <li><strong>Cloudflare Tunnel (Outbound Only):</strong> A tiny, lightweight background program (<code>cloudflared</code>) runs on your server. It initiates an <strong>outbound encrypted connection</strong> to Cloudflare’s global edge network. Your home router firewall stays 100% locked down—<strong>zero open inbound ports!</strong></li>
+            <li><strong>Port Forwarding (Inbound Architecture):</strong> When you port forward, you are quite literally punching a permanent hole directly through your router's protective firewall. Anyone on the public internet who knows, guesses, or scans your public IP address can initiate a connection and talk directly to your server hardware sitting in your living room. If the specific software you are hosting (like an outdated version of WordPress or Nextcloud) happens to have a critical, unpatched security vulnerability, an attacker has a direct, unobstructed pathway right into your local home network. From there, they can pivot and infect other devices on your LAN.</li>
+            <li><strong>Cloudflare Tunnel (Outbound-Only Architecture):</strong> Instead of opening ports, you install a tiny, incredibly lightweight background program (<code>cloudflared</code>) on your server. When this program starts up, it initiates a secure, <strong>outbound encrypted connection</strong> out to Cloudflare’s massive global edge network. When you want to visit your app from your phone, you connect to Cloudflare's servers, and Cloudflare passes that traffic down the pre-established tunnel to your server. Because the connection was initiated from the inside out, your home router firewall stays 100% locked down. <strong>There are zero open inbound ports!</strong> To a malicious port scanner on the internet, your house appears completely dark and offline.</li>
           </ul>
 
           <div style="overflow-x: auto; margin: 1.5rem 0;">
             <table style="width: 100%; border-collapse: collapse; font-size: 0.95rem;">
               <thead>
                 <tr style="border-bottom: 2px solid var(--border-color); text-align: left;">
-                  <th style="padding: 0.75rem 0.5rem; color: var(--accent-cyan);">Feature</th>
-                  <th style="padding: 0.75rem 0.5rem; color: #ef4444;">Port Forwarding</th>
+                  <th style="padding: 0.75rem 0.5rem; color: var(--accent-cyan);">Security Feature & Capability</th>
+                  <th style="padding: 0.75rem 0.5rem; color: #ef4444;">Legacy Port Forwarding</th>
                   <th style="padding: 0.75rem 0.5rem; color: #10b981;">Cloudflare Zero Trust Tunnel</th>
                 </tr>
               </thead>
               <tbody>
                 <tr style="border-bottom: 1px solid var(--border-color);">
-                  <td style="padding: 0.75rem 0.5rem; font-weight: 600;">Open Router Ports</td>
-                  <td style="padding: 0.75rem 0.5rem; color: #ef4444;">Yes (Open & Exposed)</td>
-                  <td style="padding: 0.75rem 0.5rem; color: #10b981;">Zero (100% Closed)</td>
+                  <td style="padding: 0.75rem 0.5rem; font-weight: 600;">Open Router Ports Required</td>
+                  <td style="padding: 0.75rem 0.5rem; color: #ef4444;">Yes (Open & Publicly Exposed)</td>
+                  <td style="padding: 0.75rem 0.5rem; color: #10b981;">Zero (100% Closed & Secure)</td>
                 </tr>
                 <tr style="border-bottom: 1px solid var(--border-color);">
-                  <td style="padding: 0.75rem 0.5rem; font-weight: 600;">Exposes Home IP</td>
-                  <td style="padding: 0.75rem 0.5rem; color: #ef4444;">Yes (Publicly visible)</td>
-                  <td style="padding: 0.75rem 0.5rem; color: #10b981;">No (Hidden behind Cloudflare)</td>
+                  <td style="padding: 0.75rem 0.5rem; font-weight: 600;">Exposes Home ISP IP Address</td>
+                  <td style="padding: 0.75rem 0.5rem; color: #ef4444;">Yes (Publicly visible to all)</td>
+                  <td style="padding: 0.75rem 0.5rem; color: #10b981;">No (Hidden entirely behind Cloudflare)</td>
                 </tr>
                 <tr style="border-bottom: 1px solid var(--border-color);">
-                  <td style="padding: 0.75rem 0.5rem; font-weight: 600;">DDoS Protection</td>
-                  <td style="padding: 0.75rem 0.5rem; color: #ef4444;">None (Router bears load)</td>
-                  <td style="padding: 0.75rem 0.5rem; color: #10b981;">Enterprise Cloudflare Edge</td>
+                  <td style="padding: 0.75rem 0.5rem; font-weight: 600;">Automated DDoS Protection</td>
+                  <td style="padding: 0.75rem 0.5rem; color: #ef4444;">None (Router bears the full load)</td>
+                  <td style="padding: 0.75rem 0.5rem; color: #10b981;">Yes (Enterprise Cloudflare Edge)</td>
                 </tr>
                 <tr style="border-bottom: 1px solid var(--border-color);">
-                  <td style="padding: 0.75rem 0.5rem; font-weight: 600;">Works Behind CGNAT / 5G</td>
-                  <td style="padding: 0.75rem 0.5rem; color: #ef4444;">Fails completely</td>
-                  <td style="padding: 0.75rem 0.5rem; color: #10b981;">Works flawlessly</td>
+                  <td style="padding: 0.75rem 0.5rem; font-weight: 600;">Works Behind CGNAT / 5G / Starlink</td>
+                  <td style="padding: 0.75rem 0.5rem; color: #ef4444;">Fails completely by design</td>
+                  <td style="padding: 0.75rem 0.5rem; color: #10b981;">Works flawlessly everywhere</td>
                 </tr>
                 <tr style="border-bottom: 1px solid var(--border-color);">
-                  <td style="padding: 0.75rem 0.5rem; font-weight: 600;">Pre-Authentication (SSO/OTP)</td>
-                  <td style="padding: 0.75rem 0.5rem; color: #ef4444;">No (Hits app login directly)</td>
-                  <td style="padding: 0.75rem 0.5rem; color: #10b981;">Yes (Google / Email OTP lock)</td>
+                  <td style="padding: 0.75rem 0.5rem; font-weight: 600;">Pre-Authentication (SSO/OTP/MFA)</td>
+                  <td style="padding: 0.75rem 0.5rem; color: #ef4444;">No (Hits app login screen directly)</td>
+                  <td style="padding: 0.75rem 0.5rem; color: #10b981;">Yes (Google / Email OTP lock screen)</td>
                 </tr>
               </tbody>
             </table>
           </div>
 
-          <h2>What You Need Before Starting</h2>
-          <ol>
-            <li>A free <a href="https://dash.cloudflare.com/sign-up" target="_blank" rel="noopener noreferrer">Cloudflare Account</a>.</li>
-            <li>A custom domain name (e.g. <code>myhomelab.com</code>) using Cloudflare as its authoritative DNS nameservers. You can buy cheap domains on Namecheap or Cloudflare Registrar for $5–$10/year.</li>
-            <li>A home server, Raspberry Pi, or Proxmox container running Docker or Linux.</li>
-          </ol>
-
-          <h2>Step 1: Create a Tunnel in the Zero Trust Dashboard</h2>
-          <ol>
-            <li>Log into your Cloudflare Dashboard and click <strong>Zero Trust</strong> in the left navigation sidebar.</li>
-            <li>In the Zero Trust console, navigate to <strong>Networks</strong> &rarr; <strong>Tunnels</strong>.</li>
-            <li>Click <strong>Create a Tunnel</strong>.</li>
-            <li>Select <strong>Cloudflared</strong> as the connector type and click <strong>Next</strong>.</li>
-            <li>Name your tunnel (for example: <code>homelab-main-tunnel</code>) and click <strong>Save tunnel</strong>.</li>
-          </ol>
-
-          <h2>Step 2: Install the Connector on Your Home Server</h2>
+          <h2>Prerequisites: What You Need Before Starting</h2>
           <p>
-            Cloudflare will generate a unique token and command for your operating system (Docker, Debian/Ubuntu, Windows, macOS).
+            Before we dive into the technical configuration, ensure you have these three foundational pieces fully set up:
+          </p>
+          <ol>
+            <li><strong>A Cloudflare Account:</strong> Create a completely free account at <a href="https://dash.cloudflare.com/sign-up" target="_blank" rel="noopener noreferrer">Cloudflare.com</a>. The generous free tier is more than sufficient for 99% of home lab users.</li>
+            <li><strong>A Custom Domain Name:</strong> You need to own a domain (e.g., <code>myhomelab.com</code> or <code>chucksserver.net</code>) and it must be actively using Cloudflare as its authoritative DNS nameservers. If you don't have one, you can purchase one directly through Cloudflare Registrar or a cheap alternative like Namecheap for around $5–$10 per year. Do not skip this step; tunnels require a valid domain to route traffic.</li>
+            <li><strong>A Home Server Environment:</strong> You need a running machine in your house (a Raspberry Pi, an old Dell OptiPlex running Ubuntu, or a Proxmox container) that has Docker and Docker Compose installed and ready to deploy containers.</li>
+          </ol>
+
+          <h2>Step 1: Architecting the Tunnel in the Zero Trust Dashboard</h2>
+          <p>
+            The beauty of the modern Cloudflare architecture is that you manage your tunnels centrally from a beautiful web GUI, rather than messing around with complex local configuration files in terminal editors. Let's create the tunnel definition in the cloud:
+          </p>
+          <ol>
+            <li>Log into your primary Cloudflare Dashboard. On the left navigation sidebar, locate and click on the <strong>Zero Trust</strong> icon to enter the specialized security dashboard.</li>
+            <li>In the Zero Trust console sidebar, navigate down to <strong>Networks</strong> and then click on <strong>Tunnels</strong>.</li>
+            <li>Click the bright blue <strong>Create a Tunnel</strong> button.</li>
+            <li>You will be asked to select a connector type. Select <strong>Cloudflared</strong> (which is the software agent we will run) and click <strong>Next</strong>.</li>
+            <li>Give your tunnel a highly descriptive, recognizable name (for example: <code>homelab-main-tunnel</code> or <code>proxmox-docker-tunnel</code>) so you know exactly which server this tunnel connects to if you scale up later. Click <strong>Save tunnel</strong>.</li>
+          </ol>
+
+          <h2>Step 2: Deploying the Connector Daemon on Your Home Server</h2>
+          <p>
+            Once you click save, Cloudflare will automatically generate a massively long, highly secure, unique cryptographic token just for this specific tunnel. It will also provide you with copy-and-paste installation commands for various operating systems (Debian/Ubuntu, Windows, macOS, and Docker).
           </p>
           <p>
-            If you are running Docker (or Docker Compose), copy your unique tunnel token and paste it into a <code>docker-compose.yml</code> file:
+            While you could install it directly onto the host OS, I strongly recommend running the daemon cleanly inside a Docker container. Copy your unique tunnel token from the dashboard. On your home server, create a <code>docker-compose.yml</code> file and paste in the following configuration, replacing the placeholder with your actual, massive token string:
           </p>
 
           <pre><code class="language-yaml">services:
@@ -272,74 +278,74 @@
     image: cloudflare/cloudflared:latest
     container_name: cloudflared_tunnel
     restart: unless-stopped
-    command: tunnel --no-autoupdate run --token YOUR_CLOUDFLARE_TUNNEL_TOKEN_HERE
+    command: tunnel --no-autoupdate run --token YOUR_MASSIVE_CLOUDFLARE_TUNNEL_TOKEN_HERE
 </code></pre>
 
           <p>
-            Start the container by running:
+            Save the file, open your terminal in that directory, and start the container by running the standard Docker command in detached mode:
           </p>
 
           <pre><code class="language-bash">docker compose up -d</code></pre>
 
           <p>
-            Back in the Cloudflare web dashboard, you will see your connector status flip from <em>Inactive</em> to a glowing green <strong>ACTIVE</strong> indicator within seconds! Click <strong>Next</strong>.
+            Now, look back at the Cloudflare web dashboard on your computer screen. Within five to ten seconds, you will see your connector status magically flip from a gray <em>Inactive</em> status to a glowing green <strong>ACTIVE</strong> indicator! Your server has successfully dialed out to Cloudflare and established the secure tunnel. Click <strong>Next</strong> to proceed.
           </p>
 
-          <h2>Step 3: Route Your First Public Hostname</h2>
+          <h2>Step 3: Routing Your First Public Hostname</h2>
           <p>
-            Now, tell Cloudflare which local service to link to your domain:
+            Now that the physical pipe is established between your house and Cloudflare's data centers, you need to tell Cloudflare exactly which local IP address and port inside your house should be linked to which public web address. This is called creating a Public Hostname.
           </p>
           <ul>
-            <li><strong>Subdomain:</strong> <code>notes</code> (or whatever prefix you prefer)</li>
-            <li><strong>Domain:</strong> Select your domain from the dropdown (e.g. <code>myhomelab.com</code>)</li>
-            <li><strong>Type:</strong> <code>HTTP</code></li>
-            <li><strong>URL:</strong> <code>YOUR-SERVER-LOCAL-IP:PORT</code> (e.g. <code>192.168.1.50:3000</code>)</li>
+            <li><strong>Subdomain:</strong> Type a logical name for the service. For example, type <code>notes</code> if you are exposing an Obsidian vault, or <code>home</code> if you are exposing Home Assistant.</li>
+            <li><strong>Domain:</strong> Click the dropdown and select your base custom domain (e.g., <code>myhomelab.com</code>). Your final URL will look like <code>notes.myhomelab.com</code>.</li>
+            <li><strong>Service Type:</strong> Select <code>HTTP</code> (or <code>HTTPS</code> if your local service uses self-signed SSL certificates).</li>
+            <li><strong>Service URL:</strong> Enter the exact internal, private IP address and port of your service as it runs on your LAN (e.g., <code>192.168.1.50:3000</code>).</li>
           </ul>
           <p>
-            Click <strong>Save hostname</strong>. Cloudflare will automatically create the DNS CNAME record and provision a free, valid SSL/TLS certificate!
+            Click <strong>Save hostname</strong>. In the background, Cloudflare automatically creates the necessary DNS CNAME records on your domain, provisions a free, valid SSL/TLS certificate for encryption, and binds it to the tunnel. If you wait about 30 seconds and type <code>notes.myhomelab.com</code> into your phone's browser (while disconnected from Wi-Fi), your local service will instantly load!
           </p>
 
-          <h2>Step 4: Lock Down Access with Zero Trust Application Policies</h2>
+          <h2>Step 4: The Ultimate Defense: Zero Trust Application Policies</h2>
           <p>
-            One of the best features of Cloudflare Zero Trust is the ability to place an authentication gatekeeper in front of your applications:
+            While your service is now accessible, it is accessible to <em>anyone</em> on the internet who guesses the URL. If the login screen of your application has a vulnerability, you are still at risk. This is where Cloudflare Zero Trust becomes truly magical: you can place an impenetrable authentication gatekeeper in front of your applications at the edge of the network.
           </p>
           <ol>
-            <li>Go to <strong>Access</strong> &rarr; <strong>Applications</strong> in the Zero Trust sidebar.</li>
-            <li>Click <strong>Add an Application</strong> &rarr; <strong>Self-hosted</strong>.</li>
-            <li>Enter your application name and domain (e.g. <code>notes.myhomelab.com</code>).</li>
-            <li>Under <strong>Policies</strong>, create an allow-list rule:
+            <li>Go back to the Zero Trust sidebar and click <strong>Access</strong> &rarr; <strong>Applications</strong>.</li>
+            <li>Click <strong>Add an Application</strong> and select <strong>Self-hosted</strong>.</li>
+            <li>Enter your application name and the exact domain you just created (e.g., <code>notes.myhomelab.com</code>).</li>
+            <li>Scroll down to <strong>Policies</strong>. We are going to create an ultra-restrictive allow-list rule:
               <ul>
-                <li><strong>Rule Name:</strong> Allow My Email Only</li>
+                <li><strong>Rule Name:</strong> Allow My Personal Email Only</li>
                 <li><strong>Action:</strong> Allow</li>
-                <li><strong>Include:</strong> Emails &rarr; Enter your personal email address (e.g. <code>you@gmail.com</code>).</li>
+                <li><strong>Include Rule:</strong> Select <code>Emails</code> from the dropdown, and then type your personal email address (e.g., <code>you@gmail.com</code>).</li>
               </ul>
             </li>
-            <li>Save the application.</li>
+            <li>Click save to deploy the application policy.</li>
           </ol>
           <p>
-            Now, when anyone visits <code>notes.myhomelab.com</code>, they are met with a sleek Cloudflare login screen. Cloudflare will email a one-time 6-digit pin code to your inbox. No one else on the entire internet can even view your application’s login page!
+            Now, the real magic happens. When you (or anyone else, like a malicious hacker in a foreign country) try to visit <code>notes.myhomelab.com</code>, they do not even get to see your application's login screen. Instead, they are met with a stark, highly secure Cloudflare Zero Trust login page. If they type in an unauthorized email, they are immediately rejected. If you type in your authorized email, Cloudflare emails a secure, one-time 6-digit pin code directly to your inbox. You enter the code, and only then does the proxy pass your traffic through the tunnel to your home server. It is enterprise-grade security for free.
           </p>
 
-          <h2>Troubleshooting & Common Pitfalls</h2>
+          <h2>Troubleshooting & Highly Common Architectural Pitfalls</h2>
           <p>
-            If your tunnel isn't working, check these common issues:
+            If you are pulling your hair out because your tunnel isn't working on the first try, calmly check these highly common configuration issues:
           </p>
           <ul>
-            <li><strong>Bad Gateway (502 Error):</strong> This almost always means the Cloudflare tunnel daemon (<code>cloudflared</code>) cannot reach your internal service. Double check that the internal IP and port you entered in Step 3 are perfectly correct. If running the tunnel in a Docker container, it may need to be on the same Docker network as your app.</li>
-            <li><strong>Too Many Redirects (ERR_TOO_MANY_REDIRECTS):</strong> If your internal service uses HTTPS with a self-signed certificate (like Proxmox UI), Cloudflare's strict SSL settings will loop. In the Public Hostname settings under "Additional application settings" > "TLS", turn on <strong>"No TLS Verify"</strong>.</li>
+            <li><strong>The Dreaded 502 Bad Gateway Error:</strong> This specific error almost always means that the Cloudflare tunnel daemon (<code>cloudflared</code>) running on your server is physically unable to reach your internal service on the LAN. Double and triple-check that the internal IP address and port you entered in Step 3 are perfectly correct. Furthermore, if you are running the tunnel daemon in a Docker container, you must remember that Docker containers have their own isolated networking. Use the actual host IP of the machine (e.g., <code>192.168.1.x</code>), not <code>localhost</code> or <code>127.0.0.1</code>, because <code>localhost</code> inside the tunnel container just points back to the tunnel itself!</li>
+            <li><strong>Too Many Redirects (ERR_TOO_MANY_REDIRECTS):</strong> This infuriating error occurs in web browsers if your internal self-hosted service (like the Proxmox web UI or Nextcloud) forcefully redirects HTTP traffic to HTTPS using a self-signed, untrusted local certificate. Cloudflare's strict edge SSL settings get caught in a redirect loop. To fix this, go into your tunnel's Public Hostname settings, expand the "Additional application settings" menu, click on "TLS", and toggle the <strong>"No TLS Verify"</strong> switch to ON.</li>
           </ul>
 
-          <h2>Important: Cloudflare Terms of Service & Video Streaming</h2>
+          <h2>Critical Warning: Cloudflare Terms of Service & Video Streaming</h2>
           <div class="callout callout-warning" style="background: rgba(239, 68, 68, 0.08); border-left: 4px solid #ef4444; padding: 1rem; border-radius: 4px; margin: 1.5rem 0;">
-            <strong>Heads Up on Plex & Jellyfin:</strong> Cloudflare’s free tier terms of service prohibit streaming large video files (like 4K movies through Plex or Jellyfin) through their CDN proxies. Use Cloudflare Tunnels for web apps, Home Assistant, dashboards, Nextcloud, and note vaults. For heavy video streaming, consider setting up Tailscale or WireGuard instead!
+            <strong>Heads Up on Plex, Jellyfin, and Nextcloud File Syncs:</strong> You must read the fine print. Cloudflare’s free tier terms of service strictly prohibit streaming disproportionately large amounts of non-HTML media (like streaming 4K movies through Plex or Jellyfin, or running massive, multi-gigabyte Nextcloud backup syncs) directly through their CDN caching proxies. If you violate this, Cloudflare will detect the massive bandwidth spike and permanently ban your domain and account. Use Cloudflare Tunnels strictly for lightweight web apps, Home Assistant APIs, dashboards, and text-based note vaults. If you need to stream heavy 4K video remotely from your server to your iPad at an airport, you must set up a direct VPN solution like Tailscale or WireGuard instead!
           </div>
 
-          <h2>Summary: Modern Security Made Simple</h2>
+          <h2>Summary: Bringing Enterprise Security to the Home Lab</h2>
           <p>
-            Setting up a Cloudflare Zero Trust Tunnel is hands-down the cleanest, safest way for rookie home lab builders to access their self-hosted projects on the go. You eliminate port scans, bypass CGNAT restrictions, get free automated SSL certificates, and protect your home network with world-class DDoS mitigation and identity authentication.
+            Setting up a Cloudflare Zero Trust Tunnel is, without a doubt, the cleanest, safest, and most professional way for rookie home lab builders to securely access their self-hosted projects while on the go. By completely eliminating the need for port forwarding, you instantly protect yourself from automated port scans, bypass frustrating ISP CGNAT restrictions, get free automated SSL certificates, and protect your home network with world-class DDoS mitigation and zero-trust identity authentication.
           </p>
           <p>
-            Want to learn more about containerizing your apps? Read my tutorial on <a href="docker-vs-podman.html">Docker vs. Podman</a> and my guide on <a href="obsidian-in-web-browser-docker.html">Running Obsidian in Any Web Browser</a>.
+            Want to learn more about securely containerizing the apps you just exposed to the internet? Read my comprehensive technical deep dive on <a href="docker-vs-podman.html">Understanding Docker vs. Podman architectures</a>, and then follow my step-by-step guide on <a href="obsidian-in-web-browser-docker.html">Running an Obsidian Note Vault Directly in Any Web Browser</a>.
           </p>
         </div></div>
 
