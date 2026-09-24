@@ -303,7 +303,7 @@
             Let's look at a practical, real-world example. Here is what a simple Proxmox configuration looks like in Terraform using HashiCorp Configuration Language (HCL):
           </p>
 
-          <pre><code># main.tf
+          <pre><code class="language-hcl"># main.tf
 
 terraform {
   required_providers {
@@ -385,7 +385,7 @@ resource "proxmox_virtual_environment_container" "monitoring_lxc" {
           <p>
             This is your safety net. Terraform inspects your current Proxmox setup, compares it against your code, and gives you an exact preview of what it will do:
           </p>
-          <pre><code>Plan: 1 to add, 0 to change, 0 to destroy.</code></pre>
+          <pre><code class="language-bash">Plan: 1 to add, 0 to change, 0 to destroy.</code></pre>
           <p>
             It shows you every field in green (additions), yellow (updates), or red (deletions). It never touches your actual servers until you approve.
           </p>

@@ -225,7 +225,7 @@
             Now, install Docker and Docker Compose inside your LXC:
           </p>
 
-          <pre><code>apt update && apt upgrade -y
+          <pre><code class="language-bash">apt update && apt upgrade -y
 apt install -y curl ca-certificates gnupg lsb-release
 curl -fsSL https://get.docker.com | sh
 systemctl enable --now docker</code></pre>
@@ -235,7 +235,7 @@ systemctl enable --now docker</code></pre>
             Nextcloud needs a place to store all your uploaded files, videos, and photos. Create the dedicated directory:
           </p>
 
-          <pre><code>mkdir -p /data/ncdata</code></pre>
+          <pre><code class="language-bash">mkdir -p /data/ncdata</code></pre>
 
           <p>
             If you have a dedicated ZFS pool or an NFS share from a TrueNAS box, you can bind-mount that directory directly into <code>/data/ncdata</code> in your Proxmox container configuration.
@@ -246,13 +246,13 @@ systemctl enable --now docker</code></pre>
             Create a folder for your Nextcloud project:
           </p>
 
-          <pre><code>mkdir -p ~/nextcloud && cd ~/nextcloud</code></pre>
+          <pre><code class="language-bash">mkdir -p ~/nextcloud && cd ~/nextcloud</code></pre>
 
           <p>
             Create your <code>docker-compose.yml</code> file:
           </p>
 
-          <pre><code>services:
+          <pre><code class="language-yaml">services:
   nextcloud-aio-mastercontainer:
     image: ghcr.io/nextcloud-releases/all-in-one:latest
     container_name: nextcloud-aio-mastercontainer
@@ -291,7 +291,7 @@ volumes:
             Start the master container:
           </p>
 
-          <pre><code>docker compose up -d</code></pre>
+          <pre><code class="language-bash">docker compose up -d</code></pre>
 
           <h2>Step 4: Setting Up Cloudflare Tunnel Remote Routing</h2>
           <p>
@@ -324,7 +324,7 @@ volumes:
             Now, visit your local server IP in your browser on port 8080:
           </p>
 
-          <pre><code>https://YOUR-LXC-IP:8080</code></pre>
+          <pre><code class="language-bash">https://YOUR-LXC-IP:8080</code></pre>
 
           <blockquote>
             <p><strong>Note:</strong> Your browser will warn you about a self-signed certificate on port 8080. Click <em>Advanced &rarr; Proceed</em>. This is expected for the local setup interface.</p>

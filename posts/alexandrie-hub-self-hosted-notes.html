@@ -285,7 +285,7 @@
             Deploying Alexandrie Hub on your home server takes less than five minutes using Docker Compose. Here is a starter configuration you can use to launch your instance:
           </p>
 
-          <pre><code>services:
+          <pre><code class="language-yaml">services:
   alexandrie:
     image: ghcr.io/smaug6739/alexandrie:latest
     container_name: alexandrie_hub
@@ -303,7 +303,7 @@
             Save this file as <code>docker-compose.yml</code> in a dedicated folder on your server (for example, <code>~/docker/alexandrie</code>), then launch it in the background:
           </p>
 
-          <pre><code>docker compose up -d</code></pre>
+          <pre><code class="language-bash">docker compose up -d</code></pre>
 
           <p>
             Once the container finishes starting up, open your favorite browser and navigate to <code>http://YOUR-SERVER-IP:3000</code> to complete your initial account registration.

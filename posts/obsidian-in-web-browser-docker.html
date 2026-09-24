@@ -205,7 +205,7 @@
             To get started, create a dedicated directory on your server (for example, <code>~/docker/obsidian</code>) and create a <code>docker-compose.yml</code> file:
           </p>
 
-          <pre><code>services:
+          <pre><code class="language-yaml">services:
   obsidian:
     image: lscr.io/linuxserver/obsidian:latest
     container_name: obsidian
@@ -241,7 +241,7 @@
             Before launching the container, run these two quick commands inside your directory:
           </p>
 
-          <pre><code># Create the config and vaults folders
+          <pre><code class="language-bash"># Create the config and vaults folders
 mkdir -p config vaults
 
 # Ensure your local user owns the folders
@@ -256,7 +256,7 @@ chmod -R 775 ./vaults ./config
             Start your Obsidian container in detached background mode:
           </p>
 
-          <pre><code>docker compose up -d</code></pre>
+          <pre><code class="language-bash">docker compose up -d</code></pre>
 
           <p>
             Docker will download the latest LinuxServer image and initialize the container in about 15 to 30 seconds.

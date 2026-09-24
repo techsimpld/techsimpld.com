@@ -209,7 +209,7 @@
             Here is the complete command block to update your system, install Node.js 20, clone Uptime Kuma, build it, and configure PM2 for automatic system startup.
           </p>
 
-          <pre><code>apt update && apt upgrade -y
+          <pre><code class="language-bash">apt update && apt upgrade -y
 apt install -y curl git build-essential
 curl -fsSL https://deb.nodesource.com/setup_20.x | bash -
 apt install -y nodejs
@@ -241,7 +241,7 @@ pm2 startup
             Once PM2 confirms that the service is online, open your web browser and navigate to:
           </p>
 
-          <pre><code>http://YOUR-SERVER-IP:3001</code></pre>
+          <pre><code class="language-bash">http://YOUR-SERVER-IP:3001</code></pre>
 
           <p>
             You will be greeted by the initial setup wizard:
@@ -339,7 +339,7 @@ pm2 startup
             Updating Uptime Kuma on Ubuntu takes less than a minute. Whenever a new release is published on GitHub, run:
           </p>
 
-          <pre><code>cd /opt/uptime-kuma
+          <pre><code class="language-bash">cd /opt/uptime-kuma
 git fetch --all
 git checkout 1.23.16 --force # Replace with the latest tag
 npm install --production

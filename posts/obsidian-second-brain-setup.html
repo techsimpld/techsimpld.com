@@ -265,7 +265,7 @@
           <p>
             This structures your sidebar information dynamically. A good meeting note should always have frontmatter (metadata) at the top so it is easily searchable:
           </p>
-          <pre><code>---
+          <pre><code class="language-yaml">---
 tags:
   - meeting-notes
 date: 2026-05-26
@@ -292,7 +292,7 @@ date: 2026-05-26
           <p>
             For example, let's say you want to see every active project you are currently working on, but you don't want to hunt through your folders. You can automatically display a table of all active projects by adding the following simple code block to your central dashboard note:
           </p>
-          <pre><code>```dataview
+          <pre><code class="language-markdown">```dataview
 TABLE status AS "Status", deadline AS "Deadline"
 FROM #project
 WHERE status != "completed"

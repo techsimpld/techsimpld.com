@@ -237,7 +237,7 @@
           <p>
             To use it, you just type three backticks (```) followed by the word "dataview" to create a code block. Inside that block, you write a tiny bit of instructions. For example, if you want a list of every note in your "Recipes" folder, you would type:
           </p>
-          <pre><code>```dataview
+          <pre><code class="language-markdown">```dataview
 LIST
 FROM "Recipes"
 ```</code></pre>
@@ -263,7 +263,7 @@ FROM "Recipes"
           <p>
             Now, let's make a real template. Create a new note inside your Templates folder and call it "Daily Note Template." Inside the note, type the following:
           </p>
-          <pre><code># Journal for <% tp.date.now("YYYY-MM-DD") %>
+          <pre><code class="language-bash"># Journal for <% tp.date.now("YYYY-MM-DD") %>
 
 ## Goals for today:
 - [ ] 

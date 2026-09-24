@@ -267,7 +267,7 @@
             If you are running Docker (or Docker Compose), copy your unique tunnel token and paste it into a <code>docker-compose.yml</code> file:
           </p>
 
-          <pre><code>services:
+          <pre><code class="language-yaml">services:
   cloudflared:
     image: cloudflare/cloudflared:latest
     container_name: cloudflared_tunnel
@@ -279,7 +279,7 @@
             Start the container by running:
           </p>
 
-          <pre><code>docker compose up -d</code></pre>
+          <pre><code class="language-bash">docker compose up -d</code></pre>
 
           <p>
             Back in the Cloudflare web dashboard, you will see your connector status flip from <em>Inactive</em> to a glowing green <strong>ACTIVE</strong> indicator within seconds! Click <strong>Next</strong>.

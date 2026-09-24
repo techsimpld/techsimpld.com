@@ -248,7 +248,7 @@
           <p>
             For example, let's say you tag all your project notes with the tag <code>#project</code>. To automatically list all those notes, sorted by the date you last touched them, you simply type this block of code into any note:
           </p>
-          <pre><code>```dataview
+          <pre><code class="language-markdown">```dataview
 TABLE file.folder AS "Folder", file.mtime AS "Last Modified"
 FROM #project
 SORT file.mtime DESC
