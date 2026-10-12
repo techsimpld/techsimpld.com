@@ -30,3 +30,14 @@ obsidian-starter-vault/.obsidian/backups/
 /Project Alpha
 
 tutorial-template.html
+
+# AI & Agent configuration / Brand docs
+.agents/
+AGENTS.md
+CLAUDE.md
+GEMINI.md
+.antigravitycli/
+brand.md
+brand-*.md
+*.brand.md
+anti-slop/
