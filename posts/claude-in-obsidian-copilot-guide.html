@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <!-- Google tag (gtag.js) -->
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { dataLayer.push(arguments); }
+    if(localStorage.getItem('cookie_consent') === 'true') {
+      gtag('consent', 'default', { 'ad_storage': 'granted', 'analytics_storage': 'granted', 'ad_user_data': 'granted', 'ad_personalization': 'granted' });
+    } else {
+      gtag('consent', 'default', { 'ad_storage': 'denied', 'analytics_storage': 'denied', 'ad_user_data': 'denied', 'ad_personalization': 'denied' });
+    }
+  </script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-1KFGHVDB66"></script>
+  <script>
+    gtag('js', new Date());
+    gtag('config', 'G-1KFGHVDB66');
+  </script>
+
+  <!-- Google AdSense -->
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5214277715351322"
+    crossorigin="anonymous"></script>
+
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Put Claude in Obsidian: Pay-As-You-Go AI Note Assistant Setup | Tech Simpld</title>
+  <meta name="description"
+    content="Stop paying $20/month for web subscriptions. Connect Anthropic's Claude API directly to Obsidian using Copilot for pennies per task. Full step-by-step guide.">
+  <link rel="canonical" href="https://techsimpld.com/posts/claude-in-obsidian-copilot-guide.html">
+  <meta name="robots" content="index, follow">
+
+  <!-- Open Graph / SEO -->
+  <meta property="og:locale" content="en_US">
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="Tech Simpld">
+  <meta property="og:url" content="https://techsimpld.com/posts/claude-in-obsidian-copilot-guide.html">
+  <meta property="og:title" content="Put Claude in Obsidian: Pay-As-You-Go AI Note Assistant Setup | Tech Simpld">
+  <meta property="og:description"
+    content="Stop paying $20/month for web subscriptions. Connect Anthropic's Claude API directly to Obsidian using Copilot for pennies per task.">
+  <meta property="og:image" content="https://techsimpld.com/images/claude-in-obsidian.jpg">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Put Claude in Obsidian: Pay-As-You-Go AI Note Assistant Setup | Tech Simpld">
+  <meta name="twitter:description"
+    content="Stop paying $20/month for web subscriptions. Connect Anthropic's Claude API directly to Obsidian using Copilot for pennies per task.">
+  <meta name="twitter:image" content="https://techsimpld.com/images/claude-in-obsidian.jpg">
+
+  <!-- Structured Data (JSON-LD) -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "Put Claude in Obsidian: Pay-As-You-Go AI Note Assistant Setup",
+    "image": [
+      "https://techsimpld.com/images/claude-in-obsidian.jpg"
+    ],
+    "datePublished": "2026-09-22T10:00:00+00:00",
+    "dateModified": "2026-09-22T10:00:00+00:00",
+    "author": {
+      "@type": "Person",
+      "name": "Tech Simpld",
+      "url": "https://techsimpld.com/about.html"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "Tech Simpld",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://techsimpld.com/images/obsidian-vault.png"
+      }
+    },
+    "description": "Stop paying $20/month for web subscriptions. Connect Anthropic's Claude API directly to Obsidian using Copilot for pennies per task."
+  }
+  </script>
+
+  <!-- DNS Prefetch & Preconnect for Speed -->
+  <link rel="dns-prefetch" href="https://www.googletagmanager.com">
+  <link rel="preconnect" href="https://www.googletagmanager.com" crossorigin>
+  <link rel="dns-prefetch" href="https://pagead2.googlesyndication.com">
+  <link rel="preconnect" href="https://pagead2.googlesyndication.com" crossorigin>
+
+  <!-- Favicons -->
+  <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+  <link rel="alternate icon" type="image/png" href="../favicon.png">
+
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="../css/styles.css">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" rel="stylesheet" />
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/toolbar/prism-toolbar.min.css" rel="stylesheet" />
+</head>
+
+<body>
+
+  <!-- Navigation Header -->
+  <header class="navbar" id="navbar">
+    <div class="nav-container">
+      <a href="../index.html" class="logo-link">
+        Tech Simpld<span class="logo-dot"></span>
+      </a>
+
+      <button class="menu-toggle" id="menuToggle" aria-label="Toggle Navigation Menu">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+
+      <ul class="nav-menu">
+        <li><a href="../index.html" class="nav-link">Home</a></li>
+        <li><a href="../about.html" class="nav-link">About</a></li>
+        <li><a href="../posts.html" class="nav-link active">Posts</a></li>
+        <li><a href="../resources.html" class="nav-link">Resources</a></li>
+        <li><a href="../contact.html" class="nav-link">Contact</a></li>
+        <li><a href="https://youtube.com/@TechSimpld" target="_blank" class="nav-link">YouTube</a></li>
+      </ul>
+
+      <div class="nav-actions">
+        <a href="https://youtube.com/@TechSimpld" target="_blank" class="btn btn-primary btn-sm" id="subscribeHeaderBtn">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+            <path
+              d="M23.498 6.163a3.003 3.003 0 0 0-2.11-2.11C19.517 3.545 12 3.545 12 3.545s-7.517 0-9.388.508a3.003 3.003 0 0 0-2.11 2.11C0 8.033 0 12 0 12s0 3.967.502 5.837a3.003 3.003 0 0 0 2.11 2.11c1.871.508 9.388.508 9.388.508s7.517 0 9.388-.508a3.003 3.003 0 0 0 2.11-2.11C24 15.967 24 12 24 12s0-3.967-.502-5.837zM9.545 15.568V8.432L15.818 12l-6.273 3.568z" />
+          </svg>
+          Subscribe
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content Layout -->
+  <main class="main-layout">
+
+    <!-- 2-Column Blog Layout -->
+    <div class="blog-container">
+
+      <!-- Main Article Column -->
+      <article class="blog-main">
+
+        <header class="article-header">
+          <div class="badge">AI & Productivity</div>
+          <h1 class="article-title">Put Claude in Obsidian: Pay-As-You-Go AI Note Assistant Setup</h1>
+
+          <div class="article-meta">
+            <div class="article-meta-item">
+              <div class="author-avatar">TS</div>
+              <span>By <strong>Tech Simpld</strong></span>
+            </div>
+            <span>-</span>
+            <div class="article-meta-item">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                stroke-linecap="round" stroke-linejoin="round">
+                <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                <line x1="16" y1="2" x2="16" y2="6"></line>
+                <line x1="8" y1="2" x2="8" y2="6"></line>
+                <line x1="3" y1="10" x2="21" y2="10"></line>
+              </svg>
+              <span>September 2026</span>
+            </div>
+            <span>-</span>
+            <div class="article-meta-item">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="10"></circle>
+                <polyline points="12 6 12 12 16 14"></polyline>
+              </svg>
+              <span>15 Min Read</span>
+            </div>
+          </div>
+        </header>
+
+        <!-- Video Player Container -->
+        <div class="video-container">
+          <iframe src="https://www.youtube-nocookie.com/embed/q3VZVHooQ1M" title="Put Claude in Obsidian Pay-as-you-go AI Setup Video"
+            frameborder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            allowfullscreen>
+          </iframe>
+        </div>
+
+        <!-- Article Content -->
+        <div class="prose">
+          <p>
+            Most people using artificial intelligence to assist their personal knowledge management workflow do it the hard way. They write rough notes in Obsidian, copy chunks of text into a browser tab running Claude or ChatGPT, wait for an answer, and then copy and paste the formatted response back into their vault.
+          </p>
+          <p>
+            Beyond being tedious, many creators and researchers pay a flat $20 monthly subscription fee just to ask a handful of questions or generate occasional summaries. If you only interact with AI models a few times a week, you are paying an exorbitant markup for capacity you never use.
+          </p>
+          <p>
+            In this guide, we are eliminating that friction entirely. By purchasing inexpensive pay-as-you-go developer credits directly from Anthropic, generating an API key, and connecting it to Obsidian using the open-source <strong>Copilot</strong> community plugin, Claude lives directly inside your markdown notes. You pay only fractions of a cent per request, and the assistant can directly read, organize, link, and create notes right inside your vault.
+          </p>
+
+          <h2>Web Subscriptions vs. Direct API Tokens: The Math</h2>
+          <p>
+            Understanding the distinction between consumer web chat subscriptions and developer platform APIs is the key to massive cost savings:
+          </p>
+          <ul>
+            <li><strong>Claude Pro / ChatGPT Plus:</strong> A flat $20 every 30 days regardless of whether you send 10 prompts or 1,000 prompts. You are restricted to a web browser window and forced to manually shuffle text back and forth.</li>
+            <li><strong>Anthropic Developer API (Pay-As-You-Go):</strong> You purchase a $5 prepaid credit balance. Tokens are billed strictly by volume (input tokens sent, output tokens received). Using cost-efficient models like <em>Claude 3.5 Haiku</em>, a typical note summary costs roughly $0.002 to $0.04. That initial $5 balance can comfortably last casual to moderate note-takers several months.</li>
+          </ul>
+
+          <h2>Core Capabilities of an Embedded Vault Agent</h2>
+          <p>
+            When Claude operates through an embedded plugin rather than an isolated browser tab, it gains contextual awareness of your workspace. Key practical use cases include:
+          </p>
+          <ol>
+            <li><strong>Active Note Refactoring:</strong> Highlighting a messy bulleted meeting transcript and asking Claude to restructure it into action items, decisions, and clear headings directly inside the active document.</li>
+            <li><strong>Automated Split Notes & Indexing:</strong> Taking a long, unstructured research note (e.g., character profiles and world lore) and commanding the model to split the content into individual atomic notes while automatically updating the primary note into an index with clickable <code>[[Wikilinks]]</code>.</li>
+            <li><strong>Multimodal Homelab Documentation:</strong> Feeding a photograph of your server rack, networking switch, or Proxmox dashboard to <em>Claude 3.5 Sonnet</em> to automatically generate structured hardware specifications and configuration markdown tables.</li>
+            <li><strong>Autonomous Project Scaffolding:</strong> Granting the agent permission to create subfolders, legal documents, deployment checklists, and project matrices from a single prompt in minutes.</li>
+          </ol>
+
+          <h2>Step 1: Setting Up the Anthropic Developer Console</h2>
+          <p>
+            To obtain an API key, we connect to the official Anthropic Developer Platform:
+          </p>
+          <ol>
+            <li>Navigate to the <a href="https://console.anthropic.com/" target="_blank" rel="noopener noreferrer">Anthropic Developer Console</a>.</li>
+            <li>Create or sign into your developer account. Notice that this is separate from a standard consumer Claude web subscription.</li>
+            <li>Under the <strong>Billing</strong> section, add prepaid credits. The minimum initial funding deposit is $5.00. This is plenty of credit to get started.</li>
+            <li>Navigate to the <strong>API Keys</strong> tab in the console sidebar.</li>
+            <li>Click <strong>Create Key</strong> in the top right corner.</li>
+            <li>Give your key a recognizable identifier, such as <code>Obsidian Copilot</code>.</li>
+            <li>Select your preferred expiration window (such as 30 days or custom duration) and generate the token string.</li>
+            <li>Copy the generated key immediately and leave the tab open temporarily. Anthropic will not display the key string again once you navigate away.</li>
+          </ol>
+
+          <h2>Step 2: Installing the Copilot Community Plugin</h2>
+          <p>
+            With your developer credentials ready, open your primary Obsidian vault:
+          </p>
+          <ol>
+            <li>Click the <strong>Settings</strong> gear icon in the lower-left corner of Obsidian.</li>
+            <li>Select <strong>Community plugins</strong> from the options sidebar and make sure Restricted Mode is turned off.</li>
+            <li>Click <strong>Browse</strong>, search for <strong>Copilot</strong> (developed by Logan Yang), and click <strong>Install</strong>, followed by <strong>Enable</strong>.</li>
+            <li>Close the plugin marketplace window and scroll down to the bottom of the main settings panel to find <strong>Copilot</strong> under Community Plugins.</li>
+          </ol>
+
+          <h2>Step 3: Configuring the Anthropic API Provider</h2>
+          <p>
+            In the Copilot settings panel, we configure the connection to Anthropic:
+          </p>
+          <ol>
+            <li>Locate the <strong>BYOK (Bring Your Own Key)</strong> section at the top of the plugin configuration.</li>
+            <li>Click <strong>Add Provider</strong> and select <strong>Anthropic</strong> from the provider list.</li>
+            <li>Paste your copied API key into the API Key field.</li>
+            <li>Click the <strong>Test / Verify</strong> button. The status badge will switch to verified, confirming a successful handshake between your local Obsidian client and Anthropic servers.</li>
+            <li>Under the default model selector, choose your preferred model:
+              <ul>
+                <li><strong>Claude 3.5 Haiku:</strong> Recommended for daily drafting, grammar cleanup, task extraction, and note summaries. It operates at blazing speed and costs fractions of a cent per execution.</li>
+                <li><strong>Claude 3.5 Sonnet:</strong> Select this when you require deep analytical reasoning, complex code generation, or multimodal image analysis (inspecting rack photos, diagrams, or architecture screenshots).</li>
+              </ul>
+            </li>
+            <li>Save your settings and exit the menu.</li>
+          </ol>
+
+          <h2>Step 4: Launching the Vault Agent & Execution Modes</h2>
+          <p>
+            Look at the left icon ribbon inside Obsidian. You will notice a new icon labeled <strong>Open Copilot Agent Chat</strong>.
+          </p>
+          <p>
+            Clicking this icon opens a dedicated chat panel in your right sidebar. If prompted on initial launch to download a binary engine (such as OpenCode), click <strong>Download and Install</strong>. In the model dropdown at the top of the chat panel, confirm that your Anthropic Claude model is highlighted.
+          </p>
+          <p>
+            The plugin offers two distinct execution modes:
+          </p>
+          <ul>
+            <li><strong>Supervised Mode (Default):</strong> Every time the AI proposes modifying a note, appending text, or creating a new document, Obsidian prompts you with an explicit confirmation dialog: <em>Allow Once</em> or <em>Always Allow</em>. This ensures you maintain full editorial control over your vault files.</li>
+            <li><strong>Autonomous Mode (Auto):</strong> When toggled to Auto (indicated by a red indicator box), the agent executes multi-step workflows independently without stopping to ask permission for every single markdown modification or folder creation. Use this mode for rapid project scaffolding.</li>
+          </ul>
+
+          <h2>Real-World Walkthrough 1: Restructuring Messy Research Notes</h2>
+          <p>
+            To test the assistant, open an unorganized note with raw bullet points or disjointed brainstorms. In the Copilot chat window, issue a direct prompt:
+          </p>
+
+          <pre><code class="language-markdown">Please review my active note. Restructure the messy notes into clear logical sections, fix typos, and preserve all key details.</code></pre>
+
+          <p>
+            Claude reads the active buffer, organizes the content into clear subheadings, and prompts you to review the proposed diff. Accepting the change rewrites the note into a clean, scannable document. Checking your Anthropic console reveals a total consumption of approximately $0.04.
+          </p>
+
+          <h2>Real-World Walkthrough 2: Splitting Atomic Notes with Backlinks</h2>
+          <p>
+            Obsidian functions best when ideas are split into atomic notes linked via Wikilinks. You can instruct Claude to handle this entire refactor:
+          </p>
+
+          <pre><code class="language-markdown">Break out the active note into separate atomic notes for each main character and each location. Then update the original note into an index note containing direct Wikilinks to each newly created page.</code></pre>
+
+          <p>
+            The agent creates individual markdown files in your vault (e.g., <code>Characters.md</code>, <code>Locations.md</code>) and replaces the monolithic text in your root note with clean links:
+          </p>
+
+          <pre><code class="language-markdown"># Project Master Index
+
+## Quick Links
+- [[Characters]] - Comprehensive roster and affiliations
+- [[Locations]] - Regional mapping and infrastructure</code></pre>
+
+          <h2>Real-World Walkthrough 3: Multimodal Homelab Audits with Sonnet</h2>
+          <p>
+            If you switch your model to <em>Claude 3.5 Sonnet</em>, you can leverage computer vision directly inside your vault.
+          </p>
+          <p>
+            Paste a screenshot of your physical home server rack or your Proxmox node overview directly into the chat prompt with the following command:
+          </p>
+
+          <pre><code class="language-markdown">Inspect this photo of my homelab server cluster. Document the visible physical nodes, enumerate shared specs, and format the output into a clean hardware reference table in my vault.</code></pre>
+
+          <p>
+            Within roughly 20 seconds, Sonnet examines the image, identifies the hardware enclosures, and outputs a complete, formatted hardware inventory note that integrates into your technical documentation vault.
+          </p>
+
+          <h2>Security and Data Privacy Best Practices</h2>
+          <p>
+            While pay-as-you-go API integration provides exceptional productivity, keep these privacy considerations in mind:
+          </p>
+          <ul>
+            <li><strong>Commercial Data Protections:</strong> According to Anthropic's developer commercial terms of service, inputs and outputs processed through paid developer API keys are <em>not</em> used to train foundation models, offering significantly greater confidentiality than free consumer web tiers.</li>
+            <li><strong>Sensitive Data Quarantine:</strong> If your vault contains highly classified credentials, private keys, or personal health records, configure Copilot's ignore rules or refrain from feeding those specific directories into the prompt context.</li>
+            <li><strong>Set Spend Caps:</strong> Inside the Anthropic Developer Console, configure monthly spend limits (e.g., $10 maximum) to prevent accidental runaway API bills during automated scripting loops.</li>
+          </ul>
+
+          <h2>Summary and Next Steps</h2>
+          <p>
+            By integrating Claude directly into Obsidian via the Copilot plugin, you eliminate the tedious copy-paste loop and liberate your budget from expensive monthly recurring subscriptions. You gain an intelligent, context-aware second brain assistant that costs only pennies when you need it and nothing when you don't.
+          </p>
+
+          <h2>Helpful Resources & References</h2>
+          <ul>
+            <li><a href="https://console.anthropic.com/" target="_blank" rel="noopener noreferrer">Anthropic Developer Console</a></li>
+            <li><a href="https://github.com/logancyang/obsidian-copilot" target="_blank" rel="noopener noreferrer">Obsidian Copilot Plugin GitHub</a></li>
+            <li><a href="https://docs.anthropic.com/en/docs/about-claude/models" target="_blank" rel="noopener noreferrer">Claude Models & Pricing Documentation</a></li>
+          </ul>
+        </div>
+
+      </article>
+
+      <!-- Sidebar Column -->
+      <aside class="blog-sidebar">
+        <!-- Widget: About Channel -->
+        <div class="sidebar-widget">
+          <h4 class="widget-title">About Tech Simpld</h4>
+          <p style="font-size: 0.9rem; margin-bottom: 1rem;">
+            Software and productivity, simplified. Direct, step-by-step guides for homelabs, Docker, and self-hosted tools.
+          </p>
+          <a href="https://youtube.com/@TechSimpld" target="_blank" id="sidebarYoutubeBtn" class="btn btn-outline btn-sm" style="width: 100%;">
+            Visit YouTube Channel
+          </a>
+        </div>
+      </aside>
+
+    </div>
+  </main>
+
+  <!-- Footer Section -->
+  <footer class="footer">
+    <div class="footer-container">
+      <div>
+        <a href="../index.html" class="footer-logo">
+          Tech Simpld<span class="logo-dot"></span>
+        </a>
+        <p class="footer-desc">
+          Software and productivity, simplified. Clean, no-fluff tutorials and templates for digital creators and
+          builders.
+        </p>
+      </div>
+      <div>
+        <h4 class="footer-heading">Navigation</h4>
+        <ul class="footer-links">
+          <li><a href="../index.html">Home</a></li>
+          <li><a href="../about.html">About</a></li>
+          <li><a href="../posts.html">Posts</a></li>
+          <li><a href="../resources.html">Resources</a></li>
+          <li><a href="../contact.html">Contact</a></li>
+          <li><a href="https://youtube.com/@TechSimpld" target="_blank">YouTube Channel</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4 class="footer-heading">Contact & Legal</h4>
+        <ul class="footer-links">
+          <li><a href="mailto:techsimpld@gmail.com">techsimpld@gmail.com</a></li>
+          <li><a href="../privacy-policy.html">Privacy Policy</a></li>
+          <li><a href="../terms-of-service.html">Terms of Service</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div>© 2026 Tech Simpld. All rights reserved. Built for lightning-fast speeds.</div>
+      <div class="footer-socials">
+        <a href="https://youtube.com/@TechSimpld" class="social-link" aria-label="YouTube">YouTube</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="../js/scripts.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-bash.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-yaml.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-markdown.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-json.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/toolbar/prism-toolbar.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/copy-to-clipboard/prism-copy-to-clipboard.min.js"></script>
+</body>
+
+</html>

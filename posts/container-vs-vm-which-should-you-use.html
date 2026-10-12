@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <!-- Google tag (gtag.js) -->
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { dataLayer.push(arguments); }
+    if(localStorage.getItem('cookie_consent') === 'true') {
+      gtag('consent', 'default', { 'ad_storage': 'granted', 'analytics_storage': 'granted', 'ad_user_data': 'granted', 'ad_personalization': 'granted' });
+    } else {
+      gtag('consent', 'default', { 'ad_storage': 'denied', 'analytics_storage': 'denied', 'ad_user_data': 'denied', 'ad_personalization': 'denied' });
+    }
+  </script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-1KFGHVDB66"></script>
+  <script>
+    gtag('js', new Date());
+    gtag('config', 'G-1KFGHVDB66');
+  </script>
+
+  <!-- Google AdSense -->
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5214277715351322"
+    crossorigin="anonymous"></script>
+
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Container vs VM Which Should You Use? Proxmox Benchmarks & Guide | Tech Simpld</title>
+  <meta name="description"
+    content="Detailed comparison between Docker/LXC containers and full Proxmox VMs. Real Apache Benchmark stress test numbers, memory overhead, and architecture trade-offs.">
+  <link rel="canonical" href="https://techsimpld.com/posts/container-vs-vm-which-should-you-use.html">
+  <meta name="robots" content="index, follow">
+
+  <!-- Open Graph / SEO -->
+  <meta property="og:locale" content="en_US">
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="Tech Simpld">
+  <meta property="og:url" content="https://techsimpld.com/posts/container-vs-vm-which-should-you-use.html">
+  <meta property="og:title" content="Container vs VM Which Should You Use? Proxmox Benchmarks & Guide | Tech Simpld">
+  <meta property="og:description"
+    content="Detailed comparison between Docker/LXC containers and full Proxmox VMs. Real Apache Benchmark stress test numbers, memory overhead, and architecture trade-offs.">
+  <meta property="og:image" content="https://techsimpld.com/images/container-vs-vm-which-should-you-use.png">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Container vs VM Which Should You Use? Proxmox Benchmarks & Guide | Tech Simpld">
+  <meta name="twitter:description"
+    content="Detailed comparison between Docker/LXC containers and full Proxmox VMs. Real Apache Benchmark stress test numbers, memory overhead, and architecture trade-offs.">
+  <meta name="twitter:image" content="https://techsimpld.com/images/container-vs-vm-which-should-you-use.png">
+
+  <!-- Structured Data (JSON-LD) -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "Container vs VM Which Should You Use? Proxmox Benchmarks & Guide",
+    "image": [
+      "https://techsimpld.com/images/container-vs-vm-which-should-you-use.png"
+    ],
+    "datePublished": "2026-10-05T10:00:00+00:00",
+    "dateModified": "2026-10-05T10:00:00+00:00",
+    "author": {
+      "@type": "Person",
+      "name": "Tech Simpld",
+      "url": "https://techsimpld.com/about.html"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "Tech Simpld",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://techsimpld.com/images/obsidian-vault.png"
+      }
+    },
+    "description": "Detailed comparison between Docker/LXC containers and full Proxmox VMs. Real Apache Benchmark stress test numbers, memory overhead, and architecture trade-offs."
+  }
+  </script>
+
+  <!-- DNS Prefetch & Preconnect for Speed -->
+  <link rel="dns-prefetch" href="https://www.googletagmanager.com">
+  <link rel="preconnect" href="https://www.googletagmanager.com" crossorigin>
+  <link rel="dns-prefetch" href="https://pagead2.googlesyndication.com">
+  <link rel="preconnect" href="https://pagead2.googlesyndication.com" crossorigin>
+
+  <!-- Favicons -->
+  <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+  <link rel="alternate icon" type="image/png" href="../favicon.png">
+
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="../css/styles.css">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" rel="stylesheet" />
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/toolbar/prism-toolbar.min.css" rel="stylesheet" />
+</head>
+
+<body>
+
+  <!-- Navigation Header -->
+  <header class="navbar" id="navbar">
+    <div class="nav-container">
+      <a href="../index.html" class="logo-link">
+        Tech Simpld<span class="logo-dot"></span>
+      </a>
+
+      <button class="menu-toggle" id="menuToggle" aria-label="Toggle Navigation Menu">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+
+      <ul class="nav-menu">
+        <li><a href="../index.html" class="nav-link">Home</a></li>
+        <li><a href="../about.html" class="nav-link">About</a></li>
+        <li><a href="../posts.html" class="nav-link active">Posts</a></li>
+        <li><a href="../resources.html" class="nav-link">Resources</a></li>
+        <li><a href="../contact.html" class="nav-link">Contact</a></li>
+        <li><a href="https://youtube.com/@TechSimpld" target="_blank" class="nav-link">YouTube</a></li>
+      </ul>
+
+      <div class="nav-actions">
+        <a href="https://youtube.com/@TechSimpld" target="_blank" class="btn btn-primary btn-sm" id="subscribeHeaderBtn">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+            <path
+              d="M23.498 6.163a3.003 3.003 0 0 0-2.11-2.11C19.517 3.545 12 3.545 12 3.545s-7.517 0-9.388.508a3.003 3.003 0 0 0-2.11 2.11C0 8.033 0 12 0 12s0 3.967.502 5.837a3.003 3.003 0 0 0 2.11 2.11c1.871.508 9.388.508 9.388.508s7.517 0 9.388-.508a3.003 3.003 0 0 0 2.11-2.11C24 15.967 24 12 24 12s0-3.967-.502-5.837zM9.545 15.568V8.432L15.818 12l-6.273 3.568z" />
+          </svg>
+          Subscribe
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content Layout -->
+  <main class="main-layout">
+
+    <!-- 2-Column Blog Layout -->
+    <div class="blog-container">
+
+      <!-- Main Article Column -->
+      <article class="blog-main">
+
+        <header class="article-header">
+          <div class="badge">Virtualization & Docker</div>
+          <h1 class="article-title">Container vs VM Which Should You Use? Proxmox Benchmarks & Guide</h1>
+
+          <div class="article-meta">
+            <div class="article-meta-item">
+              <div class="author-avatar">TS</div>
+              <span>By <strong>Tech Simpld</strong></span>
+            </div>
+            <span>-</span>
+            <div class="article-meta-item">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                stroke-linecap="round" stroke-linejoin="round">
+                <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                <line x1="16" y1="2" x2="16" y2="6"></line>
+                <line x1="8" y1="2" x2="8" y2="6"></line>
+                <line x1="3" y1="10" x2="21" y2="10"></line>
+              </svg>
+              <span>October 2026</span>
+            </div>
+            <span>-</span>
+            <div class="article-meta-item">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="10"></circle>
+                <polyline points="12 6 12 12 16 14"></polyline>
+              </svg>
+              <span>15 Min Read</span>
+            </div>
+          </div>
+        </header>
+
+        <!-- Video Player Container -->
+        <div class="video-container">
+          <iframe src="https://www.youtube-nocookie.com/embed/o2BIGNPVAz0" title="Container vs VM Which Should You Use Video Guide"
+            frameborder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            allowfullscreen>
+          </iframe>
+        </div>
+
+        <!-- Article Content -->
+        <div class="prose">
+          <p>
+            You are ready to spin up a new service in your home lab. You have your hardware running, Proxmox VE booted, and your storage pools mapped. But then you hit the classic architectural question: <strong>Do you deploy a full Virtual Machine with its own operating system, or do you run it inside a lightweight Docker or LXC container?</strong>
+          </p>
+          <p>
+            Make the wrong choice, and you will burn through scarce CPU and RAM running redundant operating system kernels and background daemons. Alternatively, you might box yourself into container networking constraints when your application actually requires low-level kernel modules and hardware passthrough.
+          </p>
+          <p>
+            In this guide, we bypass theoretical marketing claims and test the performance gap directly. We deploy identical Nginx web services across a Debian 12 Virtual Machine and an LXC Container on the exact same Proxmox node, measure their idle footprints side-by-side using <code>htop</code>, hit both with an intense 50,000-request Apache Benchmark stress test, and lay out the exact engineering criteria for when to pick each.
+          </p>
+
+          <h2>Under the Hood: Virtual Machines vs. Containers</h2>
+          <p>
+            To understand why the performance numbers differ so dramatically, we need to inspect what is actually executing in memory:
+          </p>
+
+          <h3>1. Virtual Machines (Hardware Emulation & Guest Kernels)</h3>
+          <p>
+            A Virtual Machine is a complete, simulated computer. The hypervisor (KVM/QEMU in Proxmox) carves out virtual hardware slices: virtual CPUs, virtual RAM controllers, virtual disks, and virtual network interfaces.
+          </p>
+          <p>
+            Inside that virtual boundary, you boot an entirely separate operating system. That guest OS runs its own Linux kernel, memory management subsystem, device drivers, and background <code>systemd</code> service tree. While this provides airtight sandboxing, you pay a mandatory "OS tax" in CPU and memory before your target software even launches.
+          </p>
+
+          <h3>2. Containers (Direct Kernel Sharing)</h3>
+          <p>
+            Containers (both Docker containers and LXC system containers) eliminate the guest operating system entirely. Containers do not virtualize hardware. Instead, they share the host Linux kernel directly, relying on Linux kernel <strong>namespaces</strong> (for process, mount, network, and IPC isolation) and <strong>cgroups</strong> (control groups for CPU and memory resource caps).
+          </p>
+          <p>
+            Because there is no secondary kernel booting, no hardware translation layer, and no redundant background operating system daemons, idle resource consumption drops to nearly zero.
+          </p>
+
+          <h2>Test 1: Idle Footprint & Process Count (htop Side-by-Side)</h2>
+          <p>
+            We created two fresh environments on the same Proxmox host using identical resource allocations: 1 vCPU and 1 GB of assigned RAM:
+          </p>
+          <ul>
+            <li><strong>Environment A:</strong> Standard Debian 12 LXC Container running Nginx.</li>
+            <li><strong>Environment B:</strong> Standard Debian 12 Virtual Machine running Nginx.</li>
+          </ul>
+          <p>
+            Both environments were fully patched via <code>apt update &amp;&amp; apt upgrade</code> with standard defaults, and both had <code>htop</code> and <code>curl</code> installed.
+          </p>
+
+          <table style="width: 100%; border-collapse: collapse; margin: 1.5rem 0;">
+            <thead>
+              <tr style="border-bottom: 2px solid var(--border-color); text-align: left;">
+                <th style="padding: 0.75rem; color: var(--accent-cyan);">Metric</th>
+                <th style="padding: 0.75rem; color: var(--text-primary);">LXC / Docker Container</th>
+                <th style="padding: 0.75rem; color: var(--text-primary);">Debian 12 Virtual Machine</th>
+                <th style="padding: 0.75rem; color: var(--accent-purple);">Performance Advantage</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr style="border-bottom: 1px solid var(--border-color);">
+                <td style="padding: 0.75rem;"><strong>Idle Memory Footprint</strong></td>
+                <td style="padding: 0.75rem;">67 MB (11% of 1 GB)</td>
+                <td style="padding: 0.75rem;">469 MB (46% of 1 GB)</td>
+                <td style="padding: 0.75rem;"><strong>7x Memory Reduction</strong></td>
+              </tr>
+              <tr style="border-bottom: 1px solid var(--border-color);">
+                <td style="padding: 0.75rem;"><strong>Active Tasks / Processes</strong></td>
+                <td style="padding: 0.75rem;">22 tasks (39 threads)</td>
+                <td style="padding: 0.75rem;">103 tasks (223 threads)</td>
+                <td style="padding: 0.75rem;"><strong>4.6x Fewer Processes</strong></td>
+              </tr>
+              <tr style="border-bottom: 1px solid var(--border-color);">
+                <td style="padding: 0.75rem;"><strong>Swap Disk Thrashing</strong></td>
+                <td style="padding: 0.75rem;">0 MB used (completely clean)</td>
+                <td style="padding: 0.75rem;">Active swap paging detected</td>
+                <td style="padding: 0.75rem;"><strong>Zero Disk I/O Overhead</strong></td>
+              </tr>
+            </tbody>
+          </table>
+
+          <p>
+            A 7-to-1 memory advantage out of the gate is immense. If you are operating a homelab on a mini PC (such as an Intel N100 or an older Lenovo Tiny / HP ProDesk) with 16 GB of RAM, that difference dictates whether your machine can comfortably host 5 services or 25 microservices.
+          </p>
+
+          <h2>Test 2: Apache Benchmark Network Stress Test (50,000 Requests)</h2>
+          <p>
+            Idle memory savings are obvious, but what happens when you hammer both services with continuous network pressure?
+          </p>
+          <p>
+            To evaluate throughput and latency jitter, we connected from an external client machine on the local network and executed <strong>Apache Benchmark (ab)</strong> against the default Nginx welcome page (a 2,689-byte payload):
+          </p>
+
+          <pre><code class="language-bash"># Send 50,000 requests with 100 concurrent connections
+ab -n 50000 -c 100 http://[TARGET_IP]/</code></pre>
+
+          <h2>The Benchmark Results: Latency & Throughput Breakdown</h2>
+
+          <table style="width: 100%; border-collapse: collapse; margin: 1.5rem 0;">
+            <thead>
+              <tr style="border-bottom: 2px solid var(--border-color); text-align: left;">
+                <th style="padding: 0.75rem; color: var(--accent-cyan);">Benchmark Metric</th>
+                <th style="padding: 0.75rem; color: var(--text-primary);">LXC Container</th>
+                <th style="padding: 0.75rem; color: var(--text-primary);">Debian Virtual Machine</th>
+                <th style="padding: 0.75rem; color: var(--accent-purple);">Delta</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr style="border-bottom: 1px solid var(--border-color);">
+                <td style="padding: 0.75rem;"><strong>Total Test Duration</strong></td>
+                <td style="padding: 0.75rem;">3.843 seconds</td>
+                <td style="padding: 0.75rem;">4.419 seconds</td>
+                <td style="padding: 0.75rem;">Container was 15% faster</td>
+              </tr>
+              <tr style="border-bottom: 1px solid var(--border-color);">
+                <td style="padding: 0.75rem;"><strong>Requests Per Second</strong></td>
+                <td style="padding: 0.75rem;">~13,010 req/sec</td>
+                <td style="padding: 0.75rem;">~11,314 req/sec</td>
+                <td style="padding: 0.75rem;">+1,696 requests / sec</td>
+              </tr>
+              <tr style="border-bottom: 1px solid var(--border-color);">
+                <td style="padding: 0.75rem;"><strong>Max Outlier Latency</strong></td>
+                <td style="padding: 0.75rem;">222 ms</td>
+                <td style="padding: 0.75rem;">356 ms</td>
+                <td style="padding: 0.75rem;">VM latency spiked 60% higher</td>
+              </tr>
+              <tr style="border-bottom: 1px solid var(--border-color);">
+                <td style="padding: 0.75rem;"><strong>Latency Standard Deviation</strong></td>
+                <td style="padding: 0.75rem;">1.5 ms (tight consistency)</td>
+                <td style="padding: 0.75rem;">7.0 ms (jittery variance)</td>
+                <td style="padding: 0.75rem;">Nearly 5x worse jitter on VM</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <h2>The Engineering Cause: QEMU VirtIO & VM Exit Traps</h2>
+          <p>
+            You might look at those numbers and wonder: <em>The webpage is only 2.7 kilobytes. Why is a container 15% faster at serving tiny HTML files than a full virtual machine?</em>
+          </p>
+          <p>
+            When transferring a gigantic 20 GB ISO file, hypervisor virtualization overhead rarely matters because your physical 1 Gbps or 2.5 Gbps network interface saturates either way. But when you bombard a server with 50,000 tiny packets across 100 concurrent streams, you are not testing bandwidth; you are testing <strong>packet processing overhead</strong>.
+          </p>
+          <ul>
+            <li><strong>Inside the VM:</strong> Every single network packet must pass through QEMU's emulated VirtIO network driver. This forces the physical CPU into continuous <strong>VM Exit traps</strong>, temporarily pausing the guest OS to allow the hypervisor to translate the packet before passing it to the Linux bridge.</li>
+            <li><strong>Inside the Container:</strong> There is zero hardware emulation. The container shares the Proxmox host kernel directly. When Nginx transmits a packet, it traverses a native Linux virtual ethernet pair (<code>veth</code>) directly onto the network bridge with zero translation.</li>
+          </ul>
+
+          <h2>When Should You Use a Container (Docker / LXC)?</h2>
+          <p>
+            Containers should be your default architecture for any single-purpose Linux application or stateless microservice:
+          </p>
+          <ul>
+            <li><strong>Web Servers & Reverse Proxies:</strong> Nginx, Caddy, Traefik, NPM.</li>
+            <li><strong>Network Infrastructure:</strong> Pi-hole, AdGuard Home, Cloudflare Tunnels, Tailscale.</li>
+            <li><strong>Monitoring Dashboards:</strong> Uptime Kuma, Grafana, Prometheus.</li>
+            <li><strong>Automation Services:</strong> n8n, Home Assistant, Gotify.</li>
+          </ul>
+          <p>
+            You benefit from instant cold boot times, sub-100 MB memory footprints, and simple backups managed through a single <code>docker-compose.yml</code> file.
+          </p>
+
+          <h2>When MUST You Use a Full Virtual Machine?</h2>
+          <p>
+            While containers are exceptionally fast, Virtual Machines remain essential for three specific architectural requirements:
+          </p>
+          <ol>
+            <li><strong>Non-Linux Operating Systems:</strong> Containers share the host Linux kernel. If you must run Windows Server, FreeBSD, TrueNAS CORE, pfSense, or macOS, you require a hypervisor to simulate x86 PC hardware.</li>
+            <li><strong>Direct PCIe Hardware Passthrough:</strong> If you need to dedicate an entire discrete GPU (e.g., for an unthrottled gaming VM or Plex transcode box), a 10GbE network controller, or a SAS HBA drive controller directly to an operating system with zero software translation, VMs provide native hardware-level passthrough.</li>
+            <li><strong>True Kernel Sandbox Security:</strong> Because containers share the host kernel, a critical Linux kernel privilege escalation exploit could theoretically compromise the entire Proxmox node. A VM operates inside an emulated hardware sandbox, providing hardware-enforced isolation for untrusted software or public-facing DMZ honeypots.</li>
+          </ol>
+
+          <h2>The Proxmox Pro Strategy: Docker Inside a Nested LXC</h2>
+          <p>
+            Here is the homelab secret that experienced engineers use to achieve the ultimate balance: <strong>You do not have to choose just one.</strong>
+          </p>
+          <p>
+            In Proxmox VE, deploy a single lightweight Debian or Ubuntu LXC container. Under the container's <strong>Options</strong> tab, enable <strong>Nesting</strong> and <strong>keyctl</strong> support. Inside that LXC, install Docker and Docker Compose.
+          </p>
+          <p>
+            This hybrid approach gives you the clean package management and portability of Docker Compose, while the entire stack runs directly on the shared Proxmox host kernel, consuming less than 200 MB of total system memory at near bare-metal speeds.
+          </p>
+
+          <h2>Summary and Key Takeaways</h2>
+          <p>
+            Virtual Machines are not slow; our test VM handled over 11,000 requests per second with ease. But for lightweight Linux services, deploying an entire secondary operating system wastes precious RAM, causes unnecessary swap thrashing, and introduces measurable network latency jitter.
+          </p>
+          <p>
+            Use lightweight containers as your daily homelab workhorses, and reserve full virtual machines for when you truly need hardware isolation, custom kernels, or non-Linux operating systems.
+          </p>
+
+          <h2>Helpful Resources & References</h2>
+          <ul>
+            <li><a href="https://pve.proxmox.com/wiki/Linux_Container" target="_blank" rel="noopener noreferrer">Proxmox VE Official LXC Container Documentation</a></li>
+            <li><a href="https://pve.proxmox.com/wiki/Qemu/KVM" target="_blank" rel="noopener noreferrer">Proxmox VE Qemu/KVM Virtual Machine Guide</a></li>
+            <li><a href="https://httpd.apache.org/docs/2.4/programs/ab.html" target="_blank" rel="noopener noreferrer">Apache Benchmark (ab) Tool Documentation</a></li>
+          </ul>
+        </div>
+
+      </article>
+
+      <!-- Sidebar Column -->
+      <aside class="blog-sidebar">
+        <!-- Widget: About Channel -->
+        <div class="sidebar-widget">
+          <h4 class="widget-title">About Tech Simpld</h4>
+          <p style="font-size: 0.9rem; margin-bottom: 1rem;">
+            Software and productivity, simplified. Direct, step-by-step guides for homelabs, Docker, and self-hosted tools.
+          </p>
+          <a href="https://youtube.com/@TechSimpld" target="_blank" id="sidebarYoutubeBtn" class="btn btn-outline btn-sm" style="width: 100%;">
+            Visit YouTube Channel
+          </a>
+        </div>
+      </aside>
+
+    </div>
+  </main>
+
+  <!-- Footer Section -->
+  <footer class="footer">
+    <div class="footer-container">
+      <div>
+        <a href="../index.html" class="footer-logo">
+          Tech Simpld<span class="logo-dot"></span>
+        </a>
+        <p class="footer-desc">
+          Software and productivity, simplified. Clean, no-fluff tutorials and templates for digital creators and
+          builders.
+        </p>
+      </div>
+      <div>
+        <h4 class="footer-heading">Navigation</h4>
+        <ul class="footer-links">
+          <li><a href="../index.html">Home</a></li>
+          <li><a href="../about.html">About</a></li>
+          <li><a href="../posts.html">Posts</a></li>
+          <li><a href="../resources.html">Resources</a></li>
+          <li><a href="../contact.html">Contact</a></li>
+          <li><a href="https://youtube.com/@TechSimpld" target="_blank">YouTube Channel</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4 class="footer-heading">Contact & Legal</h4>
+        <ul class="footer-links">
+          <li><a href="mailto:techsimpld@gmail.com">techsimpld@gmail.com</a></li>
+          <li><a href="../privacy-policy.html">Privacy Policy</a></li>
+          <li><a href="../terms-of-service.html">Terms of Service</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div>© 2026 Tech Simpld. All rights reserved. Built for lightning-fast speeds.</div>
+      <div class="footer-socials">
+        <a href="https://youtube.com/@TechSimpld" class="social-link" aria-label="YouTube">YouTube</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="../js/scripts.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-bash.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/toolbar/prism-toolbar.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/copy-to-clipboard/prism-copy-to-clipboard.min.js"></script>
+</body>
+
+</html>

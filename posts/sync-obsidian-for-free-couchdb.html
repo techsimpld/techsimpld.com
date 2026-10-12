@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <!-- Google tag (gtag.js) -->
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { dataLayer.push(arguments); }
+    if(localStorage.getItem('cookie_consent') === 'true') {
+      gtag('consent', 'default', { 'ad_storage': 'granted', 'analytics_storage': 'granted', 'ad_user_data': 'granted', 'ad_personalization': 'granted' });
+    } else {
+      gtag('consent', 'default', { 'ad_storage': 'denied', 'analytics_storage': 'denied', 'ad_user_data': 'denied', 'ad_personalization': 'denied' });
+    }
+  </script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-1KFGHVDB66"></script>
+  <script>
+    gtag('js', new Date());
+    gtag('config', 'G-1KFGHVDB66');
+  </script>
+
+  <!-- Google AdSense -->
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5214277715351322"
+    crossorigin="anonymous"></script>
+
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sync Obsidian for Free with CouchDB: Step-by-Step Self-Hosted Guide | Tech Simpld</title>
+  <meta name="description"
+    content="Sync your Obsidian vault across PC, Mac, iPhone, and Android for free using CouchDB, Docker, and the Self-Hosted LiveSync community plugin. Complete walkthrough.">
+  <link rel="canonical" href="https://techsimpld.com/posts/sync-obsidian-for-free-couchdb.html">
+  <meta name="robots" content="index, follow">
+
+  <!-- Open Graph / SEO -->
+  <meta property="og:locale" content="en_US">
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="Tech Simpld">
+  <meta property="og:url" content="https://techsimpld.com/posts/sync-obsidian-for-free-couchdb.html">
+  <meta property="og:title" content="Sync Obsidian for Free with CouchDB: Step-by-Step Self-Hosted Guide | Tech Simpld">
+  <meta property="og:description"
+    content="Sync your Obsidian vault across PC, Mac, iPhone, and Android for free using CouchDB, Docker, and the Self-Hosted LiveSync community plugin.">
+  <meta property="og:image" content="https://techsimpld.com/images/sync-obsidian-for-free-couchdb.jpg">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Sync Obsidian for Free with CouchDB: Step-by-Step Self-Hosted Guide | Tech Simpld">
+  <meta name="twitter:description"
+    content="Sync your Obsidian vault across PC, Mac, iPhone, and Android for free using CouchDB, Docker, and the Self-Hosted LiveSync community plugin.">
+  <meta name="twitter:image" content="https://techsimpld.com/images/sync-obsidian-for-free-couchdb.jpg">
+
+  <!-- Structured Data (JSON-LD) -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "Sync Obsidian for Free with CouchDB: Step-by-Step Self-Hosted Guide",
+    "image": [
+      "https://techsimpld.com/images/sync-obsidian-for-free-couchdb.jpg"
+    ],
+    "datePublished": "2026-09-18T10:00:00+00:00",
+    "dateModified": "2026-09-18T10:00:00+00:00",
+    "author": {
+      "@type": "Person",
+      "name": "Tech Simpld",
+      "url": "https://techsimpld.com/about.html"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "Tech Simpld",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://techsimpld.com/images/obsidian-vault.png"
+      }
+    },
+    "description": "Sync your Obsidian vault across PC, Mac, iPhone, and Android for free using CouchDB, Docker, and the Self-Hosted LiveSync community plugin."
+  }
+  </script>
+
+  <!-- DNS Prefetch & Preconnect for Speed -->
+  <link rel="dns-prefetch" href="https://www.googletagmanager.com">
+  <link rel="preconnect" href="https://www.googletagmanager.com" crossorigin>
+  <link rel="dns-prefetch" href="https://pagead2.googlesyndication.com">
+  <link rel="preconnect" href="https://pagead2.googlesyndication.com" crossorigin>
+
+  <!-- Favicons -->
+  <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+  <link rel="alternate icon" type="image/png" href="../favicon.png">
+
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="../css/styles.css">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" rel="stylesheet" />
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/toolbar/prism-toolbar.min.css" rel="stylesheet" />
+</head>
+
+<body>
+
+  <!-- Navigation Header -->
+  <header class="navbar" id="navbar">
+    <div class="nav-container">
+      <a href="../index.html" class="logo-link">
+        Tech Simpld<span class="logo-dot"></span>
+      </a>
+
+      <button class="menu-toggle" id="menuToggle" aria-label="Toggle Navigation Menu">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+
+      <ul class="nav-menu">
+        <li><a href="../index.html" class="nav-link">Home</a></li>
+        <li><a href="../about.html" class="nav-link">About</a></li>
+        <li><a href="../posts.html" class="nav-link active">Posts</a></li>
+        <li><a href="../resources.html" class="nav-link">Resources</a></li>
+        <li><a href="../contact.html" class="nav-link">Contact</a></li>
+        <li><a href="https://youtube.com/@TechSimpld" target="_blank" class="nav-link">YouTube</a></li>
+      </ul>
+
+      <div class="nav-actions">
+        <a href="https://youtube.com/@TechSimpld" target="_blank" class="btn btn-primary btn-sm" id="subscribeHeaderBtn">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+            <path
+              d="M23.498 6.163a3.003 3.003 0 0 0-2.11-2.11C19.517 3.545 12 3.545 12 3.545s-7.517 0-9.388.508a3.003 3.003 0 0 0-2.11 2.11C0 8.033 0 12 0 12s0 3.967.502 5.837a3.003 3.003 0 0 0 2.11 2.11c1.871.508 9.388.508 9.388.508s7.517 0 9.388-.508a3.003 3.003 0 0 0 2.11-2.11C24 15.967 24 12 24 12s0-3.967-.502-5.837zM9.545 15.568V8.432L15.818 12l-6.273 3.568z" />
+          </svg>
+          Subscribe
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content Layout -->
+  <main class="main-layout">
+
+    <!-- 2-Column Blog Layout -->
+    <div class="blog-container">
+
+      <!-- Main Article Column -->
+      <article class="blog-main">
+
+        <header class="article-header">
+          <div class="badge">Self-Hosted Obsidian</div>
+          <h1 class="article-title">Sync Obsidian for Free with CouchDB: Step-by-Step Self-Hosted Guide</h1>
+
+          <div class="article-meta">
+            <div class="article-meta-item">
+              <div class="author-avatar">TS</div>
+              <span>By <strong>Tech Simpld</strong></span>
+            </div>
+            <span>-</span>
+            <div class="article-meta-item">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                stroke-linecap="round" stroke-linejoin="round">
+                <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                <line x1="16" y1="2" x2="16" y2="6"></line>
+                <line x1="8" y1="2" x2="8" y2="6"></line>
+                <line x1="3" y1="10" x2="21" y2="10"></line>
+              </svg>
+              <span>September 2026</span>
+            </div>
+            <span>-</span>
+            <div class="article-meta-item">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="10"></circle>
+                <polyline points="12 6 12 12 16 14"></polyline>
+              </svg>
+              <span>14 Min Read</span>
+            </div>
+          </div>
+        </header>
+
+        <!-- Video Player Container -->
+        <div class="video-container">
+          <iframe src="https://www.youtube-nocookie.com/embed/WOSXBu9AiNI" title="Sync Obsidian For Free With CouchDB Tutorial Video"
+            frameborder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            allowfullscreen>
+          </iframe>
+        </div>
+
+        <!-- Article Content -->
+        <div class="prose">
+          <p>
+            Obsidian is an exceptional tool for personal knowledge management because it operates strictly on plain markdown text files stored on your local machine. However, the moment you want to access your notes across multiple devices, such as a desktop PC, a MacBook, an Android phone, or an iPad, you run into the synchronization hurdle.
+          </p>
+          <p>
+            The official Obsidian Sync service is polished and well-engineered, but it costs money every single month. Free alternatives like iCloud Drive on Windows are notoriously unstable, while third-party cloud sync tools can lead to corrupted databases and merge collisions when files update simultaneously.
+          </p>
+          <p>
+            In this guide, we are building a production-grade, self-hosted synchronization engine using <strong>Apache CouchDB</strong>, <strong>Docker Compose</strong>, and the <strong>Self-Hosted LiveSync</strong> community plugin. This setup provides near-instantaneous live replication, end-to-end encryption, and full cross-platform compatibility across desktop and mobile devices without paying a subscription.
+          </p>
+
+          <h2>Why Apache CouchDB for Obsidian?</h2>
+          <p>
+            Unlike traditional relational databases like MySQL or PostgreSQL, Apache CouchDB is an open-source NoSQL document database built specifically for distributed, multi-master replication. CouchDB treats every revision of a document as an immutable snapshot with an internal revision ID. When two devices modify notes concurrently, CouchDB detects the divergence at the document level and provides deterministic conflict resolution algorithms.
+          </p>
+          <p>
+            When paired with the <em>Self-Hosted LiveSync</em> plugin created by vorot93, Obsidian connects directly to CouchDB over HTTP/HTTPS. Every keystroke and saved note triggers an incremental sync event. Your data is encrypted locally on your device with AES-GCM before it ever leaves your machine, ensuring that even if your server is hosted publicly, nobody can read your vault contents without your master encryption passphrase.
+          </p>
+
+          <h2>Prerequisites and System Architecture</h2>
+          <p>
+            Before we begin the setup, ensure you have the following elements in place:
+          </p>
+          <ul>
+            <li><strong>A Linux Host or LXC Container:</strong> An Ubuntu or Debian server (such as an LXC container running inside Proxmox VE) with at least 1 vCPU, 1 GB of RAM, and 10 GB of storage.</li>
+            <li><strong>Docker and Docker Compose:</strong> The Docker runtime installed on your host. If you are using a Proxmox LXC container, ensure <em>Nesting</em> is enabled in the container options so Docker can run smoothly.</li>
+            <li><strong>A Reverse Proxy or Domain (Recommended):</strong> An SSL-enabled reverse proxy such as Cloudflare Tunnels, Nginx Proxy Manager, or Caddy pointing to your CouchDB container port. This allows your mobile devices to sync securely over cellular networks.</li>
+            <li><strong>Obsidian Installed:</strong> Running on your primary desktop or workstation.</li>
+          </ul>
+
+          <h2>Understanding CORS (Cross-Origin Resource Sharing)</h2>
+          <p>
+            The most common roadblock when configuring CouchDB with web or hybrid applications like Obsidian is the browser security boundary known as <strong>CORS (Cross-Origin Resource Sharing)</strong>.
+          </p>
+          <p>
+            Obsidian's internal engine is built on Electron and web technologies. When Obsidian attempts to send API requests from your local computer or phone to an external CouchDB server located on a different IP address, domain, or port, the security policy immediately rejects the connection unless CouchDB explicitly returns headers stating that cross-origin requests are permitted.
+          </p>
+          <p>
+            To prevent connection errors, we must configure CouchDB with a custom <code>local.ini</code> configuration file that explicitly enables CORS, permits all origins, and exposes the required headers.
+          </p>
+
+          <h2>Step 1: Preparing Directory Structure and CORS Configuration</h2>
+          <p>
+            Log into your Linux server or LXC container via SSH. We will create a dedicated directory for CouchDB to house our persistent database files and configuration templates.
+          </p>
+
+          <pre><code class="language-bash"># Create a dedicated directory on your storage drive
+mkdir -p /data/couchdb/data
+cd /data/couchdb
+
+# Create the custom local.ini configuration file
+nano local.ini</code></pre>
+
+          <p>
+            Paste the following configuration into <code>local.ini</code>. This enables CouchDB's native CORS engine and opens up the necessary methods and authentication headers that the LiveSync plugin requires:
+          </p>
+
+          <pre><code class="language-ini">[couchdb]
+single_node=true
+max_document_size = 50000000
+
+[chttpd]
+port = 5984
+bind_address = 0.0.0.0
+enable_cors = true
+
+[cors]
+origins = *
+credentials = true
+headers = accept, authorization, content-type, origin, referer
+methods = GET, PUT, POST, HEAD, DELETE
+max_age = 3600</code></pre>
+
+          <p>
+            Save and exit the editor by pressing <kbd>Ctrl+O</kbd>, <kbd>Enter</kbd>, and <kbd>Ctrl+X</kbd>.
+          </p>
+
+          <h2>Step 2: Deploying CouchDB with Docker Compose</h2>
+          <p>
+            Next, we will define our container service using Docker Compose. In the same <code>/data/couchdb</code> directory, create a <code>docker-compose.yml</code> file:
+          </p>
+
+          <pre><code class="language-bash">nano docker-compose.yml</code></pre>
+
+          <p>
+            Insert the following service definition. Be sure to replace <code>your_admin_username</code> and <code>your_strong_password</code> with your actual credentials:
+          </p>
+
+          <pre><code class="language-yaml">version: '3.8'
+
+services:
+  couchdb:
+    image: couchdb:3.3.3
+    container_name: couchdb_obsidian
+    restart: unless-stopped
+    ports:
+      - "5984:5984"
+    environment:
+      - COUCHDB_USER=your_admin_username
+      - COUCHDB_PASSWORD=your_strong_password
+    volumes:
+      - /data/couchdb/data:/opt/couchdb/data
+      - ./local.ini:/opt/couchdb/etc/local.d/local.ini</code></pre>
+
+          <p>
+            Launch the container in detached mode:
+          </p>
+
+          <pre><code class="language-bash">docker compose up -d</code></pre>
+
+          <p>
+            Docker will pull the official CouchDB image, apply your custom configuration, and launch the service.
+          </p>
+
+          <h2>Step 3: Verifying the Server Response</h2>
+          <p>
+            Before opening Obsidian, confirm that CouchDB is healthy and responding over the network. You can test it locally via <code>curl</code> or by navigating to the URL in your web browser:
+          </p>
+
+          <pre><code class="language-bash">curl -X GET http://localhost:5984/</code></pre>
+
+          <p>
+            You should receive a clean JSON payload greeting you with the server information:
+          </p>
+
+          <pre><code class="language-json">{
+  "couchdb": "Welcome",
+  "version": "3.3.3",
+  "git_sha": "9143b2d13",
+  "uuid": "d41d8cd98f00b204e9800998ecf8427e",
+  "features": [
+    "access-ready",
+    "partitioned",
+    "pluggable-storage-engines",
+    "reshard",
+    "scheduler"
+  ],
+  "vendor": {
+    "name": "The Apache Software Foundation"
+  }
+}</code></pre>
+
+          <p>
+            If you have mapped your server behind a reverse proxy (e.g., <code>https://sync.techsimpld.com</code>), visit that URL in your browser. When you see the CouchDB welcome greeting, your backend database is fully operational.
+          </p>
+
+          <h2>Step 4: Installing and Configuring Self-Hosted LiveSync</h2>
+          <p>
+            Now we configure your primary Obsidian vault to push data to CouchDB:
+          </p>
+          <ol>
+            <li>Open Obsidian and click the <strong>Settings</strong> gear icon in the lower-left corner.</li>
+            <li>Navigate to <strong>Community plugins</strong> and turn off Restricted Mode if prompted.</li>
+            <li>Click <strong>Browse</strong>, search for <strong>Self-hosted LiveSync</strong> by vorot93, and click <strong>Install</strong>, then <strong>Enable</strong>.</li>
+            <li>In the left sidebar of the settings window, scroll down to the bottom and select <strong>Self-hosted LiveSync</strong>.</li>
+            <li>Click the button at the top labeled <strong>Rerun onboarding wizard</strong> (or Start setup wizard).</li>
+            <li>Select <strong>First device</strong> (since this is our initial setup).</li>
+            <li>Choose <strong>Configure remote manually</strong>.</li>
+            <li>Enable <strong>End-to-End Encryption (E2EE)</strong>. Enter a robust passphrase. Keep this passphrase secure in a password manager; you will need it to decrypt your notes on subsequent devices.</li>
+            <li>Under synchronization method, choose <strong>CouchDB</strong>.</li>
+            <li>Enter your server connection details:
+              <ul>
+                <li><strong>URL:</strong> Your full HTTPS domain (e.g., <code>https://sync.techsimpld.com</code>) or local IP with port 5984.</li>
+                <li><strong>Admin Username:</strong> The username you defined in your Docker Compose file.</li>
+                <li><strong>Admin Password:</strong> The corresponding password.</li>
+                <li><strong>Database Name:</strong> <code>obsidian</code></li>
+              </ul>
+            </li>
+            <li>Click <strong>Create or connect to database and continue</strong>.</li>
+            <li>When prompted, acknowledge the confirmation risks, and click <strong>Use this device's settings</strong>.</li>
+          </ol>
+
+          <h2>Step 5: Running the Config Doctor and Health Checks</h2>
+          <p>
+            Once connected, the plugin performs an initial database verification. A banner may appear indicating that synchronization is paused for a compatibility review.
+          </p>
+          <p>
+            Click <strong>Resume synchronization</strong>. The built-in <em>Config Doctor</em> will check your vault settings against recommended best practices:
+          </p>
+          <ul>
+            <li><strong>Chunk Size:</strong> The plugin may notify you that chunk size is unconfigured. Click <strong>Apply recommended settings</strong> to set the chunk size to 60. This optimizes file transfer chunks for markdown and attachments.</li>
+            <li><strong>Storage Limits:</strong> Under storage warning alerts, select a standard capacity (such as 2 GB) so the plugin notifies you well before your server runs low on disk space.</li>
+          </ul>
+          <p>
+            After adjusting these options, restart Obsidian once. Click the small circular sync/replicate icon in your status bar or command palette. You will see a notification stating: <em>Replication has been completed successfully</em>.
+          </p>
+
+          <h2>Step 6: Syncing Second Devices (Mac, Windows, iOS, Android)</h2>
+          <p>
+            Connecting secondary devices does not require re-typing complex URLs or database paths. The plugin includes an automated setup URI generator:
+          </p>
+          <ol>
+            <li>On your primary (configured) Obsidian vault, open <strong>Settings -> Self-hosted LiveSync</strong>.</li>
+            <li>Scroll down and select <strong>Copy current settings to a setup URI</strong>.</li>
+            <li>Set a temporary passphrase for the URI payload and copy the generated link.</li>
+            <li>On your second device (e.g., your laptop or mobile phone), install Obsidian and create an empty vault.</li>
+            <li>Install and enable the <strong>Self-hosted LiveSync</strong> plugin in that new vault.</li>
+            <li>In the plugin settings, select <strong>Connect with setup URI</strong>.</li>
+            <li>Paste the URI string, enter your temporary passphrase, and select <strong>My server is already set up and I want to join this device</strong>.</li>
+            <li>Choose your conflict handling preference: select <strong>Compare modification times and keep the newer version</strong>.</li>
+            <li>Enable file deletion synchronization (e.g., <em>Delete local files if deleted on remote</em>).</li>
+          </ol>
+          <p>
+            Within seconds, the plugin will authenticate with CouchDB, fetch the encrypted blobs, decrypt them locally with your master passphrase, and populate your entire folder structure and note library.
+          </p>
+
+          <h2>Troubleshooting Common CouchDB Sync Issues</h2>
+          <p>
+            If you encounter errors during initial replication, check these common configuration bottlenecks:
+          </p>
+          <ul>
+            <li><strong>Network Connection Failed (CORS Errors):</strong> If the status icon displays red connection errors, your reverse proxy or CouchDB instance is blocking origin headers. Verify that your <code>local.ini</code> file was properly mounted into the container volume at <code>/opt/couchdb/etc/local.d/local.ini</code> and that <code>origins = *</code> is active.</li>
+            <li><strong>Reverse Proxy Timeout on Large Vaults:</strong> If your initial sync contains hundreds of images or PDFs, standard Nginx or Cloudflare proxy timeouts (usually 60 seconds) can drop the connection mid-transfer. Increase client request timeouts and maximum body sizes (e.g., <code>client_max_body_size 100M;</code>) in your proxy configuration.</li>
+            <li><strong>Mobile Sync Freezes in Background:</strong> Both iOS and Android aggressively sleep background network processes for battery management. Keep Obsidian open on your mobile screen during the initial sync until all files are transferred. Subsequent edits transfer in fractions of a second.</li>
+          </ul>
+
+          <h2>Summary and Key Takeaways</h2>
+          <p>
+            By combining Apache CouchDB with the Self-Hosted LiveSync plugin, you break free from subscription fees and third-party cloud dependencies. Your notes remain completely your own, stored on your home server, protected by end-to-end encryption, and updated across every screen you own.
+          </p>
+          <p>
+            It delivers the seamless multi-device convenience of a paid cloud service with the rock-solid data sovereignty of a local-first home lab.
+          </p>
+
+          <h2>Official Documentation & Resources</h2>
+          <ul>
+            <li><a href="https://github.com/vrtmrz/obsidian-livesync" target="_blank" rel="noopener noreferrer">Self-Hosted LiveSync GitHub Repository</a></li>
+            <li><a href="https://docs.couchdb.org/" target="_blank" rel="noopener noreferrer">Apache CouchDB Official Documentation</a></li>
+            <li><a href="https://obsidian.md/" target="_blank" rel="noopener noreferrer">Obsidian Note-Taking App</a></li>
+          </ul>
+        </div>
+
+      </article>
+
+      <!-- Sidebar Column -->
+      <aside class="blog-sidebar">
+        <!-- Widget: About Channel -->
+        <div class="sidebar-widget">
+          <h4 class="widget-title">About Tech Simpld</h4>
+          <p style="font-size: 0.9rem; margin-bottom: 1rem;">
+            Software and productivity, simplified. Direct, step-by-step guides for homelabs, Docker, and self-hosted tools.
+          </p>
+          <a href="https://youtube.com/@TechSimpld" target="_blank" id="sidebarYoutubeBtn" class="btn btn-outline btn-sm" style="width: 100%;">
+            Visit YouTube Channel
+          </a>
+        </div>
+      </aside>
+
+    </div>
+  </main>
+
+  <!-- Footer Section -->
+  <footer class="footer">
+    <div class="footer-container">
+      <div>
+        <a href="../index.html" class="footer-logo">
+          Tech Simpld<span class="logo-dot"></span>
+        </a>
+        <p class="footer-desc">
+          Software and productivity, simplified. Clean, no-fluff tutorials and templates for digital creators and
+          builders.
+        </p>
+      </div>
+      <div>
+        <h4 class="footer-heading">Navigation</h4>
+        <ul class="footer-links">
+          <li><a href="../index.html">Home</a></li>
+          <li><a href="../about.html">About</a></li>
+          <li><a href="../posts.html">Posts</a></li>
+          <li><a href="../resources.html">Resources</a></li>
+          <li><a href="../contact.html">Contact</a></li>
+          <li><a href="https://youtube.com/@TechSimpld" target="_blank">YouTube Channel</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4 class="footer-heading">Contact & Legal</h4>
+        <ul class="footer-links">
+          <li><a href="mailto:techsimpld@gmail.com">techsimpld@gmail.com</a></li>
+          <li><a href="../privacy-policy.html">Privacy Policy</a></li>
+          <li><a href="../terms-of-service.html">Terms of Service</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div>© 2026 Tech Simpld. All rights reserved. Built for lightning-fast speeds.</div>
+      <div class="footer-socials">
+        <a href="https://youtube.com/@TechSimpld" class="social-link" aria-label="YouTube">YouTube</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="../js/scripts.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-bash.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-yaml.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-ini.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-json.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/toolbar/prism-toolbar.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/copy-to-clipboard/prism-copy-to-clipboard.min.js"></script>
+</body>
+
+</html>
