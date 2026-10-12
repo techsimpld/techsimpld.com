@@ -24,7 +24,7 @@
 
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>The Ultimate Budget Proxmox Home Lab Tour: 3-Node Cluster on a Budget | Tech Simpld</title>
+  <title>the most effective Budget Proxmox Home Lab Tour: 3-Node Cluster on a Budget | Tech Simpld</title>
   <meta name="description"
     content="Tour a resilient, high-performance 3-node Proxmox home lab cluster built from cheap used Dell OptiPlex desktops. Learn about Ceph storage, VLANs, LXC containers, and PBS backups.">
   <link rel="canonical" href="https://techsimpld.com/posts/budget-proxmox-home-lab-setup.html">
@@ -35,14 +35,14 @@
   <meta property="og:type" content="article">
   <meta property="og:site_name" content="Tech Simpld">
   <meta property="og:url" content="https://techsimpld.com/posts/budget-proxmox-home-lab-setup.html">
-  <meta property="og:title" content="The Ultimate Budget Proxmox Home Lab Tour: 3-Node Cluster on a Budget | Tech Simpld">
+  <meta property="og:title" content="the most effective Budget Proxmox Home Lab Tour: 3-Node Cluster on a Budget | Tech Simpld">
   <meta property="og:description"
     content="Tour a resilient, high-performance 3-node Proxmox home lab cluster built from cheap used Dell OptiPlex desktops. Learn about Ceph storage, VLANs, LXC containers, and PBS backups.">
   <meta property="og:image" content="https://techsimpld.com/images/budget-proxmox-home-lab.png">
 
   <!-- Twitter Card -->
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="The Ultimate Budget Proxmox Home Lab Tour: 3-Node Cluster on a Budget | Tech Simpld">
+  <meta name="twitter:title" content="the most effective Budget Proxmox Home Lab Tour: 3-Node Cluster on a Budget | Tech Simpld">
   <meta name="twitter:description"
     content="Tour a resilient, high-performance 3-node Proxmox home lab cluster built from cheap used Dell OptiPlex desktops. Learn about Ceph storage, VLANs, LXC containers, and PBS backups.">
   <meta name="twitter:image" content="https://techsimpld.com/images/budget-proxmox-home-lab.png">
@@ -52,7 +52,7 @@
   {
     "@context": "https://schema.org",
     "@type": "Article",
-    "headline": "The Ultimate Budget Proxmox Home Lab Tour: 3-Node Cluster on a Budget",
+    "headline": "the most effective Budget Proxmox Home Lab Tour: 3-Node Cluster on a Budget",
     "image": [
       "https://techsimpld.com/images/budget-proxmox-home-lab.png"
     ],
@@ -138,7 +138,7 @@
 
         <header class="article-header">
           <div class="badge">Proxmox Home Lab</div>
-          <h1 class="article-title">The Ultimate Budget Proxmox Home Lab Tour: Building a 3-Node Cluster</h1>
+          <h1 class="article-title">the most effective Budget Proxmox Home Lab Tour: Building a 3-Node Cluster</h1>
 
           <div class="article-meta">
             <div class="article-meta-item">
@@ -192,7 +192,7 @@
             Let's walk step-by-step through the specific hardware choices, the network segmentation required to make it run smoothly over a managed switch, the magic of Ceph hyper-converged storage, the incredible density of Linux Containers (LXCs), and how I handle automated nightly disaster recovery with Proxmox Backup Server (PBS).
           </p>
 
-          <h2>1. The Hardware Foundation: Why Dell OptiPlex Desktops are the Ultimate Sweet Spot</h2>
+          <h2>1. The Hardware Foundation: Why Dell OptiPlex Desktops are the most effective Sweet Spot</h2>
           <p>
             The physical foundation of my budget high-availability cluster consists of exactly three refurbished <strong>Dell OptiPlex 9020</strong> small-form-factor (SFF) or micro units. When beginners start out, they often ask: why choose boring, off-lease corporate office PCs over custom-built mini PCs or clusters of Raspberry Pis?
           </p>
@@ -214,7 +214,7 @@
             If you have a cluster of exactly 2 nodes, and someone trips over a network cable unplugging Node 1, each node suddenly thinks the other node is dead. Because neither node can establish more than 50% of the vote (since each holds exactly 50%), the entire cluster enters a dangerous "split-brain" state. To prevent catastrophic data corruption, Proxmox will instantly freeze and lock down all virtual machines and storage operations across both nodes. Your "High Availability" setup just caused a complete network outage.
           </p>
           <p>
-            With <strong>3 nodes</strong>, the math fundamentally changes in your favor. If Node 1 goes down due to a hardware failure, or if you intentionally reboot it for a Linux kernel update, Node 2 and Node 3 can still communicate. Together, they hold 2 out of 3 votes (66.6%). The cluster retains Quorum, stays perfectly healthy, and allows your critical services—like your DNS server or home automation—to stay online with zero downtime while you fix the broken node.
+            With <strong>3 nodes</strong>, the math fundamentally changes in your favor. If Node 1 goes down due to a hardware failure, or if you intentionally reboot it for a Linux kernel update, Node 2 and Node 3 can still communicate. Together, they hold 2 out of 3 votes (66.6%). The cluster retains Quorum, stays perfectly healthy, and allows your critical services, like your DNS server or home automation, to stay online with zero downtime while you fix the broken node.
           </p>
 
           <h2>3. Network Segmentation & VLANs: Keeping Traffic Clean and Fast</h2>
@@ -222,7 +222,7 @@
             When you build a cluster that syncs storage across the network, you generate a massive amount of "east-west" background traffic. To prevent this heavy storage sync traffic from choking out your regular home internet and causing Netflix to buffer, I connect all three nodes through an inexpensive <strong>8-Port Managed Smart Switch</strong>. I have segmented this switch into three distinct, highly isolated Virtual LANs (VLANs):
           </p>
           <ul>
-            <li><strong>VLAN 0 (Personal Home Network):</strong> The default, untagged native network for all personal everyday devices in the house—family laptops, smartphones, IoT lightbulbs, streaming boxes, and smart TVs. This traffic has no idea the lab exists.</li>
+            <li><strong>VLAN 0 (Personal Home Network):</strong> The default, untagged native network for all personal everyday devices in the house, family laptops, smartphones, IoT lightbulbs, streaming boxes, and smart TVs. This traffic has no idea the lab exists.</li>
             <li><strong>VLAN 100 (Home Lab Server Network):</strong> The dedicated, secure playground for our Proxmox nodes. This subnet houses the Proxmox management web interfaces (port 8006), all the LXC containers, virtual machines, Docker hosts, and various self-hosted developer tools.</li>
             <li><strong>VLAN 200 (The Ceph Backend Storage Highway):</strong> An entirely isolated, non-routable, high-speed network purely dedicated to Ceph backend storage traffic, cluster heartbeat checks, and continuous block-level disk syncing between the three nodes. By isolating this, it can blast data at line-rate without ever competing with regular LAN bandwidth.</li>
           </ul>

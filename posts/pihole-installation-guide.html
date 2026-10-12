@@ -195,7 +195,7 @@
 
           <h2>Why Choose an LXC over a Full Virtual Machine?</h2>
           <p>
-            If you are relatively new to the Proxmox ecosystem, your immediate instinct might be to spin up a full Virtual Machine (VM) running Ubuntu or Debian just to host Pi-hole. Please do not do this. A full VM simulates entire hardware layers—including a virtual motherboard, BIOS, and virtual disks. It is incredibly heavy and resource-intensive for what we need to accomplish.
+            If you are relatively new to the Proxmox ecosystem, your immediate instinct might be to spin up a full Virtual Machine (VM) running Ubuntu or Debian just to host Pi-hole. Please do not do this. A full VM simulates entire hardware layers, including a virtual motherboard, BIOS, and virtual disks. It is incredibly heavy and resource-intensive for what we need to accomplish.
           </p>
           <p>
             An LXC (Linux Container), on the other hand, runs directly on the host's kernel without that massive overhead. Because Pi-hole is essentially just a highly optimized, text-based phonebook for IP addresses, it needs almost zero processing power to run efficiently. My Pi-hole LXC container boots instantly in under three seconds and consistently consumes less than 512MB of RAM, leaving the rest of my expensive server hardware completely free for much heavier workloads like media streaming and database management.
@@ -203,7 +203,7 @@
 
           <h2>Step 1: Accessing the Proxmox Shell</h2>
           <p>
-            Building Linux containers entirely manually—downloading specific OS templates, manually configuring virtual network bridges, creating administrative users, and updating packages—is tedious and prone to human error. I don't do it, and neither should you. Instead, I heavily utilize the community-built Proxmox VE Helper Scripts to completely automate the grunt work and deploy services flawlessly in seconds.
+            Building Linux containers entirely manually, downloading specific OS templates, manually configuring virtual network bridges, creating administrative users, and updating packages, is tedious and prone to human error. I don't do it, and neither should you. Instead, I heavily utilize the community-built Proxmox VE Helper Scripts to completely automate the grunt work and deploy services flawlessly in seconds.
           </p>
           <ul>
             <li>Log into your <strong>Proxmox web administrative interface</strong> via your browser.</li>
@@ -259,7 +259,7 @@
 
           <h2>Conclusion & Next Steps for Your Lab</h2>
           <p>
-            Congratulations, your entire home network is now heavily defended. Every single device connected to your Wi-Fi—from your laptop to your smart thermostat—is actively being stripped of malicious telemetry and massive ad payloads before they even reach the screen. It is easily one of the highest Return-on-Investment (ROI) projects you can ever run in a home lab environment. Monitor your dashboard, tweak your whitelists as necessary, and enjoy a significantly faster, cleaner, and more secure internet experience.
+            Congratulations, your entire home network is now heavily defended. Every single device connected to your Wi-Fi, from your laptop to your smart thermostat, is actively being stripped of malicious telemetry and massive ad payloads before they even reach the screen. It is easily one of the highest Return-on-Investment (ROI) projects you can ever run in a home lab environment. Monitor your dashboard, tweak your whitelists as necessary, and enjoy a significantly faster, cleaner, and more secure internet experience.
           </p>
 
           <h2>Official Resources & External Links</h2>

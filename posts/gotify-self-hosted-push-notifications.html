@@ -309,7 +309,7 @@ else
 fi
 </code></pre>
           <p>
-            Pay very close attention to the <code>priority</code> flag in the script above. Gotify uses this integer value to explicitly dictate how the Android operating system on your phone handles the incoming alert. I strictly use <code>2</code> (or lower) for successful, routine jobs—they silently drop into my notification drawer without vibrating or making a sound, allowing me to review them at my leisure. However, I use <code>9</code> for catastrophic failures. On Android, a Priority 9 Gotify message is designed to aggressively override system-level "Do Not Disturb" settings and trigger a loud, persistent, impossible-to-ignore alarm tone until I physically acknowledge it. It is incredibly effective.
+            Pay very close attention to the <code>priority</code> flag in the script above. Gotify uses this integer value to explicitly dictate how the Android operating system on your phone handles the incoming alert. I strictly use <code>2</code> (or lower) for successful, routine jobs, they silently drop into my notification drawer without vibrating or making a sound, allowing me to review them at my leisure. However, I use <code>9</code> for catastrophic failures. On Android, a Priority 9 Gotify message is designed to aggressively override system-level "Do Not Disturb" settings and trigger a loud, persistent, impossible-to-ignore alarm tone until I physically acknowledge it. It is incredibly effective.
           </p>
 
           <h2>Advanced Troubleshooting & Edge Case Resolution</h2>
