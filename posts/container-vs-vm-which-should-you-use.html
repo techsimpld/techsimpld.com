@@ -6,11 +6,13 @@
   <script>
     window.dataLayer = window.dataLayer || [];
     function gtag() { dataLayer.push(arguments); }
-    if(localStorage.getItem('cookie_consent') === 'true') {
-      gtag('consent', 'default', { 'ad_storage': 'granted', 'analytics_storage': 'granted', 'ad_user_data': 'granted', 'ad_personalization': 'granted' });
-    } else {
-      gtag('consent', 'default', { 'ad_storage': 'denied', 'analytics_storage': 'denied', 'ad_user_data': 'denied', 'ad_personalization': 'denied' });
-    }
+    gtag('consent', 'default', {
+      'ad_storage': 'denied',
+      'analytics_storage': 'denied',
+      'ad_user_data': 'denied',
+      'ad_personalization': 'denied',
+      'wait_for_update': 500
+    });
   </script>
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-1KFGHVDB66"></script>
   <script>
@@ -84,6 +86,11 @@
   <!-- Favicons -->
   <link rel="icon" type="image/svg+xml" href="../favicon.svg">
   <link rel="alternate icon" type="image/png" href="../favicon.png">
+
+    <!-- Google Fonts Preconnect & Stylesheet -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap">
 
   <!-- Stylesheets -->
   <link rel="stylesheet" href="../css/styles.css">
@@ -163,7 +170,7 @@
                 <circle cx="12" cy="12" r="10"></circle>
                 <polyline points="12 6 12 12 16 14"></polyline>
               </svg>
-              <span>15 Min Read</span>
+              <span>7 Min Read</span>
             </div>
           </div>
         </header>
@@ -188,6 +195,39 @@
           <p>
             In this guide, we bypass theoretical marketing claims and test the performance gap directly. We deploy identical Nginx web services across a Debian 12 Virtual Machine and an LXC Container on the exact same Proxmox node, measure their idle footprints side-by-side using <code>htop</code>, hit both with an intense 50,000-request Apache Benchmark stress test, and lay out the exact engineering criteria for when to pick each.
           </p>
+
+          <!-- Virtualization Architecture Comparison (Mermaid) -->
+          <div class="mermaid-container">
+            <div class="mermaid-title">Virtual Machine vs. Container (LXC / Docker) Architecture</div>
+            <pre class="mermaid">
+flowchart TB
+    subgraph VM["Full Virtual Machine (KVM / QEMU)"]
+        direction TB
+        App1["App / Service (Nginx)"]
+        Bins1["Libraries & Binaries"]
+        GuestOS["Guest OS Kernel & Systemd<br>(Mandatory 450MB+ Overhead)"]
+        Hyper["Hypervisor Layer (KVM)"]
+        App1 --> Bins1 --> GuestOS --> Hyper
+    end
+
+    subgraph Container["LXC Container / Docker Engine"]
+        direction TB
+        App2["App / Service (Nginx)"]
+        Bins2["Libraries & Binaries"]
+        Isolation["Namespaces & Cgroups<br>(Zero OS Kernel Tax)"]
+        App2 --> Bins2 --> Isolation
+    end
+
+    subgraph Host["Physical Host Hardware & Proxmox VE"]
+        HostKernel["Shared Proxmox Host Linux Kernel"]
+        Hardware["Bare-Metal Server Hardware (CPU, RAM, Disks, NICs)"]
+        HostKernel --> Hardware
+    end
+
+    Hyper --> HostKernel
+    Isolation --> HostKernel
+            </pre>
+          </div>
 
           <h2>Under the Hood: Virtual Machines vs. Containers</h2>
           <p>
@@ -345,14 +385,30 @@ ab -n 50000 -c 100 http://[TARGET_IP]/</code></pre>
 
           <h2>The Proxmox Pro Strategy: Docker Inside a Nested LXC</h2>
           <p>
-            Here is the homelab secret that experienced engineers use to achieve the most effective balance: <strong>You do not have to choose just one.</strong>
+            Here is the homelab secret that experienced engineers use to achieve the best architectural balance: <strong>You do not have to choose just one.</strong>
           </p>
           <p>
-            In Proxmox VE, deploy a single lightweight Debian or Ubuntu LXC container. Under the container's <strong>Options</strong> tab, enable <strong>Nesting</strong> and <strong>keyctl</strong> support. Inside that LXC, install Docker and Docker Compose.
+            In Proxmox VE, deploy a single lightweight Debian or Ubuntu LXC container. Under the container's <strong>Options</strong> tab, enable <strong>Nesting</strong> and <strong>keyctl</strong> support. Inside that LXC, install Docker and Docker Compose (as detailed in our <a href="docker-vs-podman.html">Docker vs. Podman Guide</a>).
           </p>
           <p>
             This hybrid approach gives you the clean package management and portability of Docker Compose, while the entire stack runs directly on the shared Proxmox host kernel, consuming less than 200 MB of total system memory at near bare-metal speeds.
           </p>
+
+          <h3>Reproducible Benchmark Commands: Testing Your Own Nodes</h3>
+          <p>
+            To verify throughput and response times on your own Proxmox hardware, run these commands from another workstation on your local subnet:
+          </p>
+          <pre><code class="language-bash"># 1. Stress test the LXC container with 50,000 HTTP requests
+ab -n 50000 -c 100 -k http://192.168.100.45/
+
+# 2. Stress test the Virtual Machine on identical specs
+ab -n 50000 -c 100 -k http://192.168.100.50/
+
+# 3. Inspect real-time container memory usage directly from the Proxmox host
+pct enter 105 -- free -m
+
+# 4. View active VM memory consumption and ballooning allocation
+qm status 110 --verbose</code></pre>
 
           <h2>Summary and Key Takeaways</h2>
           <p>
@@ -361,12 +417,17 @@ ab -n 50000 -c 100 http://[TARGET_IP]/</code></pre>
           <p>
             Use lightweight containers as your daily homelab workhorses, and reserve full virtual machines for when you truly need hardware isolation, custom kernels, or non-Linux operating systems.
           </p>
+          <p>
+            To continue building out your home lab architecture, check out our full tour of our <a href="budget-proxmox-home-lab-setup.html">Budget 3-Node Proxmox Cluster</a>, our guide on <a href="docker-vs-podman.html">Docker vs. Podman</a>, and our step-by-step <a href="pihole-installation-guide.html">Pi-hole LXC Deployment Guide</a>.
+          </p>
 
           <h2>Helpful Resources & References</h2>
           <ul>
             <li><a href="https://pve.proxmox.com/wiki/Linux_Container" target="_blank" rel="noopener noreferrer">Proxmox VE Official LXC Container Documentation</a></li>
             <li><a href="https://pve.proxmox.com/wiki/Qemu/KVM" target="_blank" rel="noopener noreferrer">Proxmox VE Qemu/KVM Virtual Machine Guide</a></li>
             <li><a href="https://httpd.apache.org/docs/2.4/programs/ab.html" target="_blank" rel="noopener noreferrer">Apache Benchmark (ab) Tool Documentation</a></li>
+            <li><a href="budget-proxmox-home-lab-setup.html">Complete Budget Proxmox Home Lab Guide on Tech Simpld</a></li>
+            <li><a href="docker-vs-podman.html">Docker vs Podman Comparison on Tech Simpld</a></li>
           </ul>
         </div>
 
@@ -435,6 +496,24 @@ ab -n 50000 -c 100 http://[TARGET_IP]/</code></pre>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-bash.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/toolbar/prism-toolbar.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/copy-to-clipboard/prism-copy-to-clipboard.min.js"></script>
+  <!-- Mermaid Diagram Engine -->
+  <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+  <script>
+    mermaid.initialize({
+      startOnLoad: true,
+      theme: 'dark',
+      themeVariables: {
+        darkMode: true,
+        background: '#0f111a',
+        primaryColor: '#161926',
+        primaryBorderColor: '#8b5cf6',
+        primaryTextColor: '#f3f4f6',
+        lineColor: '#06b6d4',
+        secondaryColor: '#1f2336',
+        tertiaryColor: '#07080d'
+      }
+    });
+  </script>
 </body>
 
 </html>

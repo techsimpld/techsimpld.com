@@ -6,11 +6,13 @@
   <script>
     window.dataLayer = window.dataLayer || [];
     function gtag() { dataLayer.push(arguments); }
-    if(localStorage.getItem('cookie_consent') === 'true') {
-      gtag('consent', 'default', { 'ad_storage': 'granted', 'analytics_storage': 'granted', 'ad_user_data': 'granted', 'ad_personalization': 'granted' });
-    } else {
-      gtag('consent', 'default', { 'ad_storage': 'denied', 'analytics_storage': 'denied', 'ad_user_data': 'denied', 'ad_personalization': 'denied' });
-    }
+    gtag('consent', 'default', {
+      'ad_storage': 'denied',
+      'analytics_storage': 'denied',
+      'ad_user_data': 'denied',
+      'ad_personalization': 'denied',
+      'wait_for_update': 500
+    });
   </script>
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-1KFGHVDB66"></script>
   <script>
@@ -85,6 +87,11 @@
   <link rel="icon" type="image/svg+xml" href="../favicon.svg">
   <link rel="alternate icon" type="image/png" href="../favicon.png">
 
+    <!-- Google Fonts Preconnect & Stylesheet -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap">
+
   <!-- Stylesheets -->
   <link rel="stylesheet" href="../css/styles.css">
   <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" rel="stylesheet" />
@@ -154,7 +161,7 @@
                 <line x1="8" y1="2" x2="8" y2="6"></line>
                 <line x1="3" y1="10" x2="21" y2="10"></line>
               </svg>
-              <span>Available Now</span>
+              <span>June 5, 2026</span>
             </div>
             <span>•</span>
             <div class="article-meta-item">
@@ -217,7 +224,7 @@
             You will instantly be presented with a clean interface where you can add vertical lists. I highly recommend starting with a simple three-list structure: <strong>To-Do</strong>, <strong>In Progress</strong>, and <strong>Completed</strong>. You can now create tasks as cards and visually drag them across stages as you make progress. The true brilliance of this plugin is that, because it is still just standard Markdown text under the hood, it remains lightning fast and you can link to other notes directly from within a Kanban card.
           </p>
 
-          <h2>2. Dataview: the most effective Database Engine</h2>
+          <h2>2. Dataview: Dynamic Database Engine for Markdown</h2>
           <p>
             If there is one plugin that defines the power of Obsidian, it is Dataview. Developed by <em>blacksmithgu</em>, Dataview is arguably the most powerful plugin in the entire ecosystem. It effectively acts as a live, real-time SQL query engine specifically for your plain text notes.
           </p>

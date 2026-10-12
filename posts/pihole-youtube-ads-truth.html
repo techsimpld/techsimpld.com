@@ -6,11 +6,13 @@
   <script>
     window.dataLayer = window.dataLayer || [];
     function gtag() { dataLayer.push(arguments); }
-    if(localStorage.getItem('cookie_consent') === 'true') {
-      gtag('consent', 'default', { 'ad_storage': 'granted', 'analytics_storage': 'granted', 'ad_user_data': 'granted', 'ad_personalization': 'granted' });
-    } else {
-      gtag('consent', 'default', { 'ad_storage': 'denied', 'analytics_storage': 'denied', 'ad_user_data': 'denied', 'ad_personalization': 'denied' });
-    }
+    gtag('consent', 'default', {
+      'ad_storage': 'denied',
+      'analytics_storage': 'denied',
+      'ad_user_data': 'denied',
+      'ad_personalization': 'denied',
+      'wait_for_update': 500
+    });
   </script>
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-1KFGHVDB66"></script>
   <script>
@@ -72,6 +74,40 @@
   }
   </script>
 
+  <!-- FAQPage Schema -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "Why can browser extensions like uBlock Origin block YouTube ads when Pi-hole cannot?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Pi-hole works exclusively at the DNS layer (layer 3/4), resolving entire domain names before traffic connects. Because YouTube serves both ads and actual video streams from the exact same dynamic googlevideo.com domains, Pi-hole cannot distinguish between them. Browser extensions operate at layer 7 inside the browser DOM, inspecting HTML, scripts, and video player elements in real time to filter ad injection scripts."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What happens if I manually blacklist googlevideo.com in Pi-hole?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Blocking googlevideo.com completely breaks video playback. The YouTube website or app UI will load thumbnails and comments, but clicking any video will result in an infinite loading spinner or playback error."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What is the most effective ad-blocking strategy for YouTube on Smart TVs and mobile?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "For Android TV and Fire TV devices, use open-source clients like SmartTube. For Android mobile, use ReVanced. For desktop browsers, pair Pi-hole (for background telemetry and tracker sinking) with uBlock Origin or Brave Browser for in-stream video filtering."
+        }
+      }
+    ]
+  }
+  </script>
+
   <!-- DNS Prefetch & Preconnect for Speed -->
   <link rel="dns-prefetch" href="https://www.googletagmanager.com">
   <link rel="preconnect" href="https://www.googletagmanager.com" crossorigin>
@@ -81,6 +117,11 @@
   <!-- Favicons -->
   <link rel="icon" type="image/svg+xml" href="../favicon.svg">
   <link rel="alternate icon" type="image/png" href="../favicon.png">
+
+    <!-- Google Fonts Preconnect & Stylesheet -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap">
 
   <!-- Stylesheets -->
   <link rel="stylesheet" href="../css/styles.css">
@@ -151,7 +192,7 @@
                 <line x1="8" y1="2" x2="8" y2="6"></line>
                 <line x1="3" y1="10" x2="21" y2="10"></line>
               </svg>
-              <span>Available Now</span>
+              <span>June 22, 2026</span>
             </div>
             <span>•</span>
             <div class="article-meta-item">
@@ -160,7 +201,7 @@
                 <circle cx="12" cy="12" r="10"></circle>
                 <polyline points="12 6 12 12 16 14"></polyline>
               </svg>
-              <span>10 Min Read</span>
+              <span>6 Min Read</span>
             </div>
           </div>
         </header>
@@ -246,6 +287,29 @@
             <li><strong>Check for heavily conflicting extensions:</strong> Having multiple ad-blockers installed simultaneously (for example, running uBlock Origin alongside Adblock Plus or Privacy Badger) frequently causes them to fight each other for control of the network requests, often breaking the block rules entirely and allowing ads to slip through. Remove or completely disable all of them except uBlock Origin.</li>
             <li><strong>Force an immediate update of your filter lists:</strong> Sometimes Google changes their ad delivery methodology slightly, and the open-source community needs a day or two to catch up and write new rules. Open the uBlock Origin settings dashboard, navigate to the 'Filter lists' tab, click the 'Purge all caches' button, and then immediately click 'Update now'. Refresh YouTube and the ads should be gone.</li>
           </ul>
+
+          <!-- FAQ Accordion Section -->
+          <section class="faq-section">
+            <h2 class="faq-title">Frequently Asked Questions</h2>
+            <details class="faq-item">
+              <summary class="faq-question">Why can browser extensions like uBlock Origin block YouTube ads when Pi-hole cannot?</summary>
+              <div class="faq-answer">
+                Pi-hole works exclusively at the DNS layer (layer 3/4), resolving entire domain names before traffic connects. Because YouTube serves both ads and actual video streams from the exact same dynamic googlevideo.com domains, Pi-hole cannot distinguish between them. Browser extensions operate at layer 7 inside the browser DOM, inspecting HTML, scripts, and video player elements in real time to filter ad injection scripts.
+              </div>
+            </details>
+            <details class="faq-item">
+              <summary class="faq-question">What happens if I manually blacklist googlevideo.com in Pi-hole?</summary>
+              <div class="faq-answer">
+                Blocking googlevideo.com completely breaks video playback. The YouTube website or app UI will load thumbnails and comments, but clicking any video will result in an infinite loading spinner or playback error.
+              </div>
+            </details>
+            <details class="faq-item">
+              <summary class="faq-question">What is the most effective ad-blocking strategy for YouTube on Smart TVs and mobile?</summary>
+              <div class="faq-answer">
+                For Android TV and Fire TV devices, use open-source clients like SmartTube. For Android mobile, use ReVanced. For desktop browsers, pair Pi-hole (for background telemetry and tracker sinking) with uBlock Origin or Brave Browser for in-stream video filtering.
+              </div>
+            </details>
+          </section>
 
           <h2>Conclusion & Next Steps for Your Network</h2>
           <p>

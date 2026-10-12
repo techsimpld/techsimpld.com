@@ -267,6 +267,68 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
+  // 4b. Category Filter & Live Search for Posts Grid
+  const filterButtons = document.querySelectorAll('.filter-btn');
+  const postCards = document.querySelectorAll('.tutorials-grid .card');
+  const searchInput = document.getElementById('postsSearch');
+  const tutorialsGrid = document.querySelector('.tutorials-grid');
+
+  let currentCategory = 'all';
+  let currentSearchQuery = '';
+
+  const applyPostsFilter = () => {
+    if (!postCards.length) return;
+    let visibleCount = 0;
+
+    postCards.forEach(card => {
+      const category = card.getAttribute('data-category') || '';
+      const title = (card.querySelector('.card-title') || {}).textContent || '';
+      const excerpt = (card.querySelector('.card-excerpt') || {}).textContent || '';
+      const textToMatch = `${title} ${excerpt} ${category}`.toLowerCase();
+
+      const matchesCategory = (currentCategory === 'all' || category.includes(currentCategory));
+      const matchesSearch = (!currentSearchQuery || textToMatch.includes(currentSearchQuery));
+
+      if (matchesCategory && matchesSearch) {
+        card.classList.remove('filter-hidden');
+        visibleCount++;
+      } else {
+        card.classList.add('filter-hidden');
+      }
+    });
+
+    let noResultsEl = document.getElementById('noSearchResults');
+    if (visibleCount === 0) {
+      if (!noResultsEl && tutorialsGrid) {
+        noResultsEl = document.createElement('div');
+        noResultsEl.id = 'noSearchResults';
+        noResultsEl.className = 'search-no-results';
+        noResultsEl.textContent = 'No tutorials found matching your search. Try another keyword.';
+        tutorialsGrid.parentNode.insertBefore(noResultsEl, tutorialsGrid.nextSibling);
+      }
+    } else if (noResultsEl) {
+      noResultsEl.remove();
+    }
+  };
+
+  if (filterButtons.length > 0) {
+    filterButtons.forEach(btn => {
+      btn.addEventListener('click', () => {
+        filterButtons.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        currentCategory = btn.getAttribute('data-filter') || 'all';
+        applyPostsFilter();
+      });
+    });
+  }
+
+  if (searchInput) {
+    searchInput.addEventListener('input', (e) => {
+      currentSearchQuery = e.target.value.trim().toLowerCase();
+      applyPostsFilter();
+    });
+  }
+
   // 5. Cookie Consent Banner Injection & Logic
   const checkCookieConsent = () => {
     const hasConsented = localStorage.getItem('cookie_consent');
@@ -300,12 +362,28 @@ document.addEventListener('DOMContentLoaded', () => {
 
     acceptBtn.addEventListener('click', () => {
       localStorage.setItem('cookie_consent', 'true');
+      if (typeof window.gtag === 'function') {
+        window.gtag('consent', 'update', {
+          'ad_storage': 'granted',
+          'analytics_storage': 'granted',
+          'ad_user_data': 'granted',
+          'ad_personalization': 'granted'
+        });
+      }
       initGoogleAnalytics();
       hideBanner(banner);
     });
 
     rejectBtn.addEventListener('click', () => {
       localStorage.setItem('cookie_consent', 'false');
+      if (typeof window.gtag === 'function') {
+        window.gtag('consent', 'update', {
+          'ad_storage': 'denied',
+          'analytics_storage': 'denied',
+          'ad_user_data': 'denied',
+          'ad_personalization': 'denied'
+        });
+      }
       hideBanner(banner);
     });
   };
@@ -319,6 +397,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   const initGoogleAnalytics = () => {
     if (localStorage.getItem('cookie_consent') !== 'true') return;
+    if (document.querySelector('script[src*="G-1KFGHVDB66"]')) return;
 
     const script = document.createElement('script');
     script.async = true;
@@ -326,9 +405,11 @@ document.addEventListener('DOMContentLoaded', () => {
     document.head.appendChild(script);
 
     window.dataLayer = window.dataLayer || [];
-    window.gtag = function() {
-      window.dataLayer.push(arguments);
-    };
+    if (!window.gtag) {
+      window.gtag = function() {
+        window.dataLayer.push(arguments);
+      };
+    }
 
     window.gtag('js', new Date());
     window.gtag('config', 'G-1KFGHVDB66');
@@ -336,4 +417,104 @@ document.addEventListener('DOMContentLoaded', () => {
 
   checkCookieConsent();
   initGoogleAnalytics();
+
+  // 6. Reading Progress Bar for Article Posts
+  const proseElement = document.querySelector('.prose');
+  if (proseElement) {
+    const progressBar = document.createElement('div');
+    progressBar.className = 'reading-progress-bar';
+    document.body.appendChild(progressBar);
+
+    window.addEventListener('scroll', () => {
+      const rect = proseElement.getBoundingClientRect();
+      const windowHeight = window.innerHeight;
+      const totalHeight = rect.height;
+      const progress = Math.min(
+        100,
+        Math.max(0, ((-rect.top) / (totalHeight - windowHeight + 200)) * 100)
+      );
+      progressBar.style.width = `${progress}%`;
+    }, { passive: true });
+  }
+
+  // 7. Dynamic Table of Contents for Long Articles
+  if (proseElement) {
+    const headings = proseElement.querySelectorAll('h2');
+    const sidebar = document.querySelector('.blog-sidebar');
+
+    if (headings.length >= 3 && sidebar) {
+      const tocWidget = document.createElement('div');
+      tocWidget.className = 'sidebar-widget toc-widget';
+      tocWidget.innerHTML = `
+        <h4 class="widget-title toc-title">On This Page</h4>
+        <ul class="toc-list"></ul>
+      `;
+      const tocList = tocWidget.querySelector('.toc-list');
+
+      headings.forEach((heading, idx) => {
+        if (!heading.id) {
+          heading.id = `section-${idx + 1}-${heading.textContent.trim().toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '')}`;
+        }
+        const li = document.createElement('li');
+        const link = document.createElement('a');
+        link.href = `#${heading.id}`;
+        link.textContent = heading.textContent.trim();
+        link.addEventListener('click', (e) => {
+          e.preventDefault();
+          heading.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          history.pushState(null, null, `#${heading.id}`);
+        });
+        li.appendChild(link);
+        tocList.appendChild(li);
+      });
+
+      sidebar.insertBefore(tocWidget, sidebar.firstChild);
+    }
+
+    // 8. Social Share Buttons at End of Prose
+    const shareBar = document.createElement('div');
+    shareBar.className = 'social-share-bar';
+    const postTitle = document.title.split('|')[0].trim();
+    const currentUrl = encodeURIComponent(window.location.href);
+    const encodedTitle = encodeURIComponent(postTitle);
+
+    shareBar.innerHTML = `
+      <span class="share-label">Share Guide:</span>
+      <button class="share-btn" id="copyShareBtn">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+          <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+        </svg>
+        Copy Link
+      </button>
+      <a class="share-btn" href="https://twitter.com/intent/tweet?url=${currentUrl}&text=${encodedTitle}" target="_blank" rel="noopener noreferrer">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+        </svg>
+        X
+      </a>
+      <a class="share-btn" href="https://www.reddit.com/submit?url=${currentUrl}&title=${encodedTitle}" target="_blank" rel="noopener noreferrer">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+          <circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="2"/>
+          <path d="M8 12a1 1 0 1 0 2 0 1 1 0 0 0-2 0zm6 0a1 1 0 1 0 2 0 1 1 0 0 0-2 0z"/>
+          <path d="M9 15c1 1 3 1 4 0" fill="none" stroke="currentColor" stroke-width="1.5"/>
+        </svg>
+        Reddit
+      </a>
+    `;
+
+    const copyBtn = shareBar.querySelector('#copyShareBtn');
+    if (copyBtn) {
+      copyBtn.addEventListener('click', () => {
+        navigator.clipboard.writeText(window.location.href).then(() => {
+          createNotification('Tutorial link copied to clipboard!');
+        }).catch(() => {
+          createNotification('Link: ' + window.location.href);
+        });
+      });
+    }
+
+    proseElement.appendChild(shareBar);
+  }
 });
+

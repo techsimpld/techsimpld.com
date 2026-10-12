@@ -3,6 +3,24 @@
 
 <head>
 
+  <!-- Google tag (gtag.js) -->
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { dataLayer.push(arguments); }
+    gtag('consent', 'default', {
+      'ad_storage': 'denied',
+      'analytics_storage': 'denied',
+      'ad_user_data': 'denied',
+      'ad_personalization': 'denied',
+      'wait_for_update': 500
+    });
+  </script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-1KFGHVDB66"></script>
+  <script>
+    gtag('js', new Date());
+    gtag('config', 'G-1KFGHVDB66');
+  </script>
+
   <!-- Google AdSense -->
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5214277715351322"
     crossorigin="anonymous"></script>
@@ -41,6 +59,11 @@
   <!-- Favicons -->
   <link rel="icon" type="image/svg+xml" href="favicon.svg">
   <link rel="alternate icon" type="image/png" href="favicon.png">
+
+    <!-- Google Fonts Preconnect & Stylesheet -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap">
 
   <!-- Stylesheets -->
   <link rel="stylesheet" href="css/styles.css">
@@ -130,6 +153,27 @@
         community of like-minded hobbyists. Whether you are just getting started with Docker or trying to optimize a
         complex Proxmox cluster, I want this to be your go-to resource for clear, reliable guides.
       </p>
+
+      <h2>The Tech Simpld Lab Infrastructure</h2>
+      <p>
+        Every architecture recommendation and tutorial on this site runs directly in our physical testing lab. The environment is built to mirror enterprise-grade reliability while remaining accessible and budget-conscious for home labbers:
+      </p>
+      <ul>
+        <li><strong>Compute Nodes:</strong> 3-Node Proxmox VE High-Availability (HA) cluster powered by Intel Alder Lake / Raptor Lake mini PCs equipped with 64 GB DDR5 memory per node.</li>
+        <li><strong>Storage Fabric:</strong> Distributed Ceph storage pools backed by enterprise NVMe SSDs in mirrored vdevs, delivering sub-millisecond I/O latency and seamless zero-downtime VM live migration.</li>
+        <li><strong>Networking &amp; Security:</strong> Dedicated 2.5 GbE private cluster interconnect fabric, isolated VLANs for IoT and lab guests, Pi-hole recursive DNS sinks, and encrypted Cloudflare Zero Trust Tunnels with zero open inbound ports.</li>
+        <li><strong>Power &amp; Resilience:</strong> Smart pure-sine-wave uninterruptible power supplies (UPS) configured with NUT (Network UPS Tools) for automated graceful cluster shutdown during power anomalies.</li>
+      </ul>
+
+      <h2>Editorial Ethics &amp; Testing Standards</h2>
+      <p>
+        In an era of generic, hallucinated AI content, Tech Simpld holds a strict standard for technical publication:
+      </p>
+      <ul>
+        <li><strong>100% Lab Validated:</strong> Every single command block, Docker Compose file, and configuration file published on this site has been executed and stress-tested in the physical lab.</li>
+        <li><strong>No Theoretical Fluff:</strong> If a command doesn't work out of the box or requires nuanced Linux kernel permissions (like rootless Podman or Proxmox unprivileged LXCs), the exact fix is documented directly in the guide.</li>
+        <li><strong>Privacy &amp; Data Sovereignty First:</strong> We actively test and promote local-first, self-hosted alternatives to intrusive subscription models. Your notes, family archives, and private metrics belong to you.</li>
+      </ul>
 
       <h2>Beyond the Keyboard</h2>
       <p>

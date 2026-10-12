@@ -6,11 +6,13 @@
   <script>
     window.dataLayer = window.dataLayer || [];
     function gtag() { dataLayer.push(arguments); }
-    if(localStorage.getItem('cookie_consent') === 'true') {
-      gtag('consent', 'default', { 'ad_storage': 'granted', 'analytics_storage': 'granted', 'ad_user_data': 'granted', 'ad_personalization': 'granted' });
-    } else {
-      gtag('consent', 'default', { 'ad_storage': 'denied', 'analytics_storage': 'denied', 'ad_user_data': 'denied', 'ad_personalization': 'denied' });
-    }
+    gtag('consent', 'default', {
+      'ad_storage': 'denied',
+      'analytics_storage': 'denied',
+      'ad_user_data': 'denied',
+      'ad_personalization': 'denied',
+      'wait_for_update': 500
+    });
   </script>
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-1KFGHVDB66"></script>
   <script>
@@ -56,6 +58,11 @@
   <!-- Favicons -->
   <link rel="icon" type="image/svg+xml" href="favicon.svg">
   <link rel="alternate icon" type="image/png" href="favicon.png">
+
+    <!-- Google Fonts Preconnect & Stylesheet -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap">
 
   <!-- Stylesheets -->
   <link rel="stylesheet" href="css/styles.css">
@@ -178,7 +185,10 @@
           </div>
         </div>
         <div class="resource-preview">
-          <img class="resource-preview-img" src="images/obsidian-vault.png"
+          <picture>
+            <source srcset="images/obsidian-vault.webp" type="image/webp">
+            <img class="resource-preview-img" src="images/obsidian-vault.png" alt="" loading="lazy" decoding="async">
+          </picture>
             alt="Obsidian Vault Template Preview Screenshot">
         </div>
       </div>
@@ -255,7 +265,10 @@
           </div>
         </div>
         <div class="resource-preview">
-          <img class="resource-preview-img" src="images/docker-vs-podman.png"
+          <picture>
+            <source srcset="images/docker-vs-podman.webp" type="image/webp">
+            <img class="resource-preview-img" src="images/docker-vs-podman.png" alt="" loading="lazy" decoding="async">
+          </picture>
             alt="Docker Compose Starter Pack Preview">
         </div>
       </div>
@@ -273,7 +286,10 @@
         <article class="card">
           <div class="card-image-wrapper">
             <a href="images/obsidian-cheatsheet.png" download>
-              <img class="card-image" src="images/obsidian-cheatsheet.png"
+              <picture>
+                <source srcset="images/obsidian-cheatsheet.webp" type="image/webp">
+                <img class="card-image" src="images/obsidian-cheatsheet.png" alt="" loading="lazy" decoding="async">
+              </picture>
                 alt="Keyboard Shortcut Cheatsheet Preview">
             </a>
           </div>
@@ -299,7 +315,10 @@
         <article class="card">
           <div class="card-image-wrapper">
             <a href="downloads/proxmox-cheatsheet.md" download>
-              <img class="card-image" src="images/resource-proxmox-cheatsheet.jpg"
+              <picture>
+                <source srcset="images/resource-proxmox-cheatsheet.webp" type="image/webp">
+                <img class="card-image" src="images/resource-proxmox-cheatsheet.jpg" alt="" loading="lazy" decoding="async">
+              </picture>
                 alt="Proxmox VE Cheatsheet Preview">
             </a>
           </div>
@@ -325,7 +344,10 @@
         <article class="card">
           <div class="card-image-wrapper">
             <a href="downloads/pihole-blocklists.txt" download>
-              <img class="card-image" src="images/resource-pihole-blocklists.jpg"
+              <picture>
+                <source srcset="images/resource-pihole-blocklists.webp" type="image/webp">
+                <img class="card-image" src="images/resource-pihole-blocklists.jpg" alt="" loading="lazy" decoding="async">
+              </picture>
                 alt="Pi-hole Blocklists Directory Preview">
             </a>
           </div>
@@ -351,7 +373,10 @@
         <article class="card">
           <div class="card-image-wrapper">
             <a href="downloads/obsidian-dataview-snippets.md" download>
-              <img class="card-image" src="images/resource-dataview-snippets.jpg"
+              <picture>
+                <source srcset="images/resource-dataview-snippets.webp" type="image/webp">
+                <img class="card-image" src="images/resource-dataview-snippets.jpg" alt="" loading="lazy" decoding="async">
+              </picture>
                 alt="Obsidian Dataview Snippets Preview">
             </a>
           </div>
@@ -377,7 +402,10 @@
         <article class="card">
           <div class="card-image-wrapper">
             <a href="downloads/cloudflare-zero-trust-checklist.md" download>
-              <img class="card-image" src="images/resource-cloudflare-checklist.jpg"
+              <picture>
+                <source srcset="images/resource-cloudflare-checklist.webp" type="image/webp">
+                <img class="card-image" src="images/resource-cloudflare-checklist.jpg" alt="" loading="lazy" decoding="async">
+              </picture>
                 alt="Cloudflare Zero Trust Checklist Preview">
             </a>
           </div>
@@ -403,7 +431,10 @@
         <article class="card">
           <div class="card-image-wrapper">
             <a href="downloads/alexandrie-hub-docker-compose.yml" download>
-              <img class="card-image" src="images/resource-alexandrie-blueprint.jpg"
+              <picture>
+                <source srcset="images/resource-alexandrie-blueprint.webp" type="image/webp">
+                <img class="card-image" src="images/resource-alexandrie-blueprint.jpg" alt="" loading="lazy" decoding="async">
+              </picture>
                 alt="Alexandrie Hub Blueprint Preview">
             </a>
           </div>

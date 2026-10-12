@@ -1,7 +1,25 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
+
+  <!-- Google tag (gtag.js) -->
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { dataLayer.push(arguments); }
+    gtag('consent', 'default', {
+      'ad_storage': 'denied',
+      'analytics_storage': 'denied',
+      'ad_user_data': 'denied',
+      'ad_personalization': 'denied',
+      'wait_for_update': 500
+    });
+  </script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-1KFGHVDB66"></script>
+  <script>
+    gtag('js', new Date());
+    gtag('config', 'G-1KFGHVDB66');
+  </script>
 
   <!-- Google AdSense -->
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5214277715351322"
@@ -40,6 +58,11 @@
   <!-- Favicons -->
   <link rel="icon" type="image/svg+xml" href="favicon.svg">
   <link rel="alternate icon" type="image/png" href="favicon.png">
+
+    <!-- Google Fonts Preconnect & Stylesheet -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap">
 
   <!-- Stylesheets -->
   <link rel="stylesheet" href="css/styles.css">
@@ -95,13 +118,34 @@
 
     <!-- Tutorials Grid -->
     <section style="margin: 2rem 0 4rem 0;">
+          <!-- Live Search Bar -->
+    <div class="posts-search-wrapper">
+      <svg class="posts-search-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="11" cy="11" r="8"></circle>
+        <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+      </svg>
+      <input type="search" id="postsSearch" class="posts-search-input" placeholder="Search 23 tutorials by keyword (e.g. Proxmox, CouchDB, Dataview)..." autocomplete="off" aria-label="Search tutorials">
+    </div>
+
+    <!-- Category Filter Controls -->
+    <div class="category-filters">
+      <button class="filter-btn active" data-filter="all">All Topics (23)</button>
+      <button class="filter-btn" data-filter="obsidian">Obsidian &amp; PKM</button>
+      <button class="filter-btn" data-filter="proxmox">Proxmox &amp; Home Lab</button>
+      <button class="filter-btn" data-filter="docker">Docker &amp; Containers</button>
+      <button class="filter-btn" data-filter="networking">Network &amp; Security</button>
+    </div>
+
       <div class="tutorials-grid">
 
         <!-- Post 23: Container vs VM -->
-        <article class="card">
+        <article class="card" data-category="proxmox docker">
           <div class="card-image-wrapper">
             <a href="posts/container-vs-vm-which-should-you-use.html">
-              <img class="card-image" src="images/container-vs-vm-which-should-you-use.png" alt="Container vs VM Proxmox Benchmark Preview">
+              <picture>
+                <source srcset="images/container-vs-vm-which-should-you-use.webp" type="image/webp">
+                <img class="card-image" src="images/container-vs-vm-which-should-you-use.png" alt="Container vs VM Proxmox Benchmark Preview" loading="lazy" decoding="async">
+              </picture>
             </a>
           </div>
           <div class="card-content">
@@ -123,10 +167,13 @@
         </article>
 
         <!-- Post 22: Built My Own YouTube Tools -->
-        <article class="card">
+        <article class="card" data-category="docker">
           <div class="card-image-wrapper">
             <a href="posts/custom-youtube-creator-tools-dashboard.html">
-              <img class="card-image" src="images/custom-youtube-creator-tools.png" alt="Custom YouTube Creator Tools Dashboard Preview">
+              <picture>
+                <source srcset="images/custom-youtube-creator-tools.webp" type="image/webp">
+                <img class="card-image" src="images/custom-youtube-creator-tools.png" alt="Custom YouTube Creator Tools Dashboard Preview" loading="lazy" decoding="async">
+              </picture>
             </a>
           </div>
           <div class="card-content">
@@ -148,10 +195,13 @@
         </article>
 
         <!-- Post 21: Local LLM vs Cloud AI -->
-        <article class="card">
+        <article class="card" data-category="proxmox">
           <div class="card-image-wrapper">
             <a href="posts/local-llm-vs-cloud-ai-ollama-claude.html">
-              <img class="card-image" src="images/local-llm-vs-cloud-ai.png" alt="Local LLM vs Cloud AI Ollama vs Claude Preview">
+              <picture>
+                <source srcset="images/local-llm-vs-cloud-ai.webp" type="image/webp">
+                <img class="card-image" src="images/local-llm-vs-cloud-ai.png" alt="Local LLM vs Cloud AI Ollama vs Claude Preview" loading="lazy" decoding="async">
+              </picture>
             </a>
           </div>
           <div class="card-content">
@@ -173,10 +223,13 @@
         </article>
 
         <!-- Post 20: Manage Time and Tasks in Obsidian -->
-        <article class="card">
+        <article class="card" data-category="obsidian">
           <div class="card-image-wrapper">
             <a href="posts/manage-time-tasks-obsidian-gtd.html">
-              <img class="card-image" src="images/obsidian-manage-tasks-calendar-gtd.png" alt="Manage Time and Tasks in Obsidian Preview">
+              <picture>
+                <source srcset="images/obsidian-manage-tasks-calendar-gtd.webp" type="image/webp">
+                <img class="card-image" src="images/obsidian-manage-tasks-calendar-gtd.png" alt="Manage Time and Tasks in Obsidian Preview" loading="lazy" decoding="async">
+              </picture>
             </a>
           </div>
           <div class="card-content">
@@ -198,10 +251,13 @@
         </article>
 
         <!-- Post 19: Put Claude in Obsidian -->
-        <article class="card">
+        <article class="card" data-category="obsidian">
           <div class="card-image-wrapper">
             <a href="posts/claude-in-obsidian-copilot-guide.html">
-              <img class="card-image" src="images/claude-in-obsidian.jpg" alt="Put Claude in Obsidian Preview">
+              <picture>
+                <source srcset="images/claude-in-obsidian.webp" type="image/webp">
+                <img class="card-image" src="images/claude-in-obsidian.jpg" alt="Put Claude in Obsidian Preview" loading="lazy" decoding="async">
+              </picture>
             </a>
           </div>
           <div class="card-content">
@@ -223,10 +279,13 @@
         </article>
 
         <!-- Post 18: Sync Obsidian for Free with CouchDB -->
-        <article class="card">
+        <article class="card" data-category="obsidian">
           <div class="card-image-wrapper">
             <a href="posts/sync-obsidian-for-free-couchdb.html">
-              <img class="card-image" src="images/sync-obsidian-for-free-couchdb.jpg" alt="Sync Obsidian For Free With CouchDB Preview">
+              <picture>
+                <source srcset="images/sync-obsidian-for-free-couchdb.webp" type="image/webp">
+                <img class="card-image" src="images/sync-obsidian-for-free-couchdb.jpg" alt="Sync Obsidian For Free With CouchDB Preview" loading="lazy" decoding="async">
+              </picture>
             </a>
           </div>
           <div class="card-content">
@@ -249,10 +308,13 @@
 
 
         <!-- Post 17: Nextcloud Proxmox Setup -->
-        <article class="card">
+        <article class="card" data-category="proxmox networking">
           <div class="card-image-wrapper">
             <a href="posts/nextcloud-proxmox-cloudflare-tunnel-setup.html">
-              <img class="card-image" src="images/Nextcloud Proxmox Setup The Best Free Google Drive Replacement.jpg" alt="Nextcloud Proxmox Setup Guide Preview">
+              <picture>
+                <source srcset="images/Nextcloud Proxmox Setup The Best Free Google Drive Replacement.webp" type="image/webp">
+                <img class="card-image" src="images/Nextcloud Proxmox Setup The Best Free Google Drive Replacement.jpg" alt="Nextcloud Proxmox Setup Guide Preview" loading="lazy" decoding="async">
+              </picture>
             </a>
           </div>
           <div class="card-content">
@@ -274,10 +336,13 @@
         </article>
 
         <!-- Post 16: Uptime Kuma Dashboard -->
-        <article class="card">
+        <article class="card" data-category="proxmox">
           <div class="card-image-wrapper">
             <a href="posts/uptime-kuma-server-monitoring-setup.html">
-              <img class="card-image" src="images/Stop Guessing When Servers Crash Uptime Kuma Dashboard Setup.jpg" alt="Uptime Kuma Server Monitoring Preview">
+              <picture>
+                <source srcset="images/Stop Guessing When Servers Crash Uptime Kuma Dashboard Setup.webp" type="image/webp">
+                <img class="card-image" src="images/Stop Guessing When Servers Crash Uptime Kuma Dashboard Setup.jpg" alt="Uptime Kuma Server Monitoring Preview" loading="lazy" decoding="async">
+              </picture>
             </a>
           </div>
           <div class="card-content">
@@ -299,10 +364,13 @@
         </article>
 
         <!-- Post 15: Infrastructure as Code (Terraform) -->
-        <article class="card">
+        <article class="card" data-category="proxmox">
           <div class="card-image-wrapper">
             <a href="posts/infrastructure-as-code-terraform-homelab.html">
-              <img class="card-image" src="images/Infrastructure as Code Explained in under 10 Minutes (Home Lab Guide).jpg" alt="Infrastructure as Code Terraform Guide Preview">
+              <picture>
+                <source srcset="images/Infrastructure as Code Explained in under 10 Minutes (Home Lab Guide).webp" type="image/webp">
+                <img class="card-image" src="images/Infrastructure as Code Explained in under 10 Minutes (Home Lab Guide).jpg" alt="Infrastructure as Code Terraform Guide Preview" loading="lazy" decoding="async">
+              </picture>
             </a>
           </div>
           <div class="card-content">
@@ -324,10 +392,13 @@
         </article>
 
         <!-- Post 14: Gotify Self-Hosted Alerts -->
-        <article class="card">
+        <article class="card" data-category="docker">
           <div class="card-image-wrapper">
             <a href="posts/gotify-self-hosted-push-notifications.html">
-              <img class="card-image" src="images/Stop Relying on Paid Alerts Deploy Gotify for Instant Phone Notifications.jpg" alt="Gotify Self-Hosted Push Notifications Preview">
+              <picture>
+                <source srcset="images/Stop Relying on Paid Alerts Deploy Gotify for Instant Phone Notifications.webp" type="image/webp">
+                <img class="card-image" src="images/Stop Relying on Paid Alerts Deploy Gotify for Instant Phone Notifications.jpg" alt="Gotify Self-Hosted Push Notifications Preview" loading="lazy" decoding="async">
+              </picture>
             </a>
           </div>
           <div class="card-content">
@@ -349,10 +420,13 @@
         </article>
 
         <!-- Post 13: Obsidian in Web Browser -->
-        <article class="card">
+        <article class="card" data-category="obsidian docker">
           <div class="card-image-wrapper">
             <a href="posts/obsidian-in-web-browser-docker.html">
-              <img class="card-image" src="images/obsidian-in-web-browser.png" alt="Obsidian in Web Browser Docker Guide Preview">
+              <picture>
+                <source srcset="images/obsidian-in-web-browser.webp" type="image/webp">
+                <img class="card-image" src="images/obsidian-in-web-browser.png" alt="Obsidian in Web Browser Docker Guide Preview" loading="lazy" decoding="async">
+              </picture>
             </a>
           </div>
           <div class="card-content">
@@ -374,10 +448,13 @@
         </article>
 
         <!-- Post 12: Cloudflare Zero Trust Tunnel -->
-        <article class="card">
+        <article class="card" data-category="networking proxmox">
           <div class="card-image-wrapper">
             <a href="posts/cloudflare-zero-trust-tunnel-guide.html">
-              <img class="card-image" src="images/cloudflare-zero-trust-tunnel.png" alt="Cloudflare Zero Trust Tunnel Guide Preview">
+              <picture>
+                <source srcset="images/cloudflare-zero-trust-tunnel.webp" type="image/webp">
+                <img class="card-image" src="images/cloudflare-zero-trust-tunnel.png" alt="Cloudflare Zero Trust Tunnel Guide Preview" loading="lazy" decoding="async">
+              </picture>
             </a>
           </div>
           <div class="card-content">
@@ -399,10 +476,13 @@
         </article>
 
         <!-- Post 11: 3 MORE Obsidian Plugins -->
-        <article class="card">
+        <article class="card" data-category="obsidian">
           <div class="card-image-wrapper">
             <a href="posts/3-more-obsidian-plugins-2026.html">
-              <img class="card-image" src="images/3-more-obsidian-plugins-2026.png" alt="3 MORE Obsidian Plugins 2026 Preview">
+              <picture>
+                <source srcset="images/3-more-obsidian-plugins-2026.webp" type="image/webp">
+                <img class="card-image" src="images/3-more-obsidian-plugins-2026.png" alt="3 MORE Obsidian Plugins 2026 Preview" loading="lazy" decoding="async">
+              </picture>
             </a>
           </div>
           <div class="card-content">
@@ -424,10 +504,13 @@
         </article>
 
         <!-- Post 10: Budget Proxmox Cluster -->
-        <article class="card">
+        <article class="card" data-category="proxmox">
           <div class="card-image-wrapper">
             <a href="posts/budget-proxmox-home-lab-setup.html">
-              <img class="card-image" src="images/budget-proxmox-home-lab.png" alt="Budget Proxmox Cluster Tour Preview">
+              <picture>
+                <source srcset="images/budget-proxmox-home-lab.webp" type="image/webp">
+                <img class="card-image" src="images/budget-proxmox-home-lab.png" alt="Budget Proxmox Cluster Tour Preview" loading="lazy" decoding="async">
+              </picture>
             </a>
           </div>
           <div class="card-content">
@@ -436,7 +519,7 @@
               <span>•</span>
               <span style="color: var(--accent-cyan); font-weight: 600;">Available</span>
             </div>
-            <h3 class="card-title"><a href="posts/budget-proxmox-home-lab-setup.html">the most effective Budget Proxmox Home Lab Tour</a></h3>
+            <h3 class="card-title"><a href="posts/budget-proxmox-home-lab-setup.html">The Complete Budget Proxmox Home Lab Tour</a></h3>
             <p class="card-excerpt">
               Full architecture tour of a minimalist 3-node Proxmox cluster built from cheap Dell OptiPlex desktops with Ceph, VLAN highways, and PBS snapshots.
             </p>
@@ -449,10 +532,13 @@
         </article>
 
         <!-- Post 9: Alexandrie Hub -->
-        <article class="card">
+        <article class="card" data-category="docker">
           <div class="card-image-wrapper">
             <a href="posts/alexandrie-hub-self-hosted-notes.html">
-              <img class="card-image" src="images/alexandrie-hub-review.jpg" alt="Alexandrie Hub Review Preview">
+              <picture>
+                <source srcset="images/alexandrie-hub-review.webp" type="image/webp">
+                <img class="card-image" src="images/alexandrie-hub-review.jpg" alt="Alexandrie Hub Review Preview" loading="lazy" decoding="async">
+              </picture>
             </a>
           </div>
           <div class="card-content">
@@ -474,10 +560,13 @@
         </article>
 
         <!-- Post 8: Docker vs Podman -->
-        <article class="card">
+        <article class="card" data-category="docker">
           <div class="card-image-wrapper">
             <a href="posts/docker-vs-podman.html">
-              <img class="card-image" src="images/docker-vs-podman.png" alt="Docker vs Podman Post Preview">
+              <picture>
+                <source srcset="images/docker-vs-podman.webp" type="image/webp">
+                <img class="card-image" src="images/docker-vs-podman.png" alt="Docker vs Podman Post Preview" loading="lazy" decoding="async">
+              </picture>
             </a>
           </div>
           <div class="card-content">
@@ -499,10 +588,13 @@
         </article>
 
         <!-- Tutorial 7: Pi-hole & YouTube Ads -->
-        <article class="card">
+        <article class="card" data-category="networking">
           <div class="card-image-wrapper">
             <a href="posts/pihole-youtube-ads-truth.html">
-              <img class="card-image" src="images/The%20Honest%20Truth%20About%20Pi-hole%20%26%20YouTube%20Ads.png" alt="Pi-hole YouTube Ads Tutorial Preview">
+              <picture>
+                <source srcset="images/The%20Honest%20Truth%20About%20Pi-hole%20%26%20YouTube%20Ads.webp" type="image/webp">
+                <img class="card-image" src="images/The%20Honest%20Truth%20About%20Pi-hole%20%26%20YouTube%20Ads.png" alt="Pi-hole YouTube Ads Tutorial Preview" loading="lazy" decoding="async">
+              </picture>
             </a>
           </div>
           <div class="card-content">
@@ -524,10 +616,13 @@
         </article>
 
         <!-- Tutorial 6: Pi-hole Smart Blocking & Custom Lists -->
-        <article class="card">
+        <article class="card" data-category="networking">
           <div class="card-image-wrapper">
             <a href="posts/pihole-smart-blocking-custom-lists.html">
-              <img class="card-image" src="images/Pi-hole%20Smart%20Blocking%20%26%20Custom%20Lists.png" alt="Pi-hole Smart Blocking Tutorial Preview">
+              <picture>
+                <source srcset="images/Pi-hole%20Smart%20Blocking%20%26%20Custom%20Lists.webp" type="image/webp">
+                <img class="card-image" src="images/Pi-hole%20Smart%20Blocking%20%26%20Custom%20Lists.png" alt="Pi-hole Smart Blocking Tutorial Preview" loading="lazy" decoding="async">
+              </picture>
             </a>
           </div>
           <div class="card-content">
@@ -549,10 +644,13 @@
         </article>
 
         <!-- Tutorial 5: Pi-hole Deployment -->
-        <article class="card">
+        <article class="card" data-category="networking proxmox">
           <div class="card-image-wrapper">
             <a href="posts/pihole-installation-guide.html">
-              <img class="card-image" src="images/Stop%20Network%20Ads%20Deploy%20Pi-hole.png" alt="Pi-hole Tutorial Preview">
+              <picture>
+                <source srcset="images/Stop%20Network%20Ads%20Deploy%20Pi-hole.webp" type="image/webp">
+                <img class="card-image" src="images/Stop%20Network%20Ads%20Deploy%20Pi-hole.png" alt="Pi-hole Tutorial Preview" loading="lazy" decoding="async">
+              </picture>
             </a>
           </div>
           <div class="card-content">
@@ -574,10 +672,13 @@
         </article>
 
         <!-- Tutorial 4: Obsidian Settings -->
-        <article class="card">
+        <article class="card" data-category="obsidian">
           <div class="card-image-wrapper">
             <a href="posts/3-obsidian-settings-you-must-change.html">
-              <img class="card-image" src="images/3%20Settings%20You%20MUST%20Change%20in%20Obsidian%20(Before%20It's%20Too%20Late).png" alt="Obsidian Settings Tutorial Preview">
+              <picture>
+                <source srcset="images/3%20Settings%20You%20MUST%20Change%20in%20Obsidian%20(Before%20It.webp" type="image/webp">
+                <img class="card-image" src="images/3%20Settings%20You%20MUST%20Change%20in%20Obsidian%20(Before%20It" alt="Obsidian Settings Tutorial Preview" loading="lazy" decoding="async">
+              </picture>
             </a>
           </div>
           <div class="card-content">
@@ -599,10 +700,13 @@
         </article>
 
         <!-- Tutorial 3: Obsidian Plugins -->
-        <article class="card">
+        <article class="card" data-category="obsidian">
           <div class="card-image-wrapper">
             <a href="posts/obsidian-plugins-i-use-2026.html">
-              <img class="card-image" src="images/Obsidian%20Plugins%20I%20Use%202026.png" alt="Obsidian Plugins Tutorial Preview">
+              <picture>
+                <source srcset="images/Obsidian%20Plugins%20I%20Use%202026.webp" type="image/webp">
+                <img class="card-image" src="images/Obsidian%20Plugins%20I%20Use%202026.png" alt="Obsidian Plugins Tutorial Preview" loading="lazy" decoding="async">
+              </picture>
             </a>
           </div>
           <div class="card-content">
@@ -624,10 +728,13 @@
         </article>
 
         <!-- Tutorial 2: Second Brain Setup -->
-        <article class="card">
+        <article class="card" data-category="obsidian">
           <div class="card-image-wrapper">
             <a href="posts/obsidian-second-brain-setup.html">
-              <img class="card-image" src="images/Obsidian%20Second%20Brain%20Setup.png" alt="Obsidian Second Brain Preview">
+              <picture>
+                <source srcset="images/Obsidian%20Second%20Brain%20Setup.webp" type="image/webp">
+                <img class="card-image" src="images/Obsidian%20Second%20Brain%20Setup.png" alt="Obsidian Second Brain Preview" loading="lazy" decoding="async">
+              </picture>
             </a>
           </div>
           <div class="card-content">
@@ -649,10 +756,13 @@
         </article>
 
         <!-- Tutorial 1: Starter Vault Setup -->
-        <article class="card">
+        <article class="card" data-category="obsidian">
           <div class="card-image-wrapper">
             <a href="posts/obsidian-starter-vault-tutorial.html">
-              <img class="card-image" src="images/Obsidian%20for%20Absolute%20Beginners%20(2026%20Guide).png" alt="Obsidian Starter Vault Preview">
+              <picture>
+                <source srcset="images/Obsidian%20for%20Absolute%20Beginners%20(2026%20Guide).webp" type="image/webp">
+                <img class="card-image" src="images/Obsidian%20for%20Absolute%20Beginners%20(2026%20Guide).png" alt="Obsidian Starter Vault Preview" loading="lazy" decoding="async">
+              </picture>
             </a>
           </div>
           <div class="card-content">

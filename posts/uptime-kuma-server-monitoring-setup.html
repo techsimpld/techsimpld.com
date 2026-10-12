@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -6,11 +6,13 @@
   <script>
     window.dataLayer = window.dataLayer || [];
     function gtag() { dataLayer.push(arguments); }
-    if(localStorage.getItem('cookie_consent') === 'true') {
-      gtag('consent', 'default', { 'ad_storage': 'granted', 'analytics_storage': 'granted', 'ad_user_data': 'granted', 'ad_personalization': 'granted' });
-    } else {
-      gtag('consent', 'default', { 'ad_storage': 'denied', 'analytics_storage': 'denied', 'ad_user_data': 'denied', 'ad_personalization': 'denied' });
-    }
+    gtag('consent', 'default', {
+      'ad_storage': 'denied',
+      'analytics_storage': 'denied',
+      'ad_user_data': 'denied',
+      'ad_personalization': 'denied',
+      'wait_for_update': 500
+    });
   </script>
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-1KFGHVDB66"></script>
   <script>
@@ -85,6 +87,11 @@
   <link rel="icon" type="image/svg+xml" href="../favicon.svg">
   <link rel="alternate icon" type="image/png" href="../favicon.png">
 
+    <!-- Google Fonts Preconnect & Stylesheet -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap">
+
   <!-- Stylesheets -->
   <link rel="stylesheet" href="../css/styles.css">
   <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" rel="stylesheet" />
@@ -153,7 +160,7 @@
                 <line x1="8" y1="2" x2="8" y2="6"></line>
                 <line x1="3" y1="10" x2="21" y2="10"></line>
               </svg>
-              <span>September 2026</span>
+              <span>September 15, 2026</span>
             </div>
             <span>•</span>
             <div class="article-meta-item">
@@ -162,7 +169,7 @@
                 <circle cx="12" cy="12" r="10"></circle>
                 <polyline points="12 6 12 12 16 14"></polyline>
               </svg>
-              <span>11 Min Read</span>
+              <span>6 Min Read</span>
             </div>
           </div>
         </header>
@@ -193,6 +200,44 @@
           <p>
             In this guide, I will show you how to build a dedicated Uptime Kuma instance on an Ubuntu server (or inside a Proxmox LXC container) using Node.js and PM2, configure your first service monitors, and set up instant alert routing.
           </p>
+
+          <!-- Mermaid Architecture Diagram -->
+          <div class="mermaid-container">
+            <div class="mermaid-title">Uptime Kuma Monitoring Probes & Alerting Pipeline</div>
+            <pre class="mermaid">
+flowchart TD
+    subgraph Engine ["Uptime Kuma Server (PM2 / LXC :3001)"]
+        Scheduler["Polling Scheduler\n(20s - 60s Interval)"]
+        HistoryDB[("kuma.db\nSQLite Heartbeats")]
+    end
+
+    subgraph Targets ["Monitored Homelab Infrastructure"]
+        Target1["Proxmox VE Cluster\n(ICMP Ping Probe)"]
+        Target2["Nextcloud Server\n(HTTP Status 200 + SSL Expiry)"]
+        Target3["Pi-hole DNS\n(DNS Resolution Query :53)"]
+        Target4["External Gateway\n(TCP Port 443 Check)"]
+    end
+
+    Scheduler -->|Ping| Target1
+    Scheduler -->|HTTP GET| Target2
+    Scheduler -->|DNS Query| Target3
+    Scheduler -->|TCP Connect| Target4
+
+    Target1 -.->|Healthy Heartbeat| HistoryDB
+    Target2 -.->|Healthy Heartbeat| HistoryDB
+    Target3 -.->|Healthy Heartbeat| HistoryDB
+    Target4 -.->|Healthy Heartbeat| HistoryDB
+
+    Target2 --x|Probe Failed (3 Retries)| AlertEngine{"Incident Trigger\nCriteria Met?"}
+    AlertEngine -->|Dispatch Webhook| Gotify["Gotify Server\n(Priority 8 Push Alert)"]
+    AlertEngine -->|Emergency Webhook| Discord["Discord / Telegram\nChannel Alert"]
+
+    classDef kuma fill:#0f111a,stroke:#8b5cf6,stroke-width:2px,color:#f8fafc;
+    classDef target fill:#1f2336,stroke:#06b6d4,stroke-width:2px,color:#f8fafc;
+    class Engine,Scheduler,HistoryDB,AlertEngine kuma;
+    class Targets,Target1,Target2,Target3,Target4,Gotify,Discord target;
+            </pre>
+          </div>
 
           <h2>Why Run Uptime Kuma via Node.js and PM2?</h2>
           <p>
@@ -335,9 +380,42 @@ pm2 startup
             <li><strong>Database Corruption:</strong> Do not just yank power from the server running Uptime Kuma. The SQLite database (<code>kuma.db</code>) is active almost constantly. Always shut down cleanly to prevent database corruption.</li>
           </ul>
 
+          <h2>Alternative: Docker Compose Stack with Gotify Alerts</h2>
+          <p>
+            If your infrastructure standardizes on containerized stacks, here is a production-ready <code>docker-compose.yml</code> file with persistent volume mapping and restart policies:
+          </p>
+          <pre><code class="language-yaml">services:
+  uptime-kuma:
+    image: louislam/uptime-kuma:1
+    container_name: uptime-kuma
+    restart: always
+    volumes:
+      - /opt/uptime-kuma-data:/app/data
+    ports:
+      - "3001:3001"
+    security_opt:
+      - no-new-privileges:true
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"</code></pre>
+
+          <p>
+            To verify Gotify alert integration directly from the server CLI before configuring Kuma:
+          </p>
+          <pre><code class="language-bash"># Test webhook delivery to Gotify notification server
+curl -X POST "https://push.yourdomain.com/message?token=YOUR_APP_TOKEN" \
+  -F "title=Homelab Health Alert" \
+  -F "message=Uptime Kuma monitoring probe verified." \
+  -F "priority=7"</code></pre>
+
           <h2>Final Thoughts</h2>
           <p>
             Setting up Uptime Kuma turns your home lab from an unpredictable guessing game into a reliable, professional environment. By running it on Ubuntu with PM2 and pairing it with instant push notifications, you will always be the first to know when something breaks, and exactly when it comes back online.
+          </p>
+          <p>
+            Pair this monitoring dashboard with our <a href="gotify-self-hosted-push-notifications.html">Gotify Push Notifications Guide</a> and <a href="budget-proxmox-home-lab-setup.html">Budget Proxmox Cluster Tour</a> to build a self-healing private cloud.
           </p>
         </div></div>
 
@@ -408,6 +486,21 @@ pm2 startup
   </footer>
 
   <script src="../js/scripts.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+  <script>
+    mermaid.initialize({
+      startOnLoad: true,
+      theme: 'dark',
+      themeVariables: {
+        darkMode: true,
+        background: '#0f111a',
+        primaryColor: '#1f2336',
+        primaryBorderColor: '#8b5cf6',
+        primaryTextColor: '#f8fafc',
+        lineColor: '#06b6d4'
+      }
+    });
+  </script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-bash.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-yaml.min.js"></script>

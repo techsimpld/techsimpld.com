@@ -3,9 +3,7 @@
   Theme: Sleek Productivity App Dark Mode (Slate Grey / Deep Blue + Electric Purple/Cyan)
   Author: Tech Simpld
 */
-
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap');
-
+/* Fonts preconnected and loaded in HTML <head> for optimal Core Web Vitals / eliminate render-blocking @import */
 :root {
   /* Fonts */
   --font-title: 'Outfit', sans-serif;
@@ -524,6 +522,12 @@ img {
   aspect-ratio: 16/9;
   background: var(--bg-tertiary);
   overflow: hidden;
+}
+
+.card-image-wrapper picture,
+.resource-showcase-visual picture,
+.resource-preview picture {
+  display: contents;
 }
 
 .card-image {
@@ -1172,61 +1176,346 @@ img {
   }
 }
 
-/* Cookie Consent Banner */
-.cookie-banner {
+
+/* Mermaid Diagram Architecture Styling */
+.mermaid-container {
+  background: var(--card-bg, #0f111a);
+  border: 1px solid var(--border-color, #1f2336);
+  border-radius: 12px;
+  padding: 1.75rem 1.25rem;
+  margin: 2.25rem 0;
+  overflow-x: auto;
+  text-align: center;
+}
+
+.mermaid-title {
+  font-family: var(--font-title, 'Outfit', sans-serif);
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--accent-cyan, #06b6d4);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 1rem;
+}
+
+.mermaid {
+  display: flex;
+  justify-content: center;
+  font-family: var(--font-body, 'Inter', sans-serif) !important;
+}
+
+/* Category Filter Pills */
+.category-filters {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.6rem;
+  margin: 1.5rem auto 2.5rem;
+  max-width: 800px;
+}
+
+.filter-btn {
+  background: var(--bg-tertiary, #1f2336);
+  border: 1px solid var(--border-color, #2a2f4c);
+  color: var(--text-secondary, #94a3b8);
+  font-family: var(--font-body, 'Inter', sans-serif);
+  font-size: 0.875rem;
+  font-weight: 500;
+  padding: 0.5rem 1.15rem;
+  border-radius: 9999px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.filter-btn:hover {
+  border-color: var(--accent-cyan, #06b6d4);
+  color: var(--text-primary, #f8fafc);
+  background: rgba(6, 182, 212, 0.1);
+  transform: translateY(-1px);
+}
+
+.filter-btn.active {
+  background: var(--accent-purple, #8b5cf6);
+  border-color: var(--accent-purple, #8b5cf6);
+  color: #ffffff;
+  font-weight: 600;
+  box-shadow: 0 0 15px rgba(139, 92, 246, 0.4);
+}
+
+.card.filter-hidden {
+  display: none !important;
+}
+
+/* Reading Progress Bar */
+.reading-progress-bar {
   position: fixed;
-  bottom: 2rem;
-  left: 2rem;
-  max-width: 420px;
-  background: rgba(15, 17, 26, 0.95);
-  border: 1px solid var(--border-color);
-  border-radius: var(--radius-md);
-  padding: 1.5rem;
-  box-shadow: var(--shadow-lg);
-  z-index: 1000;
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  transform: translateY(100px);
-  opacity: 0;
-  transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  top: 0;
+  left: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--accent-purple, #8b5cf6), var(--accent-cyan, #06b6d4));
+  width: 0%;
+  z-index: 99999;
+  transition: width 0.08s ease-out;
+}
+
+/* Posts Search Bar */
+.posts-search-wrapper {
+  max-width: 580px;
+  margin: 0 auto 1.5rem auto;
+  position: relative;
+}
+
+.posts-search-input {
+  width: 100%;
+  padding: 0.75rem 1.25rem 0.75rem 2.75rem;
+  background: var(--card-bg, #0f111a);
+  border: 1px solid var(--border-color, #1f2336);
+  border-radius: var(--radius-sm, 8px);
+  color: var(--text-primary, #f8fafc);
+  font-family: var(--font-body, 'Inter', sans-serif);
+  font-size: 0.95rem;
+  outline: none;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.posts-search-input:focus {
+  border-color: var(--accent-cyan, #06b6d4);
+  box-shadow: 0 0 15px rgba(6, 182, 212, 0.25);
+}
+
+.posts-search-icon {
+  position: absolute;
+  left: 0.95rem;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--text-muted, #64748b);
   pointer-events: none;
 }
 
-.cookie-banner.show {
-  transform: translateY(0);
-  opacity: 1;
-  pointer-events: auto;
+.search-no-results {
+  text-align: center;
+  padding: 3rem 1rem;
+  color: var(--text-secondary, #94a3b8);
+  font-size: 1.05rem;
 }
 
-.cookie-content {
+/* FAQ Accordion Styling */
+.faq-section {
+  margin: 2.5rem 0;
+}
+
+.faq-title {
+  font-family: var(--font-title, 'Outfit', sans-serif);
+  font-size: 1.4rem;
+  margin-bottom: 1.25rem;
+  color: var(--text-primary, #f8fafc);
+}
+
+.faq-item {
+  background: var(--card-bg, #0f111a);
+  border: 1px solid var(--border-color, #1f2336);
+  border-radius: 8px;
+  margin-bottom: 0.75rem;
+  overflow: hidden;
+  transition: border-color 0.2s ease;
+}
+
+.faq-item[open] {
+  border-color: var(--accent-purple, #8b5cf6);
+}
+
+.faq-question {
+  padding: 1rem 1.25rem;
+  font-weight: 600;
+  font-size: 1rem;
+  color: var(--text-primary, #f8fafc);
+  cursor: pointer;
+  list-style: none;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  user-select: none;
+}
+
+.faq-question::-webkit-details-marker {
+  display: none;
+}
+
+.faq-question::after {
+  content: '+';
+  font-size: 1.3rem;
+  color: var(--accent-cyan, #06b6d4);
+  transition: transform 0.2s ease;
+}
+
+.faq-item[open] .faq-question::after {
+  content: '−';
+  color: var(--accent-purple, #8b5cf6);
+}
+
+.faq-answer {
+  padding: 0 1.25rem 1.25rem 1.25rem;
+  color: var(--text-secondary, #94a3b8);
+  font-size: 0.95rem;
+  line-height: 1.65;
+}
+
+/* Table of Contents Styling */
+.toc-widget {
+  background: var(--card-bg, #0f111a);
+  border: 1px solid var(--border-color, #1f2336);
+  border-radius: 8px;
+  padding: 1.25rem;
+  margin-bottom: 1.5rem;
+}
+
+.toc-title {
+  font-family: var(--font-title, 'Outfit', sans-serif);
+  font-size: 0.95rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--accent-cyan, #06b6d4);
+  margin-bottom: 0.75rem;
+}
+
+.toc-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  font-size: 0.875rem;
+  line-height: 1.6;
+}
+
+.toc-list li {
+  margin-bottom: 0.5rem;
+}
+
+.toc-list a {
+  color: var(--text-secondary, #94a3b8);
+  text-decoration: none;
+  transition: color 0.2s ease, padding-left 0.2s ease;
+  display: block;
+}
+
+.toc-list a:hover {
+  color: var(--accent-purple, #8b5cf6);
+  padding-left: 4px;
+}
+
+/* Social Share Bar */
+.social-share-bar {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  padding: 1.25rem 0;
+  margin: 2rem 0;
+  border-top: 1px solid var(--border-color, #1f2336);
+  border-bottom: 1px solid var(--border-color, #1f2336);
+}
+
+.share-label {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--text-secondary, #94a3b8);
+  margin-right: 0.5rem;
+}
+
+.share-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.4rem 0.85rem;
+  font-size: 0.85rem;
+  font-weight: 500;
+  border-radius: 6px;
+  background: var(--bg-tertiary, #1f2336);
+  border: 1px solid var(--border-color, #2a2f4c);
+  color: var(--text-primary, #f8fafc);
+  text-decoration: none;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.share-btn:hover {
+  background: var(--border-color, #2a2f4c);
+  border-color: var(--accent-cyan, #06b6d4);
+  color: var(--accent-cyan, #06b6d4);
+  transform: translateY(-1px);
+}
+
+/* ==========================================================================
+   Google AdSense Layout & CLS Prevention
+   ========================================================================== */
+
+.ad-container {
   display: flex;
   flex-direction: column;
-  gap: 1rem;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  max-width: 100%;
+  min-height: 280px;
+  margin: 3.5rem auto;
+  padding: 1.25rem 1rem;
+  background: rgba(15, 17, 26, 0.45);
+  border: 1px dashed var(--border-color);
+  border-radius: var(--radius-md);
+  box-sizing: border-box;
+  text-align: center;
+  clear: both;
+  overflow: hidden;
+  transition: var(--transition-smooth);
 }
 
-.cookie-text {
-  font-size: 0.85rem;
-  line-height: 1.5;
-  color: var(--text-secondary);
-  margin-bottom: 0;
+.ad-container:hover {
+  border-color: var(--border-focus);
 }
 
-.cookie-text a {
-  color: var(--accent-cyan);
-  text-decoration: underline;
+.ad-label {
+  display: block;
+  font-family: var(--font-body);
+  font-size: 0.6875rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--text-muted);
+  margin-bottom: 0.85rem;
+  user-select: none;
 }
 
-.cookie-buttons {
+.ad-slot {
   display: flex;
-  justify-content: flex-end;
-  gap: 0.75rem;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  min-height: 250px;
+  text-align: center;
 }
 
-@media (max-width: 480px) {
-  .cookie-banner {
-    left: 1rem;
-    right: 1rem;
-    bottom: 1rem;
-    max-width: calc(100% - 2rem);
+/* Strict Spacing Buffer Rules (Google AdSense Policy: Prevent Accidental Clicks) */
+.btn-download + .ad-container,
+.resource-download-box + .ad-container,
+.hero-cta-group + .ad-container {
+  margin-top: 5rem;
+}
+
+.ad-container + .btn-download,
+.ad-container + .resource-download-box,
+.ad-container + .hero-cta-group {
+  margin-top: 5rem;
+}
+
+/* Responsive Ad Container Adjustments */
+@media (max-width: 768px) {
+  .ad-container {
+    min-height: 260px;
+    margin: 2.75rem auto;
+    padding: 1rem 0.5rem;
+  }
+
+  .ad-slot {
+    min-height: 230px;
   }
 }

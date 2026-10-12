@@ -6,11 +6,13 @@
   <script>
     window.dataLayer = window.dataLayer || [];
     function gtag() { dataLayer.push(arguments); }
-    if(localStorage.getItem('cookie_consent') === 'true') {
-      gtag('consent', 'default', { 'ad_storage': 'granted', 'analytics_storage': 'granted', 'ad_user_data': 'granted', 'ad_personalization': 'granted' });
-    } else {
-      gtag('consent', 'default', { 'ad_storage': 'denied', 'analytics_storage': 'denied', 'ad_user_data': 'denied', 'ad_personalization': 'denied' });
-    }
+    gtag('consent', 'default', {
+      'ad_storage': 'denied',
+      'analytics_storage': 'denied',
+      'ad_user_data': 'denied',
+      'ad_personalization': 'denied',
+      'wait_for_update': 500
+    });
   </script>
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-1KFGHVDB66"></script>
   <script>
@@ -84,6 +86,11 @@
   <!-- Favicons -->
   <link rel="icon" type="image/svg+xml" href="../favicon.svg">
   <link rel="alternate icon" type="image/png" href="../favicon.png">
+
+    <!-- Google Fonts Preconnect & Stylesheet -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap">
 
   <!-- Stylesheets -->
   <link rel="stylesheet" href="../css/styles.css">
@@ -163,7 +170,7 @@
                 <circle cx="12" cy="12" r="10"></circle>
                 <polyline points="12 6 12 12 16 14"></polyline>
               </svg>
-              <span>13 Min Read</span>
+              <span>6 Min Read</span>
             </div>
           </div>
         </header>
@@ -188,6 +195,32 @@
           <p>
             In this guide, we will connect two lightweight community plugins created by developer Vitaly that transform Obsidian into an integrated, frictionless task management engine: <strong>GTD Tasks</strong> (bringing David Allen's Getting Things Done framework to your sidebar) and <strong>Kalendae</strong> (an inline interactive date picker that makes setting and updating dates straightforward).
           </p>
+
+          <!-- GTD Workflow Decision Tree (Mermaid) -->
+          <div class="mermaid-container">
+            <div class="mermaid-title">The Obsidian GTD Task Pipeline & Temporal Bucketing</div>
+            <pre class="mermaid">
+flowchart TD
+    Start["New Task Created in Vault<br><code>- [ ] Checklist Item</code>"] --> Inbox["GTD Sidebar: 'To Review' Bucket<br>(Unprocessed Raw Inbox)"]
+    Inbox --> Decision{"Is it Actionable?"}
+    
+    Decision -- No --> Archive["Archive / Someday Maybe<br><code>#GTD/someday</code>"]
+    Decision -- Yes --> Quick{"Takes &lt; 2 Minutes?"}
+    
+    Quick -- Yes --> DoIt["Do It Immediately!<br>(Check off with celebration confetti)"]
+    Quick -- No --> Horizon{"When is it needed?"}
+    
+    Horizon --> Today["Today<br><code>#GTD/today</code>"]
+    Horizon --> ThisWeek["This Week<br><code>#GTD/this-week</code>"]
+    Horizon --> NextWeek["Next Week<br><code>#GTD/next-week</code>"]
+    Horizon --> Someday["Future Sprint / Milestone<br><code>#GTD/next-month</code>"]
+
+    Today --> Kalendae["Kalendae Inline Date Picker<br><code>@Today</code> or Hover Calendar"]
+    ThisWeek --> Kalendae
+    NextWeek --> Kalendae
+    Someday --> Kalendae
+            </pre>
+          </div>
 
           <h2>The Problem with Traditional Note-Taking Tasks</h2>
           <p>
@@ -322,15 +355,37 @@
             <li><strong>Execute:</strong> Work strictly from the <em>Today</em> tab. Enjoy the confetti as you clear your queue without ever opening a secondary task manager.</li>
           </ol>
 
+          <h2>Automating Your Daily Note: Dataview Task Rollup Query</h2>
+          <p>
+            While the GTD sidebar is perfect for triage and drag-and-drop planning, you may also want your daily schedule rendered directly inside your active Daily Note or dashboard (as demonstrated in our <a href="obsidian-starter-vault-tutorial.html">Obsidian Starter Vault Tutorial</a>).
+          </p>
+          <p>
+            You can paste this clean Dataview query block into your daily markdown template. It automatically scans your entire vault and displays every open task tagged <code>#GTD/today</code>, grouped by the parent note:
+          </p>
+          <pre><code class="language-markdown">```dataview
+TASK
+WHERE !completed AND contains(tags, "#GTD/today")
+GROUP BY file.link
+SORT file.mtime DESC
+```</code></pre>
+          <p>
+            Whenever you complete an item in either the Daily Note or the GTD sidebar, Obsidian updates the state in both locations simultaneously. This eliminates duplicate entry and keeps your active day focused on high-leverage execution.
+          </p>
+
           <h2>Summary and Key Takeaways</h2>
           <p>
             You do not need an expensive SaaS subscription or a bloated productivity stack to stay organized. With GTD Tasks and Kalendae, your tasks and calendar cues remain natively inside your local markdown vault, private, searchable, and straightforward to manage.
+          </p>
+          <p>
+            To continue optimizing your personal knowledge workspace, check out our companion guides on <a href="obsidian-second-brain-setup.html">Building an Obsidian Second Brain</a> and the <a href="3-obsidian-settings-you-must-change.html">3 Essential Obsidian Settings You Must Change</a>.
           </p>
 
           <h2>Helpful Resources & Links</h2>
           <ul>
             <li><a href="https://obsidian.md/plugins" target="_blank" rel="noopener noreferrer">Obsidian Community Plugins Directory</a></li>
             <li><a href="https://gettingthingsdone.com/" target="_blank" rel="noopener noreferrer">Official Getting Things Done (GTD) Methodology</a></li>
+            <li><a href="obsidian-starter-vault-tutorial.html">Obsidian Starter Vault Setup Guide on Tech Simpld</a></li>
+            <li><a href="obsidian-second-brain-setup.html">Second Brain Architecture Guide on Tech Simpld</a></li>
           </ul>
         </div>
 
@@ -400,6 +455,24 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-markdown.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/toolbar/prism-toolbar.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/copy-to-clipboard/prism-copy-to-clipboard.min.js"></script>
+  <!-- Mermaid Diagram Engine -->
+  <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+  <script>
+    mermaid.initialize({
+      startOnLoad: true,
+      theme: 'dark',
+      themeVariables: {
+        darkMode: true,
+        background: '#0f111a',
+        primaryColor: '#161926',
+        primaryBorderColor: '#8b5cf6',
+        primaryTextColor: '#f3f4f6',
+        lineColor: '#06b6d4',
+        secondaryColor: '#1f2336',
+        tertiaryColor: '#07080d'
+      }
+    });
+  </script>
 </body>
 
 </html>

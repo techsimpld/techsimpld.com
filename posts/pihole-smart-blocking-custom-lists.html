@@ -6,11 +6,13 @@
   <script>
     window.dataLayer = window.dataLayer || [];
     function gtag() { dataLayer.push(arguments); }
-    if(localStorage.getItem('cookie_consent') === 'true') {
-      gtag('consent', 'default', { 'ad_storage': 'granted', 'analytics_storage': 'granted', 'ad_user_data': 'granted', 'ad_personalization': 'granted' });
-    } else {
-      gtag('consent', 'default', { 'ad_storage': 'denied', 'analytics_storage': 'denied', 'ad_user_data': 'denied', 'ad_personalization': 'denied' });
-    }
+    gtag('consent', 'default', {
+      'ad_storage': 'denied',
+      'analytics_storage': 'denied',
+      'ad_user_data': 'denied',
+      'ad_personalization': 'denied',
+      'wait_for_update': 500
+    });
   </script>
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-1KFGHVDB66"></script>
   <script>
@@ -82,6 +84,11 @@
   <link rel="icon" type="image/svg+xml" href="../favicon.svg">
   <link rel="alternate icon" type="image/png" href="../favicon.png">
 
+    <!-- Google Fonts Preconnect & Stylesheet -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap">
+
   <!-- Stylesheets -->
   <link rel="stylesheet" href="../css/styles.css">
   <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" rel="stylesheet" />
@@ -151,7 +158,7 @@
                 <line x1="8" y1="2" x2="8" y2="6"></line>
                 <line x1="3" y1="10" x2="21" y2="10"></line>
               </svg>
-              <span>Available Now</span>
+              <span>June 22, 2026</span>
             </div>
             <span>•</span>
             <div class="article-meta-item">
@@ -165,9 +172,9 @@
           </div>
         </header>
 
-        <!-- Video Player Container (Mock YouTube Iframe Embed) -->
+        <!-- Video Player Container -->
         <div class="video-container">
-          <iframe src="https://www.youtube-nocookie.com/embed/-sNOsGYcrac" title="Tech Simpld YouTube Tutorial Player"
+          <iframe src="https://www.youtube-nocookie.com/embed/TcdhR1TwqnU" title="Pi-hole Smart Blocking &amp; Custom Lists Tutorial - Tech Simpld"
             frameborder="0"
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
             allowfullscreen>
@@ -185,6 +192,33 @@
           <p>
             When you hit this wall, the solution is absolutely not to disable Pi-hole or dial back your security for the entire network. The true, professional solution is to master <strong>Pi-hole Group Management</strong>. In this comprehensive, step-by-step guide, I am going to show you exactly how to utilize Pi-hole's advanced, granular features to assign wildly different, custom blocklists to specific, individual devices on your network. We are also going to cover the absolute best, highly curated community blocklists you should be using today to completely stop telemetry without breaking the functional internet for your family.
           </p>
+
+          <!-- Mermaid DNS Group Management Routing Diagram -->
+          <div class="mermaid-container">
+            <div class="mermaid-title">Pi-hole Granular Group-Based DNS Resolution Pipeline</div>
+            <pre class="mermaid">
+flowchart TD
+    Client["Client Device\n(e.g., iPhone / Smart TV / Server)"] -->|DNS Query :53| FTL["Pi-hole FTL DNS Engine"]
+    FTL --> CheckGroup{"Lookup Client IP\nin gravity.db"}
+    
+    CheckGroup -->|Group: Kids / Strict| StrictRules["Apply Strict Blocklists\n(Aggressive Telemetry + Malware)"]
+    CheckGroup -->|Group: Unfiltered / Family| PermissiveRules["Apply Baseline Blocklists\n(Whitelist Affiliate / Shopping URLs)"]
+    CheckGroup -->|Unassigned Client| DefaultGroup["Apply Default StevenBlack List"]
+
+    StrictRules --> CheckBlock{"Domain on Group\nBlocklist?"}
+    PermissiveRules --> CheckBlock
+    DefaultGroup --> CheckBlock
+
+    CheckBlock -->|YES (Matched)| Sinkhole["Return 0.0.0.0 / NXDOMAIN\n(Ad / Tracker Blocked)"]
+    CheckBlock -->|NO (Allowed)| Upstream["Forward to Upstream DNS\n(Cloudflare / Unbound Recursive)"]
+    Upstream --> ReturnValid["Return Legitimate IP Address"]
+
+    classDef ftl fill:#0f111a,stroke:#8b5cf6,stroke-width:2px,color:#f8fafc;
+    classDef resolve fill:#1f2336,stroke:#06b6d4,stroke-width:2px,color:#f8fafc;
+    class FTL,CheckGroup,CheckBlock ftl;
+    class Client,StrictRules,PermissiveRules,DefaultGroup,Sinkhole,Upstream,ReturnValid resolve;
+            </pre>
+          </div>
 
           <h2>Step 1: Architecting and Creating Custom Device Groups</h2>
           <p>
@@ -260,6 +294,25 @@
             <li><strong>The Gravity Update Crashes or Hangs Indefinitely:</strong> If you hit 'Update Gravity' and it completely stalls out or crashes with an error, you have likely run out of hardware resources. If you added massive blocklists containing 10 million domains, the Pi-hole requires significant RAM to compile them. Check your LXC container resources in Proxmox. You may need to bump the container RAM from 512MB up to 1GB or check if the virtual disk is 100% full.</li>
           </ul>
 
+          <h2>Terminal Administration: Managing Groups via CLI</h2>
+          <p>
+            For automated homelab deployments, you can manage domains, groups, and gravity updates directly from the command line inside your Pi-hole LXC container:
+          </p>
+          <pre><code class="language-bash"># Trigger manual Gravity database recompile and download all remote lists
+pihole -g
+
+# Add a domain to the blacklist manually
+pihole -b tracking.telemetry.samsungcloud.com
+
+# Add a domain to the whitelist for shopping/affiliate bypass
+pihole -w click.email.homedepot.com
+
+# Query the SQLite gravity database directly to inspect assigned client groups
+sqlite3 /etc/pihole/gravity.db "SELECT client.ip, [group].name FROM client JOIN client_by_group ON client.id = client_by_group.client_id JOIN [group] ON client_by_group.group_id = [group].id;"
+
+# Tail live DNS resolution queries to verify which rules trigger
+pihole -t</code></pre>
+
           <h2>Conclusion & Next Steps for Your Lab</h2>
           <p>
             Mastering group management is the defining difference between running a frustrating, rudimentary ad-blocker that constantly causes arguments with your family, and orchestrating a silent, highly context-aware, invisible network shield. By utilizing heavily vetted custom lists and targeting them precisely to the devices that actually need them, you can maintain maximum lockdown security for your lab servers and kids' tablets, all without breaking the daily internet experience for everyone else in the house. This is network administration done right.
@@ -288,6 +341,16 @@
           <a href="https://youtube.com/@TechSimpld" target="_blank" id="sidebarYoutubeBtn" class="btn btn-outline btn-sm" style="width: 100%;">
             Visit YouTube Channel
           </a>
+        </div>
+
+        <!-- Widget: Related Tutorials -->
+        <div class="sidebar-widget">
+          <h4 class="widget-title">Related Tutorials</h4>
+          <ul style="list-style: none; padding: 0; margin: 0; font-size: 0.9rem; line-height: 1.8;">
+            <li><a href="pihole-installation-guide.html" style="color: var(--accent-cyan);">Pi-hole Initial Proxmox Setup</a></li>
+            <li><a href="pihole-youtube-ads-truth.html" style="color: var(--text-color);">The Truth About Pi-hole & YouTube Ads</a></li>
+            <li><a href="cloudflare-zero-trust-tunnel-guide.html" style="color: var(--text-color);">Cloudflare Zero Trust Remote Access</a></li>
+          </ul>
         </div>
 
       </aside>
@@ -337,6 +400,21 @@
 
   <!-- Scripts -->
   <script src="../js/scripts.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+  <script>
+    mermaid.initialize({
+      startOnLoad: true,
+      theme: 'dark',
+      themeVariables: {
+        darkMode: true,
+        background: '#0f111a',
+        primaryColor: '#1f2336',
+        primaryBorderColor: '#8b5cf6',
+        primaryTextColor: '#f8fafc',
+        lineColor: '#06b6d4'
+      }
+    });
+  </script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-bash.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-yaml.min.js"></script>

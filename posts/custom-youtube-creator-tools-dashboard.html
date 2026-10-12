@@ -6,11 +6,13 @@
   <script>
     window.dataLayer = window.dataLayer || [];
     function gtag() { dataLayer.push(arguments); }
-    if(localStorage.getItem('cookie_consent') === 'true') {
-      gtag('consent', 'default', { 'ad_storage': 'granted', 'analytics_storage': 'granted', 'ad_user_data': 'granted', 'ad_personalization': 'granted' });
-    } else {
-      gtag('consent', 'default', { 'ad_storage': 'denied', 'analytics_storage': 'denied', 'ad_user_data': 'denied', 'ad_personalization': 'denied' });
-    }
+    gtag('consent', 'default', {
+      'ad_storage': 'denied',
+      'analytics_storage': 'denied',
+      'ad_user_data': 'denied',
+      'ad_personalization': 'denied',
+      'wait_for_update': 500
+    });
   </script>
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-1KFGHVDB66"></script>
   <script>
@@ -84,6 +86,11 @@
   <!-- Favicons -->
   <link rel="icon" type="image/svg+xml" href="../favicon.svg">
   <link rel="alternate icon" type="image/png" href="../favicon.png">
+
+    <!-- Google Fonts Preconnect & Stylesheet -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap">
 
   <!-- Stylesheets -->
   <link rel="stylesheet" href="../css/styles.css">
@@ -163,7 +170,7 @@
                 <circle cx="12" cy="12" r="10"></circle>
                 <polyline points="12 6 12 12 16 14"></polyline>
               </svg>
-              <span>16 Min Read</span>
+              <span>7 Min Read</span>
             </div>
           </div>
         </header>
@@ -188,6 +195,46 @@
           <p>
             Over the past several weeks, I prototyped and deployed my own self-hosted creator command center, tentatively named <strong>Tech Simpld Studio</strong>. By combining AI-assisted development tools with my existing homelab infrastructure, I built an application tailored specifically to my editorial workflow. Here is the full breakdown of why I built it, how it operates, and the major competitive advantages of self-hosting your creator data.
           </p>
+
+          <!-- System Architecture Diagram (Mermaid) -->
+          <div class="mermaid-container">
+            <div class="mermaid-title">Tech Simpld Studio: Self-Hosted Architecture Pipeline</div>
+            <pre class="mermaid">
+flowchart TD
+    subgraph Ingestion["Data Ingestion & External APIs"]
+        YT["YouTube Data API v3<br>(Analytics, Metadata, Comments)"]
+        Scraper["Transcript Parser<br>(Public Timestamps)"]
+        Cron["Background Scheduler<br>(Async Tasks & Heartbeats)"]
+    end
+
+    subgraph Backend["FastAPI Self-Hosted Core (Docker / LXC)"]
+        API["FastAPI App Service"]
+        LinkCheck["Async Link Card Validator<br>(HTTP Head Status Prober)"]
+        Miner["Question & Comment Miner<br>(Semantic Clusterer)"]
+    end
+
+    subgraph AI["Private AI Reasoning Pipeline"]
+        Ollama["Local Ollama Instance<br>(Private Llama 3 / Mistral)"]
+        Claude["Anthropic API<br>(Complex Synthesis & Hooks)"]
+    end
+
+    subgraph Storage["Persistent Storage"]
+        DB[("PostgreSQL / SQLite<br>Indexed Transcripts & Channels")]
+    end
+
+    subgraph Delivery["Client & Alert Surfaces"]
+        UI["Dark Mode Dashboard<br>(Vanilla JS / Modern CSS)"]
+        Gotify["Gotify Push Alerts<br>(Instant 404 URL Notifications)"]
+    end
+
+    YT & Scraper --> API
+    Cron --> LinkCheck
+    API <--> DB
+    API <--> Ollama & Claude
+    LinkCheck -->|"Dead URL Detected"| Gotify
+    API --> UI
+            </pre>
+          </div>
 
           <h2>The Rented Data Trap: Why Third-Party SaaS Tools Fall Short</h2>
           <p>
@@ -287,9 +334,37 @@
             <li><strong>Frontend / Dashboard:</strong> Lightweight, responsive HTML5, modern CSS with dark-mode productivity styling, and vanilla JavaScript.</li>
             <li><strong>Backend API:</strong> Python FastAPI managing asynchronous YouTube Data API v3 calls, database persistence, and background link verification jobs.</li>
             <li><strong>Database:</strong> SQLite / PostgreSQL storing video metadata, indexed comment threads, and parsed transcript records.</li>
-            <li><strong>AI Inference:</strong> Configurable endpoints connecting to local Ollama instances for private data extraction and Anthropic API for complex reasoning.</li>
-            <li><strong>Deployment:</strong> Packaged as a lightweight Docker container running inside an Ubuntu LXC container on Proxmox VE.</li>
+            <li><strong>AI Inference:</strong> Configurable endpoints connecting to local Ollama instances for private data extraction and Anthropic API for complex reasoning (see my in-depth breakdown of <a href="local-llm-vs-cloud-ai-ollama-claude.html">Local LLM vs Cloud AI: Ollama vs Claude</a>).</li>
+            <li><strong>Deployment:</strong> Packaged as an internal container stack running inside an Ubuntu LXC container on our <a href="budget-proxmox-home-lab-setup.html">Budget Proxmox Cluster</a> (under active home lab testing ahead of an official public release).</li>
           </ul>
+
+          <h3>Automated Link Verification Engine: Python Implementation</h3>
+          <p>
+            To prevent broken download URLs or obsolete GitHub repositories from hurting viewer trust, this asynchronous task scans every URL in my video descriptions and triggers push alerts via Gotify (detailed in my guide on <a href="gotify-self-hosted-push-notifications.html">Gotify Self-Hosted Push Alerts</a>):
+          </p>
+          <pre><code class="language-python">import httpx
+import asyncio
+
+async def check_single_url(client: httpx.AsyncClient, url: str) -> dict:
+    try:
+        response = await client.head(url, timeout=5.0, follow_redirects=True)
+        return {"url": url, "status": response.status_code, "healthy": response.status_code < 400}
+    except httpx.RequestError as exc:
+        return {"url": url, "status": 0, "healthy": False, "error": str(exc)}
+
+async def verify_catalog_links(url_list: list[str], gotify_token: str, gotify_url: str):
+    async with httpx.AsyncClient() as client:
+        tasks = [check_single_url(client, u) for u in url_list]
+        results = await asyncio.gather(*tasks)
+
+    broken = [r for r in results if not r["healthy"]]
+    if broken:
+        alert_payload = {
+            "title": f"Link Alert: {len(broken)} Broken URLs Detected",
+            "message": "\n".join([f"- {b['url']} (Code: {b['status']})" for b in broken]),
+            "priority": 7
+        }
+        await client.post(f"{gotify_url}/message?token={gotify_token}", json=alert_payload)</code></pre>
 
           <h2>Summary and Key Takeaways</h2>
           <p>
@@ -301,6 +376,8 @@
             <li><a href="https://developers.google.com/youtube/v3" target="_blank" rel="noopener noreferrer">YouTube Data API v3 Documentation</a></li>
             <li><a href="https://fastapi.tiangolo.com/" target="_blank" rel="noopener noreferrer">FastAPI Web Framework Documentation</a></li>
             <li><a href="https://www.docker.com/" target="_blank" rel="noopener noreferrer">Docker Container Platform</a></li>
+            <li><a href="gotify-self-hosted-push-notifications.html">Gotify Push Notifications Guide on Tech Simpld</a></li>
+            <li><a href="local-llm-vs-cloud-ai-ollama-claude.html">Local LLM vs Cloud AI Guide on Tech Simpld</a></li>
           </ul>
         </div>
 
@@ -370,6 +447,24 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-python.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/toolbar/prism-toolbar.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/copy-to-clipboard/prism-copy-to-clipboard.min.js"></script>
+  <!-- Mermaid Diagram Engine -->
+  <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+  <script>
+    mermaid.initialize({
+      startOnLoad: true,
+      theme: 'dark',
+      themeVariables: {
+        darkMode: true,
+        background: '#0f111a',
+        primaryColor: '#161926',
+        primaryBorderColor: '#8b5cf6',
+        primaryTextColor: '#f3f4f6',
+        lineColor: '#06b6d4',
+        secondaryColor: '#1f2336',
+        tertiaryColor: '#07080d'
+      }
+    });
+  </script>
 </body>
 
 </html>

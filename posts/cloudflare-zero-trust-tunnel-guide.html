@@ -6,11 +6,13 @@
   <script>
     window.dataLayer = window.dataLayer || [];
     function gtag() { dataLayer.push(arguments); }
-    if(localStorage.getItem('cookie_consent') === 'true') {
-      gtag('consent', 'default', { 'ad_storage': 'granted', 'analytics_storage': 'granted', 'ad_user_data': 'granted', 'ad_personalization': 'granted' });
-    } else {
-      gtag('consent', 'default', { 'ad_storage': 'denied', 'analytics_storage': 'denied', 'ad_user_data': 'denied', 'ad_personalization': 'denied' });
-    }
+    gtag('consent', 'default', {
+      'ad_storage': 'denied',
+      'analytics_storage': 'denied',
+      'ad_user_data': 'denied',
+      'ad_personalization': 'denied',
+      'wait_for_update': 500
+    });
   </script>
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-1KFGHVDB66"></script>
   <script>
@@ -75,6 +77,40 @@
   }
   </script>
 
+  <!-- FAQPage Schema -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "Does Cloudflare allow video streaming (Plex or Jellyfin) over free tunnels?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Cloudflare Terms of Service (specifically Section 2.8) restrict using their standard proxy network exclusively for disproportionate non-HTML media delivery such as 4K video streams. While web dashboards and Nextcloud document files are completely permitted, streaming bulk video libraries can trigger automated account warnings. For media streaming, use Tailscale, WireGuard, or Cloudflare Stream."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What happens if my home ISP changes my dynamic public IP address?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Your tunnel will not drop. The cloudflared connector initiates an outbound-only connection directly to Cloudflare edge data centers. Even if your residential ISP refreshes your dynamic WAN IP, the daemon automatically re-establishes the tunnel within seconds without needing Dynamic DNS (DDNS) or port forwarding."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How does Cloudflare Tunnel latency compare to a traditional VPN like WireGuard?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Cloudflare Tunnels introduce minimal overhead (typically 10-25ms) because traffic routes through Cloudflare's Anycast edge network. While direct peer-to-peer WireGuard connections can be slightly faster for direct LAN transfers, Cloudflare Tunnels provide built-in identity verification, DDoS mitigation, and clientless browser access from any device without installing VPN software."
+        }
+      }
+    ]
+  }
+  </script>
+
   <!-- DNS Prefetch & Preconnect for Speed -->
   <link rel="dns-prefetch" href="https://www.googletagmanager.com">
   <link rel="preconnect" href="https://www.googletagmanager.com" crossorigin>
@@ -84,6 +120,11 @@
   <!-- Favicons -->
   <link rel="icon" type="image/svg+xml" href="../favicon.svg">
   <link rel="alternate icon" type="image/png" href="../favicon.png">
+
+    <!-- Google Fonts Preconnect & Stylesheet -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap">
 
   <!-- Stylesheets -->
   <link rel="stylesheet" href="../css/styles.css">
@@ -154,7 +195,7 @@
                 <line x1="8" y1="2" x2="8" y2="6"></line>
                 <line x1="3" y1="10" x2="21" y2="10"></line>
               </svg>
-              <span>Available Now</span>
+              <span>August 3, 2026</span>
             </div>
             <span>•</span>
             <div class="article-meta-item">
@@ -305,7 +346,7 @@
             Click <strong>Save hostname</strong>. In the background, Cloudflare automatically creates the necessary DNS CNAME records on your domain, provisions a free, valid SSL/TLS certificate for encryption, and binds it to the tunnel. If you wait about 30 seconds and type <code>notes.myhomelab.com</code> into your phone's browser (while disconnected from Wi-Fi), your local service will instantly load!
           </p>
 
-          <h2>Step 4: the most effective Defense: Zero Trust Application Policies</h2>
+          <h2>Step 4: Enforcing Zero Trust Application Access Policies</h2>
           <p>
             While your service is now accessible, it is accessible to <em>anyone</em> on the internet who guesses the URL. If the login screen of your application has a vulnerability, you are still at risk. This is where Cloudflare Zero Trust becomes truly magical: you can place an impenetrable authentication gatekeeper in front of your applications at the edge of the network.
           </p>
@@ -339,6 +380,29 @@
           <div class="callout callout-warning" style="background: rgba(239, 68, 68, 0.08); border-left: 4px solid #ef4444; padding: 1rem; border-radius: 4px; margin: 1.5rem 0;">
             <strong>Heads Up on Plex, Jellyfin, and Nextcloud File Syncs:</strong> You must read the fine print. Cloudflare’s free tier terms of service strictly prohibit streaming disproportionately large amounts of non-HTML media (like streaming 4K movies through Plex or Jellyfin, or running massive, multi-gigabyte Nextcloud backup syncs) directly through their CDN caching proxies. If you violate this, Cloudflare will detect the massive bandwidth spike and permanently ban your domain and account. Use Cloudflare Tunnels strictly for lightweight web apps, Home Assistant APIs, dashboards, and text-based note vaults. If you need to stream heavy 4K video remotely from your server to your iPad at an airport, you must set up a direct VPN solution like Tailscale or WireGuard instead!
           </div>
+
+          <!-- FAQ Accordion Section -->
+          <section class="faq-section">
+            <h2 class="faq-title">Frequently Asked Questions</h2>
+            <details class="faq-item">
+              <summary class="faq-question">Does Cloudflare allow video streaming (Plex or Jellyfin) over free tunnels?</summary>
+              <div class="faq-answer">
+                Cloudflare Terms of Service (specifically Section 2.8) restrict using their standard proxy network exclusively for disproportionate non-HTML media delivery such as 4K video streams. While web dashboards and Nextcloud document files are completely permitted, streaming bulk video libraries can trigger automated account warnings. For media streaming, use Tailscale, WireGuard, or Cloudflare Stream.
+              </div>
+            </details>
+            <details class="faq-item">
+              <summary class="faq-question">What happens if my home ISP changes my dynamic public IP address?</summary>
+              <div class="faq-answer">
+                Your tunnel will not drop. The cloudflared connector initiates an outbound-only connection directly to Cloudflare edge data centers. Even if your residential ISP refreshes your dynamic WAN IP, the daemon automatically re-establishes the tunnel within seconds without needing Dynamic DNS (DDNS) or port forwarding.
+              </div>
+            </details>
+            <details class="faq-item">
+              <summary class="faq-question">How does Cloudflare Tunnel latency compare to a traditional VPN like WireGuard?</summary>
+              <div class="faq-answer">
+                Cloudflare Tunnels introduce minimal overhead (typically 10-25ms) because traffic routes through Cloudflare's Anycast edge network. While direct peer-to-peer WireGuard connections can be slightly faster for direct LAN transfers, Cloudflare Tunnels provide built-in identity verification, DDoS mitigation, and clientless browser access from any device without installing VPN software.
+              </div>
+            </details>
+          </section>
 
           <h2>Summary: Bringing Enterprise Security to the Home Lab</h2>
           <p>

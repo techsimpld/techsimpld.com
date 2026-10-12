@@ -29,7 +29,7 @@ obsidian-starter-vault/.obsidian/backups/
 
 /Project Alpha
 
-tutorial-template.html
+_templates/
 
 # AI & Agent configuration / Brand docs
 .agents/
@@ -42,3 +42,4 @@ brand-*.md
 *.brand.md
 anti-slop/
 scripts/
+ADSENSE_AUDIT_BACKLOG.md

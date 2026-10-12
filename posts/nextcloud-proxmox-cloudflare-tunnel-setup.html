@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -6,11 +6,13 @@
   <script>
     window.dataLayer = window.dataLayer || [];
     function gtag() { dataLayer.push(arguments); }
-    if(localStorage.getItem('cookie_consent') === 'true') {
-      gtag('consent', 'default', { 'ad_storage': 'granted', 'analytics_storage': 'granted', 'ad_user_data': 'granted', 'ad_personalization': 'granted' });
-    } else {
-      gtag('consent', 'default', { 'ad_storage': 'denied', 'analytics_storage': 'denied', 'ad_user_data': 'denied', 'ad_personalization': 'denied' });
-    }
+    gtag('consent', 'default', {
+      'ad_storage': 'denied',
+      'analytics_storage': 'denied',
+      'ad_user_data': 'denied',
+      'ad_personalization': 'denied',
+      'wait_for_update': 500
+    });
   </script>
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-1KFGHVDB66"></script>
   <script>
@@ -85,6 +87,11 @@
   <link rel="icon" type="image/svg+xml" href="../favicon.svg">
   <link rel="alternate icon" type="image/png" href="../favicon.png">
 
+    <!-- Google Fonts Preconnect & Stylesheet -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap">
+
   <!-- Stylesheets -->
   <link rel="stylesheet" href="../css/styles.css">
   <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" rel="stylesheet" />
@@ -153,7 +160,7 @@
                 <line x1="8" y1="2" x2="8" y2="6"></line>
                 <line x1="3" y1="10" x2="21" y2="10"></line>
               </svg>
-              <span>September 2026</span>
+              <span>September 15, 2026</span>
             </div>
             <span>•</span>
             <div class="article-meta-item">
@@ -162,7 +169,7 @@
                 <circle cx="12" cy="12" r="10"></circle>
                 <polyline points="12 6 12 12 16 14"></polyline>
               </svg>
-              <span>12 Min Read</span>
+              <span>7 Min Read</span>
             </div>
           </div>
         </header>
@@ -187,12 +194,38 @@
           </p>
 
           <p>
-            the most effective remedy is <strong>Nextcloud</strong>. When you self-host Nextcloud on your own hardware, storage is only limited by the size of the hard drives you plug in. There are no monthly subscription bills, and your files belong strictly to you.
+            A proven self-hosted remedy is <strong>Nextcloud</strong>. When you self-host Nextcloud on your own hardware, storage is only limited by the size of the hard drives you plug in. There are no monthly subscription bills, and your files belong strictly to you.
           </p>
 
           <p>
             In this guide, I will walk you through setting up <strong>Nextcloud All-in-One (AIO)</strong> inside an Ubuntu LXC container on Proxmox, and exposing it securely over the internet using <strong>Cloudflare Tunnels</strong>, with zero open router ports and zero port forwarding headaches.
           </p>
+
+          <!-- Mermaid Architecture Diagram -->
+          <div class="mermaid-container">
+            <div class="mermaid-title">Nextcloud AIO + Cloudflare Tunnel Architecture</div>
+            <pre class="mermaid">
+flowchart TD
+    Client["Client Device\n(Phone, Laptop, Web)"] -->|HTTPS :443| CF["Cloudflare Global Edge\n(DDoS Protection & SSL)"]
+    CF -->|Encrypted Tunnel Pipe| CFT["cloudflared Daemon\n(Outbound only - Port 7844)"]
+    
+    subgraph ProxmoxHost ["Proxmox VE Node"]
+        subgraph LXC ["Ubuntu 24.04 LXC Container (ID 105)"]
+            CFT -->|Local HTTP Proxy| AIO_Master["Nextcloud AIO Master\n(:8080 Management)"]
+            AIO_Master --> Apache["Nextcloud Apache Server\n(Web UI & WebDAV :11000)"]
+            Apache --> PHP["Nextcloud PHP-FPM Engine"]
+            PHP --> PG[("PostgreSQL Database\n(Metadata & File Index)")]
+            PHP --> Redis[("Redis Cache\n(Transactional File Locking)")]
+            PHP --> Storage[("/mnt/ncdata\n(ZFS / Local Storage Pool)")]
+        end
+    end
+
+    classDef edge fill:#1f2336,stroke:#06b6d4,stroke-width:2px,color:#f8fafc;
+    classDef lxc fill:#0f111a,stroke:#8b5cf6,stroke-width:2px,color:#f8fafc;
+    class Client,CF edge;
+    class LXC,AIO_Master,Apache,PHP,PG,Redis,Storage lxc;
+            </pre>
+          </div>
 
           <h2>Why Nextcloud All-in-One (AIO) on Proxmox LXC?</h2>
           <p>
@@ -367,9 +400,28 @@ volumes:
             <li><strong>Containers Won't Start:</strong> If the AIO setup wizard spins endlessly, SSH into the LXC and check if Docker is out of disk space or if DNS resolution failed during the image pull.</li>
           </ul>
 
+          <h2>Service Health & Tunnel Verification Commands</h2>
+          <p>
+            Once Nextcloud AIO finishes initializing, run these diagnostic commands inside the LXC container to confirm all service components and the Cloudflare tunnel daemon are operational:
+          </p>
+          <pre><code class="language-bash"># Verify all Nextcloud AIO microservices are healthy
+docker ps --format "table {{.Names}}\t{{.Status}}\t{{.Ports}}"
+
+# Inspect Nextcloud container internal logs
+docker logs -f nextcloud-aio-nextcloud --tail 50
+
+# Check Cloudflare tunnel daemon connection status
+systemctl status cloudflared --no-pager
+
+# Test local DNS resolution to the Nextcloud web container
+curl -I -k http://127.0.0.1:11000</code></pre>
+
           <h2>Summary</h2>
           <p>
-            Setting up Nextcloud on Proxmox with Cloudflare Tunnels gives you the most effective self-hosted victory: enterprise-grade cloud storage, integrated mobile photo syncing, and full privacy, without paying a single monthly dime to big tech companies.
+            Setting up Nextcloud on Proxmox with Cloudflare Tunnels delivers a complete self-hosted solution: enterprise-grade cloud storage, integrated mobile photo syncing, and full privacy, without paying recurring monthly subscription fees to third-party cloud providers.
+          </p>
+          <p>
+            To continue optimizing your homelab infrastructure, explore our <a href="container-vs-vm-which-should-you-use.html">Container vs. VM Guide</a> for LXC sizing and our <a href="cloudflare-zero-trust-tunnel-guide.html">Cloudflare Zero Trust Tutorial</a> for granular multi-user access rules.
           </p>
         </div></div>
 
@@ -440,6 +492,21 @@ volumes:
   </footer>
 
   <script src="../js/scripts.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+  <script>
+    mermaid.initialize({
+      startOnLoad: true,
+      theme: 'dark',
+      themeVariables: {
+        darkMode: true,
+        background: '#0f111a',
+        primaryColor: '#1f2336',
+        primaryBorderColor: '#8b5cf6',
+        primaryTextColor: '#f8fafc',
+        lineColor: '#06b6d4'
+      }
+    });
+  </script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-bash.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-yaml.min.js"></script>
