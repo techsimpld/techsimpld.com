@@ -372,7 +372,7 @@ ceph -w</code></pre>
             <strong>Linux Containers (LXCs)</strong>, which are natively supported in Proxmox, represent a radically different approach. They share the existing host Linux kernel directly, bypassing hardware emulation entirely, while still providing completely isolated root environments for your applications. Because they don't have to boot their own kernel, an LXC container running Pi-hole or an Nginx web server will often use as little as <strong>35MB to 60MB of RAM</strong> total!
           </p>
           <p>
-            By intentionally converting 80% of my typical homelab services (like DNS, reverse proxies, and dashboards) into lightweight LXC containers rather than heavy VMs, my 48GB total cluster can easily and smoothly run 25+ simultaneous, highly isolated services with gigabytes of RAM left to spare. For a deep dive into performance metrics and resource allocation, read my side-by-side comparison on <a href="container-vs-vm-which-should-you-use.html">Container vs. VM: Which Should You Use in Proxmox?</a>, and see my step-by-step <a href="pihole-installation-guide.html">Pi-hole Proxmox LXC Deployment Guide</a>.
+            By intentionally converting 80% of my typical homelab services (like DNS, reverse proxies, and dashboards) into lightweight LXC containers rather than heavy VMs, my 48GB total cluster can easily and smoothly run 25+ simultaneous, highly isolated services with gigabytes of RAM left to spare. For a detailed breakdown of performance metrics and resource allocation, read my side-by-side comparison on <a href="container-vs-vm-which-should-you-use.html">Container vs. VM: Which Should You Use in Proxmox?</a>, and see my step-by-step <a href="pihole-installation-guide.html">Pi-hole Proxmox LXC Deployment Guide</a>.
           </p>
 
           <h2>6. Disaster Recovery: Automated Nightly Backups with PBS</h2>
@@ -415,9 +415,9 @@ ceph -w</code></pre>
             </details>
           </section>
 
-          <h2>Summary & Next Steps for Your Journey</h2>
+          <h2>Summary & Next Steps for Your Home Lab</h2>
           <p>
-            The core lesson here is empowering: you do not need an enterprise budget, a rack server, or a dedicated data center cooling unit to learn enterprise-grade virtualization, advanced networking, and high-availability architecture. Three cheap, refurbished Dell OptiPlex desktops, an inexpensive gigabit managed switch, and the free, open-source power of Proxmox VE will give you a highly resilient, quiet, and power-efficient playground. This exact setup will teach you significantly more about modern IT infrastructure, clustering, and disaster recovery than any textbook or cloud simulator ever could.
+            The core takeaway here is clear: you do not need an enterprise budget, a rack server, or a dedicated data center cooling unit to learn enterprise-grade virtualization, advanced networking, and high-availability architecture. Three cheap, refurbished Dell OptiPlex desktops, an inexpensive gigabit managed switch, and the free, open-source power of Proxmox VE will give you a highly resilient, quiet, and power-efficient playground. This exact setup will teach you significantly more about modern IT infrastructure, clustering, and disaster recovery than any textbook or cloud simulator ever could.
           </p>
           <p>
             Ready to deploy your first real service into your new cluster? Check out my comprehensive guides on <a href="docker-vs-podman.html">Understanding Docker vs. Podman</a> and <a href="cloudflare-zero-trust-tunnel-guide.html">Setting Up Secure Cloudflare Zero Trust Tunnels</a>.

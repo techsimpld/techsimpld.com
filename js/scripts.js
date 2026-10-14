@@ -29,6 +29,14 @@ document.addEventListener('DOMContentLoaded', () => {
         navbar.classList.remove('navbar-active');
       });
     });
+
+    // Close menu on Escape key press (keyboard accessibility)
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && navbar.classList.contains('navbar-active')) {
+        navbar.classList.remove('navbar-active');
+        menuToggle.focus();
+      }
+    });
   }
 
   // 2. Newsletter Signup Simulation

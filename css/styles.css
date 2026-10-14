@@ -19,7 +19,7 @@
   
   --text-primary: #f3f4f6;
   --text-secondary: #9ca3af;
-  --text-muted: #6b7280;
+  --text-muted: #94a3b8;
   
   --accent-purple: #8b5cf6;
   --accent-purple-hover: #7c3aed;
@@ -436,13 +436,14 @@ img {
   border-radius: var(--radius-sm);
   font-family: var(--font-body);
   font-size: 0.95rem;
-  outline: none;
   transition: var(--transition-smooth);
 }
 
 .form-input:focus {
-  border-color: var(--border-focus);
-  box-shadow: 0 0 0 2px rgba(139, 92, 246, 0.2);
+  border-color: var(--accent-purple);
+  outline: 2px solid var(--accent-purple);
+  outline-offset: 1px;
+  box-shadow: 0 0 0 2px rgba(139, 92, 246, 0.25);
 }
 
 .form-message {
@@ -1274,12 +1275,13 @@ img {
   color: var(--text-primary, #f8fafc);
   font-family: var(--font-body, 'Inter', sans-serif);
   font-size: 0.95rem;
-  outline: none;
   transition: border-color 0.2s ease, box-shadow 0.2s ease;
 }
 
 .posts-search-input:focus {
   border-color: var(--accent-cyan, #06b6d4);
+  outline: 2px solid var(--accent-cyan, #06b6d4);
+  outline-offset: 1px;
   box-shadow: 0 0 15px rgba(6, 182, 212, 0.25);
 }
 
