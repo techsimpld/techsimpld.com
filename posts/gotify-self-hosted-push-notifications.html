@@ -56,14 +56,19 @@
     "@type": "Article",
     "headline": "Stop Relying on Paid Alerts: Deploy Gotify for Instant Phone Notifications",
     "image": [
-      "https://techsimpld.com/images/Stop%20Relying%20on%20Paid%20Alerts%20Deploy%20Gotify%20for%20Instant%20Phone%20Notifications.jpg"
+      "https://techsimpld.com/images/Stop%20Relying%20on%20Paid%20Alerts%20Deploy%20Gotify%20for%20Instant%20Phone%20Notifications.jpg",
+      "https://techsimpld.com/images/gotify-step-1.png",
+      "https://techsimpld.com/images/gotify-step-2.png",
+      "https://techsimpld.com/images/gotify-step-3.png"
     ],
     "datePublished": "2026-09-15T08:00:00-04:00",
-    "dateModified": "2026-09-15T08:00:00-04:00",
+    "dateModified": "2026-11-02T10:00:00-05:00",
     "author": {
       "@type": "Person",
       "name": "Tech Simpld",
-      "url": "https://techsimpld.com/about.html"
+      "url": "https://techsimpld.com/about.html",
+      "jobTitle": "MCSA Certified Systems Engineer",
+      "sameAs": ["https://youtube.com/@TechSimpld"]
     },
     "publisher": {
       "@type": "Organization",
@@ -120,6 +125,7 @@
         <li><a href="../about.html" class="nav-link">About</a></li>
         <li><a href="../posts.html" class="nav-link active">Posts</a></li>
         <li><a href="../resources.html" class="nav-link">Resources</a></li>
+        <li><a href="../tools.html" class="nav-link">Tools</a></li>
         <li><a href="../contact.html" class="nav-link">Contact</a></li>
         <li><a href="https://youtube.com/@TechSimpld" target="_blank" class="nav-link">YouTube</a></li>
       </ul>
@@ -187,6 +193,13 @@
 
         <!-- Article Content -->
         <div class="prose">
+          <figure class="article-featured-figure">
+            <picture>
+              <source srcset="../images/Stop%20Relying%20on%20Paid%20Alerts%20Deploy%20Gotify%20for%20Instant%20Phone%20Notifications.webp" type="image/webp">
+              <img src="../images/Stop%20Relying%20on%20Paid%20Alerts%20Deploy%20Gotify%20for%20Instant%20Phone%20Notifications.jpg" alt="Gotify Self-Hosted Push Notification Server Architecture and Mobile Alerts" width="1200" height="675" loading="eager" decoding="async">
+            </picture>
+            <figcaption class="article-featured-caption">Self-hosted Gotify push notification server routing real-time REST API alerts from Proxmox and Uptime Kuma.</figcaption>
+          </figure>
           <p>
             If you are running a home lab filled with critical self-hosted services, data pipelines, and scheduled backups, visibility into the health of your system is absolutely crucial. For years, I stubbornly relied on an incredibly messy, duct-taped chain of external services to tell me when things went wrong. I used Pushover (which requires paid licenses), unreliable Telegram bots, and complex SMTP email relays to know when my Proxmox cluster dropped a node or Nextcloud simply stopped syncing.
           </p>
@@ -266,6 +279,14 @@
             <li>Gotify will instantly generate a highly complex cryptographic <strong>Token</strong> (it will always start with the letter <code>A</code>). Copy this entire token string; we absolutely need it for the next critical integration steps.</li>
           </ol>
 
+          <figure class="article-featured-figure">
+            <picture>
+              <source srcset="../images/gotify-step-1.webp" type="image/webp">
+              <img src="../images/gotify-step-1.png" alt="Gotify web interface Applications tab showing the Create Application button for generating isolated API tokens" width="1280" height="640" loading="lazy" decoding="async">
+            </picture>
+            <figcaption class="article-featured-caption">Creating isolated sender identities and cryptographic API tokens inside the Gotify web interface.</figcaption>
+          </figure>
+
           <h3>3. Native Alert Integration with Proxmox VE</h3>
           <p>
             One of the most massive, workflow-changing wins for deploying Gotify is its native, built-in integration in modern versions of Proxmox VE (version 8.1 and higher). I no longer need to write fragile, custom Python wrapper scripts just to parse system logs and find out if a critical VM backup snapshot failed to execute during the night. Proxmox handles it natively.
@@ -284,6 +305,14 @@
           <p>
             Next, to prevent notification fatigue, I highly recommend setting up a <strong>Notification Matcher</strong> in Proxmox. This allows you to aggressively filter the noise and route only truly critical events (such as storage replication failures, backup job errors, or High Availability fencing actions) directly to this Gotify target, while letting trivial informational logs remain silently in the system journal.
           </p>
+
+          <figure class="article-featured-figure">
+            <picture>
+              <source srcset="../images/gotify-step-2.webp" type="image/webp">
+              <img src="../images/gotify-step-2.png" alt="Proxmox VE Datacenter Notifications panel showing Notification Targets and Notification Matchers configuration" width="1280" height="640" loading="lazy" decoding="async">
+            </picture>
+            <figcaption class="article-featured-caption">Configuring native Notification Targets and Notification Matchers at the Proxmox VE Datacenter level.</figcaption>
+          </figure>
 
           <h3>4. Building Custom Bash Script Alerts</h3>
           <p>
@@ -318,6 +347,14 @@ fi
           <p>
             Pay very close attention to the <code>priority</code> flag in the script above. Gotify uses this integer value to explicitly dictate how the Android operating system on your phone handles the incoming alert. I strictly use <code>2</code> (or lower) for successful, routine jobs, they silently drop into my notification drawer without vibrating or making a sound, allowing me to review them at my leisure. However, I use <code>9</code> for catastrophic failures. On Android, a Priority 9 Gotify message is designed to aggressively override system-level "Do Not Disturb" settings and trigger a loud, persistent, impossible-to-ignore alarm tone until I physically acknowledge it. It is incredibly effective.
           </p>
+
+          <figure class="article-featured-figure">
+            <picture>
+              <source srcset="../images/gotify-step-3.webp" type="image/webp">
+              <img src="../images/gotify-step-3.png" alt="Gotify All Messages stream displaying a real-time Proxmox vzdump backup status log notification" width="1280" height="640" loading="lazy" decoding="async">
+            </picture>
+            <figcaption class="article-featured-caption">Live Proxmox vzdump snapshot completion log delivered directly into the Gotify Server Monitor stream.</figcaption>
+          </figure>
 
           <h2>Advanced Troubleshooting & Edge Case Resolution</h2>
           <p>
@@ -357,6 +394,21 @@ fi
           </p>
         </div>
 
+        <div class="author-bio-box">
+          <div class="author-bio-avatar" aria-hidden="true">TS</div>
+          <div class="author-bio-content">
+            <h3>Written by Tech Simpld</h3>
+            <span class="author-bio-role">MCSA Certified Systems Engineer &bull; 20+ Years Enterprise IT</span>
+            <p>
+              Tech Simpld is maintained by a Systems Engineer managing virtual machines and enterprise storage architecture across five data centers. Every tutorial and configuration on this site is tested first-hand in our physical Proxmox VE home lab and daily Obsidian production vaults.
+            </p>
+            <div class="author-bio-links">
+              <a href="../about.html">Lab Architecture &amp; Mission &rarr;</a>
+              <a href="../tools.html">Interactive Home Lab Web Tools &rarr;</a>
+            </div>
+          </div>
+        </div>
+
       </article>
 
       <!-- Sidebar Column -->
@@ -375,8 +427,8 @@ fi
           <h4 class="widget-title">Related Tutorials</h4>
           <ul style="list-style: none; padding: 0; margin: 0; font-size: 0.9rem; line-height: 1.8;">
             <li><a href="uptime-kuma-server-monitoring-setup.html" style="color: var(--accent-cyan);">Uptime Kuma Server Monitoring</a></li>
-            <li><a href="cloudflare-zero-trust-tunnel-guide.html" style="color: var(--text-color);">Cloudflare Zero Trust Tunnels</a></li>
-            <li><a href="budget-proxmox-home-lab-setup.html" style="color: var(--text-color);">Budget Proxmox Cluster Guide</a></li>
+            <li><a href="cloudflare-zero-trust-tunnel-guide.html" style="color: var(--text-primary);">Cloudflare Zero Trust Tunnels</a></li>
+            <li><a href="budget-proxmox-home-lab-setup.html" style="color: var(--text-primary);">Budget Proxmox Cluster Guide</a></li>
           </ul>
         </div>
       </aside>
@@ -402,6 +454,7 @@ fi
           <li><a href="../about.html">About</a></li>
           <li><a href="../posts.html">Posts</a></li>
           <li><a href="../resources.html">Resources</a></li>
+          <li><a href="../tools.html">Tools</a></li>
           <li><a href="../contact.html">Contact</a></li>
           <li><a href="https://youtube.com/@TechSimpld" target="_blank">YouTube Channel</a></li>
         </ul>

@@ -1,0 +1,1114 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <!-- Google tag (gtag.js) -->
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { dataLayer.push(arguments); }
+    gtag('consent', 'default', {
+      'ad_storage': 'denied',
+      'analytics_storage': 'denied',
+      'ad_user_data': 'denied',
+      'ad_personalization': 'denied',
+      'wait_for_update': 500
+    });
+  </script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-1KFGHVDB66"></script>
+  <script>
+    gtag('js', new Date());
+    gtag('config', 'G-1KFGHVDB66');
+  </script>
+
+  <!-- Google AdSense -->
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5214277715351322"
+    crossorigin="anonymous"></script>
+
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Client-Side Home Lab & PKM Web Tools | Tech Simpld</title>
+  <meta name="description"
+    content="Free client-side home lab utilities: Docker Compose generator, Proxmox LXC/VM sizer, IP subnet calculator, server power calculator, and Markdown formatter.">
+  <link rel="canonical" href="https://techsimpld.com/tools.html">
+  <meta name="robots" content="index, follow">
+
+  <!-- Open Graph / SEO -->
+  <meta property="og:locale" content="en_US">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Tech Simpld">
+  <meta property="og:url" content="https://techsimpld.com/tools.html">
+  <meta property="og:title" content="Client-Side Home Lab & PKM Web Tools | Tech Simpld">
+  <meta property="og:description"
+    content="Free client-side home lab utilities: Docker Compose generator, Proxmox LXC/VM sizer, IP subnet calculator, server power calculator, and Markdown formatter.">
+  <meta property="og:image" content="https://techsimpld.com/images/obsidian-vault.png">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Client-Side Home Lab & PKM Web Tools | Tech Simpld">
+  <meta name="twitter:description"
+    content="Free client-side home lab utilities: Docker Compose generator, Proxmox LXC/VM sizer, IP subnet calculator, server power calculator, and Markdown formatter.">
+  <meta name="twitter:image" content="https://techsimpld.com/images/obsidian-vault.png">
+
+  <!-- Structured Data (JSON-LD) -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Tech Simpld Home Lab Utilities",
+    "url": "https://techsimpld.com/tools.html",
+    "applicationCategory": "UtilitiesApplication",
+    "operatingSystem": "All",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "USD"
+    },
+    "description": "Suite of privacy-friendly, client-side web tools for home labbers and productivity builders including Docker Compose generator, Markdown formatter, IP Subnet calculator, Server Power & Electricity calculator, and Proxmox LXC resource planner."
+  }
+  </script>
+
+  <!-- DNS Prefetch & Preconnect for Speed -->
+  <link rel="dns-prefetch" href="https://www.googletagmanager.com">
+  <link rel="preconnect" href="https://www.googletagmanager.com" crossorigin>
+  <link rel="dns-prefetch" href="https://pagead2.googlesyndication.com">
+  <link rel="preconnect" href="https://pagead2.googlesyndication.com" crossorigin>
+
+  <!-- Favicons -->
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="alternate icon" type="image/png" href="favicon.png">
+
+  <!-- Google Fonts Preconnect & Stylesheet -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet"
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap">
+
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="css/styles.css">
+  <link rel="stylesheet" href="css/tools.css">
+</head>
+
+<body class="tools-page">
+
+  <!-- Navigation Header -->
+  <header class="navbar" id="navbar">
+    <div class="nav-container">
+      <a href="index.html" class="logo-link">
+        Tech Simpld<span class="logo-dot"></span>
+      </a>
+
+      <button class="menu-toggle" id="menuToggle" aria-label="Toggle Navigation Menu">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+
+      <ul class="nav-menu">
+        <li><a href="index.html" class="nav-link">Home</a></li>
+        <li><a href="about.html" class="nav-link">About</a></li>
+        <li><a href="posts.html" class="nav-link">Posts</a></li>
+        <li><a href="resources.html" class="nav-link">Resources</a></li>
+        <li><a href="tools.html" class="nav-link active">Tools</a></li>
+        <li><a href="contact.html" class="nav-link">Contact</a></li>
+        <li><a href="https://youtube.com/@TechSimpld" target="_blank" class="nav-link">YouTube</a></li>
+      </ul>
+
+      <div class="nav-actions">
+        <a href="https://youtube.com/@TechSimpld" target="_blank" class="btn btn-primary btn-sm"
+          id="subscribeHeaderBtn">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+            <path
+              d="M23.498 6.163a3.003 3.003 0 0 0-2.11-2.11C19.517 3.545 12 3.545 12 3.545s-7.517 0-9.388.508a3.003 3.003 0 0 0-2.11 2.11C0 8.033 0 12 0 12s0 3.967.502 5.837a3.003 3.003 0 0 0 2.11 2.11c1.871.508 9.388.508 9.388.508s7.517 0 9.388-.508a3.003 3.003 0 0 0 2.11-2.11C24 15.967 24 12 24 12s0-3.967-.502-5.837zM9.545 15.568V8.432L15.818 12l-6.273 3.568z" />
+          </svg>
+          Subscribe
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Tools Layout -->
+  <main class="tools-container">
+
+    <!-- Compact Workspace Header -->
+    <section class="tools-hero">
+      <div class="tools-hero-row">
+        <div>
+          <h1 class="tools-title">Home Lab &amp; Builder <span>Web Tools</span></h1>
+          <p class="tools-subtitle">
+            Client-side utilities for self-hosters. Zero server tracking; all calculations run in your browser.
+          </p>
+        </div>
+        <div class="tools-count-meta" id="toolsCountMeta">5 Interactive Utilities</div>
+      </div>
+    </section>
+
+    <!-- Mobile Sticky Switcher Bar (Visible below 960px) -->
+    <div class="mobile-tool-switcher" id="mobileToolSwitcher">
+      <button type="button" class="mobile-switcher-trigger" id="mobileSwitcherBtn" aria-expanded="false" aria-controls="toolsSidebarRail">
+        <span class="mobile-switcher-label">Active Tool:</span>
+        <strong class="mobile-switcher-current" id="mobileActiveToolName">Docker Compose &amp; .env</strong>
+        <svg class="mobile-switcher-chevron" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <polyline points="6 9 12 15 18 9"></polyline>
+        </svg>
+      </button>
+    </div>
+
+    <!-- App-Style Two-Column Workspace -->
+    <div class="tools-workspace-shell">
+
+      <!-- Left Sidebar Rail -->
+      <aside class="tools-sidebar-rail" id="toolsSidebarRail" aria-label="Tools Directory Navigation">
+        <div class="sidebar-rail-inner">
+          <div class="sidebar-search-box">
+            <svg class="sidebar-search-icon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <circle cx="11" cy="11" r="8"></circle>
+              <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+            </svg>
+            <input type="search" id="toolSearchInput" class="sidebar-search-input" placeholder="Filter tools... (Press /)" aria-label="Filter tools by name or keyword" autocomplete="off">
+            <kbd class="sidebar-search-kbd" id="sidebarSearchKbd" aria-hidden="true">/</kbd>
+          </div>
+
+          <nav class="tools-sidebar-nav" role="tablist" aria-orientation="vertical" aria-label="Web Tools Navigation">
+
+            <div class="sidebar-nav-group" data-category="containers">
+              <div class="sidebar-group-heading">Containers &amp; Virtualization</div>
+              <button type="button" class="tool-tab-btn active" role="tab" data-target="tool-docker"
+                data-keywords="docker compose yaml env container stack self-hosted portainer" id="tab-docker"
+                aria-controls="tool-docker" aria-selected="true">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <path d="M4 14h6m-6 3h16m-4-7V5a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v9"></path>
+                  <rect x="7" y="7" width="3" height="3"></rect>
+                  <rect x="11" y="7" width="3" height="3"></rect>
+                  <rect x="15" y="7" width="3" height="3"></rect>
+                </svg>
+                <span class="nav-item-text">
+                  <span class="nav-item-title">Docker Compose</span>
+                  <span class="nav-item-sub">YAML &amp; .env Builder</span>
+                </span>
+              </button>
+
+              <button type="button" class="tool-tab-btn" role="tab" data-target="tool-proxmox"
+                data-keywords="proxmox lxc vm hypervisor ram vcpu zfs pct create virtualization" id="tab-proxmox"
+                aria-controls="tool-proxmox" aria-selected="false">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect>
+                  <line x1="8" y1="21" x2="16" y2="21"></line>
+                  <line x1="12" y1="17" x2="12" y2="21"></line>
+                </svg>
+                <span class="nav-item-text">
+                  <span class="nav-item-title">Proxmox Resource Sizer</span>
+                  <span class="nav-item-sub">LXC &amp; VM Capacity</span>
+                </span>
+              </button>
+            </div>
+
+            <div class="sidebar-nav-group" data-category="networking">
+              <div class="sidebar-group-heading">Networking &amp; Infrastructure</div>
+              <button type="button" class="tool-tab-btn" role="tab" data-target="tool-subnet"
+                data-keywords="subnet ip calculator cidr vlan netmask broadcast network dhcp" id="tab-subnet"
+                aria-controls="tool-subnet" aria-selected="false">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <rect x="2" y="2" width="20" height="8" rx="2" ry="2"></rect>
+                  <rect x="2" y="14" width="20" height="8" rx="2" ry="2"></rect>
+                </svg>
+                <span class="nav-item-text">
+                  <span class="nav-item-title">Subnet Calculator</span>
+                  <span class="nav-item-sub">CIDR &amp; VLAN Planner</span>
+                </span>
+              </button>
+            </div>
+
+            <div class="sidebar-nav-group" data-category="hardware">
+              <div class="sidebar-group-heading">Hardware &amp; Efficiency</div>
+              <button type="button" class="tool-tab-btn" role="tab" data-target="tool-power"
+                data-keywords="power electricity watts kwh energy cost tco server mini pc" id="tab-power"
+                aria-controls="tool-power" aria-selected="false">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
+                </svg>
+                <span class="nav-item-text">
+                  <span class="nav-item-title">Power &amp; Electricity</span>
+                  <span class="nav-item-sub">Wattage &amp; TCO ROI</span>
+                </span>
+              </button>
+            </div>
+
+            <div class="sidebar-nav-group" data-category="pkm">
+              <div class="sidebar-group-heading">PKM &amp; Documentation</div>
+              <button type="button" class="tool-tab-btn" role="tab" data-target="tool-markdown"
+                data-keywords="markdown formatter table csv yaml frontmatter obsidian notes pkm" id="tab-markdown"
+                aria-controls="tool-markdown" aria-selected="false">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                  <polyline points="14 2 14 8 20 8"></polyline>
+                </svg>
+                <span class="nav-item-text">
+                  <span class="nav-item-title">Markdown Formatter</span>
+                  <span class="nav-item-sub">Tables &amp; Frontmatter</span>
+                </span>
+              </button>
+            </div>
+
+          </nav>
+
+          <!-- Empty Filter State -->
+          <div class="sidebar-empty-state" id="sidebarEmptyState" hidden>
+            <p class="sidebar-empty-text">No tools match "<span id="sidebarEmptyQuery"></span>".</p>
+            <button type="button" class="tool-btn tool-btn-secondary tool-btn-sm" id="resetToolSearchBtn">Show all tools</button>
+          </div>
+        </div>
+      </aside>
+
+      <!-- Right Tool Workspace Canvas -->
+      <div class="tools-workspace-canvas">
+
+
+    <!-- ======================================================================
+         TOOL 1: DOCKER COMPOSE & ENVIRONMENT FILE GENERATOR
+         ====================================================================== -->
+    <section class="tool-section active" id="tool-docker" role="tabpanel" aria-labelledby="tab-docker">
+      <div id="docker"></div>
+      <div class="tool-card">
+        <div class="tool-card-header">
+          <div>
+            <h2 class="tool-card-title">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M4 14h6m-6 3h16m-4-7V5a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v9"></path>
+                <rect x="7" y="7" width="3" height="3"></rect>
+                <rect x="11" y="7" width="3" height="3"></rect>
+                <rect x="15" y="7" width="3" height="3"></rect>
+              </svg>
+              Docker Compose & .env Generator
+            </h2>
+            <p class="tool-card-desc">
+              Select popular self-hosted applications, configure base paths and environment variables, and get a production-ready stack in seconds.
+            </p>
+          </div>
+        </div>
+
+        <!-- How to Use This Tool Dropdown -->
+        <details class="tool-guide-accordion">
+          <summary class="tool-guide-summary">
+            <span class="guide-badge">Guide</span>
+            <span>How to use the Docker Compose Generator &amp; Homelab Guide</span>
+            <span class="guide-toggle-icon" aria-hidden="true">▼</span>
+          </summary>
+          <div class="tool-guide-body">
+            <h4>Quick Workflow:</h4>
+            <ol>
+              <li><strong>Select Your Services:</strong> Check the boxes for the self-hosted apps you want in your stack (e.g. Nextcloud, Gotify, Uptime Kuma, AdGuard Home).</li>
+              <li><strong>Set Configuration &amp; Paths:</strong> Specify your root storage directory (default <code>~/homelab/data</code>) and your server's local timezone (e.g. <code>America/New_York</code>).</li>
+              <li><strong>Customize Ports &amp; Variables:</strong> If a host port conflicts with existing services (e.g., port 53 for DNS or 80 for web), adjust it directly in the service cards.</li>
+              <li><strong>Export &amp; Deploy:</strong> Click <strong>Copy compose.yml</strong> and <strong>Copy .env</strong> (or download both). Save them into the same directory on your server and run:
+                <br><code>docker compose up -d</code>
+              </li>
+            </ol>
+            <h4>Homelab Best Practices:</h4>
+            <ul>
+              <li><strong>Keep Credentials in .env:</strong> Never hardcode database passwords or API tokens inside <code>compose.yml</code>. Our generator extracts them cleanly into a companion <code>.env</code> file.</li>
+              <li><strong>Port Binding:</strong> Binding to <code>127.0.0.1:PORT:PORT</code> restricts traffic to localhost so you can safely route it via Cloudflare Tunnel or an Nginx reverse proxy without exposing ports to your LAN.</li>
+            </ul>
+          </div>
+        </details>
+
+        <div class="docker-grid-layout">
+          <!-- Left Column: App Selection & Controls -->
+          <div>
+            <!-- Step 1: Select Apps -->
+            <div style="margin-bottom: 1.5rem;">
+              <label class="form-label">
+                1. Select Self-Hosted Applications
+                <span class="required">*</span>
+              </label>
+              <div class="app-selection-grid" id="dockerAppsGrid">
+                <!-- Dynamically populated via JS -->
+              </div>
+              <button type="button" class="tool-btn tool-btn-secondary tool-btn-sm" id="addCustomServiceBtn">
+                + Add Custom Service
+              </button>
+            </div>
+
+            <!-- Step 2: Global Environment & Paths -->
+            <div style="margin-bottom: 1.5rem; background: var(--tools-card-inner); padding: 1.25rem; border-radius: var(--tools-radius-md); border: 1px solid var(--tools-border);">
+              <label class="form-label" style="color: var(--tools-yellow);">2. Global Environment Settings</label>
+              <div class="config-row">
+                <div class="form-group">
+                  <label class="form-label" for="dockerProjectName">Project Name</label>
+                  <input type="text" class="form-input" id="dockerProjectName" value="homelab" spellcheck="false">
+                </div>
+                <div class="form-group">
+                  <label class="form-label" for="dockerBaseDir">Base Storage Path</label>
+                  <input type="text" class="form-input" id="dockerBaseDir" value="./data" spellcheck="false">
+                </div>
+                <div class="form-group">
+                  <label class="form-label" for="dockerTimezone">Timezone (TZ)</label>
+                  <input type="text" class="form-input" id="dockerTimezone" value="America/New_York" spellcheck="false">
+                </div>
+                <div class="form-group">
+                  <label class="form-label" for="dockerPuid">PUID / PGID</label>
+                  <div style="display: flex; gap: 0.5rem;">
+                    <input type="text" class="form-input" id="dockerPuid" value="1000" title="PUID">
+                    <input type="text" class="form-input" id="dockerPgid" value="1000" title="PGID">
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="form-label" for="dockerRestartPolicy">Restart Policy</label>
+                  <select class="form-select" id="dockerRestartPolicy">
+                    <option value="unless-stopped" selected>unless-stopped</option>
+                    <option value="always">always</option>
+                    <option value="on-failure">on-failure</option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label class="form-label" for="dockerNetworkName">Bridge Network</label>
+                  <input type="text" class="form-input" id="dockerNetworkName" value="homelab_net" spellcheck="false">
+                </div>
+              </div>
+            </div>
+
+            <!-- Step 3: Per-Service Configuration Accordion -->
+            <div>
+              <label class="form-label">3. Service Port & Volume Customization</label>
+              <div id="dockerServiceSettings">
+                <!-- Dynamically rendered per selected app -->
+              </div>
+            </div>
+          </div>
+
+          <!-- Right Column: Live Output Code Box -->
+          <div>
+            <div class="code-preview-container">
+              <div class="code-preview-header">
+                <div class="code-tabs">
+                  <button type="button" class="code-tab-btn active" data-code-view="compose">docker-compose.yml</button>
+                  <button type="button" class="code-tab-btn" data-code-view="env">.env template</button>
+                </div>
+                <div class="code-preview-actions">
+                  <button type="button" class="tool-btn tool-btn-secondary tool-btn-sm" id="copyComposeBtn" title="Copy compose file">
+                    Copy Compose
+                  </button>
+                  <button type="button" class="tool-btn tool-btn-secondary tool-btn-sm" id="copyEnvBtn" title="Copy env file">
+                    Copy .env
+                  </button>
+                </div>
+              </div>
+
+              <div class="code-editor-area">
+                <pre class="code-pre" id="dockerComposeCode"></pre>
+                <pre class="code-pre" id="dockerEnvCode" style="display: none;"></pre>
+              </div>
+
+              <div style="padding: 0.85rem 1.25rem; background: #090e1a; border-top: 1px solid var(--tools-border); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.5rem;">
+                <span style="font-size: 0.8rem; color: var(--tools-text-muted);">
+                  Ready to deploy: Place both files in the same directory and run <code style="color:var(--tools-yellow);">docker compose up -d</code>
+                </span>
+                <div style="display: flex; gap: 0.5rem;">
+                  <button type="button" class="tool-btn tool-btn-primary tool-btn-sm" id="downloadComposeBtn">
+                    Download compose.yml
+                  </button>
+                  <button type="button" class="tool-btn tool-btn-primary tool-btn-sm" id="downloadEnvBtn">
+                    Download .env
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ======================================================================
+         TOOL 2: MARKDOWN TABLE & FRONTMATTER FORMATTER
+         ====================================================================== -->
+    <section class="tool-section" id="tool-markdown" role="tabpanel" aria-labelledby="tab-markdown">
+      <div id="markdown"></div>
+      <div class="tool-card">
+        <div class="tool-card-header">
+          <div>
+            <h2 class="tool-card-title">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                <polyline points="14 2 14 8 20 8"></polyline>
+              </svg>
+              Markdown Table & Frontmatter Formatter
+            </h2>
+            <p class="tool-card-desc">
+              Paste messy CSV, raw spreadsheet rows, unstructured notes, or YAML frontmatter to format them instantly for Obsidian and GitHub.
+            </p>
+          </div>
+        </div>
+
+        <!-- How to Use This Tool Dropdown -->
+        <details class="tool-guide-accordion">
+          <summary class="tool-guide-summary">
+            <span class="guide-badge">Guide</span>
+            <span>How to use the Markdown Formatter &amp; Obsidian PKM Guide</span>
+            <span class="guide-toggle-icon" aria-hidden="true">▼</span>
+          </summary>
+          <div class="tool-guide-body">
+            <h4>Formatting Modes:</h4>
+            <ul>
+              <li><strong>Markdown Table Formatter:</strong> Converts unaligned pipe tables, comma-separated values (CSV), or tab-separated spreadsheet clips into neat GFM tables with customizable text alignment (left, center, right).</li>
+              <li><strong>YAML Frontmatter Properties:</strong> Validates key-value metadata blocks (e.g. <code>title:</code>, <code>tags:</code>, <code>date:</code>, <code>aliases:</code>) and wraps them cleanly in standard triple-dash blocks (<code>---</code>) required by Obsidian and static site generators like Astro or Jekyll.</li>
+              <li><strong>Smart Obsidian Note Helper:</strong> Standardizes header hierarchies, repairs bullet list indentation, strips redundant whitespace, and cleans up tag formatting.</li>
+            </ul>
+            <h4>Obsidian Dataview Tip:</h4>
+            <p>Using consistent YAML properties enables powerful dynamic queries in Obsidian with the Dataview community plugin, such as <code>TABLE file.mtime AS "Updated", tags WHERE type = "homelab"</code>.</p>
+          </div>
+        </details>
+
+
+        <!-- Controls Toolbar -->
+        <div class="format-controls-bar">
+          <div style="display: flex; gap: 0.5rem; align-items: center;">
+            <label for="mdModeSelect" class="form-label" style="margin-bottom: 0;">Mode:</label>
+            <select class="form-select" id="mdModeSelect" style="width: auto;">
+              <option value="table" selected>Markdown Table Formatter</option>
+              <option value="frontmatter">YAML Frontmatter Properties</option>
+              <option value="obsidian">Smart Obsidian Note Helper</option>
+            </select>
+          </div>
+
+          <div style="display: flex; gap: 0.5rem; align-items: center;">
+            <label for="mdDelimiterSelect" class="form-label" style="margin-bottom: 0;">Delimiter:</label>
+            <select class="form-select" id="mdDelimiterSelect" style="width: auto;">
+              <option value="auto" selected>Auto Detect</option>
+              <option value="comma">Comma (CSV)</option>
+              <option value="pipe">Pipe (|)</option>
+              <option value="tab">Tab (TSV)</option>
+              <option value="semicolon">Semicolon (;)</option>
+            </select>
+          </div>
+
+          <div style="display: flex; gap: 0.5rem; align-items: center;">
+            <label for="mdAlignSelect" class="form-label" style="margin-bottom: 0;">Alignment:</label>
+            <select class="form-select" id="mdAlignSelect" style="width: auto;">
+              <option value="left" selected>Left (:---)</option>
+              <option value="center">Center (:---:)</option>
+              <option value="right">Right (---:)</option>
+            </select>
+          </div>
+
+          <div style="display: flex; gap: 1rem; align-items: center; margin-left: auto;">
+            <label style="display: flex; align-items: center; gap: 0.4rem; font-size: 0.85rem; cursor: pointer;">
+              <input type="checkbox" id="mdFirstRowHeader" checked> First row is header
+            </label>
+            <label style="display: flex; align-items: center; gap: 0.4rem; font-size: 0.85rem; cursor: pointer;">
+              <input type="checkbox" id="mdPadColumns" checked> Pad visual whitespace
+            </label>
+          </div>
+        </div>
+
+        <!-- Dual Pane Formatter -->
+        <div class="formatter-grid">
+          <!-- Input Pane -->
+          <div class="formatter-pane">
+            <div class="pane-header">
+              <span class="pane-title">Input (Raw text, CSV, or loose notes)</span>
+              <div class="sample-btns-bar">
+                <button type="button" class="tool-btn tool-btn-ghost tool-btn-sm" id="loadSampleCsvBtn">Sample CSV</button>
+                <button type="button" class="tool-btn tool-btn-ghost tool-btn-sm" id="loadSampleFrontmatterBtn">Sample Frontmatter</button>
+                <button type="button" class="tool-btn tool-btn-ghost tool-btn-sm" id="loadSampleNotesBtn">Sample Notes</button>
+                <button type="button" class="tool-btn tool-btn-ghost tool-btn-sm" id="clearMdBtn" style="color: #ef4444;">Clear</button>
+              </div>
+            </div>
+            <textarea class="form-textarea formatter-textarea" id="mdInputArea" placeholder="Paste your raw text, CSV table, notes, or frontmatter here..." spellcheck="false"></textarea>
+          </div>
+
+          <!-- Output Pane -->
+          <div class="formatter-pane">
+            <div class="pane-header">
+              <span class="pane-title">Formatted Output</span>
+              <div style="display: flex; gap: 0.5rem; align-items: center;">
+                <span class="format-stat-badge" id="mdStatsLines">0 lines</span>
+                <span class="format-stat-badge" id="mdStatsWords">0 words</span>
+                <span class="format-stat-badge" id="mdStatsChars">0 chars</span>
+                <button type="button" class="tool-btn tool-btn-primary tool-btn-sm" id="copyMdOutputBtn">
+                  Copy Output
+                </button>
+                <button type="button" class="tool-btn tool-btn-secondary tool-btn-sm" id="downloadMdBtn">
+                  Download .md
+                </button>
+              </div>
+            </div>
+            <textarea class="form-textarea formatter-textarea" id="mdOutputArea" readonly placeholder="Your clean, aligned Markdown will appear here instantly..." spellcheck="false"></textarea>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ======================================================================
+         TOOL 3: LOCAL NETWORK SUBNET & IP CALCULATOR
+         ====================================================================== -->
+    <section class="tool-section" id="tool-subnet" role="tabpanel" aria-labelledby="tab-subnet">
+      <div id="subnet"></div>
+      <div class="tool-card calculator-input-card">
+        <div class="tool-card-header">
+          <div>
+            <h2 class="tool-card-title">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <rect x="2" y="2" width="20" height="8" rx="2" ry="2"></rect>
+                <rect x="2" y="14" width="20" height="8" rx="2" ry="2"></rect>
+                <line x1="6" y1="6" x2="6.01" y2="6"></line>
+                <line x1="6" y1="18" x2="6.01" y2="18"></line>
+              </svg>
+              Local Network Subnet & IP Calculator
+            </h2>
+            <p class="tool-card-desc">
+              Lightweight network planner for home labbers. Calculate CIDR pools, broadcast boundaries, usable addresses, and recommended VLAN distributions.
+            </p>
+          </div>
+          <button type="button" class="tool-btn tool-btn-primary" id="copySubnetSummaryBtn">
+            Copy Network Summary
+          </button>
+        </div>
+
+        <!-- How to Use This Tool Dropdown -->
+        <details class="tool-guide-accordion">
+          <summary class="tool-guide-summary">
+            <span class="guide-badge">Guide</span>
+            <span>How to use the Subnet Calculator &amp; Network Planning Guide</span>
+            <span class="guide-toggle-icon" aria-hidden="true">▼</span>
+          </summary>
+          <div class="tool-guide-body">
+            <h4>Quick Workflow:</h4>
+            <ol>
+              <li><strong>Enter Your Gateway or CIDR:</strong> Type any IP (e.g. <code>192.168.1.1</code> or <code>10.0.0.1/24</code>) or pick a common preset chip below.</li>
+              <li><strong>Check Usable Addresses:</strong> The calculator instantly works out the network address, broadcast address, and total usable hosts.</li>
+              <li><strong>Review Home Lab Distribution:</strong> Use the standardized IP allocation table below to organize static IPs for gateways, Proxmox hypervisors, switches, and VMs without colliding with your DHCP scope.</li>
+              <li><strong>VLAN Splitting:</strong> Check the Sub-Dividing Matrix to split a single network into two isolated subnets (e.g. Trusted LAN vs IoT/Guest).</li>
+            </ol>
+            <h4>Homelab Best Practices:</h4>
+            <p>Always keep static server IPs (like your TrueNAS, Pi-hole, and Proxmox management interfaces) outside of your router's DHCP pool range (e.g., reserve <code>.2</code> through <code>.99</code> as static, and set DHCP to <code>.100</code> through <code>.254</code>).</p>
+          </div>
+        </details>
+
+
+        <!-- Input Parameters -->
+        <div class="ip-input-row">
+          <div class="form-group">
+            <label class="form-label" for="calcIpAddress">IP Address or CIDR</label>
+            <input type="text" class="form-input" id="calcIpAddress" value="192.168.1.1" placeholder="e.g. 192.168.1.1 or 10.0.0.1/24" spellcheck="false">
+            <span class="form-hint">Enter host IP or network address (supports CIDR notation)</span>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="calcCidrPrefix">Subnet Mask (CIDR)</label>
+            <select class="form-select" id="calcCidrPrefix">
+              <!-- Dynamically populated /8 to /30 -->
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="calcVlanTag">VLAN ID (Optional)</label>
+            <input type="number" class="form-input" id="calcVlanTag" value="1" min="1" max="4094" placeholder="1 - 4094">
+          </div>
+        </div>
+
+        <!-- Quick Home Lab Presets -->
+        <div>
+          <label class="form-label" style="font-size: 0.8rem; text-transform: uppercase; color: var(--tools-text-muted);">
+            Quick Presets for Home Labs:
+          </label>
+          <div class="subnet-presets-bar" id="subnetPresets">
+            <!-- Dynamically populated buttons -->
+          </div>
+        </div>
+      </div>
+
+      <!-- Results Metric Grid -->
+      <div class="results-metric-grid">
+        <div class="metric-card highlight">
+          <div class="metric-label">Network Address (CIDR)</div>
+          <div class="metric-value yellow" id="resNetworkAddr">192.168.1.0 /24</div>
+          <div class="metric-binary" id="binIpAddr">11000000.10101000.00000001.00000000</div>
+        </div>
+
+        <div class="metric-card">
+          <div class="metric-label">Subnet Mask</div>
+          <div class="metric-value" id="resSubnetMask">255.255.255.0</div>
+          <div class="metric-binary" id="binNetmask">11111111.11111111.11111111.00000000</div>
+        </div>
+
+        <div class="metric-card highlight">
+          <div class="metric-label">Usable Host Range</div>
+          <div class="metric-value cyan" id="resUsableRange">192.168.1.1 - 192.168.1.254</div>
+          <div style="font-size: 0.75rem; color: var(--tools-text-muted); margin-top: 0.35rem;">First usable & last usable host</div>
+        </div>
+
+        <div class="metric-card">
+          <div class="metric-label">Broadcast Address</div>
+          <div class="metric-value" id="resBroadcastAddr">192.168.1.255</div>
+          <div style="font-size: 0.75rem; color: var(--tools-text-muted); margin-top: 0.35rem;">Directed broadcast IP</div>
+        </div>
+
+        <div class="metric-card">
+          <div class="metric-label">Usable Hosts</div>
+          <div class="metric-value yellow" id="resUsableHosts">254</div>
+          <div style="font-size: 0.75rem; color: var(--tools-text-muted); margin-top: 0.35rem;">Total hosts: <span id="resTotalAddresses">256</span></div>
+        </div>
+
+        <div class="metric-card">
+          <div class="metric-label">Wildcard Mask</div>
+          <div class="metric-value" id="resWildcardMask">0.0.0.255</div>
+          <div style="font-size: 0.75rem; color: var(--tools-text-muted); margin-top: 0.35rem;">ACL / OSPF mask</div>
+        </div>
+
+        <div class="metric-card">
+          <div class="metric-label">Network Scope</div>
+          <div class="metric-value" style="font-size: 1rem;" id="resIpScope">Private (RFC 1918 Class C)</div>
+          <div style="font-size: 0.75rem; color: var(--tools-text-muted); margin-top: 0.35rem;">Non-routable on public internet</div>
+        </div>
+      </div>
+
+      <!-- Homelab IP Allocation Visualizer -->
+      <div class="tool-card">
+        <h3 style="font-size: 1.15rem; margin-bottom: 0.5rem; color: var(--tools-text-primary);">
+          Recommended Home Lab IP Distribution
+        </h3>
+        <p style="font-size: 0.875rem; color: var(--tools-text-secondary); margin-bottom: 1rem;">
+          Standardizing your address assignments prevents IP collisions between Proxmox hypervisors, Docker bridges, and DHCP leases:
+        </p>
+        <div id="homelabAllocVisualizer">
+          <!-- Rendered dynamically -->
+        </div>
+      </div>
+
+      <!-- Subnet Subdivision Matrix -->
+      <div class="tool-card">
+        <h3 style="font-size: 1.15rem; margin-bottom: 0.5rem; color: var(--tools-text-primary);">
+          VLAN Sub-Dividing Matrix (Split Network)
+        </h3>
+        <p style="font-size: 0.875rem; color: var(--tools-text-secondary); margin-bottom: 0.5rem;">
+          How to split this network evenly to isolate servers, IoT gear, and guest devices:
+        </p>
+        <div id="subnetSplittingTable">
+          <!-- Rendered dynamically -->
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ======================================================================
+         TOOL 4: HOME SERVER POWER & ELECTRICITY COST CALCULATOR
+         ====================================================================== -->
+    <section class="tool-section" id="tool-power" role="tabpanel" aria-labelledby="tab-power">
+      <div id="power"></div>
+      <div class="tool-card">
+        <div class="tool-card-header">
+          <div>
+            <h2 class="tool-card-title">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
+              </svg>
+              Home Server Power &amp; Electricity Cost Calculator
+            </h2>
+            <p class="tool-card-desc">
+              Calculate true 24/7 wattage, annual electricity bills, and hardware payoff timelines when switching from power-hungry rack servers to energy-efficient mini PCs.
+            </p>
+          </div>
+          <button type="button" class="tool-btn tool-btn-primary" id="copyPowerSummaryBtn">
+            Copy Power Summary
+          </button>
+        </div>
+
+        <!-- How to Use This Tool Dropdown -->
+        <details class="tool-guide-accordion">
+          <summary class="tool-guide-summary">
+            <span class="guide-badge">Guide</span>
+            <span>How to use the Power Calculator &amp; Energy Optimization Guide</span>
+            <span class="guide-toggle-icon" aria-hidden="true">▼</span>
+          </summary>
+          <div class="tool-guide-body">
+            <h4>Quick Workflow:</h4>
+            <ol>
+              <li><strong>Select a Hardware Preset or Enter Measurements:</strong> Click any preset chip (e.g. Intel N100 Mini PC, ThinkCentre Tiny, or 2U Enterprise Server) to load baseline measurements, or slide to your exact wall draw.</li>
+              <li><strong>Adjust Load Hours:</strong> Enter how many hours per day your server is transcoding video, backing up data, or running games. Homelab servers spend 80 to 90% of the day at idle.</li>
+              <li><strong>Set Your Local Electricity Rate:</strong> Enter your $/kWh rate (US average is ~$0.16/kWh, European rates often range from €0.25 to €0.35/kWh).</li>
+              <li><strong>Evaluate TCO &amp; Payoff:</strong> Check the Payoff Comparison Card to see how quickly a modern mini PC pays for itself by replacing older enterprise hardware.</li>
+            </ol>
+            <h4>Homelab Energy Optimization Tips:</h4>
+            <ul>
+              <li><strong>Wall Draw vs. TDP:</strong> Processor TDP (Thermal Design Power) indicates cooling capacity under synthetic torture, not actual wall draw. A 65W Core i5 can idle under 15W at the wall.</li>
+              <li><strong>Hard Drive Spin-Down:</strong> 3.5" enterprise SATA/SAS drives draw 6W to 9W continuously spinning. If your storage array is accessed infrequently, configure spin-down timers in TrueNAS or with <code>hdparm -S</code>.</li>
+              <li><strong>Tune Linux C-States:</strong> Install PowerTOP on Proxmox or Ubuntu (<code>apt install powertop &amp;&amp; powertop --auto-tune</code>) to allow PCIe lanes, NICs, and CPU cores to drop into power-saving C6/C8 package states.</li>
+            </ul>
+          </div>
+        </details>
+
+        <!-- Presets Bar -->
+        <div style="margin-bottom: 1.5rem;">
+          <label class="form-label">Quick Hardware Profiles</label>
+          <div class="subnet-presets-bar" id="powerPresetsBar">
+            <button type="button" class="preset-chip active" data-idle="8" data-peak="25" data-hours="3" data-cost="160">
+              Intel N100 Mini PC (8W/25W)
+            </button>
+            <button type="button" class="preset-chip" data-idle="15" data-peak="45" data-hours="4" data-cost="180">
+              1L Tiny Desktop (15W/45W)
+            </button>
+            <button type="button" class="preset-chip" data-idle="35" data-peak="95" data-hours="4" data-cost="450">
+              Custom Desktop Server (35W/95W)
+            </button>
+            <button type="button" class="preset-chip" data-idle="28" data-peak="62" data-hours="6" data-cost="350">
+              4-Bay Synology NAS (28W/62W)
+            </button>
+            <button type="button" class="preset-chip" data-idle="135" data-peak="240" data-hours="6" data-cost="250">
+              2U Rack Server R720/R730 (135W/240W)
+            </button>
+            <button type="button" class="preset-chip" data-idle="9" data-peak="22" data-hours="3" data-cost="220">
+              Raspberry Pi 5 Cluster (9W/22W)
+            </button>
+          </div>
+        </div>
+
+        <!-- Calculator Form & Metrics Grid Layout -->
+        <div class="docker-grid-layout" style="align-items: start;">
+          <!-- Left Column: Sliders & Form Controls -->
+          <div>
+            <div class="form-group" style="margin-bottom: 1.25rem;">
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.35rem;">
+                <label class="form-label" for="powerIdleWatts" style="margin-bottom: 0;">Idle Power Draw (Watts)</label>
+                <span class="range-number-display" id="idleWattsDisplay">8 W</span>
+              </div>
+              <input type="range" class="tool-range-slider" id="powerIdleWatts" min="5" max="350" step="1" value="8">
+              <span class="form-hint">Baseline draw when CPU is idling and storage is not under heavy I/O</span>
+            </div>
+
+            <div class="form-group" style="margin-bottom: 1.25rem;">
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.35rem;">
+                <label class="form-label" for="powerPeakWatts" style="margin-bottom: 0;">Peak / Load Power Draw (Watts)</label>
+                <span class="range-number-display" id="peakWattsDisplay">25 W</span>
+              </div>
+              <input type="range" class="tool-range-slider" id="powerPeakWatts" min="10" max="600" step="1" value="25">
+              <span class="form-hint">Power during Plex transcoding, Nextcloud indexing, or game server activity</span>
+            </div>
+
+            <div class="form-group" style="margin-bottom: 1.25rem;">
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.35rem;">
+                <label class="form-label" for="powerPeakHours" style="margin-bottom: 0;">Active Heavy Load Duration (Hours/Day)</label>
+                <span class="range-number-display" id="peakHoursDisplay">3 hrs</span>
+              </div>
+              <input type="range" class="tool-range-slider" id="powerPeakHours" min="0" max="24" step="0.5" value="3">
+              <span class="form-hint">Remaining hours of the 24h day are calculated at Idle Power</span>
+            </div>
+
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+              <div class="form-group">
+                <label class="form-label" for="powerCostKwh">Electricity Rate ($/kWh)</label>
+                <input type="number" class="form-input" id="powerCostKwh" value="0.16" step="0.01" min="0.01" max="1.50">
+                <span class="form-hint">US Avg: $0.16, EU Avg: $0.30</span>
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="powerHardwareCost">Hardware Price ($)</label>
+                <input type="number" class="form-input" id="powerHardwareCost" value="160" step="10" min="0">
+                <span class="form-hint">Purchase cost for TCO &amp; ROI</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Right Column: Real-Time Results & Payoff Card -->
+          <div>
+            <div class="results-metric-grid">
+              <div class="result-metric-card">
+                <div class="metric-label">Weighted Average Draw</div>
+                <div class="metric-value highlight" id="resAvgWatts">10.1 W</div>
+                <div class="metric-subtext">True continuous 24/7 baseline</div>
+              </div>
+              <div class="result-metric-card">
+                <div class="metric-label">Daily Power Cost</div>
+                <div class="metric-value" id="resDailyCost">$0.04</div>
+                <div class="metric-subtext" id="resDailyKwh">0.24 kWh / day</div>
+              </div>
+              <div class="result-metric-card">
+                <div class="metric-label">Monthly Power Cost</div>
+                <div class="metric-value" id="resMonthlyCost">$1.18</div>
+                <div class="metric-subtext" id="resMonthlyKwh">7.4 kWh / month</div>
+              </div>
+              <div class="result-metric-card">
+                <div class="metric-label">Annual Power Cost</div>
+                <div class="metric-value highlight" id="resAnnualCost">$14.19</div>
+                <div class="metric-subtext" id="resAnnualKwh">88.7 kWh / year</div>
+              </div>
+            </div>
+
+            <!-- 3-Year Total Cost of Ownership -->
+            <div class="result-metric-card" style="margin-bottom: 1rem; border-color: rgba(250, 204, 21, 0.3);">
+              <div style="display: flex; justify-content: space-between; align-items: baseline;">
+                <div>
+                  <div class="metric-label">3-Year Total Cost of Ownership (TCO)</div>
+                  <div class="metric-value highlight" style="font-size: 1.5rem;" id="resThreeYearTco">$202.57</div>
+                </div>
+                <div style="text-align: right; font-size: 0.8rem; color: var(--tools-text-muted);" id="resTcoBreakdown">
+                  Hardware: $160 | Power: $42.57
+                </div>
+              </div>
+            </div>
+
+            <!-- Rack Server vs. Mini PC Payoff Analysis -->
+            <div class="tco-comparison-card">
+              <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.5rem;">
+                <span class="status-pill safe">Efficiency Payoff Analysis</span>
+                <span style="font-size: 0.75rem; color: var(--tools-text-muted);">vs 160W Rack Server</span>
+              </div>
+              <div style="margin-bottom: 0.75rem;">
+                <div class="tco-savings-number" id="resPayoffAnnualSavings">$210.53 / yr</div>
+                <div style="font-size: 0.85rem; color: var(--tools-text-secondary);">
+                  Annual electricity savings compared to keeping an older enterprise rack server running 24/7.
+                </div>
+              </div>
+              <div style="padding-top: 0.75rem; border-top: 1px solid var(--tools-border); font-size: 0.85rem; color: var(--tools-text-primary);">
+                Hardware Breakeven: <strong style="color: var(--tools-yellow);" id="resPayoffMonths">9.1 months</strong> until power savings cover the entire hardware purchase cost.
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ======================================================================
+         TOOL 5: PROXMOX LXC & VM RESOURCE SIZING PLANNER
+         ====================================================================== -->
+    <section class="tool-section" id="tool-proxmox" role="tabpanel" aria-labelledby="tab-proxmox">
+      <div id="proxmox"></div>
+      <div class="tool-card">
+        <div class="tool-card-header">
+          <div>
+            <h2 class="tool-card-title">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect>
+                <line x1="8" y1="21" x2="16" y2="21"></line>
+                <line x1="12" y1="17" x2="12" y2="21"></line>
+              </svg>
+              Proxmox LXC &amp; VM Resource Sizing Planner
+            </h2>
+            <p class="tool-card-desc">
+              Plan hypervisor vCPUs, memory limits, and storage overhead for your self-hosted containers and VMs. Avoid out-of-memory kernel panics and generate ready-to-run <code>pct create</code> shell commands.
+            </p>
+          </div>
+          <button type="button" class="tool-btn tool-btn-primary" id="copyProxmoxSummaryBtn">
+            Copy Sizing Summary
+          </button>
+        </div>
+
+        <!-- How to Use This Tool Dropdown -->
+        <details class="tool-guide-accordion">
+          <summary class="tool-guide-summary">
+            <span class="guide-badge">Guide</span>
+            <span>How to use the Proxmox Sizing Planner &amp; Virtualization Guide</span>
+            <span class="guide-toggle-icon" aria-hidden="true">▼</span>
+          </summary>
+          <div class="tool-guide-body">
+            <h4>Quick Workflow:</h4>
+            <ol>
+              <li><strong>Configure Your Proxmox Host Hardware:</strong> Enter your physical CPU core count, physical host RAM (e.g. 16 GB, 32 GB, or 64 GB), and storage pool capacity.</li>
+              <li><strong>Select Desired Services:</strong> Toggle the checkboxes for the workloads you plan to host. Adjust allocated cores, RAM (MB), and disk (GB) to match your workload needs.</li>
+              <li><strong>Monitor Resource Gauges:</strong> Watch the live RAM commitment meter, vCPU overcommit ratio, and disk consumption indicators.</li>
+              <li><strong>Generate Proxmox CLI Command:</strong> Select any container from the bottom CLI generator to produce a complete unprivileged <code>pct create</code> command ready to paste into your Proxmox terminal.</li>
+            </ol>
+            <h4>Proxmox Sizing Rules of Thumb:</h4>
+            <ul>
+              <li><strong>LXC vs. QEMU VM:</strong> Always prefer lightweight LXC containers for standard Linux tools (Pi-hole, Gotify, Uptime Kuma, Nextcloud). LXCs share the host kernel, eliminating hypervisor virtualization overhead and idling at ~30MB of RAM. Reserve full QEMU VMs for non-Linux OSes (Windows) or systems requiring dedicated kernel modules (Home Assistant OS, TrueNAS).</li>
+              <li><strong>Safe CPU Overcommit:</strong> Homelab workloads typically idle 95% of the time. Overcommitting vCPUs up to <strong>2.5:1</strong> or <strong>3:1</strong> (e.g. 24 vCPUs on an 8-core CPU) is standard and safe. Avoid overcommitting cores on heavy database or game server hosts.</li>
+              <li><strong>Proxmox &amp; ZFS Memory Reserve:</strong> Never commit 100% of host RAM to guests. Proxmox VE requires ~2 GB for hypervisor services, plus ZFS ARC cache. If physical memory is exhausted, the Linux Out-Of-Memory (OOM) killer will terminate container processes.</li>
+            </ul>
+          </div>
+        </details>
+
+        <!-- Host Specifications Input Bar -->
+        <div class="calculator-input-card" style="background-color: var(--tools-card-inner); border: 1px solid var(--tools-border); border-radius: var(--tools-radius-md); padding: 1.25rem; margin-bottom: 1.5rem;">
+          <h3 style="font-size: 1rem; color: var(--tools-text-primary); margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem;">
+            <span>1. Host Hardware Specifications</span>
+            <span style="font-size: 0.75rem; color: var(--tools-text-muted); font-weight: normal;">(Your physical server capabilities)</span>
+          </h3>
+          <div class="ip-input-row">
+            <div class="form-group">
+              <label class="form-label" for="hostCpuCores">Physical CPU Cores</label>
+              <select class="form-select" id="hostCpuCores">
+                <option value="4">4 Cores (Quad-Core / N100)</option>
+                <option value="6">6 Cores (Hexa-Core)</option>
+                <option value="8" selected>8 Cores (Octa-Core)</option>
+                <option value="12">12 Cores</option>
+                <option value="16">16 Cores</option>
+                <option value="24">24 Cores</option>
+                <option value="32">32 Cores</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="hostRamGb">Physical Host RAM (GB)</label>
+              <select class="form-select" id="hostRamGb">
+                <option value="8">8 GB RAM</option>
+                <option value="16">16 GB RAM</option>
+                <option value="32" selected>32 GB RAM</option>
+                <option value="64">64 GB RAM</option>
+                <option value="128">128 GB RAM</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="hostDiskGb">Usable Storage Pool (GB)</label>
+              <input type="number" class="form-input" id="hostDiskGb" value="500" min="50" step="50">
+            </div>
+          </div>
+        </div>
+
+        <!-- Live Resource Allocation Gauges -->
+        <div style="background-color: #0b1120; border: 1px solid var(--tools-border); border-radius: var(--tools-radius-md); padding: 1.25rem; margin-bottom: 2rem;">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.25rem; flex-wrap: wrap; gap: 0.5rem;">
+            <h3 style="font-size: 1rem; color: var(--tools-text-primary); margin: 0;">2. Live Hypervisor Capacity &amp; Safety Meters</h3>
+            <span class="status-pill safe" id="proxmoxOverallStatus">Healthy Allocation</span>
+          </div>
+
+          <!-- RAM Meter -->
+          <div class="meter-wrapper">
+            <div class="meter-header">
+              <span>RAM Allocation: <strong id="ramCommittedDisplay">13.5 GB</strong> / <span id="ramTotalDisplay">32.0 GB</span> (<span id="ramPercentDisplay">42%</span>)</span>
+              <span id="ramHeadroomDisplay" style="color: #4ade80;">18.5 GB Free for ZFS / Host</span>
+            </div>
+            <div class="meter-track">
+              <div class="meter-bar safe" id="ramMeterBar" style="width: 42%;"></div>
+            </div>
+            <span class="form-hint" style="margin-top: 0.25rem; display: block;">Includes 2.0 GB reserved for Proxmox VE root OS services. Warning triggers at 80% commitment.</span>
+          </div>
+
+          <!-- vCPU & Disk Grid -->
+          <div class="proxmox-meters-grid">
+            <!-- vCPU Overcommit Metric -->
+            <div style="background-color: var(--tools-card-inner); border: 1px solid var(--tools-border); border-radius: var(--tools-radius-sm); padding: 1rem;">
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.4rem;">
+                <span class="metric-label">vCPU Overcommit Ratio</span>
+                <span class="status-pill safe" id="vcpuStatusPill">1.75 : 1 (Safe)</span>
+              </div>
+              <div style="font-size: 1.4rem; font-weight: 700; color: var(--tools-text-primary);" id="vcpuStatsText">
+                14 vCPUs <span style="font-size: 0.85rem; font-weight: normal; color: var(--tools-text-muted);">across 8 cores</span>
+              </div>
+              <div style="font-size: 0.775rem; color: var(--tools-text-secondary); margin-top: 0.35rem;">
+                Homelab guideline: Up to 3.0:1 overcommit is safe for lightweight LXCs.
+              </div>
+            </div>
+
+            <!-- Disk Footprint Metric -->
+            <div style="background-color: var(--tools-card-inner); border: 1px solid var(--tools-border); border-radius: var(--tools-radius-sm); padding: 1rem;">
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.4rem;">
+                <span class="metric-label">Disk Storage Allocation</span>
+                <span style="font-family: monospace; font-size: 0.85rem; color: var(--tools-yellow);" id="diskStatsText">236 GB / 500 GB (47%)</span>
+              </div>
+              <div class="meter-track" style="height: 8px; margin: 0.5rem 0;">
+                <div class="meter-bar safe" id="diskMeterBar" style="width: 47%;"></div>
+              </div>
+              <div style="font-size: 0.775rem; color: var(--tools-text-secondary);">
+                Includes 20 GB reserved for Proxmox system boot. Free storage: <strong id="diskFreeText" style="color: #4ade80;">264 GB</strong>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Workload Catalog Checklist -->
+        <div>
+          <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.5rem;">
+            <h3 style="font-size: 1rem; color: var(--tools-text-primary); margin: 0;">3. Workload Sizing Catalog</h3>
+            <div style="font-size: 0.8rem; color: var(--tools-text-muted);">
+              Check or uncheck workloads and adjust individual core/RAM allocations:
+            </div>
+          </div>
+
+          <div class="proxmox-workloads-grid" id="proxmoxWorkloadsGrid">
+            <!-- Dynamically populated via JS -->
+          </div>
+
+          <!-- Add Custom Workload Form -->
+          <div class="add-custom-workload-box">
+            <span style="font-size: 0.85rem; font-weight: 600; color: var(--tools-yellow);">+ Add Custom Workload:</span>
+            <input type="text" id="customWorkloadName" placeholder="Workload Name (e.g. Postgres DB)" style="flex-grow: 1; min-width: 140px;">
+            <select id="customWorkloadType" style="width: 90px;">
+              <option value="lxc">LXC</option>
+              <option value="vm">VM</option>
+            </select>
+            <input type="number" id="customWorkloadCores" value="2" min="1" max="16" placeholder="Cores" style="width: 75px;" title="Cores">
+            <input type="number" id="customWorkloadRam" value="1024" min="64" step="128" placeholder="RAM (MB)" style="width: 100px;" title="RAM MB">
+            <input type="number" id="customWorkloadDisk" value="20" min="1" step="5" placeholder="Disk (GB)" style="width: 95px;" title="Disk GB">
+            <button type="button" class="tool-btn tool-btn-primary tool-btn-sm" id="addCustomWorkloadBtn">
+              Add Workload
+            </button>
+          </div>
+        </div>
+
+        <!-- Proxmox CLI Command Generator -->
+        <div style="margin-top: 2rem; background-color: var(--tools-card-inner); border: 1px solid var(--tools-border); border-radius: var(--tools-radius-md); padding: 1.25rem;">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.75rem; flex-wrap: wrap; gap: 0.5rem;">
+            <div>
+              <h3 style="font-size: 1rem; color: var(--tools-text-primary); margin-bottom: 0.2rem;">
+                Proxmox CLI Deployment Command (<code>pct create</code>)
+              </h3>
+              <p style="font-size: 0.8rem; color: var(--tools-text-muted); margin: 0;">
+                Generate the exact shell command to spin up an unprivileged, nested LXC container on Proxmox VE:
+              </p>
+            </div>
+            <div style="display: flex; gap: 0.5rem; align-items: center;">
+              <label for="cliTargetSelect" style="font-size: 0.8rem; color: var(--tools-text-secondary);">Select Service:</label>
+              <select class="form-select" id="cliTargetSelect" style="width: auto; padding: 0.35rem 0.75rem; font-size: 0.85rem;">
+                <!-- Populated dynamically -->
+              </select>
+              <button type="button" class="tool-btn tool-btn-primary tool-btn-sm" id="copyCliCommandBtn">
+                Copy CLI Command
+              </button>
+            </div>
+          </div>
+          <div class="code-editor-area" style="min-height: auto; max-height: 180px;">
+            <pre class="code-pre" id="proxmoxCliOutput" style="white-space: pre-wrap; font-size: 0.85rem; color: #4ade80;"># Loading command...</pre>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+      </div><!-- /.tools-workspace-canvas -->
+    </div><!-- /.tools-workspace-shell -->
+
+  </main>
+
+  <!-- Footer Section -->
+  <footer class="footer">
+    <div class="footer-container">
+      <div>
+        <a href="index.html" class="footer-logo">
+          Tech Simpld<span class="logo-dot"></span>
+        </a>
+        <p class="footer-desc">
+          Software and productivity, simplified. Clean, no-fluff tutorials, blueprints, and interactive tools for digital creators and builders.
+        </p>
+      </div>
+      <div>
+        <h4 class="footer-heading">Navigation</h4>
+        <ul class="footer-links">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="about.html">About</a></li>
+          <li><a href="posts.html">Posts</a></li>
+          <li><a href="resources.html">Resources</a></li>
+          <li><a href="tools.html">Tools</a></li>
+          <li><a href="contact.html">Contact</a></li>
+          <li><a href="https://youtube.com/@TechSimpld" target="_blank">YouTube Channel</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4 class="footer-heading">Contact & Legal</h4>
+        <ul class="footer-links">
+          <li><a href="mailto:techsimpld@gmail.com">techsimpld@gmail.com</a></li>
+          <li><a href="privacy-policy.html">Privacy Policy</a></li>
+          <li><a href="terms-of-service.html">Terms of Service</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div>© 2026 Tech Simpld. All rights reserved. Client-side tools processed 100% in your browser.</div>
+      <div class="footer-socials">
+        <a href="https://youtube.com/@TechSimpld" class="social-link" aria-label="YouTube">YouTube</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="js/scripts.js"></script>
+  <script src="js/tools.js"></script>
+</body>
+
+</html>

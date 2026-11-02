@@ -56,14 +56,19 @@
     "@type": "Article",
     "headline": "Obsidian Starter Vault: Complete Setup Guide",
     "image": [
-      "https://techsimpld.com/images/Obsidian%20for%20Absolute%20Beginners%20(2026%20Guide).png"
+      "https://techsimpld.com/images/Obsidian%20for%20Absolute%20Beginners%20(2026%20Guide).png",
+      "https://techsimpld.com/images/obsidian-starter-vault-step-1.png",
+      "https://techsimpld.com/images/obsidian-starter-vault-step-2.png",
+      "https://techsimpld.com/images/obsidian-starter-vault-step-3.png"
     ],
     "datePublished": "2026-05-26T08:00:00+08:00",
-    "dateModified": "2026-05-26T08:00:00+08:00",
+    "dateModified": "2026-11-02T10:00:00-05:00",
     "author": {
       "@type": "Person",
       "name": "Tech Simpld",
-      "url": "https://techsimpld.com/about.html"
+      "url": "https://techsimpld.com/about.html",
+      "jobTitle": "MCSA Certified Systems Engineer",
+      "sameAs": ["https://youtube.com/@TechSimpld"]
     },
     "publisher": {
       "@type": "Organization",
@@ -118,6 +123,7 @@
         <li><a href="../about.html" class="nav-link">About</a></li>
         <li><a href="../posts.html" class="nav-link active">Posts</a></li>
         <li><a href="../resources.html" class="nav-link">Resources</a></li>
+        <li><a href="../tools.html" class="nav-link">Tools</a></li>
         <li><a href="../contact.html" class="nav-link">Contact</a></li>
         <li><a href="https://youtube.com/@TechSimpld" target="_blank" class="nav-link">YouTube</a></li>
       </ul>
@@ -186,6 +192,13 @@
 
         <!-- Article Content -->
         <div class="prose">
+          <figure class="article-featured-figure">
+            <picture>
+              <source srcset="../images/Obsidian%20for%20Absolute%20Beginners%20%282026%20Guide%29.webp" type="image/webp">
+              <img src="../images/Obsidian%20for%20Absolute%20Beginners%20%282026%20Guide%29.png" alt="Tech Simpld Pre-Configured Obsidian Starter Vault Setup and Folder Structure" width="1200" height="675" loading="eager" decoding="async">
+            </picture>
+            <figcaption class="article-featured-caption">Inside the pre-configured Tech Simpld Obsidian Starter Vault with custom dark-slate CSS and ready-to-use templates.</figcaption>
+          </figure>
           <p>
             I'll be completely honest with you. When I first downloaded and installed Obsidian, I stared at a blank, blinking cursor for about twenty minutes before closing the application in frustration. It is wildly powerful, running entirely locally so it's lightning-fast, and because it uses plain text Markdown, you actually own your files forever. But out of the box? It's a black void. Unlike Notion, Evernote, or OneNote, there is absolutely no hand-holding. I spent my first two weeks drowning in endless community plugin configurations and writing custom CSS tweaks instead of actually writing a single useful note.
           </p>
@@ -218,6 +231,14 @@
             When you launch the application for the very first time, click "Create a new vault." Keep the name simple, something like "Tech Simpld Notes" or "My Vault." Save it somewhere safe on your drive. Here is a critical tip: if you plan to sync it to your iPhone or Android later via iCloud or Google Drive, create the vault directly inside that syncing folder <em>now</em>. Do not create it on your Desktop and try to move it later; doing so often breaks hidden configuration files and will cause major sync headaches down the line.
           </p>
 
+          <figure class="article-featured-figure">
+            <picture>
+              <source srcset="../images/obsidian-starter-vault-step-1.webp" type="image/webp">
+              <img src="../images/obsidian-starter-vault-step-1.png" alt="Obsidian quick-start launcher creating a new local vault named Techsimpld Second Brain" width="1280" height="640" loading="lazy" decoding="async">
+            </picture>
+            <figcaption class="article-featured-caption">Initializing a new local Obsidian vault directly inside your chosen storage directory via the quick-start launcher.</figcaption>
+          </figure>
+
           <h2>Step 1: The Strict 4-Folder Organization Strategy</h2>
           <p>
             A chaotic, cluttered sidebar kills your focus. If you just dump files randomly into the root directory, you will eventually have hundreds of notes you can never find again. I use a very strict, minimalist 4-folder structure. I specifically number them so they stay in exactly this order alphabetically:
@@ -228,6 +249,14 @@
             <li><strong>20 Templates:</strong> If you do something twice, you should template it. Write a weekly review agenda or a project kickoff document once, save it in this folder, and reuse it forever. We will configure plugins later to automatically pull from this specific directory.</li>
             <li><strong>90 System:</strong> This is the junk drawer that you never need to look at. Whenever you paste a screenshot into Obsidian, it creates a physical image file. You want to hide all your image attachments, PDFs, and custom CSS snippets here so they do not clog up your main workspace.</li>
           </ul>
+
+          <figure class="article-featured-figure">
+            <picture>
+              <source srcset="../images/obsidian-starter-vault-step-2.webp" type="image/webp">
+              <img src="../images/obsidian-starter-vault-step-2.png" alt="Three-pane Obsidian starter workspace showing File Explorer, active Markdown note, and live Graph View" width="1280" height="640" loading="lazy" decoding="async">
+            </picture>
+            <figcaption class="article-featured-caption">The three-pane starter workspace layout pairing the File Explorer sidebar, primary Markdown editor, and live Graph View.</figcaption>
+          </figure>
 
           <h2>Step 2: Installing Essential Community Plugins</h2>
           <p>
@@ -267,6 +296,14 @@ SORT file.mtime DESC
             <li><strong>Use Wikilinks:</strong> Ensure "Use [[Wikilinks]]" is enabled. This is the core mechanic of Obsidian. Typing double brackets allows you to link to any other file in your system instantly.</li>
           </ol>
 
+          <figure class="article-featured-figure">
+            <picture>
+              <source srcset="../images/obsidian-starter-vault-step-3.webp" type="image/webp">
+              <img src="../images/obsidian-starter-vault-step-3.png" alt="Obsidian note linking to Video Ideas with double brackets and updating the Graph View node connection in real time" width="1280" height="640" loading="lazy" decoding="async">
+            </picture>
+            <figcaption class="article-featured-caption">Creating a [[Video Ideas]] wikilink inside the editor and watching the corresponding node connection render in the live Graph View.</figcaption>
+          </figure>
+
           <h2>Troubleshooting & Common Pitfalls</h2>
           <p>
             I've seen plenty of homelab and productivity setups break over the years. Here are the most common issues you will hit when setting up this vault:
@@ -302,6 +339,21 @@ SORT file.mtime DESC
           </div>
         </div>
 
+        <div class="author-bio-box">
+          <div class="author-bio-avatar" aria-hidden="true">TS</div>
+          <div class="author-bio-content">
+            <h3>Written by Tech Simpld</h3>
+            <span class="author-bio-role">MCSA Certified Systems Engineer &bull; 20+ Years Enterprise IT</span>
+            <p>
+              Tech Simpld is maintained by a Systems Engineer managing virtual machines and enterprise storage architecture across five data centers. Every tutorial and configuration on this site is tested first-hand in our physical Proxmox VE home lab and daily Obsidian production vaults.
+            </p>
+            <div class="author-bio-links">
+              <a href="../about.html">Lab Architecture &amp; Mission &rarr;</a>
+              <a href="../tools.html">Interactive Home Lab Web Tools &rarr;</a>
+            </div>
+          </div>
+        </div>
+
       </article>
 
       <!-- Sidebar Column -->
@@ -319,6 +371,15 @@ SORT file.mtime DESC
           </a>
         </div>
 
+        <div class="sidebar-widget">
+          <h4 class="widget-title">Related Tutorials</h4>
+          <ul style="list-style: none; padding: 0; margin: 0; font-size: 0.9rem; line-height: 1.8;">
+            <li><a href="obsidian-second-brain-setup.html" style="color: var(--accent-cyan);">Obsidian Second Brain Setup</a></li>
+            <li><a href="3-obsidian-settings-you-must-change.html" style="color: var(--text-primary);">3 Settings You Must Change</a></li>
+            <li><a href="obsidian-plugins-i-use-2026.html" style="color: var(--text-primary);">3 Core Obsidian Plugins</a></li>
+            <li><a href="../tools.html" style="color: var(--accent-yellow, #facc15);">Interactive Home Lab Web Tools</a></li>
+          </ul>
+        </div>
       </aside>
 
     </div>
@@ -343,6 +404,7 @@ SORT file.mtime DESC
           <li><a href="../about.html">About</a></li>
           <li><a href="../posts.html">Posts</a></li>
           <li><a href="../resources.html">Resources</a></li>
+          <li><a href="../tools.html">Tools</a></li>
           <li><a href="../contact.html">Contact</a></li>
           <li><a href="https://youtube.com/@TechSimpld" target="_blank">YouTube Channel</a></li>
         </ul>

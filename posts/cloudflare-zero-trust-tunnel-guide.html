@@ -56,14 +56,19 @@
     "@type": "Article",
     "headline": "Setting Up Your First Cloudflare Zero Trust Tunnel",
     "image": [
-      "https://techsimpld.com/images/cloudflare-zero-trust-tunnel.png"
+      "https://techsimpld.com/images/cloudflare-zero-trust-tunnel.png",
+      "https://techsimpld.com/images/cloudflare-tunnel-step-1.png",
+      "https://techsimpld.com/images/cloudflare-tunnel-step-2.png",
+      "https://techsimpld.com/images/cloudflare-tunnel-step-3.png"
     ],
     "datePublished": "2026-08-03T08:00:00+08:00",
-    "dateModified": "2026-08-03T08:00:00+08:00",
+    "dateModified": "2026-11-02T10:00:00-05:00",
     "author": {
       "@type": "Person",
       "name": "Tech Simpld",
-      "url": "https://techsimpld.com/about.html"
+      "url": "https://techsimpld.com/about.html",
+      "jobTitle": "MCSA Certified Systems Engineer",
+      "sameAs": ["https://youtube.com/@TechSimpld"]
     },
     "publisher": {
       "@type": "Organization",
@@ -152,6 +157,7 @@
         <li><a href="../about.html" class="nav-link">About</a></li>
         <li><a href="../posts.html" class="nav-link active">Posts</a></li>
         <li><a href="../resources.html" class="nav-link">Resources</a></li>
+        <li><a href="../tools.html" class="nav-link">Tools</a></li>
         <li><a href="../contact.html" class="nav-link">Contact</a></li>
         <li><a href="https://youtube.com/@TechSimpld" target="_blank" class="nav-link">YouTube</a></li>
       </ul>
@@ -220,6 +226,13 @@
 
         <!-- Article Content -->
         <div class="prose">
+          <figure class="article-featured-figure">
+            <picture>
+              <source srcset="../images/cloudflare-zero-trust-tunnel.webp" type="image/webp">
+              <img src="../images/cloudflare-zero-trust-tunnel.png" alt="Cloudflare Zero Trust Tunnel Architecture for Remote Home Lab Access" width="1200" height="675" loading="eager" decoding="async">
+            </picture>
+            <figcaption class="article-featured-caption">Routing external HTTPS traffic securely into a local Proxmox home lab via outbound Cloudflare Zero Trust tunnels.</figcaption>
+          </figure>
           <p>
             You’ve just spent the entire weekend setting up your first home lab services. You finally got Home Assistant humming along perfectly to control your smart lights, you’ve deployed a beautiful Obsidian note vault that syncs flawlessly, and you have a gorgeous, customized self-hosted dashboard tying it all together. Everything works beautifully when you’re sitting at your desk, connected to your secure home Wi-Fi. 
           </p>
@@ -284,13 +297,21 @@
             </table>
           </div>
 
+          <figure class="article-featured-figure">
+            <picture>
+              <source srcset="../images/cloudflare-tunnel-step-1.webp" type="image/webp">
+              <img src="../images/cloudflare-tunnel-step-1.png" alt="Architecture diagram showing outbound encrypted tunnel connection from home server container to Cloudflare edge" width="1280" height="640" loading="lazy" decoding="async">
+            </picture>
+            <figcaption class="article-featured-caption">Visualizing the outbound encrypted pipe between the local container host and Cloudflare's edge network with zero open router ports.</figcaption>
+          </figure>
+
           <h2>Prerequisites: What You Need Before Starting</h2>
           <p>
             Before starting the technical configuration, ensure you have these three foundational pieces fully set up:
           </p>
           <ol>
             <li><strong>A Cloudflare Account:</strong> Create a completely free account at <a href="https://dash.cloudflare.com/sign-up" target="_blank" rel="noopener noreferrer">Cloudflare.com</a>. The generous free tier is more than sufficient for 99% of home lab users.</li>
-            <li><strong>A Custom Domain Name:</strong> You need to own a domain (e.g., <code>myhomelab.com</code> or <code>chucksserver.net</code>) and it must be actively using Cloudflare as its authoritative DNS nameservers. If you don't have one, you can purchase one directly through Cloudflare Registrar or a cheap alternative like Namecheap for around $5–$10 per year. Do not skip this step; tunnels require a valid domain to route traffic.</li>
+            <li><strong>A Custom Domain Name:</strong> You need to own a domain (e.g., <code>myhomelab.com</code> or <code>techsimpldlab.net</code>) and it must be actively using Cloudflare as its authoritative DNS nameservers. If you don't have one, you can purchase one directly through Cloudflare Registrar or a cheap alternative like Namecheap for around $5–$10 per year. Do not skip this step; tunnels require a valid domain to route traffic.</li>
             <li><strong>A Home Server Environment:</strong> You need a running machine in your house (a Raspberry Pi, an old Dell OptiPlex running Ubuntu, or a Proxmox container) that has Docker and Docker Compose installed and ready to deploy containers.</li>
           </ol>
 
@@ -332,6 +353,14 @@
             Now, look back at the Cloudflare web dashboard on your computer screen. Within five to ten seconds, you will see your connector status magically flip from a gray <em>Inactive</em> status to a glowing green <strong>ACTIVE</strong> indicator! Your server has successfully dialed out to Cloudflare and established the secure tunnel. Click <strong>Next</strong> to proceed.
           </p>
 
+          <figure class="article-featured-figure">
+            <picture>
+              <source srcset="../images/cloudflare-tunnel-step-2.webp" type="image/webp">
+              <img src="../images/cloudflare-tunnel-step-2.png" alt="Cloudflare Zero Trust dashboard Install and run a connector page showing Debian 64-bit cloudflared installation commands" width="1280" height="640" loading="lazy" decoding="async">
+            </picture>
+            <figcaption class="article-featured-caption">Copying the connector installation command and unique tunnel token from the Cloudflare Zero Trust console.</figcaption>
+          </figure>
+
           <h2>Step 3: Routing Your First Public Hostname</h2>
           <p>
             Now that the physical pipe is established between your house and Cloudflare's data centers, you need to tell Cloudflare exactly which local IP address and port inside your house should be linked to which public web address. This is called creating a Public Hostname.
@@ -345,6 +374,14 @@
           <p>
             Click <strong>Save hostname</strong>. In the background, Cloudflare automatically creates the necessary DNS CNAME records on your domain, provisions a free, valid SSL/TLS certificate for encryption, and binds it to the tunnel. If you wait about 30 seconds and type <code>notes.myhomelab.com</code> into your phone's browser (while disconnected from Wi-Fi), your local service will instantly load!
           </p>
+
+          <figure class="article-featured-figure">
+            <picture>
+              <source srcset="../images/cloudflare-tunnel-step-3.webp" type="image/webp">
+              <img src="../images/cloudflare-tunnel-step-3.png" alt="Cloudflare Zero Trust Published application routes view mapping test.techsimpld.com to internal LAN address http://192.168.1.25" width="1280" height="640" loading="lazy" decoding="async">
+            </picture>
+            <figcaption class="article-featured-caption">Mapping a public subdomain route in Cloudflare Zero Trust directly to a private internal LAN IP address (http://192.168.1.25).</figcaption>
+          </figure>
 
           <h2>Step 4: Enforcing Zero Trust Application Access Policies</h2>
           <p>
@@ -411,7 +448,22 @@
           <p>
             Want to learn more about securely containerizing the apps you just exposed to the internet? Read my comprehensive technical deep dive on <a href="docker-vs-podman.html">Understanding Docker vs. Podman architectures</a>, and then follow my step-by-step guide on <a href="obsidian-in-web-browser-docker.html">Running an Obsidian Note Vault Directly in Any Web Browser</a>.
           </p>
-        </div></div>
+        </div>
+
+        <div class="author-bio-box">
+          <div class="author-bio-avatar" aria-hidden="true">TS</div>
+          <div class="author-bio-content">
+            <h3>Written by Tech Simpld</h3>
+            <span class="author-bio-role">MCSA Certified Systems Engineer &bull; 20+ Years Enterprise IT</span>
+            <p>
+              Tech Simpld is maintained by a Systems Engineer managing virtual machines and enterprise storage architecture across five data centers. Every tutorial and configuration on this site is tested first-hand in our physical Proxmox VE home lab and daily Obsidian production vaults.
+            </p>
+            <div class="author-bio-links">
+              <a href="../about.html">Lab Architecture &amp; Mission &rarr;</a>
+              <a href="../tools.html">Interactive Home Lab Web Tools &rarr;</a>
+            </div>
+          </div>
+        </div>
 
       </article>
 
@@ -473,6 +525,7 @@
           <li><a href="../about.html">About</a></li>
           <li><a href="../posts.html">Posts</a></li>
           <li><a href="../resources.html">Resources</a></li>
+          <li><a href="../tools.html">Tools</a></li>
           <li><a href="../contact.html">Contact</a></li>
           <li><a href="https://youtube.com/@TechSimpld" target="_blank">YouTube Channel</a></li>
         </ul>

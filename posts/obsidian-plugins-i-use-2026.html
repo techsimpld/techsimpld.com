@@ -56,14 +56,19 @@
     "@type": "Article",
     "headline": "3 Obsidian Plugins I Use in 2026",
     "image": [
-      "https://techsimpld.com/images/Obsidian%20Plugins%20I%20Use%202026.png"
+      "https://techsimpld.com/images/Obsidian%20Plugins%20I%20Use%202026.png",
+      "https://techsimpld.com/images/obsidian-plugins-2026-step-1.png",
+      "https://techsimpld.com/images/obsidian-plugins-2026-step-2.png",
+      "https://techsimpld.com/images/obsidian-plugins-2026-step-3.png"
     ],
     "datePublished": "2026-06-05T08:00:00+08:00",
-    "dateModified": "2026-06-05T08:00:00+08:00",
+    "dateModified": "2026-11-02T10:00:00-05:00",
     "author": {
       "@type": "Person",
       "name": "Tech Simpld",
-      "url": "https://techsimpld.com/about.html"
+      "url": "https://techsimpld.com/about.html",
+      "jobTitle": "MCSA Certified Systems Engineer",
+      "sameAs": ["https://youtube.com/@TechSimpld"]
     },
     "publisher": {
       "@type": "Organization",
@@ -118,6 +123,7 @@
         <li><a href="../about.html" class="nav-link">About</a></li>
         <li><a href="../posts.html" class="nav-link active">Posts</a></li>
         <li><a href="../resources.html" class="nav-link">Resources</a></li>
+        <li><a href="../tools.html" class="nav-link">Tools</a></li>
         <li><a href="../contact.html" class="nav-link">Contact</a></li>
         <li><a href="https://youtube.com/@TechSimpld" target="_blank" class="nav-link">YouTube</a></li>
       </ul>
@@ -186,6 +192,13 @@
 
         <!-- Article Content -->
         <div class="prose">
+          <figure class="article-featured-figure">
+            <picture>
+              <source srcset="../images/Obsidian%20Plugins%20I%20Use%202026.webp" type="image/webp">
+              <img src="../images/Obsidian%20Plugins%20I%20Use%202026.png" alt="Essential Obsidian Community Plugins: Dataview, Templater, and Kanban" width="1200" height="675" loading="eager" decoding="async">
+            </picture>
+            <figcaption class="article-featured-caption">Core community plugins powering dynamic note queries and automated Markdown templates in Obsidian.</figcaption>
+          </figure>
           <p>
             Out of the box, Obsidian is a remarkably solid, blazing-fast plain text editor. If you are just writing basic grocery lists or throwing down quick, unformatted thoughts, the core application is perfectly fine. But when I attempted to use it in a professional capacity, to manage complex YouTube video production schedules, intricate long-term homelab project planning, and my daily task execution, the minimalist, plain text approach completely fell apart. Without heavy customization, a growing vault rapidly turns into a chaotic, unsearchable mess of Markdown files that are impossible to navigate efficiently.
           </p>
@@ -223,6 +236,14 @@
           <p>
             You will instantly be presented with a clean interface where you can add vertical lists. I highly recommend starting with a simple three-list structure: <strong>To-Do</strong>, <strong>In Progress</strong>, and <strong>Completed</strong>. You can now create tasks as cards and visually drag them across stages as you make progress. The true brilliance of this plugin is that, because it is still just standard Markdown text under the hood, it remains lightning fast and you can link to other notes directly from within a Kanban card.
           </p>
+
+          <figure class="article-featured-figure">
+            <picture>
+              <source srcset="../images/obsidian-plugins-2026-step-2.webp" type="image/webp">
+              <img src="../images/obsidian-plugins-2026-step-2.png" alt="Obsidian Kanban board showing In Progress, Complete, and Bug columns for Project Alpha Game" width="1280" height="640" loading="lazy" decoding="async">
+            </picture>
+            <figcaption class="article-featured-caption">Managing project tasks and bug tracking visually inside Obsidian using the drag-and-drop Kanban community plugin.</figcaption>
+          </figure>
 
           <h2>2. Dataview: Dynamic Database Engine for Markdown</h2>
           <p>
@@ -269,6 +290,14 @@ FROM "Recipes"
             Here is where the magic happens. When you create a new note and insert this template using the Templater command, the engine reads the <code>&lt;% tp.date.now("YYYY-MM-DD") %&gt;</code> string, executes the code, and permanently replaces it with the actual current date (e.g., 2026-10-12). You never have to type dates manually again. You can create templates for book notes, server configurations, client meetings, and more.
           </p>
 
+          <figure class="article-featured-figure">
+            <picture>
+              <source srcset="../images/obsidian-plugins-2026-step-1.webp" type="image/webp">
+              <img src="../images/obsidian-plugins-2026-step-1.png" alt="Creating a dedicated Templates folder and reusable note blueprint inside the Obsidian File Explorer" width="1280" height="640" loading="lazy" decoding="async">
+            </picture>
+            <figcaption class="article-featured-caption">Setting up a dedicated Templates directory in the File Explorer to store reusable Templater note blueprints.</figcaption>
+          </figure>
+
           <h2>Troubleshooting & Edge Cases</h2>
           <p>
             Setting up these advanced plugins can sometimes be tricky. Here are the most common issues you will run into, and how to quickly resolve them:
@@ -278,6 +307,14 @@ FROM "Recipes"
             <li><strong>Templater tags aren't resolving into dates:</strong> If you trigger a template and see the raw <code>&lt;% %&gt;</code> code sitting on the page instead of the actual date, you likely made a common mistake: you used Obsidian's default core "Insert template" command. You must specifically use the <em>Templater: Open Insert Template modal</em> command (I highly recommend binding this to <code>Alt+N</code> in your hotkey settings) for the Javascript scripts to actually execute.</li>
             <li><strong>My overall vault performance is lagging:</strong> While the three specific plugins we discussed today are highly optimized and very fast, installing 40 other random plugins just because they look cool will absolutely cripple Obsidian's speed and drain your laptop battery. Treat plugins like physical tools in a workshop: only install what you actively, consistently use.</li>
           </ul>
+
+          <figure class="article-featured-figure">
+            <picture>
+              <source srcset="../images/obsidian-plugins-2026-step-3.webp" type="image/webp">
+              <img src="../images/obsidian-plugins-2026-step-3.png" alt="Split view inside Obsidian pairing the Project Alpha Game Kanban board with an auto-templated Bug Report note" width="1280" height="640" loading="lazy" decoding="async">
+            </picture>
+            <figcaption class="article-featured-caption">Combining Kanban cards with Templater blueprints in a split-pane view to generate structured bug reports automatically.</figcaption>
+          </figure>
 
           <h2>Conclusion & Next Steps for Your Vault</h2>
           <p>
@@ -301,7 +338,22 @@ FROM "Recipes"
             <li><a href="https://blacksmithgu.github.io/obsidian-dataview/" target="_blank" rel="noopener noreferrer">Dataview Comprehensive Documentation</a></li>
             <li><a href="https://silentvoid13.github.io/Templater/" target="_blank" rel="noopener noreferrer">Templater Official Documentation</a></li>
           </ul>
-        </div></div>
+        </div>
+
+        <div class="author-bio-box">
+          <div class="author-bio-avatar" aria-hidden="true">TS</div>
+          <div class="author-bio-content">
+            <h3>Written by Tech Simpld</h3>
+            <span class="author-bio-role">MCSA Certified Systems Engineer &bull; 20+ Years Enterprise IT</span>
+            <p>
+              Tech Simpld is maintained by a Systems Engineer managing virtual machines and enterprise storage architecture across five data centers. Every tutorial and configuration on this site is tested first-hand in our physical Proxmox VE home lab and daily Obsidian production vaults.
+            </p>
+            <div class="author-bio-links">
+              <a href="../about.html">Lab Architecture &amp; Mission &rarr;</a>
+              <a href="../tools.html">Interactive Home Lab Web Tools &rarr;</a>
+            </div>
+          </div>
+        </div>
 
       </article>
 
@@ -320,6 +372,15 @@ FROM "Recipes"
           </a>
         </div>
 
+        <div class="sidebar-widget">
+          <h4 class="widget-title">Related Tutorials</h4>
+          <ul style="list-style: none; padding: 0; margin: 0; font-size: 0.9rem; line-height: 1.8;">
+            <li><a href="3-more-obsidian-plugins-2026.html" style="color: var(--accent-cyan);">3 More Obsidian Plugins (Part 2)</a></li>
+            <li><a href="obsidian-starter-vault-tutorial.html" style="color: var(--text-primary);">Obsidian Starter Vault Guide</a></li>
+            <li><a href="obsidian-second-brain-setup.html" style="color: var(--text-primary);">Second Brain Setup Guide</a></li>
+            <li><a href="../tools.html" style="color: var(--accent-yellow, #facc15);">Interactive Home Lab Web Tools</a></li>
+          </ul>
+        </div>
       </aside>
 
     </div>
@@ -344,6 +405,7 @@ FROM "Recipes"
           <li><a href="../about.html">About</a></li>
           <li><a href="../posts.html">Posts</a></li>
           <li><a href="../resources.html">Resources</a></li>
+          <li><a href="../tools.html">Tools</a></li>
           <li><a href="../contact.html">Contact</a></li>
           <li><a href="https://youtube.com/@TechSimpld" target="_blank">YouTube Channel</a></li>
         </ul>

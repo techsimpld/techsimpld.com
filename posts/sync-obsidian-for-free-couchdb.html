@@ -56,14 +56,19 @@
     "@type": "Article",
     "headline": "Sync Obsidian for Free with CouchDB: Step-by-Step Self-Hosted Guide",
     "image": [
-      "https://techsimpld.com/images/sync-obsidian-for-free-couchdb.jpg"
+      "https://techsimpld.com/images/sync-obsidian-for-free-couchdb.jpg",
+      "https://techsimpld.com/images/obsidian-couchdb-step-1.png",
+      "https://techsimpld.com/images/obsidian-couchdb-step-2.png",
+      "https://techsimpld.com/images/obsidian-couchdb-step-3.png"
     ],
     "datePublished": "2026-09-18T10:00:00+00:00",
-    "dateModified": "2026-09-18T10:00:00+00:00",
+    "dateModified": "2026-11-02T10:00:00-05:00",
     "author": {
       "@type": "Person",
       "name": "Tech Simpld",
-      "url": "https://techsimpld.com/about.html"
+      "url": "https://techsimpld.com/about.html",
+      "jobTitle": "MCSA Certified Systems Engineer",
+      "sameAs": ["https://youtube.com/@TechSimpld"]
     },
     "publisher": {
       "@type": "Organization",
@@ -118,6 +123,7 @@
         <li><a href="../about.html" class="nav-link">About</a></li>
         <li><a href="../posts.html" class="nav-link active">Posts</a></li>
         <li><a href="../resources.html" class="nav-link">Resources</a></li>
+        <li><a href="../tools.html" class="nav-link">Tools</a></li>
         <li><a href="../contact.html" class="nav-link">Contact</a></li>
         <li><a href="https://youtube.com/@TechSimpld" target="_blank" class="nav-link">YouTube</a></li>
       </ul>
@@ -186,6 +192,13 @@
 
         <!-- Article Content -->
         <div class="prose">
+          <figure class="article-featured-figure">
+            <picture>
+              <source srcset="../images/sync-obsidian-for-free-couchdb.webp" type="image/webp">
+              <img src="../images/sync-obsidian-for-free-couchdb.jpg" alt="Self-Hosted Obsidian LiveSync Architecture with Docker and Apache CouchDB" width="1200" height="675" loading="eager" decoding="async">
+            </picture>
+            <figcaption class="article-featured-caption">End-to-end encrypted Obsidian vault synchronization across desktop and mobile using self-hosted CouchDB.</figcaption>
+          </figure>
           <p>
             Obsidian is an exceptional tool for personal knowledge management because it operates strictly on plain markdown text files stored on your local machine. However, the moment you want to access your notes across multiple devices, such as a desktop PC, a MacBook, an Android phone, or an iPad, you run into the synchronization hurdle.
           </p>
@@ -299,6 +312,14 @@ services:
             Docker will pull the official CouchDB image, apply your custom configuration, and launch the service.
           </p>
 
+          <figure class="article-featured-figure">
+            <picture>
+              <source srcset="../images/obsidian-couchdb-step-1.webp" type="image/webp">
+              <img src="../images/obsidian-couchdb-step-1.png" alt="Linux terminal showing CouchDB local.ini CORS settings and docker-compose.yml deployment" width="1280" height="640" loading="lazy" decoding="async">
+            </picture>
+            <figcaption class="article-featured-caption">Configuring local.ini CORS rules and deploying the CouchDB 3.3 container on port 5984 via Docker Compose.</figcaption>
+          </figure>
+
           <h2>Step 3: Verifying the Server Response</h2>
           <p>
             Before opening Obsidian, confirm that CouchDB is healthy and responding over the network. You can test it locally via <code>curl</code> or by navigating to the URL in your web browser:
@@ -357,6 +378,14 @@ services:
             <li>When prompted, acknowledge the confirmation risks, and click <strong>Use this device's settings</strong>.</li>
           </ol>
 
+          <figure class="article-featured-figure">
+            <picture>
+              <source srcset="../images/obsidian-couchdb-step-2.webp" type="image/webp">
+              <img src="../images/obsidian-couchdb-step-2.png" alt="Obsidian Self-hosted LiveSync plugin settings testing CouchDB server connection and database requirements" width="1280" height="640" loading="lazy" decoding="async">
+            </picture>
+            <figcaption class="article-featured-caption">Validating server parameters and initializing the encrypted remote database inside the Self-Hosted LiveSync onboarding wizard.</figcaption>
+          </figure>
+
           <h2>Step 5: Running the Config Doctor and Health Checks</h2>
           <p>
             Once connected, the plugin performs an initial database verification. A banner may appear indicating that synchronization is paused for a compatibility review.
@@ -391,6 +420,14 @@ services:
             Within seconds, the plugin will authenticate with CouchDB, fetch the encrypted blobs, decrypt them locally with your master passphrase, and populate your entire folder structure and note library.
           </p>
 
+          <figure class="article-featured-figure">
+            <picture>
+              <source srcset="../images/obsidian-couchdb-step-3.webp" type="image/webp">
+              <img src="../images/obsidian-couchdb-step-3.png" alt="Two Obsidian vault windows syncing notes in real time via a Self-Hosted LiveSync Setup URI" width="1280" height="640" loading="lazy" decoding="async">
+            </picture>
+            <figcaption class="article-featured-caption">Real-time multi-device replication across two separate Obsidian vaults connected via an encrypted Setup URI.</figcaption>
+          </figure>
+
           <h2>Troubleshooting Common CouchDB Sync Issues</h2>
           <p>
             If you encounter errors during initial replication, check these common configuration bottlenecks:
@@ -417,6 +454,21 @@ services:
           </ul>
         </div>
 
+        <div class="author-bio-box">
+          <div class="author-bio-avatar" aria-hidden="true">TS</div>
+          <div class="author-bio-content">
+            <h3>Written by Tech Simpld</h3>
+            <span class="author-bio-role">MCSA Certified Systems Engineer &bull; 20+ Years Enterprise IT</span>
+            <p>
+              Tech Simpld is maintained by a Systems Engineer managing virtual machines and enterprise storage architecture across five data centers. Every tutorial and configuration on this site is tested first-hand in our physical Proxmox VE home lab and daily Obsidian production vaults.
+            </p>
+            <div class="author-bio-links">
+              <a href="../about.html">Lab Architecture &amp; Mission &rarr;</a>
+              <a href="../tools.html">Interactive Home Lab Web Tools &rarr;</a>
+            </div>
+          </div>
+        </div>
+
       </article>
 
       <!-- Sidebar Column -->
@@ -430,6 +482,15 @@ services:
           <a href="https://youtube.com/@TechSimpld" target="_blank" id="sidebarYoutubeBtn" class="btn btn-outline btn-sm" style="width: 100%;">
             Visit YouTube Channel
           </a>
+        </div>
+        <div class="sidebar-widget">
+          <h4 class="widget-title">Related Tutorials</h4>
+          <ul style="list-style: none; padding: 0; margin: 0; font-size: 0.9rem; line-height: 1.8;">
+            <li><a href="obsidian-in-web-browser-docker.html" style="color: var(--accent-cyan);">Obsidian in Web Browser Docker</a></li>
+            <li><a href="cloudflare-zero-trust-tunnel-guide.html" style="color: var(--text-primary);">Cloudflare Zero Trust Tunnel</a></li>
+            <li><a href="obsidian-second-brain-setup.html" style="color: var(--text-primary);">Obsidian Second Brain Setup</a></li>
+            <li><a href="../tools.html" style="color: var(--accent-yellow, #facc15);">Interactive Home Lab Web Tools</a></li>
+          </ul>
         </div>
       </aside>
 
@@ -455,6 +516,7 @@ services:
           <li><a href="../about.html">About</a></li>
           <li><a href="../posts.html">Posts</a></li>
           <li><a href="../resources.html">Resources</a></li>
+          <li><a href="../tools.html">Tools</a></li>
           <li><a href="../contact.html">Contact</a></li>
           <li><a href="https://youtube.com/@TechSimpld" target="_blank">YouTube Channel</a></li>
         </ul>

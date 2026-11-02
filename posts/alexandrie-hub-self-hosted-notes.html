@@ -56,14 +56,19 @@
     "@type": "Article",
     "headline": "Alexandrie Hub: A Gorgeous Self-Hosted Note-Taking Knowledge Base Alternative",
     "image": [
-      "https://techsimpld.com/images/alexandrie-hub-review.jpg"
+      "https://techsimpld.com/images/alexandrie-hub-review.jpg",
+      "https://techsimpld.com/images/alexandrie-notes-step-1.png",
+      "https://techsimpld.com/images/alexandrie-notes-step-2.png",
+      "https://techsimpld.com/images/alexandrie-notes-step-3.png"
     ],
     "datePublished": "2026-07-06T08:00:00+08:00",
-    "dateModified": "2026-07-06T08:00:00+08:00",
+    "dateModified": "2026-11-02T10:00:00-05:00",
     "author": {
       "@type": "Person",
       "name": "Tech Simpld",
-      "url": "https://techsimpld.com/about.html"
+      "url": "https://techsimpld.com/about.html",
+      "jobTitle": "MCSA Certified Systems Engineer",
+      "sameAs": ["https://youtube.com/@TechSimpld"]
     },
     "publisher": {
       "@type": "Organization",
@@ -118,6 +123,7 @@
         <li><a href="../about.html" class="nav-link">About</a></li>
         <li><a href="../posts.html" class="nav-link active">Posts</a></li>
         <li><a href="../resources.html" class="nav-link">Resources</a></li>
+        <li><a href="../tools.html" class="nav-link">Tools</a></li>
         <li><a href="../contact.html" class="nav-link">Contact</a></li>
         <li><a href="https://youtube.com/@TechSimpld" target="_blank" class="nav-link">YouTube</a></li>
       </ul>
@@ -186,6 +192,13 @@
 
         <!-- Article Content -->
         <div class="prose">
+          <figure class="article-featured-figure">
+            <picture>
+              <source srcset="../images/alexandrie-hub-review.webp" type="image/webp">
+              <img src="../images/alexandrie-hub-review.jpg" alt="Alexandrie Hub Self-Hosted Web Markdown Knowledge Base Interface" width="1200" height="675" loading="eager" decoding="async">
+            </picture>
+            <figcaption class="article-featured-caption">Alexandrie Hub running as a containerized web-first Markdown knowledge base with built-in graph visualization.</figcaption>
+          </figure>
           <p>
             If you hang around the self-hosting community long enough, you will eventually come to a very stark realization: finding the "perfect" note-taking system and personal knowledge base is a never-ending, borderline unhealthy obsession for developers and homelabbers alike. We are constantly searching for that elusive golden ratio of speed, aesthetics, data ownership, and cross-platform accessibility.
           </p>
@@ -212,10 +225,26 @@
             This is the absolute killer feature that solved my synchronization nightmare. Because Alexandrie Hub is fundamentally a web service running continuously in a Docker container on my Proxmox lab, I no longer need a dedicated desktop client installed on every machine I own. I simply open Chrome on my locked-down corporate laptop, type in my local IP address (or my secure Cloudflare Tunnel domain), log in, and my entire, up-to-date knowledge base is instantly there. I can write notes, organize folders, and search my brain without ever installing a local executable. There are zero syncing conflicts, zero iCloud delays, and zero Git push errors because every device is just viewing the exact same live web server.
           </p>
 
+          <figure class="article-featured-figure">
+            <picture>
+              <source srcset="../images/alexandrie-notes-step-1.webp" type="image/webp">
+              <img src="../images/alexandrie-notes-step-1.png" alt="Alexandrie Hub web interface creating a new Markdown document with tags under Project Alpha" width="1280" height="640" loading="lazy" decoding="async">
+            </picture>
+            <figcaption class="article-featured-caption">Creating a new structured document with custom tags and parent workspace hierarchy inside the Alexandrie Hub web interface.</figcaption>
+          </figure>
+
           <h3>2. Flawless, Real-Time Markdown Editing</h3>
           <p>
             As a systems engineer, I write exclusively in Markdown. It is the universal language of the tech world. Alexandrie offers a stunning, distraction-free, real-time editor that renders your formatting instantly. When you type out headers, inject code blocks, or format complex bulleted lists, the editor parses and displays them beautifully in real-time without ever requiring a clunky page refresh or a split-screen "preview" pane. It feels incredibly snappy and responsive, mimicking the feel of a native application while running in a browser tab.
           </p>
+
+          <figure class="article-featured-figure">
+            <picture>
+              <source srcset="../images/alexandrie-notes-step-3.webp" type="image/webp">
+              <img src="../images/alexandrie-notes-step-3.png" alt="Alexandrie Hub split-pane live Markdown editor rendering callout blocks and S3-hosted images" width="1280" height="640" loading="lazy" decoding="async">
+            </picture>
+            <figcaption class="article-featured-caption">Real-time split-pane Markdown editing in Alexandrie Hub rendering custom callout containers, tables, and MinIO S3 media assets.</figcaption>
+          </figure>
 
           <h3>3. Built-In Graph Visualization Engine</h3>
           <p>
@@ -226,6 +255,14 @@
           <p>
             As a home labber and systems architect, I spend a significant amount of time drawing network diagrams, server topologies, and CI/CD flowcharts. Alexandrie supports Mermaid.js syntax natively out of the box. This means I can generate beautiful, complex flowcharts and sequence diagrams using pure, version-controllable text directly inside my notes, without ever having to open a heavy external tool like Visio or draw.io and embed screenshots.
           </p>
+
+          <figure class="article-featured-figure">
+            <picture>
+              <source srcset="../images/alexandrie-notes-step-2.webp" type="image/webp">
+              <img src="../images/alexandrie-notes-step-2.png" alt="Alexandrie Hub built-in CDN SVG diagram preview showing an interactive dark-mode node flowchart" width="1280" height="640" loading="lazy" decoding="async">
+            </picture>
+            <figcaption class="article-featured-caption">Inspecting vector SVG architecture diagrams hosted inside Alexandrie Hub's integrated CDN asset manager.</figcaption>
+          </figure>
 
           <h2>Alexandrie Hub vs. The Competition: A Technical Breakdown</h2>
           <p>
@@ -320,7 +357,22 @@
             <li><a href="https://github.com/Smaug6739/Alexandrie" target="_blank" rel="noopener noreferrer">Alexandrie Official GitHub Repository & Source Code</a></li>
             <li><a href="https://alexandrie-hub.fr/" target="_blank" rel="noopener noreferrer">Alexandrie Official Live Demo & Project Website</a></li>
           </ul>
-        </div></div>
+        </div>
+
+        <div class="author-bio-box">
+          <div class="author-bio-avatar" aria-hidden="true">TS</div>
+          <div class="author-bio-content">
+            <h3>Written by Tech Simpld</h3>
+            <span class="author-bio-role">MCSA Certified Systems Engineer &bull; 20+ Years Enterprise IT</span>
+            <p>
+              Tech Simpld is maintained by a Systems Engineer managing virtual machines and enterprise storage architecture across five data centers. Every tutorial and configuration on this site is tested first-hand in our physical Proxmox VE home lab and daily Obsidian production vaults.
+            </p>
+            <div class="author-bio-links">
+              <a href="../about.html">Lab Architecture &amp; Mission &rarr;</a>
+              <a href="../tools.html">Interactive Home Lab Web Tools &rarr;</a>
+            </div>
+          </div>
+        </div>
 
       </article>
 
@@ -382,6 +434,7 @@
           <li><a href="../about.html">About</a></li>
           <li><a href="../posts.html">Posts</a></li>
           <li><a href="../resources.html">Resources</a></li>
+          <li><a href="../tools.html">Tools</a></li>
           <li><a href="../contact.html">Contact</a></li>
           <li><a href="https://youtube.com/@TechSimpld" target="_blank">YouTube Channel</a></li>
         </ul>

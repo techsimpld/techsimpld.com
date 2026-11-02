@@ -56,14 +56,19 @@
     "@type": "Article",
     "headline": "Nextcloud Proxmox Setup: The Best Free Google Drive Replacement",
     "image": [
-      "https://techsimpld.com/images/Nextcloud%20Proxmox%20Setup%20The%20Best%20Free%20Google%20Drive%20Replacement.jpg"
+      "https://techsimpld.com/images/Nextcloud%20Proxmox%20Setup%20The%20Best%20Free%20Google%20Drive%20Replacement.jpg",
+      "https://techsimpld.com/images/nextcloud-aio-step-1.png",
+      "https://techsimpld.com/images/nextcloud-aio-step-2.png",
+      "https://techsimpld.com/images/nextcloud-aio-step-3.png"
     ],
     "datePublished": "2026-09-15T08:00:00-04:00",
-    "dateModified": "2026-09-15T08:00:00-04:00",
+    "dateModified": "2026-11-02T10:00:00-05:00",
     "author": {
       "@type": "Person",
       "name": "Tech Simpld",
-      "url": "https://techsimpld.com/about.html"
+      "url": "https://techsimpld.com/about.html",
+      "jobTitle": "MCSA Certified Systems Engineer",
+      "sameAs": ["https://youtube.com/@TechSimpld"]
     },
     "publisher": {
       "@type": "Organization",
@@ -118,6 +123,7 @@
         <li><a href="../about.html" class="nav-link">About</a></li>
         <li><a href="../posts.html" class="nav-link active">Posts</a></li>
         <li><a href="../resources.html" class="nav-link">Resources</a></li>
+        <li><a href="../tools.html" class="nav-link">Tools</a></li>
         <li><a href="../contact.html" class="nav-link">Contact</a></li>
         <li><a href="https://youtube.com/@TechSimpld" target="_blank" class="nav-link">YouTube</a></li>
       </ul>
@@ -185,6 +191,13 @@
 
         <!-- Article Content -->
         <div class="prose">
+          <figure class="article-featured-figure">
+            <picture>
+              <source srcset="../images/Nextcloud%20Proxmox%20Setup%20The%20Best%20Free%20Google%20Drive%20Replacement.webp" type="image/webp">
+              <img src="../images/Nextcloud%20Proxmox%20Setup%20The%20Best%20Free%20Google%20Drive%20Replacement.jpg" alt="Self-Hosted Nextcloud Deployment on Proxmox VE with Cloudflare Zero Trust Tunnel" width="1200" height="675" loading="eager" decoding="async">
+            </picture>
+            <figcaption class="article-featured-caption">Private Nextcloud cloud storage running on Proxmox VE with Redis caching and Cloudflare Zero Trust access.</figcaption>
+          </figure>
           <p>
             Almost everyone reaches a point where they get fed up with commercial cloud storage. Google Drive, Dropbox, and iCloud start out convenient, but before long, you hit the free 15 GB ceiling. Suddenly you are nagged with pop-ups telling you that your emails will stop sending unless you hand over $2.99 or $9.99 a month for extra gigabytes.
           </p>
@@ -326,6 +339,14 @@ volumes:
 
           <pre><code class="language-bash">docker compose up -d</code></pre>
 
+          <figure class="article-featured-figure">
+            <picture>
+              <source srcset="../images/nextcloud-aio-step-1.webp" type="image/webp">
+              <img src="../images/nextcloud-aio-step-1.png" alt="Proxmox VE LXC console showing the Nextcloud All-in-One docker-compose.yml configuration in GNU nano" width="1280" height="640" loading="lazy" decoding="async">
+            </picture>
+            <figcaption class="article-featured-caption">Editing the Nextcloud AIO docker-compose.yml file inside the Proxmox VE unprivileged Ubuntu LXC console.</figcaption>
+          </figure>
+
           <h2>Step 4: Setting Up Cloudflare Tunnel Remote Routing</h2>
           <p>
             Instead of exposing your home IP address and forwarding ports 80 and 443 on your ISP router, we route traffic through a secure Cloudflare Zero Trust Tunnel.
@@ -381,6 +402,14 @@ volumes:
             AIO will now pull the individual images and wire them together. This process typically takes 3 to 5 minutes depending on your internet connection. Once complete, you will be given your initial Nextcloud <code>admin</code> username and password.
           </p>
 
+          <figure class="article-featured-figure">
+            <picture>
+              <source srcset="../images/nextcloud-aio-step-2.webp" type="image/webp">
+              <img src="../images/nextcloud-aio-step-2.png" alt="Nextcloud AIO v13.6.0 master management interface showing running child containers for Apache, PostgreSQL, Redis, and Imaginary" width="1280" height="640" loading="lazy" decoding="async">
+            </picture>
+            <figcaption class="article-featured-caption">Nextcloud AIO master container dashboard showing all child microservices (Apache, PostgreSQL, Redis, and Imaginary) running healthy.</figcaption>
+          </figure>
+
           <h2>Step 6: Syncing Your Phone and Desktop</h2>
           <p>
             Navigate to your public URL (e.g., <code>https://drive.yourdomain.com</code>) and log in. You now have a full, private cloud:
@@ -390,6 +419,14 @@ volumes:
             <li><strong>Mobile App (iOS &amp; Android):</strong> Install the official Nextcloud app, enter your domain, and turn on <em>Auto Upload</em>. Every photo and video you snap on your phone will automatically back up to your home server the moment you connect to Wi-Fi.</li>
             <li><strong>Desktop Client (Windows, macOS, Linux):</strong> Install the desktop sync client. Select the folders you want synchronized locally, and use <em>Virtual Files</em> to save hard drive space on your laptop while keeping your entire archive accessible.</li>
           </ul>
+
+          <figure class="article-featured-figure">
+            <picture>
+              <source srcset="../images/nextcloud-aio-step-3.webp" type="image/webp">
+              <img src="../images/nextcloud-aio-step-3.png" alt="Nextcloud Hub web files dashboard loaded in dark mode over the Cloudflare Tunnel domain" width="1280" height="640" loading="lazy" decoding="async">
+            </picture>
+            <figcaption class="article-featured-caption">Production Nextcloud Hub file manager accessed over HTTPS via the Cloudflare Zero Trust Tunnel.</figcaption>
+          </figure>
 
           <h2>Troubleshooting & Common Pitfalls</h2>
           <p>
@@ -423,7 +460,22 @@ curl -I -k http://127.0.0.1:11000</code></pre>
           <p>
             To continue optimizing your homelab infrastructure, explore our <a href="container-vs-vm-which-should-you-use.html">Container vs. VM Guide</a> for LXC sizing and our <a href="cloudflare-zero-trust-tunnel-guide.html">Cloudflare Zero Trust Tutorial</a> for granular multi-user access rules.
           </p>
-        </div></div>
+        </div>
+
+        <div class="author-bio-box">
+          <div class="author-bio-avatar" aria-hidden="true">TS</div>
+          <div class="author-bio-content">
+            <h3>Written by Tech Simpld</h3>
+            <span class="author-bio-role">MCSA Certified Systems Engineer &bull; 20+ Years Enterprise IT</span>
+            <p>
+              Tech Simpld is maintained by a Systems Engineer managing virtual machines and enterprise storage architecture across five data centers. Every tutorial and configuration on this site is tested first-hand in our physical Proxmox VE home lab and daily Obsidian production vaults.
+            </p>
+            <div class="author-bio-links">
+              <a href="../about.html">Lab Architecture &amp; Mission &rarr;</a>
+              <a href="../tools.html">Interactive Home Lab Web Tools &rarr;</a>
+            </div>
+          </div>
+        </div>
 
       </article>
 
@@ -443,8 +495,8 @@ curl -I -k http://127.0.0.1:11000</code></pre>
           <h4 class="widget-title">Related Tutorials</h4>
           <ul style="list-style: none; padding: 0; margin: 0; font-size: 0.9rem; line-height: 1.8;">
             <li><a href="cloudflare-zero-trust-tunnel-guide.html" style="color: var(--accent-cyan);">Cloudflare Zero Trust Guide</a></li>
-            <li><a href="budget-proxmox-home-lab-setup.html" style="color: var(--text-color);">Budget Proxmox Cluster Tour</a></li>
-            <li><a href="uptime-kuma-server-monitoring-setup.html" style="color: var(--text-color);">Uptime Kuma Monitoring</a></li>
+            <li><a href="budget-proxmox-home-lab-setup.html" style="color: var(--text-primary);">Budget Proxmox Cluster Tour</a></li>
+            <li><a href="uptime-kuma-server-monitoring-setup.html" style="color: var(--text-primary);">Uptime Kuma Monitoring</a></li>
           </ul>
         </div>
       </aside>
@@ -470,6 +522,7 @@ curl -I -k http://127.0.0.1:11000</code></pre>
           <li><a href="../about.html">About</a></li>
           <li><a href="../posts.html">Posts</a></li>
           <li><a href="../resources.html">Resources</a></li>
+          <li><a href="../tools.html">Tools</a></li>
           <li><a href="../contact.html">Contact</a></li>
           <li><a href="https://youtube.com/@TechSimpld" target="_blank">YouTube Channel</a></li>
         </ul>

@@ -53,14 +53,19 @@
     "@type": "Article",
     "headline": "The Honest Truth About Pi-hole & YouTube Ads",
     "image": [
-      "https://techsimpld.com/images/The%20Honest%20Truth%20About%20Pi-hole%20%26%20YouTube%20Ads.png"
+      "https://techsimpld.com/images/The%20Honest%20Truth%20About%20Pi-hole%20%26%20YouTube%20Ads.png",
+      "https://techsimpld.com/images/pihole-youtube-step-1.png",
+      "https://techsimpld.com/images/pihole-youtube-step-2.png",
+      "https://techsimpld.com/images/pihole-youtube-step-3.png"
     ],
     "datePublished": "2026-06-22T08:00:00+08:00",
-    "dateModified": "2026-06-22T08:00:00+08:00",
+    "dateModified": "2026-11-02T10:00:00-05:00",
     "author": {
       "@type": "Person",
       "name": "Tech Simpld",
-      "url": "https://techsimpld.com/about.html"
+      "url": "https://techsimpld.com/about.html",
+      "jobTitle": "MCSA Certified Systems Engineer",
+      "sameAs": ["https://youtube.com/@TechSimpld"]
     },
     "publisher": {
       "@type": "Organization",
@@ -149,6 +154,7 @@
         <li><a href="../about.html" class="nav-link">About</a></li>
         <li><a href="../posts.html" class="nav-link active">Posts</a></li>
         <li><a href="../resources.html" class="nav-link">Resources</a></li>
+        <li><a href="../tools.html" class="nav-link">Tools</a></li>
         <li><a href="../contact.html" class="nav-link">Contact</a></li>
         <li><a href="https://youtube.com/@TechSimpld" target="_blank" class="nav-link">YouTube</a></li>
       </ul>
@@ -217,6 +223,13 @@
 
         <!-- Article Content -->
         <div class="prose">
+          <figure class="article-featured-figure">
+            <picture>
+              <source srcset="../images/The%20Honest%20Truth%20About%20Pi-hole%20%26%20YouTube%20Ads.webp" type="image/webp">
+              <img src="../images/The%20Honest%20Truth%20About%20Pi-hole%20%26%20YouTube%20Ads.png" alt="Why DNS Sinkholes Like Pi-hole Cannot Block Same-Domain YouTube Video Streams" width="1200" height="675" loading="eager" decoding="async">
+            </picture>
+            <figcaption class="article-featured-caption">Network architecture breakdown: how same-origin video CDN streaming bypasses DNS-level ad blockers.</figcaption>
+          </figure>
           <p>
             I have seen this exact scenario play out dozens of times in the home lab community. You spend your weekend finally deploying your brand new Pi-hole setup. You painstakingly configure your router's DHCP settings to point to your new DNS server, you verify the community blocklists are updating correctly, and you sit back and watch your dashboard proudly light up as it successfully blocks thousands of background tracking queries and telemetry requests. You feel like a network administrator god. Your internet feels cleaner.
           </p>
@@ -226,6 +239,14 @@
           <p>
             You probably rushed right back to your computer dashboard, convinced that you configured something incorrectly. You frantically checked your IP addresses, updated Gravity, and flushed your DNS cache. Let me save you the stress right now: You didn't do anything wrong. In this comprehensive guide, I am going to give you the honest, highly technical truth about exactly why Pi-hole fundamentally fails at blocking YouTube ads. We are going to explore why it's not your fault, why the "fixes" on Reddit don't work, and exactly what methods I personally use to successfully bypass these ads on my desktop PC, my living room smart TV, and my mobile phone.
           </p>
+
+          <figure class="article-featured-figure">
+            <picture>
+              <source srcset="../images/pihole-youtube-step-1.webp" type="image/webp">
+              <img src="../images/pihole-youtube-step-1.png" alt="Pi-hole administrative dashboard showing active DNS queries blocked across the local network" width="1280" height="640" loading="lazy" decoding="async">
+            </picture>
+            <figcaption class="article-featured-caption">A healthy Pi-hole instance actively sinkholing background telemetry and third-party ad domains across the local network.</figcaption>
+          </figure>
 
           <h2>Understanding the Architecture: Why DNS Blocking Fails on YouTube</h2>
           <p>
@@ -240,6 +261,14 @@
           <p>
             To your Pi-hole, a pre-roll advertisement for laundry detergent and a 4K resolution tech review video look absolutely identical on a network level. They share the same underlying architecture (usually something like <code>r1---sn-nx5s-cg0l.googlevideo.com</code>). If you attempt to aggressively block YouTube ad domains using complex custom regex rules you found on a forum, you will almost certainly just break the video player entirely. You will click a video, and the loading circle will spin endlessly because you just blocked the content delivery network that serves the actual video. Pure DNS blocking simply cannot, and will never be able to, separate the video stream from the ad stream. They are mathematically entangled.
           </p>
+
+          <figure class="article-featured-figure">
+            <picture>
+              <source srcset="../images/pihole-youtube-step-2.webp" type="image/webp">
+              <img src="../images/pihole-youtube-step-2.png" alt="Architecture diagram comparing third-party website ad servers versus YouTube same-origin video streaming" width="1280" height="640" loading="lazy" decoding="async">
+            </picture>
+            <figcaption class="article-featured-caption">Why DNS sinkholes fail on YouTube: standard websites fetch ads from separate domains, whereas YouTube multiplexes ads and video content from identical googlevideo.com endpoints.</figcaption>
+          </figure>
 
           <h2>Solution 1: Desktop and Laptop Browsers (The Easy, Guaranteed Win)</h2>
           <p>
@@ -278,6 +307,14 @@
           <p>
             So, what is my actual, practical approach? For my iOS devices (iPhone and iPad), I simply deleted the official, ad-infested YouTube app entirely. Instead, I watch YouTube exclusively via the Safari mobile browser with a reliable content blocker (like AdGuard) installed as a Safari extension. It works perfectly, allows background play, and is completely secure. For my living room smart TV, I swallowed my pride, bit the bullet, and paid for a YouTube Premium subscription. It is the only 100% reliable, cross-platform, zero-maintenance solution for smart TVs. Sometimes, your time and security are simply worth more than the subscription fee.
           </p>
+
+          <figure class="article-featured-figure">
+            <picture>
+              <source srcset="../images/pihole-youtube-step-3.webp" type="image/webp">
+              <img src="../images/pihole-youtube-step-3.png" alt="Terminal DNS lookup of googlevideo.com and 3-layer defense architecture combining Pi-hole and uBlock Origin" width="1280" height="640" loading="lazy" decoding="async">
+            </picture>
+            <figcaption class="article-featured-caption">Inspecting shared googlevideo.com CDN endpoints via dig and combining Layer 3 Pi-hole DNS filtering with Layer 7 browser DOM filtering.</figcaption>
+          </figure>
 
           <h2>Troubleshooting & Edge Cases for Desktop Users</h2>
           <p>
@@ -321,7 +358,22 @@
             <li><a href="https://ublockorigin.com/" target="_blank" rel="noopener noreferrer">uBlock Origin Official Project Homepage</a></li>
             <li><a href="https://discourse.pi-hole.net/" target="_blank" rel="noopener noreferrer">Pi-hole Official Community Discussion Forums</a></li>
           </ul>
-        </div></div>
+        </div>
+
+        <div class="author-bio-box">
+          <div class="author-bio-avatar" aria-hidden="true">TS</div>
+          <div class="author-bio-content">
+            <h3>Written by Tech Simpld</h3>
+            <span class="author-bio-role">MCSA Certified Systems Engineer &bull; 20+ Years Enterprise IT</span>
+            <p>
+              Tech Simpld is maintained by a Systems Engineer managing virtual machines and enterprise storage architecture across five data centers. Every tutorial and configuration on this site is tested first-hand in our physical Proxmox VE home lab and daily Obsidian production vaults.
+            </p>
+            <div class="author-bio-links">
+              <a href="../about.html">Lab Architecture &amp; Mission &rarr;</a>
+              <a href="../tools.html">Interactive Home Lab Web Tools &rarr;</a>
+            </div>
+          </div>
+        </div>
 
       </article>
 
@@ -340,6 +392,15 @@
           </a>
         </div>
 
+        <div class="sidebar-widget">
+          <h4 class="widget-title">Related Tutorials</h4>
+          <ul style="list-style: none; padding: 0; margin: 0; font-size: 0.9rem; line-height: 1.8;">
+            <li><a href="pihole-installation-guide.html" style="color: var(--accent-cyan);">Pi-hole Proxmox LXC Guide</a></li>
+            <li><a href="pihole-smart-blocking-custom-lists.html" style="color: var(--text-primary);">Pi-hole Smart Blocking &amp; Lists</a></li>
+            <li><a href="adguard-home-1-0-beta-setup-guide.html" style="color: var(--text-primary);">AdGuard Home 1.0 Setup Guide</a></li>
+            <li><a href="../tools.html" style="color: var(--accent-yellow, #facc15);">Interactive Home Lab Web Tools</a></li>
+          </ul>
+        </div>
       </aside>
 
     </div>
@@ -364,6 +425,7 @@
           <li><a href="../about.html">About</a></li>
           <li><a href="../posts.html">Posts</a></li>
           <li><a href="../resources.html">Resources</a></li>
+          <li><a href="../tools.html">Tools</a></li>
           <li><a href="../contact.html">Contact</a></li>
           <li><a href="https://youtube.com/@TechSimpld" target="_blank">YouTube Channel</a></li>
         </ul>

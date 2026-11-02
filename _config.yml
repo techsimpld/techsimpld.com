@@ -1,2 +1,10 @@
 exclude:
   - obsidian-starter-vault/
+  - scripts/
+  - anti-slop/
+  - _templates/
+  - .agents/
+  - AGENTS.md
+  - ADSENSE_AUDIT_BACKLOG.md
+  - brand.md
+  - README.md

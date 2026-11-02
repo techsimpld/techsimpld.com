@@ -56,14 +56,19 @@
     "@type": "Article",
     "headline": "Local LLM vs Cloud AI: Ollama vs Claude Compared Side-by-Side",
     "image": [
-      "https://techsimpld.com/images/local-llm-vs-cloud-ai.png"
+      "https://techsimpld.com/images/local-llm-vs-cloud-ai.png",
+      "https://techsimpld.com/images/local-vs-cloud-llm-step-1.png",
+      "https://techsimpld.com/images/local-vs-cloud-llm-step-2.png",
+      "https://techsimpld.com/images/local-vs-cloud-llm-step-3.png"
     ],
     "datePublished": "2026-09-28T10:00:00+00:00",
-    "dateModified": "2026-09-28T10:00:00+00:00",
+    "dateModified": "2026-11-02T10:00:00-05:00",
     "author": {
       "@type": "Person",
       "name": "Tech Simpld",
-      "url": "https://techsimpld.com/about.html"
+      "url": "https://techsimpld.com/about.html",
+      "jobTitle": "MCSA Certified Systems Engineer",
+      "sameAs": ["https://youtube.com/@TechSimpld"]
     },
     "publisher": {
       "@type": "Organization",
@@ -118,6 +123,7 @@
         <li><a href="../about.html" class="nav-link">About</a></li>
         <li><a href="../posts.html" class="nav-link active">Posts</a></li>
         <li><a href="../resources.html" class="nav-link">Resources</a></li>
+        <li><a href="../tools.html" class="nav-link">Tools</a></li>
         <li><a href="../contact.html" class="nav-link">Contact</a></li>
         <li><a href="https://youtube.com/@TechSimpld" target="_blank" class="nav-link">YouTube</a></li>
       </ul>
@@ -186,6 +192,13 @@
 
         <!-- Article Content -->
         <div class="prose">
+          <figure class="article-featured-figure">
+            <picture>
+              <source srcset="../images/local-llm-vs-cloud-ai.webp" type="image/webp">
+              <img src="../images/local-llm-vs-cloud-ai.png" alt="Local Ollama LLM Hardware vs Cloud AI APIs Performance and Privacy Comparison" width="1200" height="675" loading="eager" decoding="async">
+            </picture>
+            <figcaption class="article-featured-caption">Comparing self-hosted Ollama local LLM inference against cloud frontier models for privacy, latency, and token cost.</figcaption>
+          </figure>
           <p>
             Almost everyone uses artificial intelligence tools today, but when technical discussions shift to large language model tokens, high-dimensional vector embeddings, and running open-weight local AI, it is easy to get lost in industry jargon.
           </p>
@@ -223,6 +236,14 @@
             By sliding a window across text that overlaps adjacent chunks (e.g., preserving 3 to 5 words or tokens between slices), boundaries stay intact. Ideas flow smoothly across evaluation windows, allowing attention heads to compute semantic connections across the entire document.
           </p>
 
+          <figure class="article-featured-figure">
+            <picture>
+              <source srcset="../images/local-vs-cloud-llm-step-1.webp" type="image/webp">
+              <img src="../images/local-vs-cloud-llm-step-1.png" alt="ChunkViz interactive visualization showing character splitting, chunk size, and chunk overlap windows" width="1280" height="640" loading="lazy" decoding="async">
+            </picture>
+            <figcaption class="article-featured-caption">Visualizing how sliding chunk overlap preserves semantic context across text boundaries before vector embedding.</figcaption>
+          </figure>
+
           <h2>From Words to Vector Space: Tokenization & Embedding Coordinates</h2>
           <p>
             Computers cannot perform matrix multiplication on English letters. Before a neural network touches your text, the tokenizer chops the input into tokens and maps each token to an integer token ID from a fixed dictionary.
@@ -254,6 +275,14 @@
           <p>
             The model rolls the dice across those top probability candidates, outputs that single token, appends it to the prompt buffer, and recalculates the entire probability distribution for the subsequent token. That is an LLM: billions of floating-point calculations predicting the next slice of text, one token at a time.
           </p>
+
+          <figure class="article-featured-figure">
+            <picture>
+              <source srcset="../images/local-vs-cloud-llm-step-2.webp" type="image/webp">
+              <img src="../images/local-vs-cloud-llm-step-2.png" alt="Tokenizer interface mapping English words to numerical token IDs for neural network processing" width="1280" height="640" loading="lazy" decoding="async">
+            </picture>
+            <figcaption class="article-featured-caption">Mapping raw text strings into discrete integer token IDs before projecting them into high-dimensional vector coordinate space.</figcaption>
+          </figure>
 
           <h2>Two Architectural Philosophies: Cloud vs. Local</h2>
           <p>
@@ -297,6 +326,14 @@
             <li><strong>Cloud Model (Claude):</strong> Responded within seconds. It parsed the thousands of lines of logs, pinpointed a database connection pool leak on port 5432, explained how the thread pool starved as a consequence, and provided a working connection-timeout configuration block.</li>
             <li><strong>Local Model (Ollama):</strong> Halted with an error: <em>Context window size exceeded</em>. The combined size of the raw system dump and prompt exceeded the physical VRAM and KV-cache allocated to the local model, causing inference to terminate before generating a single token.</li>
           </ol>
+
+          <figure class="article-featured-figure">
+            <picture>
+              <source srcset="../images/local-vs-cloud-llm-step-3.webp" type="image/webp">
+              <img src="../images/local-vs-cloud-llm-step-3.png" alt="Side-by-side benchmark showing local Ollama hitting context limits versus Claude diagnosing a crash log" width="1280" height="640" loading="lazy" decoding="async">
+            </picture>
+            <figcaption class="article-featured-caption">Side-by-side crash log stress test: local quantized inference hitting a KV-cache context ceiling while Claude isolates the root configuration error.</figcaption>
+          </figure>
 
           <h2>Analyzing the Technical Bottleneck: VRAM and the KV Cache</h2>
           <p>
@@ -346,6 +383,21 @@
           </ul>
         </div>
 
+        <div class="author-bio-box">
+          <div class="author-bio-avatar" aria-hidden="true">TS</div>
+          <div class="author-bio-content">
+            <h3>Written by Tech Simpld</h3>
+            <span class="author-bio-role">MCSA Certified Systems Engineer &bull; 20+ Years Enterprise IT</span>
+            <p>
+              Tech Simpld is maintained by a Systems Engineer managing virtual machines and enterprise storage architecture across five data centers. Every tutorial and configuration on this site is tested first-hand in our physical Proxmox VE home lab and daily Obsidian production vaults.
+            </p>
+            <div class="author-bio-links">
+              <a href="../about.html">Lab Architecture &amp; Mission &rarr;</a>
+              <a href="../tools.html">Interactive Home Lab Web Tools &rarr;</a>
+            </div>
+          </div>
+        </div>
+
       </article>
 
       <!-- Sidebar Column -->
@@ -359,6 +411,15 @@
           <a href="https://youtube.com/@TechSimpld" target="_blank" id="sidebarYoutubeBtn" class="btn btn-outline btn-sm" style="width: 100%;">
             Visit YouTube Channel
           </a>
+        </div>
+        <div class="sidebar-widget">
+          <h4 class="widget-title">Related Tutorials</h4>
+          <ul style="list-style: none; padding: 0; margin: 0; font-size: 0.9rem; line-height: 1.8;">
+            <li><a href="claude-in-obsidian-copilot-guide.html" style="color: var(--accent-cyan);">Claude in Obsidian Copilot Setup</a></li>
+            <li><a href="custom-youtube-creator-tools-dashboard.html" style="color: var(--text-primary);">Self-Hosted Creator Dashboard</a></li>
+            <li><a href="budget-proxmox-home-lab-setup.html" style="color: var(--text-primary);">Budget Proxmox Home Lab Setup</a></li>
+            <li><a href="../tools.html" style="color: var(--accent-yellow, #facc15);">Interactive Home Lab Web Tools</a></li>
+          </ul>
         </div>
       </aside>
 
@@ -384,6 +445,7 @@
           <li><a href="../about.html">About</a></li>
           <li><a href="../posts.html">Posts</a></li>
           <li><a href="../resources.html">Resources</a></li>
+          <li><a href="../tools.html">Tools</a></li>
           <li><a href="../contact.html">Contact</a></li>
           <li><a href="https://youtube.com/@TechSimpld" target="_blank">YouTube Channel</a></li>
         </ul>

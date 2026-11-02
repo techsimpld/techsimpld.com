@@ -27,9 +27,9 @@
 
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Obsidian & Productivity Posts | Tech Simpld</title>
+  <title>Home Lab, Proxmox, Docker &amp; Obsidian Tutorials | Tech Simpld</title>
   <meta name="description"
-    content="Free, step-by-step, no-fluff guides for Obsidian note-taking, second brain setups, and workspace customization.">
+    content="Step-by-step technical tutorials for Proxmox home labs, Docker containers, network DNS security, and Obsidian note-taking workflows.">
   <link rel="canonical" href="https://techsimpld.com/posts.html">
   <meta name="robots" content="index, follow">
 
@@ -38,16 +38,32 @@
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="Tech Simpld">
   <meta property="og:url" content="https://techsimpld.com/posts.html">
-  <meta property="og:title" content="Obsidian & Productivity Posts | Tech Simpld">
-  <meta property="og:description" content="Step-by-step guides for freemium SaaS and productivity setups.">
+  <meta property="og:title" content="Home Lab, Proxmox, Docker &amp; Obsidian Tutorials | Tech Simpld">
+  <meta property="og:description" content="Step-by-step technical tutorials for Proxmox home labs, Docker containers, network DNS security, and Obsidian note-taking workflows.">
   <meta property="og:image" content="https://techsimpld.com/images/obsidian-vault.png">
 
   <!-- Twitter Card -->
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="Obsidian & Productivity Posts | Tech Simpld">
+  <meta name="twitter:title" content="Home Lab, Proxmox, Docker &amp; Obsidian Tutorials | Tech Simpld">
   <meta name="twitter:description"
-    content="Free, step-by-step, no-fluff guides for Obsidian note-taking, second brain setups, and workspace customization.">
+    content="Step-by-step technical tutorials for Proxmox home labs, Docker containers, network DNS security, and Obsidian note-taking workflows.">
   <meta name="twitter:image" content="https://techsimpld.com/images/obsidian-vault.png">
+
+  <!-- Structured Data (JSON-LD) -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "CollectionPage",
+    "name": "Home Lab, Proxmox, Docker & Obsidian Tutorials",
+    "url": "https://techsimpld.com/posts.html",
+    "description": "Step-by-step technical tutorials for Proxmox home labs, Docker containers, network DNS security, and Obsidian note-taking workflows.",
+    "isPartOf": {
+      "@type": "WebSite",
+      "name": "Tech Simpld",
+      "url": "https://techsimpld.com/"
+    }
+  }
+  </script>
 
   <!-- DNS Prefetch & Preconnect for Speed -->
   <link rel="dns-prefetch" href="https://www.googletagmanager.com">
@@ -88,6 +104,7 @@
         <li><a href="about.html" class="nav-link">About</a></li>
         <li><a href="posts.html" class="nav-link active">Posts</a></li>
         <li><a href="resources.html" class="nav-link">Resources</a></li>
+        <li><a href="tools.html" class="nav-link">Tools</a></li>
         <li><a href="contact.html" class="nav-link">Contact</a></li>
         <li><a href="https://youtube.com/@TechSimpld" target="_blank" class="nav-link">YouTube</a></li>
       </ul>
@@ -124,12 +141,12 @@
         <circle cx="11" cy="11" r="8"></circle>
         <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
       </svg>
-      <input type="search" id="postsSearch" class="posts-search-input" placeholder="Search 23 tutorials by keyword (e.g. Proxmox, CouchDB, Dataview)..." autocomplete="off" aria-label="Search tutorials">
+      <input type="search" id="postsSearch" class="posts-search-input" placeholder="Search 25 tutorials by keyword (e.g. Proxmox, CouchDB, Dataview)..." autocomplete="off" aria-label="Search tutorials">
     </div>
 
     <!-- Category Filter Controls -->
     <div class="category-filters">
-      <button class="filter-btn active" data-filter="all">All Topics (23)</button>
+      <button class="filter-btn active" data-filter="all">All Topics (25)</button>
       <button class="filter-btn" data-filter="obsidian">Obsidian &amp; PKM</button>
       <button class="filter-btn" data-filter="proxmox">Proxmox &amp; Home Lab</button>
       <button class="filter-btn" data-filter="docker">Docker &amp; Containers</button>
@@ -137,6 +154,62 @@
     </div>
 
       <div class="tutorials-grid">
+
+        <!-- Post 25: AdGuard Home 1.0 Beta Setup Guide -->
+        <article class="card" data-category="proxmox networking">
+          <div class="card-image-wrapper">
+            <a href="posts/adguard-home-1-0-beta-setup-guide.html">
+              <picture>
+                <source srcset="images/Setup%20Adguard.webp" type="image/webp">
+                <img class="card-image" src="images/Setup%20Adguard.png" alt="AdGuard Home 1.0 Beta Ubuntu LXC Setup Guide Preview" loading="lazy" decoding="async">
+              </picture>
+            </a>
+          </div>
+          <div class="card-content">
+            <div class="card-meta">
+              <span class="card-category" style="color: var(--accent-cyan);">DNS &amp; Security</span>
+              <span>-</span>
+              <span style="color: var(--accent-cyan); font-weight: 600;">Available</span>
+            </div>
+            <h3 class="card-title"><a href="posts/adguard-home-1-0-beta-setup-guide.html">Setting Up AdGuard Home 1.0 Beta in an Ubuntu LXC Container</a></h3>
+            <p class="card-excerpt">
+              Deploy the redesigned AdGuard Home 1.0 Beta with zero Docker overhead. Fix Ubuntu port 53 stub conflicts, configure custom adlists, and explore 1-click service blocking.
+            </p>
+            <div class="card-footer"
+              style="border-top: 1px solid var(--border-color); padding-top: 1rem; margin-top: auto; display: flex; justify-content: space-between; align-items: center; width: 100%;">
+              <span class="card-date">November 2026</span>
+              <a href="posts/adguard-home-1-0-beta-setup-guide.html" id="readPostBtn-adguard-1-0-beta" class="btn btn-outline btn-sm">Read Post</a>
+            </div>
+          </div>
+        </article>
+
+        <!-- Post 24: Obsidian Flashcards True Recall FSRS -->
+        <article class="card" data-category="obsidian">
+          <div class="card-image-wrapper">
+            <a href="posts/obsidian-flashcards-true-recall-fsrs.html">
+              <picture>
+                <source srcset="images/Obsidian%20Flashcards%20Made%20Simple.webp" type="image/webp">
+                <img class="card-image" src="images/Obsidian%20Flashcards%20Made%20Simple.png" alt="Obsidian Flashcards Made Simple True Recall Preview" loading="lazy" decoding="async">
+              </picture>
+            </a>
+          </div>
+          <div class="card-content">
+            <div class="card-meta">
+              <span class="card-category" style="color: var(--accent-purple);">Obsidian &amp; PKM</span>
+              <span>-</span>
+              <span style="color: var(--accent-cyan); font-weight: 600;">Available</span>
+            </div>
+            <h3 class="card-title"><a href="posts/obsidian-flashcards-true-recall-fsrs.html">Obsidian Flashcards Made Simple: Active Recall with True Recall &amp; FSRS</a></h3>
+            <p class="card-excerpt">
+              Turn your Obsidian vault notes into flashcards without leaving the app. Master the modern FSRS algorithm vs SM-2, auto-generate cards with local AI, and track study streaks.
+            </p>
+            <div class="card-footer"
+              style="border-top: 1px solid var(--border-color); padding-top: 1rem; margin-top: auto; display: flex; justify-content: space-between; align-items: center; width: 100%;">
+              <span class="card-date">November 2026</span>
+              <a href="posts/obsidian-flashcards-true-recall-fsrs.html" id="readPostBtn-obsidian-true-recall" class="btn btn-outline btn-sm">Read Post</a>
+            </div>
+          </div>
+        </article>
 
         <!-- Post 23: Container vs VM -->
         <article class="card" data-category="proxmox docker">
@@ -807,6 +880,7 @@
           <li><a href="about.html">About</a></li>
           <li><a href="posts.html">Posts</a></li>
           <li><a href="resources.html">Resources</a></li>
+          <li><a href="tools.html">Tools</a></li>
           <li><a href="contact.html">Contact</a></li>
           <li><a href="https://youtube.com/@TechSimpld" target="_blank">YouTube Channel</a></li>
         </ul>

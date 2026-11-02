@@ -56,14 +56,19 @@
     "@type": "Article",
     "headline": "Manage Time and Tasks in Obsidian: GTD Tasks & Kalendae Guide",
     "image": [
-      "https://techsimpld.com/images/obsidian-manage-tasks-calendar-gtd.png"
+      "https://techsimpld.com/images/obsidian-manage-tasks-calendar-gtd.png",
+      "https://techsimpld.com/images/obsidian-gtd-step-1.png",
+      "https://techsimpld.com/images/obsidian-gtd-step-2.png",
+      "https://techsimpld.com/images/obsidian-gtd-step-3.png"
     ],
     "datePublished": "2026-09-25T10:00:00+00:00",
-    "dateModified": "2026-09-25T10:00:00+00:00",
+    "dateModified": "2026-11-02T10:00:00-05:00",
     "author": {
       "@type": "Person",
       "name": "Tech Simpld",
-      "url": "https://techsimpld.com/about.html"
+      "url": "https://techsimpld.com/about.html",
+      "jobTitle": "MCSA Certified Systems Engineer",
+      "sameAs": ["https://youtube.com/@TechSimpld"]
     },
     "publisher": {
       "@type": "Organization",
@@ -118,6 +123,7 @@
         <li><a href="../about.html" class="nav-link">About</a></li>
         <li><a href="../posts.html" class="nav-link active">Posts</a></li>
         <li><a href="../resources.html" class="nav-link">Resources</a></li>
+        <li><a href="../tools.html" class="nav-link">Tools</a></li>
         <li><a href="../contact.html" class="nav-link">Contact</a></li>
         <li><a href="https://youtube.com/@TechSimpld" target="_blank" class="nav-link">YouTube</a></li>
       </ul>
@@ -186,6 +192,13 @@
 
         <!-- Article Content -->
         <div class="prose">
+          <figure class="article-featured-figure">
+            <picture>
+              <source srcset="../images/obsidian-manage-tasks-calendar-gtd.webp" type="image/webp">
+              <img src="../images/obsidian-manage-tasks-calendar-gtd.png" alt="Obsidian GTD Task Management, Daily Notes, and Calendar Workflow" width="1200" height="675" loading="eager" decoding="async">
+            </picture>
+            <figcaption class="article-featured-caption">Automated Getting Things Done (GTD) task queries, recurring deadlines, and daily note rollups inside Obsidian.</figcaption>
+          </figure>
           <p>
             Obsidian is an unbeatable tool for long-form note-taking and knowledge storage, but tracking actionable tasks across dozens of separate project files is notoriously messy. As your vault expands past hundreds of documents, actionable checkboxes (<code>- [ ]</code>) scatter across meeting summaries, server migration plans, and personal logs.
           </p>
@@ -272,6 +285,14 @@ flowchart TD
             Notice that the plugin preserves nested sub-tasks. If an overarching task has indented checklists beneath it, the sidebar maintains that parent-child hierarchy, allowing you to track multi-step procedures without clutter.
           </p>
 
+          <figure class="article-featured-figure">
+            <picture>
+              <source srcset="../images/obsidian-gtd-step-1.webp" type="image/webp">
+              <img src="../images/obsidian-gtd-step-1.png" alt="Obsidian note with GTD tags synchronized to the right-hand GTD Tasks temporal sidebar" width="1280" height="640" loading="lazy" decoding="async">
+            </picture>
+            <figcaption class="article-featured-caption">The GTD Tasks sidebar automatically indexing vault-wide checkboxes into Today, This Week, Next Week, and Someday buckets via native Markdown tags.</figcaption>
+          </figure>
+
           <h2>Direct Navigation & Instant Highlighting</h2>
           <p>
             When scanning your sidebar with 50+ pending tasks across different folders, finding where a task originally lives can be difficult. GTD Tasks solves this with deep linking:
@@ -279,6 +300,14 @@ flowchart TD
           <p>
             Clicking any task in the sidebar immediately opens the parent note, scrolls directly to the relevant line, and applies a momentary visual highlight so you immediately know the exact context of the action item.
           </p>
+
+          <figure class="article-featured-figure">
+            <picture>
+              <source srcset="../images/obsidian-gtd-step-2.webp" type="image/webp">
+              <img src="../images/obsidian-gtd-step-2.png" alt="Obsidian production security-hardening checklist with nested sub-tasks tracked in the GTD sidebar" width="1280" height="640" loading="lazy" decoding="async">
+            </picture>
+            <figcaption class="article-featured-caption">Managing a multi-step infrastructure security checklist with preserved parent-child hierarchy and deep-linked sidebar navigation.</figcaption>
+          </figure>
 
           <h2>Completion Celebrations</h2>
           <p>
@@ -306,6 +335,14 @@ flowchart TD
           <p>
             Selecting an option instantly formats and pastes the chosen date into your note.
           </p>
+
+          <figure class="article-featured-figure">
+            <picture>
+              <source srcset="../images/obsidian-gtd-step-3.webp" type="image/webp">
+              <img src="../images/obsidian-gtd-step-3.png" alt="Kalendae and GTD Tasks plugin settings inside Obsidian configuring date triggers and calendar pickers" width="1280" height="640" loading="lazy" decoding="async">
+            </picture>
+            <figcaption class="article-featured-caption">Configuring Kalendae's inline date trigger symbol, custom date format strings, and interactive hover calendar preferences.</figcaption>
+          </figure>
 
           <h2>Hover Date Picker & Dynamic Re-scheduling</h2>
           <p>
@@ -389,6 +426,21 @@ SORT file.mtime DESC
           </ul>
         </div>
 
+        <div class="author-bio-box">
+          <div class="author-bio-avatar" aria-hidden="true">TS</div>
+          <div class="author-bio-content">
+            <h3>Written by Tech Simpld</h3>
+            <span class="author-bio-role">MCSA Certified Systems Engineer &bull; 20+ Years Enterprise IT</span>
+            <p>
+              Tech Simpld is maintained by a Systems Engineer managing virtual machines and enterprise storage architecture across five data centers. Every tutorial and configuration on this site is tested first-hand in our physical Proxmox VE home lab and daily Obsidian production vaults.
+            </p>
+            <div class="author-bio-links">
+              <a href="../about.html">Lab Architecture &amp; Mission &rarr;</a>
+              <a href="../tools.html">Interactive Home Lab Web Tools &rarr;</a>
+            </div>
+          </div>
+        </div>
+
       </article>
 
       <!-- Sidebar Column -->
@@ -402,6 +454,15 @@ SORT file.mtime DESC
           <a href="https://youtube.com/@TechSimpld" target="_blank" id="sidebarYoutubeBtn" class="btn btn-outline btn-sm" style="width: 100%;">
             Visit YouTube Channel
           </a>
+        </div>
+        <div class="sidebar-widget">
+          <h4 class="widget-title">Related Tutorials</h4>
+          <ul style="list-style: none; padding: 0; margin: 0; font-size: 0.9rem; line-height: 1.8;">
+            <li><a href="obsidian-second-brain-setup.html" style="color: var(--accent-cyan);">Obsidian Second Brain Setup</a></li>
+            <li><a href="obsidian-plugins-i-use-2026.html" style="color: var(--text-primary);">3 Core Obsidian Plugins</a></li>
+            <li><a href="3-more-obsidian-plugins-2026.html" style="color: var(--text-primary);">3 More Obsidian Plugins</a></li>
+            <li><a href="../tools.html" style="color: var(--accent-yellow, #facc15);">Interactive Home Lab Web Tools</a></li>
+          </ul>
         </div>
       </aside>
 
@@ -427,6 +488,7 @@ SORT file.mtime DESC
           <li><a href="../about.html">About</a></li>
           <li><a href="../posts.html">Posts</a></li>
           <li><a href="../resources.html">Resources</a></li>
+          <li><a href="../tools.html">Tools</a></li>
           <li><a href="../contact.html">Contact</a></li>
           <li><a href="https://youtube.com/@TechSimpld" target="_blank">YouTube Channel</a></li>
         </ul>

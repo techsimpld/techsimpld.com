@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -56,14 +56,19 @@
     "@type": "Article",
     "headline": "Infrastructure as Code Explained in Under 10 Minutes: Home Lab Guide",
     "image": [
-      "https://techsimpld.com/images/Infrastructure%20as%20Code%20Explained%20in%20under%2010%20Minutes%20(Home%20Lab%20Guide).jpg"
+      "https://techsimpld.com/images/Infrastructure%20as%20Code%20Explained%20in%20under%2010%20Minutes%20(Home%20Lab%20Guide).jpg",
+      "https://techsimpld.com/images/terraform-iac-step-1.png",
+      "https://techsimpld.com/images/terraform-iac-step-2.png",
+      "https://techsimpld.com/images/terraform-iac-step-3.png"
     ],
     "datePublished": "2026-09-15T08:00:00-04:00",
-    "dateModified": "2026-09-15T08:00:00-04:00",
+    "dateModified": "2026-11-02T10:00:00-05:00",
     "author": {
       "@type": "Person",
       "name": "Tech Simpld",
-      "url": "https://techsimpld.com/about.html"
+      "url": "https://techsimpld.com/about.html",
+      "jobTitle": "MCSA Certified Systems Engineer",
+      "sameAs": ["https://youtube.com/@TechSimpld"]
     },
     "publisher": {
       "@type": "Organization",
@@ -118,6 +123,7 @@
         <li><a href="../about.html" class="nav-link">About</a></li>
         <li><a href="../posts.html" class="nav-link active">Posts</a></li>
         <li><a href="../resources.html" class="nav-link">Resources</a></li>
+        <li><a href="../tools.html" class="nav-link">Tools</a></li>
         <li><a href="../contact.html" class="nav-link">Contact</a></li>
         <li><a href="https://youtube.com/@TechSimpld" target="_blank" class="nav-link">YouTube</a></li>
       </ul>
@@ -185,6 +191,13 @@
 
         <!-- Article Content -->
         <div class="prose">
+          <figure class="article-featured-figure">
+            <picture>
+              <source srcset="../images/Infrastructure%20as%20Code%20Explained%20in%20under%2010%20Minutes%20%28Home%20Lab%20Guide%29.webp" type="image/webp">
+              <img src="../images/Infrastructure%20as%20Code%20Explained%20in%20under%2010%20Minutes%20%28Home%20Lab%20Guide%29.jpg" alt="Terraform Infrastructure as Code Automated Provisioning for Proxmox VE" width="1200" height="675" loading="eager" decoding="async">
+            </picture>
+            <figcaption class="article-featured-caption">Declarative Infrastructure as Code (IaC) workflow provisioning Proxmox VE containers and VMs with Terraform.</figcaption>
+          </figure>
           <p>
             If you spend any time browsing self-hosted forums, Reddit, or YouTube tech channels, you have probably heard people tossing around terms like "Infrastructure as Code," "Terraform," and "declarative environments." It often sounds like enterprise-level jargon reserved for Fortune 500 cloud engineers who manage thousands of AWS servers.
           </p>
@@ -305,6 +318,14 @@
             This file maps the resources in your code to real IDs on your hardware. When you modify your configuration later (like bumping RAM from 4 GB to 8 GB), Terraform compares your code against the state file and the live server to figure out the exact minimal change required.
           </p>
 
+          <figure class="article-featured-figure">
+            <picture>
+              <source srcset="../images/terraform-iac-step-1.webp" type="image/webp">
+              <img src="../images/terraform-iac-step-1.png" alt="VS Code editor showing provider.tf configuration for the Proxmox Terraform provider and API token endpoint" width="1280" height="640" loading="lazy" decoding="async">
+            </picture>
+            <figcaption class="article-featured-caption">Configuring the Proxmox Terraform provider block and API endpoint credentials inside provider.tf.</figcaption>
+          </figure>
+
           <h2>A Real Home Lab Example: What Terraform Code Looks Like</h2>
           <p>
             Let's look at a practical, real-world example. Here is what a simple Proxmox configuration looks like in Terraform using HashiCorp Configuration Language (HCL):
@@ -388,6 +409,14 @@ resource "proxmox_virtual_environment_container" "monitoring_lxc" {
             Run this command once when setting up a new project directory. Terraform inspects your configuration, downloads the necessary provider plugins, and prepares your local working environment.
           </p>
 
+          <figure class="article-featured-figure">
+            <picture>
+              <source srcset="../images/terraform-iac-step-2.webp" type="image/webp">
+              <img src="../images/terraform-iac-step-2.png" alt="Terminal output of terraform init downloading and verifying the Proxmox provider plugin in VS Code" width="1280" height="640" loading="lazy" decoding="async">
+            </picture>
+            <figcaption class="article-featured-caption">Running terraform init in the integrated PowerShell terminal to initialize the backend and install the Proxmox provider plugin.</figcaption>
+          </figure>
+
           <h3>2. <code>terraform plan</code></h3>
           <p>
             This is your safety net. Terraform inspects your current Proxmox setup, compares it against your code, and gives you an exact preview of what it will do:
@@ -401,6 +430,14 @@ resource "proxmox_virtual_environment_container" "monitoring_lxc" {
           <p>
             Once you have reviewed the plan, running <code>terraform apply</code> instructs Terraform to execute the changes. It communicates with your Proxmox API, provisions the disks, downloads the template, and boots the container. Within seconds, your new container is online and pingable.
           </p>
+
+          <figure class="article-featured-figure">
+            <picture>
+              <source srcset="../images/terraform-iac-step-3.webp" type="image/webp">
+              <img src="../images/terraform-iac-step-3.png" alt="Terminal output of terraform apply completing creation of proxmox_lxc.demo_container on node proxmox01 in 2 seconds" width="1280" height="640" loading="lazy" decoding="async">
+            </picture>
+            <figcaption class="article-featured-caption">Executing terraform apply to provision an Alpine Linux LXC container (VMID 200) on node proxmox01 in 2 seconds.</figcaption>
+          </figure>
 
           <h3>4. <code>terraform destroy</code></h3>
           <p>
@@ -438,7 +475,22 @@ resource "proxmox_virtual_environment_container" "monitoring_lxc" {
           <p>
             Infrastructure as Code isn't just an enterprise corporate buzzword, it is the cleanest, most reliable way to run a personal home lab. It turns server deployments into repeatable code, gives you built-in disaster recovery, and frees you from the endless cycle of manual web UI clicking.
           </p>
-        </div></div>
+        </div>
+
+        <div class="author-bio-box">
+          <div class="author-bio-avatar" aria-hidden="true">TS</div>
+          <div class="author-bio-content">
+            <h3>Written by Tech Simpld</h3>
+            <span class="author-bio-role">MCSA Certified Systems Engineer &bull; 20+ Years Enterprise IT</span>
+            <p>
+              Tech Simpld is maintained by a Systems Engineer managing virtual machines and enterprise storage architecture across five data centers. Every tutorial and configuration on this site is tested first-hand in our physical Proxmox VE home lab and daily Obsidian production vaults.
+            </p>
+            <div class="author-bio-links">
+              <a href="../about.html">Lab Architecture &amp; Mission &rarr;</a>
+              <a href="../tools.html">Interactive Home Lab Web Tools &rarr;</a>
+            </div>
+          </div>
+        </div>
 
       </article>
 
@@ -458,8 +510,8 @@ resource "proxmox_virtual_environment_container" "monitoring_lxc" {
           <h4 class="widget-title">Related Tutorials</h4>
           <ul style="list-style: none; padding: 0; margin: 0; font-size: 0.9rem; line-height: 1.8;">
             <li><a href="budget-proxmox-home-lab-setup.html" style="color: var(--accent-cyan);">Budget Proxmox Cluster Tour</a></li>
-            <li><a href="docker-vs-podman.html" style="color: var(--text-color);">Docker vs Podman Guide</a></li>
-            <li><a href="gotify-self-hosted-push-notifications.html" style="color: var(--text-color);">Gotify Alerting Setup</a></li>
+            <li><a href="docker-vs-podman.html" style="color: var(--text-primary);">Docker vs Podman Guide</a></li>
+            <li><a href="gotify-self-hosted-push-notifications.html" style="color: var(--text-primary);">Gotify Alerting Setup</a></li>
           </ul>
         </div>
       </aside>
@@ -485,6 +537,7 @@ resource "proxmox_virtual_environment_container" "monitoring_lxc" {
           <li><a href="../about.html">About</a></li>
           <li><a href="../posts.html">Posts</a></li>
           <li><a href="../resources.html">Resources</a></li>
+          <li><a href="../tools.html">Tools</a></li>
           <li><a href="../contact.html">Contact</a></li>
           <li><a href="https://youtube.com/@TechSimpld" target="_blank">YouTube Channel</a></li>
         </ul>

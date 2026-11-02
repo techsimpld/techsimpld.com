@@ -337,14 +337,29 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // 5. Cookie Consent Banner Injection & Logic
-  const checkCookieConsent = () => {
-    const hasConsented = localStorage.getItem('cookie_consent');
-    if (hasConsented !== null) return;
+  const applyStoredConsent = () => {
+    const consentValue = localStorage.getItem('cookie_consent');
+    if (consentValue === null || typeof window.gtag !== 'function') return;
+    const status = consentValue === 'true' ? 'granted' : 'denied';
+    window.gtag('consent', 'update', {
+      'ad_storage': status,
+      'analytics_storage': status,
+      'ad_user_data': status,
+      'ad_personalization': status
+    });
+  };
 
-    // Create banner
+  const showCookieBanner = (forceShow = false) => {
+    const hasConsented = localStorage.getItem('cookie_consent');
+    if (!forceShow && hasConsented !== null) return;
+
+    const existingBanner = document.querySelector('.cookie-banner');
+    if (existingBanner) existingBanner.remove();
+
     const banner = document.createElement('div');
     banner.className = 'cookie-banner';
+    banner.setAttribute('role', 'dialog');
+    banner.setAttribute('aria-label', 'Cookie consent preferences');
     banner.innerHTML = `
       <div class="cookie-content">
         <p class="cookie-text">
@@ -359,39 +374,22 @@ document.addEventListener('DOMContentLoaded', () => {
 
     document.body.appendChild(banner);
 
-    // Slide in
     setTimeout(() => {
       banner.classList.add('show');
-    }, 1000);
+    }, forceShow ? 50 : 1000);
 
-    // Event Listeners
     const acceptBtn = banner.querySelector('#cookie-accept');
     const rejectBtn = banner.querySelector('#cookie-reject');
 
     acceptBtn.addEventListener('click', () => {
       localStorage.setItem('cookie_consent', 'true');
-      if (typeof window.gtag === 'function') {
-        window.gtag('consent', 'update', {
-          'ad_storage': 'granted',
-          'analytics_storage': 'granted',
-          'ad_user_data': 'granted',
-          'ad_personalization': 'granted'
-        });
-      }
-      initGoogleAnalytics();
+      applyStoredConsent();
       hideBanner(banner);
     });
 
     rejectBtn.addEventListener('click', () => {
       localStorage.setItem('cookie_consent', 'false');
-      if (typeof window.gtag === 'function') {
-        window.gtag('consent', 'update', {
-          'ad_storage': 'denied',
-          'analytics_storage': 'denied',
-          'ad_user_data': 'denied',
-          'ad_personalization': 'denied'
-        });
-      }
+      applyStoredConsent();
       hideBanner(banner);
     });
   };
@@ -403,28 +401,15 @@ document.addEventListener('DOMContentLoaded', () => {
     }, 500);
   };
 
-  const initGoogleAnalytics = () => {
-    if (localStorage.getItem('cookie_consent') !== 'true') return;
-    if (document.querySelector('script[src*="G-1KFGHVDB66"]')) return;
+  applyStoredConsent();
+  showCookieBanner();
 
-    const script = document.createElement('script');
-    script.async = true;
-    script.src = 'https://www.googletagmanager.com/gtag/js?id=G-1KFGHVDB66';
-    document.head.appendChild(script);
-
-    window.dataLayer = window.dataLayer || [];
-    if (!window.gtag) {
-      window.gtag = function() {
-        window.dataLayer.push(arguments);
-      };
-    }
-
-    window.gtag('js', new Date());
-    window.gtag('config', 'G-1KFGHVDB66');
-  };
-
-  checkCookieConsent();
-  initGoogleAnalytics();
+  const manageCookieBtn = document.getElementById('manageCookiePreferencesBtn');
+  if (manageCookieBtn) {
+    manageCookieBtn.addEventListener('click', () => {
+      showCookieBanner(true);
+    });
+  }
 
   // 6. Reading Progress Bar for Article Posts
   const proseElement = document.querySelector('.prose');

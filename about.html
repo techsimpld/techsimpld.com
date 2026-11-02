@@ -27,7 +27,7 @@
 
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>About | Tech Simpld</title>
+  <title>About Tech Simpld | IT Background &amp; Home Lab Mission</title>
   <meta name="description"
     content="Learn more about Tech Simpld, our 20-year IT background, and our mission to simplify productivity software, Obsidian, and self-hosted home labs.">
   <link rel="canonical" href="https://techsimpld.com/about.html">
@@ -38,17 +38,37 @@
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="Tech Simpld">
   <meta property="og:url" content="https://techsimpld.com/about.html">
-  <meta property="og:title" content="About | Tech Simpld">
+  <meta property="og:title" content="About Tech Simpld | IT Background &amp; Home Lab Mission">
   <meta property="og:description"
     content="Learn more about Tech Simpld, our 20-year IT background, and our mission to simplify productivity software, Obsidian, and self-hosted home labs.">
   <meta property="og:image" content="https://techsimpld.com/images/obsidian-vault.png">
 
   <!-- Twitter Card -->
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="About | Tech Simpld">
+  <meta name="twitter:title" content="About Tech Simpld | IT Background &amp; Home Lab Mission">
   <meta name="twitter:description"
     content="Learn more about Tech Simpld, our 20-year IT background, and our mission to simplify productivity software, Obsidian, and self-hosted home labs.">
   <meta name="twitter:image" content="https://techsimpld.com/images/obsidian-vault.png">
+
+  <!-- Structured Data (JSON-LD) -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "AboutPage",
+    "name": "About Tech Simpld",
+    "url": "https://techsimpld.com/about.html",
+    "image": "https://techsimpld.com/images/proxmox01-host-specs.png",
+    "description": "Learn more about Tech Simpld, our 20-year IT background, and our mission to simplify productivity software, Obsidian, and self-hosted home labs.",
+    "mainEntity": {
+      "@type": "Organization",
+      "name": "Tech Simpld",
+      "url": "https://techsimpld.com/",
+      "sameAs": [
+        "https://youtube.com/@TechSimpld"
+      ]
+    }
+  }
+  </script>
 
   <!-- DNS Prefetch & Preconnect for Speed -->
   <link rel="dns-prefetch" href="https://www.googletagmanager.com">
@@ -89,6 +109,7 @@
         <li><a href="about.html" class="nav-link active">About</a></li>
         <li><a href="posts.html" class="nav-link">Posts</a></li>
         <li><a href="resources.html" class="nav-link">Resources</a></li>
+        <li><a href="tools.html" class="nav-link">Tools</a></li>
         <li><a href="contact.html" class="nav-link">Contact</a></li>
         <li><a href="https://youtube.com/@TechSimpld" target="_blank" class="nav-link">YouTube</a></li>
       </ul>
@@ -117,7 +138,7 @@
     </header>
 
     <div class="prose"
-      style="background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 12px; padding: 2rem;">
+      style="background: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: 12px; padding: 2rem;">
 
       <h2>The Mission</h2>
       <p>
@@ -155,14 +176,21 @@
       </p>
 
       <h2>The Tech Simpld Lab Infrastructure</h2>
+      <figure class="article-featured-figure">
+        <picture>
+          <source srcset="images/proxmox01-host-specs.webp" type="image/webp">
+          <img src="images/proxmox01-host-specs.png" alt="Proxmox VE 9.2 node proxmox01 hardware summary showing 8 x Intel Core i7-4770 CPU @ 3.40GHz and 32 GB DDR3 RAM" width="1280" height="640" loading="lazy" decoding="async">
+        </picture>
+        <figcaption class="article-featured-caption">Live host summary from node proxmox01 (Proxmox VE 9.2.20 on Linux 7.0.14-17-pve) powered by an Intel Core i7-4770 @ 3.40GHz and 32 GB of DDR3 RAM.</figcaption>
+      </figure>
       <p>
         Every architecture recommendation and tutorial on this site runs directly in our physical testing lab. The environment is built to mirror enterprise-grade reliability while remaining accessible and budget-conscious for home labbers:
       </p>
       <ul>
-        <li><strong>Compute Nodes:</strong> 3-Node Proxmox VE High-Availability (HA) cluster powered by Intel Alder Lake / Raptor Lake mini PCs equipped with 64 GB DDR5 memory per node.</li>
-        <li><strong>Storage Fabric:</strong> Distributed Ceph storage pools backed by enterprise NVMe SSDs in mirrored vdevs, delivering sub-millisecond I/O latency and uninterrupted zero-downtime VM live migration.</li>
-        <li><strong>Networking &amp; Security:</strong> Dedicated 2.5 GbE private cluster interconnect fabric, isolated VLANs for IoT and lab guests, Pi-hole recursive DNS sinks, and encrypted Cloudflare Zero Trust Tunnels with zero open inbound ports.</li>
-        <li><strong>Power &amp; Resilience:</strong> Smart pure-sine-wave uninterruptible power supplies (UPS) configured with NUT (Network UPS Tools) for automated graceful cluster shutdown during power anomalies.</li>
+        <li><strong>Compute Nodes:</strong> 3-Node Proxmox VE 9.2 High-Availability (HA) cluster (<code>proxmox01</code>, <code>proxmox02</code>, <code>proxmox03</code>) built from refurbished Dell OptiPlex 9020 hosts, each equipped with an Intel Core i7-4770 CPU @ 3.40 GHz (4 cores / 8 threads) and 32 GB of DDR3 memory (96 GB total cluster RAM).</li>
+        <li><strong>Storage &amp; Backups:</strong> Distributed Ceph storage pools backed by local SSDs across all three nodes, paired with a dedicated Proxmox Backup Server (PBS) running automated nightly deduplicated snapshots.</li>
+        <li><strong>Networking &amp; Security:</strong> 1 GbE VLAN-segmented managed switching (isolating home LAN traffic, lab VMs/LXCs on VLAN 100, and Ceph replication traffic on VLAN 200), redundant Pi-hole and AdGuard Home LXC DNS sinks, and encrypted Cloudflare Zero Trust Tunnels with zero open inbound ports.</li>
+
       </ul>
 
       <h2>Editorial Ethics &amp; Testing Standards</h2>
@@ -207,6 +235,7 @@
           <li><a href="about.html">About</a></li>
           <li><a href="posts.html">Posts</a></li>
           <li><a href="resources.html">Resources</a></li>
+          <li><a href="tools.html">Tools</a></li>
           <li><a href="contact.html">Contact</a></li>
           <li><a href="https://youtube.com/@TechSimpld" target="_blank">YouTube Channel</a></li>
         </ul>

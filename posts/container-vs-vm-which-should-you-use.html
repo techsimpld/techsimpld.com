@@ -56,14 +56,19 @@
     "@type": "Article",
     "headline": "Container vs VM Which Should You Use? Proxmox Benchmarks & Guide",
     "image": [
-      "https://techsimpld.com/images/container-vs-vm-which-should-you-use.png"
+      "https://techsimpld.com/images/container-vs-vm-which-should-you-use.png",
+      "https://techsimpld.com/images/container-vs-vm-step-1.png",
+      "https://techsimpld.com/images/container-vs-vm-step-2.png",
+      "https://techsimpld.com/images/container-vs-vm-step-3.png"
     ],
     "datePublished": "2026-10-05T10:00:00+00:00",
-    "dateModified": "2026-10-05T10:00:00+00:00",
+    "dateModified": "2026-11-02T10:00:00-05:00",
     "author": {
       "@type": "Person",
       "name": "Tech Simpld",
-      "url": "https://techsimpld.com/about.html"
+      "url": "https://techsimpld.com/about.html",
+      "jobTitle": "MCSA Certified Systems Engineer",
+      "sameAs": ["https://youtube.com/@TechSimpld"]
     },
     "publisher": {
       "@type": "Organization",
@@ -118,6 +123,7 @@
         <li><a href="../about.html" class="nav-link">About</a></li>
         <li><a href="../posts.html" class="nav-link active">Posts</a></li>
         <li><a href="../resources.html" class="nav-link">Resources</a></li>
+        <li><a href="../tools.html" class="nav-link">Tools</a></li>
         <li><a href="../contact.html" class="nav-link">Contact</a></li>
         <li><a href="https://youtube.com/@TechSimpld" target="_blank" class="nav-link">YouTube</a></li>
       </ul>
@@ -186,6 +192,13 @@
 
         <!-- Article Content -->
         <div class="prose">
+          <figure class="article-featured-figure">
+            <picture>
+              <source srcset="../images/container-vs-vm-which-should-you-use.webp" type="image/webp">
+              <img src="../images/container-vs-vm-which-should-you-use.png" alt="Proxmox LXC Containers vs KVM Virtual Machines Architecture Comparison" width="1200" height="675" loading="eager" decoding="async">
+            </picture>
+            <figcaption class="article-featured-caption">Comparing shared-kernel Linux Containers (LXC) against full hypervisor KVM virtual machines in Proxmox VE.</figcaption>
+          </figure>
           <p>
             You are ready to spin up a new service in your home lab. You have your hardware running, Proxmox VE booted, and your storage pools mapped. But then you hit the classic architectural question: <strong>Do you deploy a full Virtual Machine with its own operating system, or do you run it inside a lightweight Docker or LXC container?</strong>
           </p>
@@ -297,6 +310,14 @@ flowchart TB
             A 7-to-1 memory advantage out of the gate is immense. If you are operating a homelab on a mini PC (such as an Intel N100 or an older Lenovo Tiny / HP ProDesk) with 16 GB of RAM, that difference dictates whether your machine can comfortably host 5 services or 25 microservices.
           </p>
 
+          <figure class="article-featured-figure">
+            <picture>
+              <source srcset="../images/container-vs-vm-step-1.webp" type="image/webp">
+              <img src="../images/container-vs-vm-step-1.png" alt="Proxmox VE summary view of test-vm showing 74.15% memory consumption (759.34 MiB of 1.00 GiB) and CPU spikes under load" width="1280" height="640" loading="lazy" decoding="async">
+            </picture>
+            <figcaption class="article-featured-caption">Proxmox VE resource monitor showing the Debian 12 virtual machine consuming 759.34 MiB of its 1 GiB RAM allocation.</figcaption>
+          </figure>
+
           <h2>Test 2: Apache Benchmark Network Stress Test (50,000 Requests)</h2>
           <p>
             Idle memory savings are obvious, but what happens when you hammer both services with continuous network pressure?
@@ -307,6 +328,14 @@ flowchart TB
 
           <pre><code class="language-bash"># Send 50,000 requests with 100 concurrent connections
 ab -n 50000 -c 100 http://[TARGET_IP]/</code></pre>
+
+          <figure class="article-featured-figure">
+            <picture>
+              <source srcset="../images/container-vs-vm-step-2.webp" type="image/webp">
+              <img src="../images/container-vs-vm-step-2.png" alt="Terminal output of ApacheBench (ab) completing 50,000 requests against the LXC container at 13,009.30 requests per second" width="1280" height="640" loading="lazy" decoding="async">
+            </picture>
+            <figcaption class="article-featured-caption">Raw ApacheBench (ab) terminal output showing the LXC container completing 50,000 concurrent requests in 3.843 seconds (13,009.30 req/sec).</figcaption>
+          </figure>
 
           <h2>The Benchmark Results: Latency & Throughput Breakdown</h2>
 
@@ -346,6 +375,14 @@ ab -n 50000 -c 100 http://[TARGET_IP]/</code></pre>
               </tr>
             </tbody>
           </table>
+
+          <figure class="article-featured-figure">
+            <picture>
+              <source srcset="../images/container-vs-vm-step-3.webp" type="image/webp">
+              <img src="../images/container-vs-vm-step-3.png" alt="Side-by-side benchmark results comparing LXC container (13,009.30 req/s) against Virtual Machine (11,313.50 req/s)" width="1280" height="640" loading="lazy" decoding="async">
+            </picture>
+            <figcaption class="article-featured-caption">Side-by-side ApacheBench telemetry comparing requests per second, mean response time, and transfer rates between LXC and KVM.</figcaption>
+          </figure>
 
           <h2>The Engineering Cause: QEMU VirtIO & VM Exit Traps</h2>
           <p>
@@ -431,6 +468,21 @@ qm status 110 --verbose</code></pre>
           </ul>
         </div>
 
+        <div class="author-bio-box">
+          <div class="author-bio-avatar" aria-hidden="true">TS</div>
+          <div class="author-bio-content">
+            <h3>Written by Tech Simpld</h3>
+            <span class="author-bio-role">MCSA Certified Systems Engineer &bull; 20+ Years Enterprise IT</span>
+            <p>
+              Tech Simpld is maintained by a Systems Engineer managing virtual machines and enterprise storage architecture across five data centers. Every tutorial and configuration on this site is tested first-hand in our physical Proxmox VE home lab and daily Obsidian production vaults.
+            </p>
+            <div class="author-bio-links">
+              <a href="../about.html">Lab Architecture &amp; Mission &rarr;</a>
+              <a href="../tools.html">Interactive Home Lab Web Tools &rarr;</a>
+            </div>
+          </div>
+        </div>
+
       </article>
 
       <!-- Sidebar Column -->
@@ -444,6 +496,15 @@ qm status 110 --verbose</code></pre>
           <a href="https://youtube.com/@TechSimpld" target="_blank" id="sidebarYoutubeBtn" class="btn btn-outline btn-sm" style="width: 100%;">
             Visit YouTube Channel
           </a>
+        </div>
+        <div class="sidebar-widget">
+          <h4 class="widget-title">Related Tutorials</h4>
+          <ul style="list-style: none; padding: 0; margin: 0; font-size: 0.9rem; line-height: 1.8;">
+            <li><a href="budget-proxmox-home-lab-setup.html" style="color: var(--accent-cyan);">Budget Proxmox Cluster Setup</a></li>
+            <li><a href="docker-vs-podman.html" style="color: var(--text-primary);">Docker vs. Podman Architecture</a></li>
+            <li><a href="infrastructure-as-code-terraform-homelab.html" style="color: var(--text-primary);">Terraform Proxmox IaC Guide</a></li>
+            <li><a href="../tools.html" style="color: var(--accent-yellow, #facc15);">Interactive Home Lab Web Tools</a></li>
+          </ul>
         </div>
       </aside>
 
@@ -469,6 +530,7 @@ qm status 110 --verbose</code></pre>
           <li><a href="../about.html">About</a></li>
           <li><a href="../posts.html">Posts</a></li>
           <li><a href="../resources.html">Resources</a></li>
+          <li><a href="../tools.html">Tools</a></li>
           <li><a href="../contact.html">Contact</a></li>
           <li><a href="https://youtube.com/@TechSimpld" target="_blank">YouTube Channel</a></li>
         </ul>

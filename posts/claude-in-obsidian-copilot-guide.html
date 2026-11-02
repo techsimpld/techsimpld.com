@@ -56,14 +56,19 @@
     "@type": "Article",
     "headline": "Put Claude in Obsidian: Pay-As-You-Go AI Note Assistant Setup",
     "image": [
-      "https://techsimpld.com/images/claude-in-obsidian.jpg"
+      "https://techsimpld.com/images/claude-in-obsidian.jpg",
+      "https://techsimpld.com/images/claude-obsidian-step-1.png",
+      "https://techsimpld.com/images/claude-obsidian-step-2.png",
+      "https://techsimpld.com/images/claude-obsidian-step-3.png"
     ],
     "datePublished": "2026-09-22T10:00:00+00:00",
-    "dateModified": "2026-09-22T10:00:00+00:00",
+    "dateModified": "2026-11-02T10:00:00-05:00",
     "author": {
       "@type": "Person",
       "name": "Tech Simpld",
-      "url": "https://techsimpld.com/about.html"
+      "url": "https://techsimpld.com/about.html",
+      "jobTitle": "MCSA Certified Systems Engineer",
+      "sameAs": ["https://youtube.com/@TechSimpld"]
     },
     "publisher": {
       "@type": "Organization",
@@ -118,6 +123,7 @@
         <li><a href="../about.html" class="nav-link">About</a></li>
         <li><a href="../posts.html" class="nav-link active">Posts</a></li>
         <li><a href="../resources.html" class="nav-link">Resources</a></li>
+        <li><a href="../tools.html" class="nav-link">Tools</a></li>
         <li><a href="../contact.html" class="nav-link">Contact</a></li>
         <li><a href="https://youtube.com/@TechSimpld" target="_blank" class="nav-link">YouTube</a></li>
       </ul>
@@ -186,6 +192,13 @@
 
         <!-- Article Content -->
         <div class="prose">
+          <figure class="article-featured-figure">
+            <picture>
+              <source srcset="../images/claude-in-obsidian.webp" type="image/webp">
+              <img src="../images/claude-in-obsidian.jpg" alt="Claude AI and Copilot Plugin Integration Inside an Obsidian Vault" width="1200" height="675" loading="eager" decoding="async">
+            </picture>
+            <figcaption class="article-featured-caption">Connecting Claude AI and the Obsidian Copilot plugin to query local Markdown notes with context-aware RAG.</figcaption>
+          </figure>
           <p>
             Most people using artificial intelligence to assist their personal knowledge management workflow do it the hard way. They write rough notes in Obsidian, copy chunks of text into a browser tab running Claude or ChatGPT, wait for an answer, and then copy and paste the formatted response back into their vault.
           </p>
@@ -260,6 +273,14 @@
             <li>Save your settings and exit the menu.</li>
           </ol>
 
+          <figure class="article-featured-figure">
+            <picture>
+              <source srcset="../images/claude-obsidian-step-1.webp" type="image/webp">
+              <img src="../images/claude-obsidian-step-1.png" alt="Obsidian Copilot plugin settings modal showing verified Anthropic API key and model configuration" width="1280" height="640" loading="lazy" decoding="async">
+            </picture>
+            <figcaption class="article-featured-caption">Verifying the Anthropic pay-as-you-go API key inside Obsidian Copilot's Bring Your Own Key (BYOK) provider configuration.</figcaption>
+          </figure>
+
           <h2>Step 4: Launching the Vault Agent & Execution Modes</h2>
           <p>
             Look at the left icon ribbon inside Obsidian. You will notice a new icon labeled <strong>Open Copilot Agent Chat</strong>.
@@ -285,6 +306,14 @@
           <p>
             Claude reads the active buffer, organizes the content into clear subheadings, and prompts you to review the proposed diff. Accepting the change rewrites the note into a clean, scannable document. Checking your Anthropic console reveals a total consumption of approximately $0.04.
           </p>
+
+          <figure class="article-featured-figure">
+            <picture>
+              <source srcset="../images/claude-obsidian-step-2.webp" type="image/webp">
+              <img src="../images/claude-obsidian-step-2.png" alt="Obsidian workspace showing a messy research note refactored into clean Markdown tables by Claude Haiku" width="1280" height="640" loading="lazy" decoding="async">
+            </picture>
+            <figcaption class="article-featured-caption">Claude 3.5 Haiku restructuring raw research notes directly inside the active Obsidian editor pane for fractions of a cent.</figcaption>
+          </figure>
 
           <h2>Real-World Walkthrough 2: Splitting Atomic Notes with Backlinks</h2>
           <p>
@@ -317,6 +346,14 @@
             Within roughly 20 seconds, Sonnet examines the image, identifies the hardware enclosures, and outputs a complete, formatted hardware inventory note that integrates into your technical documentation vault.
           </p>
 
+          <figure class="article-featured-figure">
+            <picture>
+              <source srcset="../images/claude-obsidian-step-3.webp" type="image/webp">
+              <img src="../images/claude-obsidian-step-3.png" alt="Obsidian Copilot agent autonomously scaffolding multi-folder project notes inside the vault" width="1280" height="640" loading="lazy" decoding="async">
+            </picture>
+            <figcaption class="article-featured-caption">Running the Copilot vault agent in autonomous mode to scaffold multi-document project folders and cross-linked index pages.</figcaption>
+          </figure>
+
           <h2>Security and Data Privacy Best Practices</h2>
           <p>
             While pay-as-you-go API integration provides exceptional productivity, keep these privacy considerations in mind:
@@ -340,6 +377,21 @@
           </ul>
         </div>
 
+        <div class="author-bio-box">
+          <div class="author-bio-avatar" aria-hidden="true">TS</div>
+          <div class="author-bio-content">
+            <h3>Written by Tech Simpld</h3>
+            <span class="author-bio-role">MCSA Certified Systems Engineer &bull; 20+ Years Enterprise IT</span>
+            <p>
+              Tech Simpld is maintained by a Systems Engineer managing virtual machines and enterprise storage architecture across five data centers. Every tutorial and configuration on this site is tested first-hand in our physical Proxmox VE home lab and daily Obsidian production vaults.
+            </p>
+            <div class="author-bio-links">
+              <a href="../about.html">Lab Architecture &amp; Mission &rarr;</a>
+              <a href="../tools.html">Interactive Home Lab Web Tools &rarr;</a>
+            </div>
+          </div>
+        </div>
+
       </article>
 
       <!-- Sidebar Column -->
@@ -353,6 +405,15 @@
           <a href="https://youtube.com/@TechSimpld" target="_blank" id="sidebarYoutubeBtn" class="btn btn-outline btn-sm" style="width: 100%;">
             Visit YouTube Channel
           </a>
+        </div>
+        <div class="sidebar-widget">
+          <h4 class="widget-title">Related Tutorials</h4>
+          <ul style="list-style: none; padding: 0; margin: 0; font-size: 0.9rem; line-height: 1.8;">
+            <li><a href="local-llm-vs-cloud-ai-ollama-claude.html" style="color: var(--accent-cyan);">Local LLM vs. Cloud AI Benchmark</a></li>
+            <li><a href="sync-obsidian-for-free-couchdb.html" style="color: var(--text-primary);">Free Obsidian CouchDB LiveSync</a></li>
+            <li><a href="obsidian-second-brain-setup.html" style="color: var(--text-primary);">Obsidian Second Brain Setup</a></li>
+            <li><a href="../tools.html" style="color: var(--accent-yellow, #facc15);">Interactive Home Lab Web Tools</a></li>
+          </ul>
         </div>
       </aside>
 
@@ -378,6 +439,7 @@
           <li><a href="../about.html">About</a></li>
           <li><a href="../posts.html">Posts</a></li>
           <li><a href="../resources.html">Resources</a></li>
+          <li><a href="../tools.html">Tools</a></li>
           <li><a href="../contact.html">Contact</a></li>
           <li><a href="https://youtube.com/@TechSimpld" target="_blank">YouTube Channel</a></li>
         </ul>

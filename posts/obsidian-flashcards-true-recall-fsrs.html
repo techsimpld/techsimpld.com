@@ -1,0 +1,678 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <!-- Google tag (gtag.js) -->
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { dataLayer.push(arguments); }
+    gtag('consent', 'default', {
+      'ad_storage': 'denied',
+      'analytics_storage': 'denied',
+      'ad_user_data': 'denied',
+      'ad_personalization': 'denied',
+      'wait_for_update': 500
+    });
+  </script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-1KFGHVDB66"></script>
+  <script>
+    gtag('js', new Date());
+    gtag('config', 'G-1KFGHVDB66');
+  </script>
+
+  <!-- Google AdSense -->
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5214277715351322"
+    crossorigin="anonymous"></script>
+
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Obsidian Flashcards Made Simple: Spaced Repetition with True Recall & FSRS | Tech Simpld</title>
+  <meta name="description"
+    content="Turn your Obsidian notes into active recall flashcards with True Recall and the FSRS algorithm. Includes inline cards, local AI generation, and analytics.">
+  <link rel="canonical" href="https://techsimpld.com/posts/obsidian-flashcards-true-recall-fsrs.html">
+  <meta name="robots" content="index, follow">
+
+  <!-- Open Graph / SEO -->
+  <meta property="og:locale" content="en_US">
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="Tech Simpld">
+  <meta property="og:url" content="https://techsimpld.com/posts/obsidian-flashcards-true-recall-fsrs.html">
+  <meta property="og:title" content="Obsidian Flashcards Made Simple: Spaced Repetition with True Recall & FSRS | Tech Simpld">
+  <meta property="og:description"
+    content="Turn your Obsidian notes into active recall flashcards without external apps. Complete guide for True Recall using the modern FSRS algorithm, inline cards, local AI, and retention tracking.">
+  <meta property="og:image" content="https://techsimpld.com/images/Obsidian%20Flashcards%20Made%20Simple.png">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Obsidian Flashcards Made Simple: Spaced Repetition with True Recall & FSRS | Tech Simpld">
+  <meta name="twitter:description"
+    content="Turn your Obsidian notes into active recall flashcards without external apps. Complete guide for True Recall using FSRS, inline cards, and local AI.">
+  <meta name="twitter:image" content="https://techsimpld.com/images/Obsidian%20Flashcards%20Made%20Simple.png">
+
+  <!-- Structured Data: Article (JSON-LD) -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "Obsidian Flashcards Made Simple: Spaced Repetition with True Recall & FSRS",
+    "image": [
+      "https://techsimpld.com/images/Obsidian%20Flashcards%20Made%20Simple.png",
+      "https://techsimpld.com/images/true-recall-step-1.png",
+      "https://techsimpld.com/images/true-recall-step-2.png",
+      "https://techsimpld.com/images/true-recall-step-3.png"
+    ],
+    "datePublished": "2026-11-02T10:00:00-05:00",
+    "dateModified": "2026-11-02T10:00:00-05:00",
+    "author": {
+      "@type": "Person",
+      "name": "Tech Simpld",
+      "url": "https://techsimpld.com/about.html",
+      "jobTitle": "MCSA Certified Systems Engineer",
+      "sameAs": ["https://youtube.com/@TechSimpld"]
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "Tech Simpld",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://techsimpld.com/images/obsidian-vault.png"
+      }
+    },
+    "description": "Master active recall and spaced repetition inside Obsidian using the True Recall community plugin and modern FSRS algorithm. Eliminate copy-paste friction, auto-generate cards with local AI, and track your study streaks."
+  }
+  </script>
+
+  <!-- Structured Data: FAQPage (JSON-LD) -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "What is the difference between FSRS and SM-2 in spaced repetition?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "SM-2 is a legacy algorithm developed in 1987 that uses a rigid ease factor starting at 2.5 and fixed interval math, often leading to 'ease hell' where cards are reviewed too frequently. FSRS (Free Spaced Repetition Scheduler) is a modern machine-learning model that tracks three biological memory pillars: Difficulty, Stability, and Retrievability. It personalizes review schedules to your specific learning speed and allows targeting a specific desired retention rate (e.g. 90%)."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Does True Recall clutter my Obsidian markdown files with card metadata?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "No. True Recall manages cards and spaced repetition scheduling data in the background, keeping your core markdown documents clean, readable, and portable."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Can I use AI flashcard generation for free without paying for True Recall Pro?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes. True Recall allows you to Bring Your Own Key (BYOK) or connect a local AI provider (such as Ollama or OpenRouter) completely free. Pro is only required for automated Image Occlusion and AI-Graded typed answers."
+        }
+      }
+    ]
+  }
+  </script>
+
+  <!-- DNS Prefetch & Preconnect for Speed -->
+  <link rel="dns-prefetch" href="https://www.googletagmanager.com">
+  <link rel="preconnect" href="https://www.googletagmanager.com" crossorigin>
+  <link rel="dns-prefetch" href="https://pagead2.googlesyndication.com">
+  <link rel="preconnect" href="https://pagead2.googlesyndication.com" crossorigin>
+
+  <!-- Favicons -->
+  <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+  <link rel="alternate icon" type="image/png" href="../favicon.png">
+
+  <!-- Google Fonts Preconnect & Stylesheet -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet"
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap">
+
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="../css/styles.css">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" rel="stylesheet" />
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/toolbar/prism-toolbar.min.css" rel="stylesheet" />
+</head>
+
+<body>
+
+  <!-- Navigation Header -->
+  <header class="navbar" id="navbar">
+    <div class="nav-container">
+      <a href="../index.html" class="logo-link">
+        Tech Simpld<span class="logo-dot"></span>
+      </a>
+
+      <button class="menu-toggle" id="menuToggle" aria-label="Toggle Navigation Menu">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+
+      <ul class="nav-menu">
+        <li><a href="../index.html" class="nav-link">Home</a></li>
+        <li><a href="../about.html" class="nav-link">About</a></li>
+        <li><a href="../posts.html" class="nav-link active">Posts</a></li>
+        <li><a href="../resources.html" class="nav-link">Resources</a></li>
+        <li><a href="../tools.html" class="nav-link">Tools</a></li>
+        <li><a href="../contact.html" class="nav-link">Contact</a></li>
+        <li><a href="https://youtube.com/@TechSimpld" target="_blank" class="nav-link">YouTube</a></li>
+      </ul>
+
+      <div class="nav-actions">
+        <a href="https://youtube.com/@TechSimpld" target="_blank" class="btn btn-primary btn-sm"
+          id="subscribeHeaderBtn">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+            <path
+              d="M23.498 6.163a3.003 3.003 0 0 0-2.11-2.11C19.517 3.545 12 3.545 12 3.545s-7.517 0-9.388.508a3.003 3.003 0 0 0-2.11 2.11C0 8.033 0 12 0 12s0 3.967.502 5.837a3.003 3.003 0 0 0 2.11 2.11c1.871.508 9.388.508 9.388.508s7.517 0 9.388-.508a3.003 3.003 0 0 0 2.11-2.11C24 15.967 24 12 24 12s0-3.967-.502-5.837zM9.545 15.568V8.432L15.818 12l-6.273 3.568z" />
+          </svg>
+          Subscribe
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content Layout -->
+  <main class="main-layout">
+    <div class="blog-container">
+
+      <!-- Main Article Column -->
+      <article class="blog-main">
+
+        <header class="article-header">
+          <div class="badge">Obsidian & PKM</div>
+          <h1 class="article-title">Obsidian Flashcards Made Simple: Spaced Repetition with True Recall & FSRS</h1>
+
+          <div class="article-meta">
+            <div class="article-meta-item">
+              <div class="author-avatar">TS</div>
+              <span>By <strong>Tech Simpld</strong></span>
+            </div>
+            <span>•</span>
+            <div class="article-meta-item">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                stroke-linecap="round" stroke-linejoin="round">
+                <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                <line x1="16" y1="2" x2="16" y2="6"></line>
+                <line x1="8" y1="2" x2="8" y2="6"></line>
+                <line x1="3" y1="10" x2="21" y2="10"></line>
+              </svg>
+              <span>November 2, 2026</span>
+            </div>
+            <span>•</span>
+            <div class="article-meta-item">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="10"></circle>
+                <polyline points="12 6 12 12 16 14"></polyline>
+              </svg>
+              <span>10 Min Read</span>
+            </div>
+          </div>
+        </header>
+
+        <!-- Video Player Container -->
+        <div class="video-container">
+          <iframe src="https://www.youtube-nocookie.com/embed/RSRj35Wqhzg"
+            title="Obsidian Flashcards Made Simple True Recall"
+            frameborder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            allowfullscreen>
+          </iframe>
+        </div>
+
+        <!-- Article Content -->
+        <div class="prose">
+          <figure class="article-featured-figure">
+            <picture>
+              <source srcset="../images/Obsidian%20Flashcards%20Made%20Simple.webp" type="image/webp">
+              <img src="../images/Obsidian%20Flashcards%20Made%20Simple.png" alt="Obsidian True Recall Spaced Repetition Flashcards with FSRS Scheduling" width="1200" height="675" loading="eager" decoding="async">
+            </picture>
+            <figcaption class="article-featured-caption">Active recall flashcard generation and FSRS memory retention analytics inside Obsidian with True Recall.</figcaption>
+          </figure>
+          <p>
+            If you study technical certifications, conduct in-depth research, or build a personal knowledge base inside Obsidian, you are likely familiar with the proven science of active recall and spaced repetition. Yet, if you are like the vast majority of knowledge workers, you probably gave up on flashcard systems like Anki after a few weeks.
+          </p>
+
+          <p>
+            The reason is not a lack of discipline; it is <strong>context switching friction</strong>. Having to stop reading, switch windows, open an external flashcard application, and copy-paste concepts between disconnected databases destroys your focus. Over time, your primary Obsidian notes and your flashcard decks drift apart, creating dual-maintenance debt that quickly leads to study burnout.
+          </p>
+
+          <p>
+            In this guide, we explore <strong>True Recall</strong>, an Obsidian community plugin developed by Lucas that integrates spaced repetition directly into your vault. True Recall eliminates markdown syntax clutter, implements the modern <strong>FSRS (Free Spaced Repetition Scheduler)</strong> algorithm instead of rigid 1980s math, supports automated card generation via local AI models (BYOK), and provides visual retention tracking right inside your workspace.
+          </p>
+
+          <div class="callout callout-note">
+            <div class="callout-title">Editorial Transparency & Disclosure</div>
+            <p>
+              This tutorial is completely unsponsored. The developer of True Recall kindly offered a complimentary Pro license key, which I chose to decline. We tested this workflow using the exact configuration available to everyone: 100% free, using native local learning features and bringing our own local AI endpoints.
+            </p>
+          </div>
+
+          <!-- Mermaid Comparison Diagram -->
+          <div class="mermaid-container">
+            <div class="mermaid-title">Scheduling Architecture: Legacy SM-2 vs. Modern FSRS</div>
+            <pre class="mermaid">
+flowchart TD
+    subgraph SM2 ["Legacy SM-2 Engine (1987)"]
+        FixedEase["Initial Ease Factor = 2.5"]
+        RigidMath["Rigid Intervals:\nDay 1 -> Day 6 -> Day (N * 2.5)"]
+        EaseHell["Card Lapse Penalty:\nEase Factor Drops Permanently\n'Ease Hell' Review Overload"]
+        FixedEase --> RigidMath --> EaseHell
+    end
+
+    subgraph FSRS ["Modern FSRS Model (2022+)"]
+        Pillars["Memory State Tracking:\nDifficulty (D) | Stability (S) | Retrievability (R)"]
+        TargetRetention["Desired Retention Target\n(e.g., 90% Probability of Recall)"]
+        OptimalInterval["Adaptive Calculation:\nReview Scheduled Exactly When\nMemory Probability Hits Target"]
+        Pillars --> TargetRetention --> OptimalInterval
+    end
+
+    classDef legacy fill:#152033,stroke:#ef4444,stroke-width:1.5px,color:#f8fafc;
+    classDef modern fill:#0f111a,stroke:#4ade80,stroke-width:2px,color:#f8fafc;
+    class SM2,FixedEase,RigidMath,EaseHell legacy;
+    class FSRS,Pillars,TargetRetention,OptimalInterval modern;
+            </pre>
+          </div>
+
+          <h2>Why FSRS Completely Outclasses Legacy SM-2</h2>
+          <p>
+            Most legacy flashcard applications (including default Anki profiles) still rely on the <strong>SM-2 algorithm</strong>, formulated by Piotr Woźniak in 1987. While groundbreaking for its era, SM-2 suffers from severe mathematical limitations that create study fatigue:
+          </p>
+
+          <ul>
+            <li><strong>Rigid Ease Factors:</strong> Every flashcard begins with an arbitrary "ease factor" of 2.5. Reviews follow a fixed progression: 1 day, then 6 days, then previous interval multiplied by 2.5.</li>
+            <li><strong>The "Ease Hell" Trap:</strong> If you struggle with a complex technical topic (such as subnet masking or Ceph quorum math) and rate a card "Hard" or "Again" multiple times, SM-2 permanently reduces the ease factor. Even after you master the concept later, the card remains artificially trapped in short intervals, forcing dozens of redundant reviews.</li>
+            <li><strong>No Retention Control:</strong> With SM-2, you cannot choose your retention target. Whatever percentage of facts you remember is simply a passive byproduct of rigid formulas.</li>
+          </ul>
+
+          <h3>The FSRS Advantage</h3>
+          <p>
+            Developed from 2022 onward as an open-source data science initiative, <strong>FSRS (Free Spaced Repetition Scheduler)</strong> replaces crude heuristics with a machine-learning model based on three pillars of human memory:
+          </p>
+          <ol>
+            <li><strong>Difficulty (D):</strong> How intrinsically complex the information is.</li>
+            <li><strong>Stability (S):</strong> How slowly memory traces decay over time.</li>
+            <li><strong>Retrievability (R):</strong> The probability that you can successfully recall the information on any given day.</li>
+          </ol>
+
+          <p>
+            Instead of locking cards into fixed multipliers, FSRS continuously fits its parameters to your actual review history. Most importantly, you set a <strong>Desired Retention</strong> target (such as 90%). The algorithm calculates the forgetting curve and schedules your next review precisely when your statistical probability of remembering the card drops to 90%. If you are cramming for an IT exam next week, you can dial retention up to 95%; for relaxed long-term hobby reading, you can lower it to 85% to cut daily review workloads in half.
+          </p>
+
+          <figure class="article-featured-figure">
+            <picture>
+              <source srcset="../images/true-recall-step-1.webp" type="image/webp">
+              <img src="../images/true-recall-step-1.png" alt="Comparison table of SM-2 fixed interval scheduling versus FSRS Difficulty, Stability, and Retrievability memory model" width="1280" height="640" loading="lazy" decoding="async">
+            </picture>
+            <figcaption class="article-featured-caption">Comparing legacy SM-2 fixed ease multipliers against the FSRS Difficulty, Stability, and Retrievability (DSR) memory model.</figcaption>
+          </figure>
+
+          <h2>Step 1: Installing & Configuring True Recall in Obsidian</h2>
+          <p>
+            Installing True Recall requires no manual file downloads or terminal commands:
+          </p>
+
+          <ol>
+            <li>Open Obsidian and navigate to <strong>Settings</strong> &rarr; <strong>Community plugins</strong>.</li>
+            <li>Ensure <em>Restricted mode</em> is turned <strong>Off</strong>.</li>
+            <li>Click <strong>Browse</strong>, search for <code>True Recall</code> by Lucas, click <strong>Install</strong>, and then click <strong>Enable</strong>.</li>
+          </ol>
+
+          <h3>Key Settings Breakdown</h3>
+          <p>
+            Open the True Recall plugin settings. You will see five primary configuration sections:
+          </p>
+
+          <ul>
+            <li><strong>FSRS Configuration:</strong> Review the default parameters. The single most important setting is <strong>Desired Retention</strong> (default: <code>0.90</code> / 90%). Leave this at 90% for a balanced study workload.</li>
+            <li><strong>Integrations & Cloud Sync:</strong> True Recall includes built-in encrypted sync across 2 devices on the free tier (and 5 devices on Pro). This allows you to create cards on your desktop workstation and complete daily reviews on your mobile phone or tablet.</li>
+            <li><strong>Features & AI Provider:</strong> Configure whether you are operating in local-only mode, using Bring Your Own Key (BYOK) with OpenAI/OpenRouter, or connecting to a self-hosted local model like Ollama.</li>
+          </ul>
+
+          <div class="callout callout-tip">
+            <div class="callout-title">Zero-Clutter Markdown Storage</div>
+            <p>
+              Unlike legacy plugins that inject noisy HTML comments (e.g. <code>&lt;!--ID: 17294819--&gt;</code>) directly into your clean markdown prose, True Recall stores review schedules and metadata in the background. Your notes remain pristine, standard markdown compatible with our <a href="../tools.html#markdown">Markdown Table & Frontmatter Formatter</a>.
+            </p>
+          </div>
+
+          <h2>Step 2: Structuring Your Knowledge with Projects</h2>
+          <p>
+            Before generating cards, launch the True Recall dashboard using the brain icon in your left Obsidian ribbon. The first step is creating a <strong>Project</strong>.
+          </p>
+
+          <p>
+            Projects act as isolated study domains. If you are preparing for a Cisco CCNA certification, studying Spanish vocabulary, and configuring a Proxmox home lab, you want to keep those learning tracks segregated:
+          </p>
+
+          <ol>
+            <li>In the True Recall dashboard, click <strong>+ Project</strong>.</li>
+            <li>Name your project (e.g., <code>Proxmox Home Lab</code> or <code>System Architecture</code>).</li>
+            <li>Assign notes from your vault to this project.</li>
+          </ol>
+
+          <h2>Step 3: Creating Active Recall Flashcards</h2>
+          <p>
+            True Recall supports three native card architectures directly out of the box:
+          </p>
+
+          <h3>1. Basic Flashcards (Front / Back)</h3>
+          <p>
+            The fundamental active recall card. Click <strong>Add</strong>, select your project, enter a prompt on the front, and provide the concise explanation on the back:
+          </p>
+          <pre><code class="language-text">Front: What is a Linux Container (LXC)?
+Back: An OS-level virtualization method that shares the host Linux kernel directly, offering sub-second boot times and near-zero memory overhead.</code></pre>
+
+          <h3>2. Basic Reversed (Bidirectional Learning)</h3>
+          <p>
+            Basic reversed cards automatically generate two distinct test items from a single entry. For example, testing the port assignment of a protocol:
+          </p>
+          <pre><code class="language-text">Card 1 (Forward): What default port does DNS operate on? -> Port 53
+Card 2 (Reversed): What service runs on Port 53? -> DNS</code></pre>
+
+          <h3>3. Cloze Deletion (Fill-in-the-Blank)</h3>
+          <p>
+            Cloze deletions allow you to mask specific words or technical terms directly within a sentence using double curly braces:
+          </p>
+          <pre><code class="language-text">Proxmox VE uses {{c1::Ceph}} for distributed block storage across cluster nodes, requiring a minimum of {{c2::three}} voting monitors for quorum.</code></pre>
+          <p>
+            This single note automatically produces two separate test cards: one testing for the word "Ceph", and another testing for "three".
+          </p>
+
+          <figure class="article-featured-figure">
+            <picture>
+              <source srcset="../images/true-recall-step-2.webp" type="image/webp">
+              <img src="../images/true-recall-step-2.png" alt="True Recall Browse view inside Obsidian showing a basic flashcard with live FSRS stability and difficulty statistics" width="1280" height="640" loading="lazy" decoding="async">
+            </picture>
+            <figcaption class="article-featured-caption">True Recall card browser inside Obsidian displaying live FSRS statistics (Stability, Difficulty, Reviews, and Lapses) in the right inspector pane.</figcaption>
+          </figure>
+
+          <h2>Step 4: Auto-Generating Cards with Local AI (BYOK)</h2>
+          <p>
+            Creating dozens of flashcards manually can be tedious. True Recall solves this with inline AI card generation:
+          </p>
+
+          <ol>
+            <li>Open any standard technical note in your vault (such as our <a href="budget-proxmox-home-lab-setup.html">Budget Proxmox Cluster Guide</a>).</li>
+            <li>Highlight a sentence or paragraph explaining a technical concept.</li>
+            <li>Click the floating True Recall action pill above your selection.</li>
+            <li>Choose <strong>Ask AI &rarr; Create Cards</strong>.</li>
+          </ol>
+
+          <p>
+            True Recall sends the highlighted context to your configured AI provider (such as an Ollama instance running locally or OpenRouter) and proposes multiple candidate cards. You can inspect each card, modify the phrasing, reject weak items, and click <strong>Apply All</strong> to commit them to your review deck in seconds.
+          </p>
+
+          <figure class="article-featured-figure">
+            <picture>
+              <source srcset="../images/true-recall-step-3.webp" type="image/webp">
+              <img src="../images/true-recall-step-3.png" alt="True Recall deck browser populated with AI-generated flashcards and cloze deletions from a Proxmox study note" width="1280" height="640" loading="lazy" decoding="async">
+            </picture>
+            <figcaption class="article-featured-caption">AI-generated basic and cloze flashcards linked directly to the source Proxmox note inside the True Recall browser.</figcaption>
+          </figure>
+
+          <h2>Step 5: Conducting Reviews & The 4 Rating Buttons</h2>
+          <p>
+            To start your daily study session, click <strong>Review</strong> in the dashboard. You can review all vault cards together, or click the <em>Play</em> button on a specific project to focus solely on one subject.
+          </p>
+
+          <p>
+            When a card appears, read the question, actively formulate the answer in your mind, and press the <strong>Spacebar</strong> to reveal the reverse side. Underneath the answer, you will see four rating choices:
+          </p>
+
+          <table style="width: 100%; border-collapse: collapse; margin: 1.5rem 0;">
+            <thead>
+              <tr style="border-bottom: 2px solid var(--border-color); text-align: left;">
+                <th style="padding: 0.75rem;">Button</th>
+                <th style="padding: 0.75rem;">Interval Action</th>
+                <th style="padding: 0.75rem;">When to Press</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr style="border-bottom: 1px solid var(--border-color);">
+                <td style="padding: 0.75rem; color: #ef4444;"><strong>Again (1m)</strong></td>
+                <td style="padding: 0.75rem;">Recycles card into today's active queue</td>
+                <td style="padding: 0.75rem;">Complete recall failure; you blanked on the answer.</td>
+              </tr>
+              <tr style="border-bottom: 1px solid var(--border-color);">
+                <td style="padding: 0.75rem; color: var(--accent-yellow, #facc15);"><strong>Hard</strong></td>
+                <td style="padding: 0.75rem;">Short interval multiplier</td>
+                <td style="padding: 0.75rem;">You remembered the answer, but required significant mental effort.</td>
+              </tr>
+              <tr style="border-bottom: 1px solid var(--border-color);">
+                <td style="padding: 0.75rem; color: var(--accent-cyan);"><strong>Good</strong></td>
+                <td style="padding: 0.75rem;">Standard FSRS target interval</td>
+                <td style="padding: 0.75rem;">The default baseline button for normal, successful recall.</td>
+              </tr>
+              <tr>
+                <td style="padding: 0.75rem; color: #4ade80;"><strong>Easy</strong></td>
+                <td style="padding: 0.75rem;">Pushes card out days or weeks ahead</td>
+                <td style="padding: 0.75rem;">Immediate recall; concept is fully solidified in long-term memory.</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <div class="callout callout-warning">
+            <div class="callout-title">The "Again" Button Golden Rule</div>
+            <p>
+              Never be afraid of the <strong>Again</strong> button. Unlike legacy SM-2 which punishes you with permanent "ease hell", FSRS simply recalibrates the card's Stability score. Pressing Again ensures you see difficult concepts before your session closes, reinforcing memory synapses before sleep consolidation.
+            </p>
+          </div>
+
+          <h2>Visual Retention Analytics & The Streak Heatmap</h2>
+          <p>
+            Spaced repetition depends on daily momentum. Missing study sessions allows forgetting curves to steepen, causing cards to pile up in backlog queues. True Recall addresses this psychological barrier with its dedicated <strong>Stats & Analytics</strong> command center:
+          </p>
+
+          <ul>
+            <li><strong>GitHub-Style Calendar Heatmap:</strong> A visual grid recording every day you complete a study session. Building an unbroken streak directly inside your note-taking app provides immediate visual accountability without needing separate habit trackers.</li>
+            <li><strong>Retention Curves:</strong> Live graphical analysis showing your empirical recall percentage compared against your Desired Retention target.</li>
+            <li><strong>Card Maturity Breakdown:</strong> Tracks the transition of concepts from "Young / Learning" status into "Mature / Long-Term" memory.</li>
+            <li><strong>Rating Distribution:</strong> Shows the proportion of Again, Hard, Good, and Easy responses, helping you identify subjects that require clearer source notes.</li>
+          </ul>
+
+          <h2>Free vs. Bring Your Own Key vs. Pro Breakdown</h2>
+          <p>
+            True Recall offers three distinct tiers of functionality:
+          </p>
+
+          <table style="width: 100%; border-collapse: collapse; margin: 1.5rem 0;">
+            <thead>
+              <tr style="border-bottom: 2px solid var(--border-color); text-align: left;">
+                <th style="padding: 0.75rem;">Capability</th>
+                <th style="padding: 0.75rem;">Free Tier</th>
+                <th style="padding: 0.75rem;">Bring Your Own Key</th>
+                <th style="padding: 0.75rem;">True Recall Pro</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr style="border-bottom: 1px solid var(--border-color);">
+                <td style="padding: 0.75rem;"><strong>FSRS Engine & Local Cards</strong></td>
+                <td style="padding: 0.75rem; color: #4ade80;">Yes (Unlimited)</td>
+                <td style="padding: 0.75rem; color: #4ade80;">Yes (Unlimited)</td>
+                <td style="padding: 0.75rem; color: #4ade80;">Yes (Unlimited)</td>
+              </tr>
+              <tr style="border-bottom: 1px solid var(--border-color);">
+                <td style="padding: 0.75rem;"><strong>Encrypted Cloud Sync</strong></td>
+                <td style="padding: 0.75rem;">2 Devices</td>
+                <td style="padding: 0.75rem;">2 Devices</td>
+                <td style="padding: 0.75rem; color: #4ade80;">5 Devices</td>
+              </tr>
+              <tr style="border-bottom: 1px solid var(--border-color);">
+                <td style="padding: 0.75rem;"><strong>AI Card Generation</strong></td>
+                <td style="padding: 0.75rem;">Manual Only</td>
+                <td style="padding: 0.75rem; color: #4ade80;">Yes (via Ollama / Custom API)</td>
+                <td style="padding: 0.75rem; color: #4ade80;">Yes (Hosted Cloud AI)</td>
+              </tr>
+              <tr style="border-bottom: 1px solid var(--border-color);">
+                <td style="padding: 0.75rem;"><strong>Image Occlusion</strong></td>
+                <td style="padding: 0.75rem;">No</td>
+                <td style="padding: 0.75rem;">No</td>
+                <td style="padding: 0.75rem; color: #4ade80;">Yes</td>
+              </tr>
+              <tr>
+                <td style="padding: 0.75rem;"><strong>AI-Graded Typed Answers</strong></td>
+                <td style="padding: 0.75rem;">No</td>
+                <td style="padding: 0.75rem;">No</td>
+                <td style="padding: 0.75rem; color: #4ade80;">Yes</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <p>
+            For 95% of self-hosters and digital creators, the <strong>Free + BYOK (Bring Your Own Key)</strong> setup provides everything needed for world-class learning without any recurring subscription.
+          </p>
+
+          <h2>Frequently Asked Questions</h2>
+          <details style="background: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: 8px; padding: 1rem; margin-bottom: 1rem;">
+            <summary style="font-weight: 700; cursor: pointer; color: var(--text-primary);">What is the difference between FSRS and SM-2 in spaced repetition?</summary>
+            <p style="margin-top: 0.75rem; color: var(--text-secondary); line-height: 1.6;">
+              SM-2 (from 1987) uses fixed ease factor multipliers and rigid interval schedules that frequently trap users in "ease hell." FSRS is a modern machine-learning model based on human memory pillars: Difficulty, Stability, and Retrievability. It personalizes review schedules to your specific learning speed and allows targeting a specific retention rate (such as 90%).
+            </p>
+          </details>
+
+          <details style="background: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: 8px; padding: 1rem; margin-bottom: 1rem;">
+            <summary style="font-weight: 700; cursor: pointer; color: var(--text-primary);">Does True Recall clutter my Obsidian markdown files with card metadata?</summary>
+            <p style="margin-top: 0.75rem; color: var(--text-secondary); line-height: 1.6;">
+              No. Unlike older plugins that insert intrusive comment blocks and card IDs into your notes, True Recall manages flashcard data and review history in background data stores. Your markdown files remain clean, portable, and readable in any text editor.
+            </p>
+          </details>
+
+          <details style="background: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: 8px; padding: 1rem;">
+            <summary style="font-weight: 700; cursor: pointer; color: var(--text-primary);">Can I use AI flashcard generation for free without paying for True Recall Pro?</summary>
+            <p style="margin-top: 0.75rem; color: var(--text-secondary); line-height: 1.6;">
+              Yes. True Recall allows you to connect your own local AI provider (such as Ollama running locally on your homelab) or an OpenRouter API key completely free. Pro is only required if you want developer-hosted cloud AI, automated Image Occlusion, or AI-Graded typed answers.
+            </p>
+          </details>
+
+          <h2>Key Takeaways & Next Steps</h2>
+          <p>
+            By integrating spaced repetition directly into your Obsidian vault, True Recall eliminates the copy-paste friction that derails most flashcard workflows. Powered by the adaptive FSRS algorithm and enhanced by local AI generation, it transforms static notes into an active recall study system.
+          </p>
+
+          <p>
+            To expand your Obsidian productivity system:
+          </p>
+          <ul>
+            <li>Download our pre-configured <a href="../resources.html">Tech Simpld Obsidian Starter Vault (2026 Edition)</a>.</li>
+            <li>Format your raw study notes with our <a href="../tools.html#markdown">Markdown Table & Frontmatter Formatter</a>.</li>
+            <li>Explore our step-by-step guide on <a href="obsidian-second-brain-setup.html">Building a Zero-Lag Second Brain in Obsidian</a>.</li>
+          </ul>
+        </div>
+
+        <div class="author-bio-box">
+          <div class="author-bio-avatar" aria-hidden="true">TS</div>
+          <div class="author-bio-content">
+            <h3>Written by Tech Simpld</h3>
+            <span class="author-bio-role">MCSA Certified Systems Engineer &bull; 20+ Years Enterprise IT</span>
+            <p>
+              Tech Simpld is maintained by a Systems Engineer managing virtual machines and enterprise storage architecture across five data centers. Every tutorial and configuration on this site is tested first-hand in our physical Proxmox VE home lab and daily Obsidian production vaults.
+            </p>
+            <div class="author-bio-links">
+              <a href="../about.html">Lab Architecture &amp; Mission &rarr;</a>
+              <a href="../tools.html">Interactive Home Lab Web Tools &rarr;</a>
+            </div>
+          </div>
+        </div>
+
+      </article>
+
+      <!-- Sidebar Column -->
+      <aside class="blog-sidebar">
+        <div class="sidebar-widget">
+          <h4 class="widget-title">About Tech Simpld</h4>
+          <p style="font-size: 0.9rem; margin-bottom: 1rem;">
+            Software, home labs, and self-hosted tools simplified. Direct, step-by-step guides with zero fluff.
+          </p>
+          <a href="https://youtube.com/@TechSimpld" target="_blank" class="btn btn-outline btn-sm" style="width: 100%;">
+            Visit YouTube Channel
+          </a>
+        </div>
+
+        <div class="sidebar-widget">
+          <h4 class="widget-title">Related Tutorials</h4>
+          <ul style="list-style: none; padding: 0; margin: 0; font-size: 0.9rem; line-height: 1.8;">
+            <li><a href="obsidian-starter-vault-tutorial.html" style="color: var(--accent-cyan);">Obsidian Starter Vault Tutorial</a></li>
+            <li><a href="obsidian-plugins-i-use-2026.html" style="color: var(--text-primary);">Best Obsidian Plugins (2026)</a></li>
+            <li><a href="manage-time-tasks-obsidian-gtd.html" style="color: var(--text-primary);">Obsidian GTD Task Management</a></li>
+            <li><a href="../tools.html#markdown" style="color: var(--accent-yellow, #facc15);">Markdown & Note Formatter Tool</a></li>
+          </ul>
+        </div>
+      </aside>
+
+    </div>
+  </main>
+
+  <!-- Footer Section -->
+  <footer class="footer">
+    <div class="footer-container">
+      <div>
+        <a href="../index.html" class="footer-logo">
+          Tech Simpld<span class="logo-dot"></span>
+        </a>
+        <p class="footer-desc">
+          Software and productivity, simplified. Clean, no-fluff tutorials and templates for digital creators and builders.
+        </p>
+      </div>
+      <div>
+        <h4 class="footer-heading">Navigation</h4>
+        <ul class="footer-links">
+          <li><a href="../index.html">Home</a></li>
+          <li><a href="../about.html">About</a></li>
+          <li><a href="../posts.html">Posts</a></li>
+          <li><a href="../resources.html">Resources</a></li>
+          <li><a href="../tools.html">Tools</a></li>
+          <li><a href="../contact.html">Contact</a></li>
+          <li><a href="https://youtube.com/@TechSimpld" target="_blank">YouTube Channel</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4 class="footer-heading">Contact & Legal</h4>
+        <ul class="footer-links">
+          <li><a href="mailto:techsimpld@gmail.com">techsimpld@gmail.com</a></li>
+          <li><a href="../privacy-policy.html">Privacy Policy</a></li>
+          <li><a href="../terms-of-service.html">Terms of Service</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div>© 2026 Tech Simpld. All rights reserved. Built for lightning-fast speeds.</div>
+      <div class="footer-socials">
+        <a href="https://youtube.com/@TechSimpld" class="social-link" aria-label="YouTube">YouTube</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="../js/scripts.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-bash.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-yaml.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-markdown.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/toolbar/prism-toolbar.min.js"></script>
+  <!-- Mermaid Engine -->
+  <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+  <script>
+    mermaid.initialize({
+      startOnLoad: true,
+      theme: 'dark',
+      themeVariables: {
+        darkMode: true,
+        background: '#0f111a',
+        primaryColor: '#161926',
+        primaryBorderColor: '#8b5cf6',
+        primaryTextColor: '#f3f4f6',
+        lineColor: '#06b6d4',
+        secondaryColor: '#1f2336',
+        tertiaryColor: '#07080d'
+      }
+    });
+  </script>
+</body>
+
+</html>

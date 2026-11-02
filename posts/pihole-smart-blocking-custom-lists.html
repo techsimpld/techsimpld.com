@@ -53,14 +53,19 @@
     "@type": "Article",
     "headline": "Pi-hole Smart Blocking & Custom Lists",
     "image": [
-      "https://techsimpld.com/images/Pi-hole%20Smart%20Blocking%20%26%20Custom%20Lists.png"
+      "https://techsimpld.com/images/Pi-hole%20Smart%20Blocking%20%26%20Custom%20Lists.png",
+      "https://techsimpld.com/images/pihole-lists-step-1.png",
+      "https://techsimpld.com/images/pihole-lists-step-2.png",
+      "https://techsimpld.com/images/pihole-lists-step-3.png"
     ],
     "datePublished": "2026-06-22T08:00:00+08:00",
-    "dateModified": "2026-06-22T08:00:00+08:00",
+    "dateModified": "2026-11-02T10:00:00-05:00",
     "author": {
       "@type": "Person",
       "name": "Tech Simpld",
-      "url": "https://techsimpld.com/about.html"
+      "url": "https://techsimpld.com/about.html",
+      "jobTitle": "MCSA Certified Systems Engineer",
+      "sameAs": ["https://youtube.com/@TechSimpld"]
     },
     "publisher": {
       "@type": "Organization",
@@ -115,6 +120,7 @@
         <li><a href="../about.html" class="nav-link">About</a></li>
         <li><a href="../posts.html" class="nav-link active">Posts</a></li>
         <li><a href="../resources.html" class="nav-link">Resources</a></li>
+        <li><a href="../tools.html" class="nav-link">Tools</a></li>
         <li><a href="../contact.html" class="nav-link">Contact</a></li>
         <li><a href="https://youtube.com/@TechSimpld" target="_blank" class="nav-link">YouTube</a></li>
       </ul>
@@ -183,6 +189,13 @@
 
         <!-- Article Content -->
         <div class="prose">
+          <figure class="article-featured-figure">
+            <picture>
+              <source srcset="../images/Pi-hole%20Smart%20Blocking%20%26%20Custom%20Lists.webp" type="image/webp">
+              <img src="../images/Pi-hole%20Smart%20Blocking%20%26%20Custom%20Lists.png" alt="Pi-hole Custom Gravity Adlists, Regex Filters, and Unbound Recursive DNS" width="1200" height="675" loading="eager" decoding="async">
+            </picture>
+            <figcaption class="article-featured-caption">Hardening Pi-hole DNS filtering with curated Firebog gravity blocklists and regex telemetry rules.</figcaption>
+          </figure>
           <p>
             If you have successfully followed my initial <a href="pihole-installation-guide.html">Pi-hole Proxmox deployment guide</a>, you have already taken the most important step: you have eliminated the vast majority of network-wide advertisements and background telemetry across your entire home. Your internet is faster, and your bandwidth is no longer being choked by tracking scripts. However, standard, blanket blocking inherently possesses a massive structural flaw: it forcefully treats every single device on your network exactly the same.
           </p>
@@ -234,6 +247,14 @@ flowchart TD
             You have now successfully created a logical container. However, right now, that container is completely empty. We need to populate it.
           </p>
 
+          <figure class="article-featured-figure">
+            <picture>
+              <source srcset="../images/pihole-lists-step-1.webp" type="image/webp">
+              <img src="../images/pihole-lists-step-1.png" alt="Pi-hole Group Management interface creating a new custom filtering group" width="1280" height="640" loading="lazy" decoding="async">
+            </picture>
+            <figcaption class="article-featured-caption">Creating logical device groups inside Pi-hole Group Management to separate strict lab filtering from family mobile devices.</figcaption>
+          </figure>
+
           <h2>Step 2: Assigning Specific Physical Clients to Your New Groups</h2>
           <p>
             Now we need to explicitly tell Pi-hole exactly which physical hardware devices belong inside the segmented group we just created.
@@ -249,6 +270,14 @@ flowchart TD
             Congratulations, this specific device is now completely isolated from your standard network rules. Any new blocklists you apply to the 'Default' group will no longer affect this iPad, and any ultra-aggressive lists you apply to the iPad will not break your wife's shopping links. This is the foundation of network harmony.
           </p>
 
+          <figure class="article-featured-figure">
+            <picture>
+              <source srcset="../images/pihole-lists-step-2.webp" type="image/webp">
+              <img src="../images/pihole-lists-step-2.png" alt="Pi-hole Domain Management view assigning exact and regex domain rules to specific client groups" width="1280" height="640" loading="lazy" decoding="async">
+            </picture>
+            <figcaption class="article-featured-caption">Configuring exact and regular expression domain exceptions and mapping them directly to segmented client groups.</figcaption>
+          </figure>
+
           <h2>Step 3: Expanding Your Protection with Curated Community Blocklists</h2>
           <p>
             Pi-hole ships with the standard StevenBlack list enabled by default. While this list is an excellent baseline, it fundamentally misses a massive amount of modern tracking telemetry, specifically targeting smart TVs, IoT devices, and aggressively tracked mobile apps. You absolutely need to pull in externally curated lists from the wider privacy community.
@@ -260,6 +289,14 @@ flowchart TD
             <li><strong>Firebog (The "Ticked" Lists):</strong> The website <a href="https://firebog.net" target="_blank">Firebog.net</a> is legendary in the Pi-hole community. It curates dozens of different adlists, categorized by type (Tracking, Advertising, Malicious, etc.). The secret is to <em>only</em> use the lists that are highlighted in a green box with a checkmark (the "ticked" lists). These specific lists are heavily vetted and are virtually guaranteed not to interfere with normal, day-to-day internet browsing.</li>
             <li><strong>HaGezi's DNS Blocklists:</strong> Available publicly on GitHub, HaGezi maintains some of the best blocklists in the world right now. His "Multi Normal" list is widely considered the current gold standard for perfectly balancing highly aggressive tracker blocking with incredibly low false-positive rates. If you only add one extra list to your Pi-hole, make it HaGezi's Multi Normal.</li>
           </ul>
+
+          <figure class="article-featured-figure">
+            <picture>
+              <source srcset="../images/pihole-lists-step-3.webp" type="image/webp">
+              <img src="../images/pihole-lists-step-3.png" alt="The Firebog curated DNS blocklist collection highlighting verified green-ticked adlists" width="1280" height="640" loading="lazy" decoding="async">
+            </picture>
+            <figcaption class="article-featured-caption">Selecting verified, low-false-positive community blocklists from The Firebog's green-ticked Suspicious and Advertising categories.</figcaption>
+          </figure>
 
           <h2>Step 4: Applying Your Custom Blocklists to Specific Groups</h2>
           <p>
@@ -324,7 +361,22 @@ pihole -t</code></pre>
             <li><a href="https://firebog.net/" target="_blank" rel="noopener noreferrer">The Firebog Curated Adlist Collection</a></li>
             <li><a href="https://github.com/hagezi/dns-blocklists" target="_blank" rel="noopener noreferrer">HaGezi's Premium DNS Blocklists Repository</a></li>
           </ul>
-        </div></div>
+        </div>
+
+        <div class="author-bio-box">
+          <div class="author-bio-avatar" aria-hidden="true">TS</div>
+          <div class="author-bio-content">
+            <h3>Written by Tech Simpld</h3>
+            <span class="author-bio-role">MCSA Certified Systems Engineer &bull; 20+ Years Enterprise IT</span>
+            <p>
+              Tech Simpld is maintained by a Systems Engineer managing virtual machines and enterprise storage architecture across five data centers. Every tutorial and configuration on this site is tested first-hand in our physical Proxmox VE home lab and daily Obsidian production vaults.
+            </p>
+            <div class="author-bio-links">
+              <a href="../about.html">Lab Architecture &amp; Mission &rarr;</a>
+              <a href="../tools.html">Interactive Home Lab Web Tools &rarr;</a>
+            </div>
+          </div>
+        </div>
 
       </article>
 
@@ -348,8 +400,8 @@ pihole -t</code></pre>
           <h4 class="widget-title">Related Tutorials</h4>
           <ul style="list-style: none; padding: 0; margin: 0; font-size: 0.9rem; line-height: 1.8;">
             <li><a href="pihole-installation-guide.html" style="color: var(--accent-cyan);">Pi-hole Initial Proxmox Setup</a></li>
-            <li><a href="pihole-youtube-ads-truth.html" style="color: var(--text-color);">The Truth About Pi-hole & YouTube Ads</a></li>
-            <li><a href="cloudflare-zero-trust-tunnel-guide.html" style="color: var(--text-color);">Cloudflare Zero Trust Remote Access</a></li>
+            <li><a href="pihole-youtube-ads-truth.html" style="color: var(--text-primary);">The Truth About Pi-hole & YouTube Ads</a></li>
+            <li><a href="cloudflare-zero-trust-tunnel-guide.html" style="color: var(--text-primary);">Cloudflare Zero Trust Remote Access</a></li>
           </ul>
         </div>
 
@@ -377,6 +429,7 @@ pihole -t</code></pre>
           <li><a href="../about.html">About</a></li>
           <li><a href="../posts.html">Posts</a></li>
           <li><a href="../resources.html">Resources</a></li>
+          <li><a href="../tools.html">Tools</a></li>
           <li><a href="../contact.html">Contact</a></li>
           <li><a href="https://youtube.com/@TechSimpld" target="_blank">YouTube Channel</a></li>
         </ul>

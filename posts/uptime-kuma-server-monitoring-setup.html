@@ -56,14 +56,19 @@
     "@type": "Article",
     "headline": "Stop Guessing When Servers Crash: Uptime Kuma Dashboard Setup",
     "image": [
-      "https://techsimpld.com/images/Stop%20Guessing%20When%20Servers%20Crash%20Uptime%20Kuma%20Dashboard%20Setup.jpg"
+      "https://techsimpld.com/images/Stop%20Guessing%20When%20Servers%20Crash%20Uptime%20Kuma%20Dashboard%20Setup.jpg",
+      "https://techsimpld.com/images/uptime-kuma-step-1.png",
+      "https://techsimpld.com/images/uptime-kuma-step-2.png",
+      "https://techsimpld.com/images/uptime-kuma-step-3.png"
     ],
     "datePublished": "2026-09-15T08:00:00-04:00",
-    "dateModified": "2026-09-15T08:00:00-04:00",
+    "dateModified": "2026-11-02T10:00:00-05:00",
     "author": {
       "@type": "Person",
       "name": "Tech Simpld",
-      "url": "https://techsimpld.com/about.html"
+      "url": "https://techsimpld.com/about.html",
+      "jobTitle": "MCSA Certified Systems Engineer",
+      "sameAs": ["https://youtube.com/@TechSimpld"]
     },
     "publisher": {
       "@type": "Organization",
@@ -118,6 +123,7 @@
         <li><a href="../about.html" class="nav-link">About</a></li>
         <li><a href="../posts.html" class="nav-link active">Posts</a></li>
         <li><a href="../resources.html" class="nav-link">Resources</a></li>
+        <li><a href="../tools.html" class="nav-link">Tools</a></li>
         <li><a href="../contact.html" class="nav-link">Contact</a></li>
         <li><a href="https://youtube.com/@TechSimpld" target="_blank" class="nav-link">YouTube</a></li>
       </ul>
@@ -185,6 +191,13 @@
 
         <!-- Article Content -->
         <div class="prose">
+          <figure class="article-featured-figure">
+            <picture>
+              <source srcset="../images/Stop%20Guessing%20When%20Servers%20Crash%20Uptime%20Kuma%20Dashboard%20Setup.webp" type="image/webp">
+              <img src="../images/Stop%20Guessing%20When%20Servers%20Crash%20Uptime%20Kuma%20Dashboard%20Setup.jpg" alt="Uptime Kuma Self-Hosted Infrastructure Monitoring Dashboard and TCP/HTTP Probes" width="1200" height="675" loading="eager" decoding="async">
+            </picture>
+            <figcaption class="article-featured-caption">Real-time service monitoring, SSL certificate expiration tracking, and Docker health checks with Uptime Kuma.</figcaption>
+          </figure>
           <p>
             There is nothing more frustrating than opening your favorite self-hosted web app, whether that is Plex, your password vault, Pi-hole, or Nextcloud, only to see a generic browser timeout error. Even worse is realizing the service has been down for twelve hours, and you had no idea because you were not actively checking it.
           </p>
@@ -327,6 +340,14 @@ pm2 startup
             Want to monitor a PostgreSQL database, an SSH port, or an MQTT broker? Use the <strong>TCP Port</strong> monitor type, specify the hostname or IP, and enter the port (e.g., <code>5432</code> for Postgres or <code>1883</code> for MQTT).
           </p>
 
+          <figure class="article-featured-figure">
+            <picture>
+              <source srcset="../images/uptime-kuma-step-1.webp" type="image/webp">
+              <img src="../images/uptime-kuma-step-1.png" alt="Uptime Kuma Add New Monitor configuration panel showing HTTP monitor type, heartbeat interval, and retry settings" width="1280" height="640" loading="lazy" decoding="async">
+            </picture>
+            <figcaption class="article-featured-caption">Configuring an HTTP(s) service monitor with a 60-second heartbeat interval inside the Uptime Kuma dashboard.</figcaption>
+          </figure>
+
           <h2>Connecting Notification Channels</h2>
           <p>
             A dashboard is useless if you have to sit there staring at it. Uptime Kuma shines when it comes to notification integrations.
@@ -353,6 +374,14 @@ pm2 startup
             Check the box that says <strong>Default enabled</strong> so that all current and future monitors automatically route alerts through this channel. Click <strong>Test</strong> to verify delivery, then click <strong>Save</strong>.
           </p>
 
+          <figure class="article-featured-figure">
+            <picture>
+              <source srcset="../images/uptime-kuma-step-2.webp" type="image/webp">
+              <img src="../images/uptime-kuma-step-2.png" alt="Uptime Kuma Set Up Notification modal displaying supported webhook and push providers including Gotify, Discord, and Telegram" width="1280" height="640" loading="lazy" decoding="async">
+            </picture>
+            <figcaption class="article-featured-caption">Selecting a webhook or push alert provider such as Gotify, Telegram, or Discord in the Uptime Kuma notification settings.</figcaption>
+          </figure>
+
           <h2>Creating a Public Status Page</h2>
           <p>
             If other people in your household or team rely on your servers, give them a public status page so they don't have to message you asking if the internet or media server is down.
@@ -370,6 +399,14 @@ pm2 startup
           <p>
             You can now expose this status page through a Cloudflare Tunnel or local reverse proxy, giving everyone a clear, real-time look at service uptime.
           </p>
+
+          <figure class="article-featured-figure">
+            <picture>
+              <source srcset="../images/uptime-kuma-step-3.webp" type="image/webp">
+              <img src="../images/uptime-kuma-step-3.png" alt="Uptime Kuma public Status Page editor showing live 100% uptime heartbeat bars for self-hosted services" width="1280" height="640" loading="lazy" decoding="async">
+            </picture>
+            <figcaption class="article-featured-caption">Customizing a live Uptime Kuma status page with grouped service monitors and dark mode styling.</figcaption>
+          </figure>
 
           <h2>Troubleshooting & Common Pitfalls</h2>
           <p>
@@ -417,7 +454,22 @@ curl -X POST "https://push.yourdomain.com/message?token=YOUR_APP_TOKEN" \
           <p>
             Pair this monitoring dashboard with our <a href="gotify-self-hosted-push-notifications.html">Gotify Push Notifications Guide</a> and <a href="budget-proxmox-home-lab-setup.html">Budget Proxmox Cluster Tour</a> to build a self-healing private cloud.
           </p>
-        </div></div>
+        </div>
+
+        <div class="author-bio-box">
+          <div class="author-bio-avatar" aria-hidden="true">TS</div>
+          <div class="author-bio-content">
+            <h3>Written by Tech Simpld</h3>
+            <span class="author-bio-role">MCSA Certified Systems Engineer &bull; 20+ Years Enterprise IT</span>
+            <p>
+              Tech Simpld is maintained by a Systems Engineer managing virtual machines and enterprise storage architecture across five data centers. Every tutorial and configuration on this site is tested first-hand in our physical Proxmox VE home lab and daily Obsidian production vaults.
+            </p>
+            <div class="author-bio-links">
+              <a href="../about.html">Lab Architecture &amp; Mission &rarr;</a>
+              <a href="../tools.html">Interactive Home Lab Web Tools &rarr;</a>
+            </div>
+          </div>
+        </div>
 
       </article>
 
@@ -437,8 +489,8 @@ curl -X POST "https://push.yourdomain.com/message?token=YOUR_APP_TOKEN" \
           <h4 class="widget-title">Related Tutorials</h4>
           <ul style="list-style: none; padding: 0; margin: 0; font-size: 0.9rem; line-height: 1.8;">
             <li><a href="gotify-self-hosted-push-notifications.html" style="color: var(--accent-cyan);">Gotify Phone Notifications</a></li>
-            <li><a href="cloudflare-zero-trust-tunnel-guide.html" style="color: var(--text-color);">Cloudflare Zero Trust Tunnels</a></li>
-            <li><a href="budget-proxmox-home-lab-setup.html" style="color: var(--text-color);">Budget Proxmox Cluster Tour</a></li>
+            <li><a href="cloudflare-zero-trust-tunnel-guide.html" style="color: var(--text-primary);">Cloudflare Zero Trust Tunnels</a></li>
+            <li><a href="budget-proxmox-home-lab-setup.html" style="color: var(--text-primary);">Budget Proxmox Cluster Tour</a></li>
           </ul>
         </div>
       </aside>
@@ -464,6 +516,7 @@ curl -X POST "https://push.yourdomain.com/message?token=YOUR_APP_TOKEN" \
           <li><a href="../about.html">About</a></li>
           <li><a href="../posts.html">Posts</a></li>
           <li><a href="../resources.html">Resources</a></li>
+          <li><a href="../tools.html">Tools</a></li>
           <li><a href="../contact.html">Contact</a></li>
           <li><a href="https://youtube.com/@TechSimpld" target="_blank">YouTube Channel</a></li>
         </ul>

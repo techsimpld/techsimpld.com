@@ -21,9 +21,9 @@
     gtag('config', 'G-1KFGHVDB66');
   </script>
 
-  <!-- Google AdSense -->
-  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5214277715351322"
-    crossorigin="anonymous"></script>
+
+
+
 
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -46,6 +46,23 @@
   <meta name="twitter:title" content="Contact Us | Tech Simpld">
   <meta name="twitter:description" content="Get in touch with Tech Simpld. Find our official contact info for business inquiries, sponsorships, product reviews, and collaboration opportunities.">
   <meta name="twitter:image" content="https://techsimpld.com/images/obsidian-vault.png">
+
+  <!-- Structured Data (JSON-LD) -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "ContactPage",
+    "name": "Contact Tech Simpld",
+    "url": "https://techsimpld.com/contact.html",
+    "description": "Get in touch with Tech Simpld. Find our official contact info for business inquiries, sponsorships, product reviews, and collaboration opportunities.",
+    "mainEntity": {
+      "@type": "Organization",
+      "name": "Tech Simpld",
+      "url": "https://techsimpld.com/",
+      "email": "techsimpld@gmail.com"
+    }
+  }
+  </script>
 
   <!-- DNS Prefetch & Preconnect for Speed -->
   <link rel="dns-prefetch" href="https://www.googletagmanager.com">
@@ -86,6 +103,7 @@
         <li><a href="about.html" class="nav-link">About</a></li>
         <li><a href="posts.html" class="nav-link">Posts</a></li>
         <li><a href="resources.html" class="nav-link">Resources</a></li>
+        <li><a href="tools.html" class="nav-link">Tools</a></li>
         <li><a href="contact.html" class="nav-link active">Contact</a></li>
         <li><a href="https://youtube.com/@TechSimpld" target="_blank" class="nav-link">YouTube</a></li>
       </ul>
@@ -113,7 +131,7 @@
       </p>
     </header>
 
-    <div class="prose" style="background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 12px; padding: 2rem;">
+    <div class="prose" style="background: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: 12px; padding: 2rem;">
       <h2 style="margin-top: 0;">Sponsorships & Product Reviews</h2>
       <p>
         My primary focus is on creating high-quality, step-by-step video tutorials for productivity software and tech workflows. 
@@ -122,24 +140,24 @@
         If your company has a product, software tool, or piece of gear that you believe would genuinely benefit the Tech Simpld audience, I am open to discussing dedicated reviews, integrations, or sponsorships.
       </p>
 
-      <div style="background: var(--bg-color); border: 1px solid var(--border-color); padding: 2rem; margin: 2rem 0; border-radius: 8px;">
+      <div style="background: var(--bg-primary); border: 1px solid var(--border-color); padding: 2rem; margin: 2rem 0; border-radius: 8px;">
         <h3 style="margin-top: 0;">Send me a message</h3>
         <form action="https://formspree.io/f/maenbdbg" method="POST" style="display: flex; flex-direction: column; gap: 1rem;">
           <div style="display: flex; flex-direction: column; gap: 0.5rem;">
             <label for="name" style="font-weight: 600;">Name</label>
-            <input type="text" id="name" name="name" required style="padding: 0.75rem; border: 1px solid var(--border-color); border-radius: 4px; background: var(--card-bg); color: var(--text-primary); font-family: inherit;">
+            <input type="text" id="name" name="name" required style="padding: 0.75rem; border: 1px solid var(--border-color); border-radius: 4px; background: var(--bg-secondary); color: var(--text-primary); font-family: inherit;">
           </div>
           <div style="display: flex; flex-direction: column; gap: 0.5rem;">
             <label for="email" style="font-weight: 600;">Email Address</label>
-            <input type="email" id="email" name="email" required style="padding: 0.75rem; border: 1px solid var(--border-color); border-radius: 4px; background: var(--card-bg); color: var(--text-primary); font-family: inherit;">
+            <input type="email" id="email" name="email" required style="padding: 0.75rem; border: 1px solid var(--border-color); border-radius: 4px; background: var(--bg-secondary); color: var(--text-primary); font-family: inherit;">
           </div>
           <div style="display: flex; flex-direction: column; gap: 0.5rem;">
             <label for="subject" style="font-weight: 600;">Subject (Sponsorship, Review, etc.)</label>
-            <input type="text" id="subject" name="subject" required style="padding: 0.75rem; border: 1px solid var(--border-color); border-radius: 4px; background: var(--card-bg); color: var(--text-primary); font-family: inherit;">
+            <input type="text" id="subject" name="subject" required style="padding: 0.75rem; border: 1px solid var(--border-color); border-radius: 4px; background: var(--bg-secondary); color: var(--text-primary); font-family: inherit;">
           </div>
           <div style="display: flex; flex-direction: column; gap: 0.5rem;">
             <label for="message" style="font-weight: 600;">Message</label>
-            <textarea id="message" name="message" rows="5" required style="padding: 0.75rem; border: 1px solid var(--border-color); border-radius: 4px; background: var(--card-bg); color: var(--text-primary); font-family: inherit; resize: vertical;"></textarea>
+            <textarea id="message" name="message" rows="5" required style="padding: 0.75rem; border: 1px solid var(--border-color); border-radius: 4px; background: var(--bg-secondary); color: var(--text-primary); font-family: inherit; resize: vertical;"></textarea>
           </div>
           
           <!-- Honeypot spam field: bots will fill this in, humans won't see it -->
@@ -178,6 +196,7 @@
           <li><a href="about.html">About</a></li>
           <li><a href="posts.html">Posts</a></li>
           <li><a href="resources.html">Resources</a></li>
+          <li><a href="tools.html">Tools</a></li>
           <li><a href="contact.html">Contact</a></li>
           <li><a href="https://youtube.com/@TechSimpld" target="_blank">YouTube Channel</a></li>
         </ul>

@@ -56,14 +56,19 @@
     "@type": "Article",
     "headline": "My Obsidian Second Brain Setup in 2026",
     "image": [
-      "https://techsimpld.com/images/Obsidian%20Second%20Brain%20Setup.png"
+      "https://techsimpld.com/images/Obsidian%20Second%20Brain%20Setup.png",
+      "https://techsimpld.com/images/obsidian-second-brain-step-1.png",
+      "https://techsimpld.com/images/obsidian-second-brain-step-2.png",
+      "https://techsimpld.com/images/obsidian-second-brain-step-3.png"
     ],
     "datePublished": "2026-05-26T08:00:00+08:00",
-    "dateModified": "2026-05-26T08:00:00+08:00",
+    "dateModified": "2026-11-02T10:00:00-05:00",
     "author": {
       "@type": "Person",
       "name": "Tech Simpld",
-      "url": "https://techsimpld.com/about.html"
+      "url": "https://techsimpld.com/about.html",
+      "jobTitle": "MCSA Certified Systems Engineer",
+      "sameAs": ["https://youtube.com/@TechSimpld"]
     },
     "publisher": {
       "@type": "Organization",
@@ -118,6 +123,7 @@
         <li><a href="../about.html" class="nav-link">About</a></li>
         <li><a href="../posts.html" class="nav-link active">Posts</a></li>
         <li><a href="../resources.html" class="nav-link">Resources</a></li>
+        <li><a href="../tools.html" class="nav-link">Tools</a></li>
         <li><a href="../contact.html" class="nav-link">Contact</a></li>
         <li><a href="https://youtube.com/@TechSimpld" target="_blank" class="nav-link">YouTube</a></li>
       </ul>
@@ -186,6 +192,13 @@
 
         <!-- Article Content -->
         <div class="prose">
+          <figure class="article-featured-figure">
+            <picture>
+              <source srcset="../images/Obsidian%20Second%20Brain%20Setup.webp" type="image/webp">
+              <img src="../images/Obsidian%20Second%20Brain%20Setup.png" alt="Obsidian Second Brain Vault Folder Hierarchy and Knowledge Graph Architecture" width="1200" height="675" loading="eager" decoding="async">
+            </picture>
+            <figcaption class="article-featured-caption">Structuring a scalable local-first Second Brain in Obsidian with PARA folders, atomic notes, and bi-directional links.</figcaption>
+          </figure>
           <p>
             I've been there too many times: deep into a project, knowing I read a brilliant article last week that perfectly solves my current problem, but I simply cannot find it. My bookmarks were a graveyard of unnamed links. My browser tabs were out of control. My Apple Notes app was a nightmare of grocery lists mixed with critical server configuration commands. Thirty minutes into searching for that one specific command, the flow state was entirely gone, and I would end up just re-Googling the problem from scratch.
           </p>
@@ -231,6 +244,14 @@
             <li><strong>Linked Assets:</strong> I deliberately do not dump all my research, PDFs, and code directly into the main project note. It makes the note too long and unreadable. Instead, I use internal Obsidian wikilinks like <code>[[Proxmox Network Config]]</code>. It keeps the main page clean while keeping the deep-dive technical details just one click away.</li>
           </ol>
 
+          <figure class="article-featured-figure">
+            <picture>
+              <source srcset="../images/obsidian-second-brain-step-1.webp" type="image/webp">
+              <img src="../images/obsidian-second-brain-step-1.png" alt="Obsidian note showing a bidirectional Project Alpha wiki-link inside a clean minimalist workspace" width="1280" height="640" loading="lazy" decoding="async">
+            </picture>
+            <figcaption class="article-featured-caption">Linking atomic notes with double-bracket [[Project Alpha]] wikilinks to establish automatic two-way context without rigid folder hierarchies.</figcaption>
+          </figure>
+
           <h2>Step 3: Connecting Ideas with Obsidian Backlinks</h2>
           <p>
             Here is where Obsidian completely outshines traditional note-taking apps like Evernote or Notion. Folders are rigid and frustrating. Think about it: where does a note about a new Python API framework go? Does it go in the "Work" folder? The "Tech" folder? The "Ideas" folder? I don't care anymore, because I have completely stopped relying on folders for organization. Instead, I rely entirely on <strong>backlinking</strong>.
@@ -250,6 +271,14 @@
             The system organizes itself based on context, not rigid hierarchies. It mirrors how your actual brain works, forming connections between related concepts naturally over time.
           </p>
 
+          <figure class="article-featured-figure">
+            <picture>
+              <source srcset="../images/obsidian-second-brain-step-2.webp" type="image/webp">
+              <img src="../images/obsidian-second-brain-step-2.png" alt="Obsidian interactive Graph View highlighting connected Development, Alpha Build, and Project Alpha nodes" width="1280" height="640" loading="lazy" decoding="async">
+            </picture>
+            <figcaption class="article-featured-caption">Hovering over a core node in the interactive Graph View to highlight every connected milestone, feedback log, and build document.</figcaption>
+          </figure>
+
           <h2>Step 4: Automating Dashboards with Dataview</h2>
           <p>
             When your vault is small, finding things is easy. But when your vault hits a thousand notes, manually finding which projects are active and which are stalled becomes incredibly painful. I use the <strong>Dataview</strong> plugin to build automated, self-updating dashboards so I never have to maintain manual index pages.
@@ -266,6 +295,14 @@ SORT deadline ASC
           <p>
             This small block of code is incredibly powerful. It instantly scans my entire vault for any note containing the <code>#project</code> tag. It filters out any projects where I've set the status to "completed" in the metadata, and then it sorts the remaining active projects by their deadline. It's a live, zero-maintenance dashboard. When I finish a project and change its status, it automatically disappears from this list. I don't have to delete anything or move files around manually.
           </p>
+
+          <figure class="article-featured-figure">
+            <picture>
+              <source srcset="../images/obsidian-second-brain-step-3.webp" type="image/webp">
+              <img src="../images/obsidian-second-brain-step-3.png" alt="Expanded Obsidian Graph View showing multi-node cluster links across templates and project feedback notes" width="1280" height="640" loading="lazy" decoding="async">
+            </picture>
+            <figcaption class="article-featured-caption">An organically growing Second Brain graph cluster connecting project templates, communications logs, and release milestones.</figcaption>
+          </figure>
 
           <h2>Troubleshooting & Common Edge Cases</h2>
           <p>
@@ -292,6 +329,21 @@ SORT deadline ASC
             <a href="../downloads/obsidian-starter-vault.zip" download id="downloadObsidianStarterVaultBtn" class="btn btn-primary btn-download" data-resource="Obsidian Starter Vault">
               Download Starter Vault (ZIP)
             </a>
+          </div>
+        </div>
+
+        <div class="author-bio-box">
+          <div class="author-bio-avatar" aria-hidden="true">TS</div>
+          <div class="author-bio-content">
+            <h3>Written by Tech Simpld</h3>
+            <span class="author-bio-role">MCSA Certified Systems Engineer &bull; 20+ Years Enterprise IT</span>
+            <p>
+              Tech Simpld is maintained by a Systems Engineer managing virtual machines and enterprise storage architecture across five data centers. Every tutorial and configuration on this site is tested first-hand in our physical Proxmox VE home lab and daily Obsidian production vaults.
+            </p>
+            <div class="author-bio-links">
+              <a href="../about.html">Lab Architecture &amp; Mission &rarr;</a>
+              <a href="../tools.html">Interactive Home Lab Web Tools &rarr;</a>
+            </div>
           </div>
         </div>
 
@@ -324,6 +376,15 @@ SORT deadline ASC
           </ul>
         </div>
 
+        <div class="sidebar-widget">
+          <h4 class="widget-title">Related Tutorials</h4>
+          <ul style="list-style: none; padding: 0; margin: 0; font-size: 0.9rem; line-height: 1.8;">
+            <li><a href="obsidian-starter-vault-tutorial.html" style="color: var(--accent-cyan);">Obsidian Starter Vault Guide</a></li>
+            <li><a href="obsidian-plugins-i-use-2026.html" style="color: var(--text-primary);">3 Essential Obsidian Plugins</a></li>
+            <li><a href="sync-obsidian-for-free-couchdb.html" style="color: var(--text-primary);">Free Obsidian CouchDB Sync</a></li>
+            <li><a href="../tools.html" style="color: var(--accent-yellow, #facc15);">Interactive Home Lab Web Tools</a></li>
+          </ul>
+        </div>
       </aside>
 
     </div>
@@ -348,6 +409,7 @@ SORT deadline ASC
           <li><a href="../about.html">About</a></li>
           <li><a href="../posts.html">Posts</a></li>
           <li><a href="../resources.html">Resources</a></li>
+          <li><a href="../tools.html">Tools</a></li>
           <li><a href="../contact.html">Contact</a></li>
           <li><a href="https://youtube.com/@TechSimpld" target="_blank">YouTube Channel</a></li>
         </ul>

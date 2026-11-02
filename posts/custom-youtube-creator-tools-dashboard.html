@@ -56,14 +56,19 @@
     "@type": "Article",
     "headline": "I Got Tired of Bad YouTube Creator Tools, So I Built My Own",
     "image": [
-      "https://techsimpld.com/images/custom-youtube-creator-tools.png"
+      "https://techsimpld.com/images/custom-youtube-creator-tools.png",
+      "https://techsimpld.com/images/creator-dashboard-step-1.png",
+      "https://techsimpld.com/images/creator-dashboard-step-2.png",
+      "https://techsimpld.com/images/creator-dashboard-step-3.png"
     ],
     "datePublished": "2026-10-02T10:00:00+00:00",
-    "dateModified": "2026-10-02T10:00:00+00:00",
+    "dateModified": "2026-11-02T10:00:00-05:00",
     "author": {
       "@type": "Person",
       "name": "Tech Simpld",
-      "url": "https://techsimpld.com/about.html"
+      "url": "https://techsimpld.com/about.html",
+      "jobTitle": "MCSA Certified Systems Engineer",
+      "sameAs": ["https://youtube.com/@TechSimpld"]
     },
     "publisher": {
       "@type": "Organization",
@@ -118,6 +123,7 @@
         <li><a href="../about.html" class="nav-link">About</a></li>
         <li><a href="../posts.html" class="nav-link active">Posts</a></li>
         <li><a href="../resources.html" class="nav-link">Resources</a></li>
+        <li><a href="../tools.html" class="nav-link">Tools</a></li>
         <li><a href="../contact.html" class="nav-link">Contact</a></li>
         <li><a href="https://youtube.com/@TechSimpld" target="_blank" class="nav-link">YouTube</a></li>
       </ul>
@@ -186,6 +192,13 @@
 
         <!-- Article Content -->
         <div class="prose">
+          <figure class="article-featured-figure">
+            <picture>
+              <source srcset="../images/custom-youtube-creator-tools.webp" type="image/webp">
+              <img src="../images/custom-youtube-creator-tools.png" alt="Self-Hosted YouTube Creator Production Dashboard and Analytics Workflow" width="1200" height="675" loading="eager" decoding="async">
+            </picture>
+            <figcaption class="article-featured-caption">Custom self-hosted creator dashboard for video production pipelines, thumbnail testing, and script management.</figcaption>
+          </figure>
           <p>
             Anyone who has consistently created content and uploaded videos to YouTube knows the default YouTube Studio interface leaves a lot to be desired. While the official dashboard displays essential analytics, tracking subscriber ratios, comment themes, link health, and competitor topic coverage requires navigating dozens of fragmented sub-menus.
           </p>
@@ -269,6 +282,14 @@ flowchart TD
             <li><strong>Upcoming Content Pipeline:</strong> Tracking video drafts from initial concept to scheduled release.</li>
           </ul>
 
+          <figure class="article-featured-figure">
+            <picture>
+              <source srcset="../images/creator-dashboard-step-1.webp" type="image/webp">
+              <img src="../images/creator-dashboard-step-1.png" alt="TechSimpld Studio dashboard showing channel analytics, CTR, audience acquisition split, and SQLite growth chart" width="1280" height="640" loading="lazy" decoding="async">
+            </picture>
+            <figcaption class="article-featured-caption">The self-hosted TechSimpld Studio dashboard displaying subscriber velocity, average CTR, and longitudinal SQLite channel growth metrics.</figcaption>
+          </figure>
+
           <h3>2. "Best Time to Post" Algorithmic Analyzer</h3>
           <p>
             Finding the optimal publishing window usually involves guesswork or generic global heatmaps. My tool analyzes my channel's specific past uploads and viewer interaction timestamps across topics like homelabs, Proxmox, and Obsidian.
@@ -301,6 +322,14 @@ flowchart TD
             The engine analyzes the underlying emotional friction (e.g., fear of spending money on slow hardware) and drafts a crisp 30-second video hook outline designed to grab viewer attention in the opening moments of a new tutorial.
           </p>
 
+          <figure class="article-featured-figure">
+            <picture>
+              <source srcset="../images/creator-dashboard-step-2.webp" type="image/webp">
+              <img src="../images/creator-dashboard-step-2.png" alt="TechSimpld Studio Competitor Radar and Outlier Spike Hunter highlighting breakout peer videos" width="1280" height="640" loading="lazy" decoding="async">
+            </picture>
+            <figcaption class="article-featured-caption">Tracking topic momentum with the Competitor Radar and Outlier Spike Hunter module to spot high-velocity homelab tutorials.</figcaption>
+          </figure>
+
           <h2>Editorial Gap Analysis vs. Script Plagiarism</h2>
           <p>
             A critical distinction must be made regarding how transcript extraction is used. This system is <strong>not</strong> designed to copy scripts or replicate other creators' content:
@@ -325,6 +354,14 @@ flowchart TD
           <p>
             When planning a new series on a topic like CouchDB or Cloudflare Tunnels, I can perform a single keyword search across all indexed transcripts. The database reveals exactly where that topic was mentioned across all analyzed videos, highlighting market saturation, common terminology, and unexplored subtopics.
           </p>
+
+          <figure class="article-featured-figure">
+            <picture>
+              <source srcset="../images/creator-dashboard-step-3.webp" type="image/webp">
+              <img src="../images/creator-dashboard-step-3.png" alt="TechSimpld Studio Transcript Vault tool performing full-text timestamp searches across indexed video transcripts" width="1280" height="640" loading="lazy" decoding="async">
+            </picture>
+            <figcaption class="article-featured-caption">Querying the local Transcript Vault across indexed videos to locate exact timestamp mentions and identify unaddressed technical gaps.</figcaption>
+          </figure>
 
           <h2>Technical Architecture & Development Process</h2>
           <p>
@@ -381,6 +418,21 @@ async def verify_catalog_links(url_list: list[str], gotify_token: str, gotify_ur
           </ul>
         </div>
 
+        <div class="author-bio-box">
+          <div class="author-bio-avatar" aria-hidden="true">TS</div>
+          <div class="author-bio-content">
+            <h3>Written by Tech Simpld</h3>
+            <span class="author-bio-role">MCSA Certified Systems Engineer &bull; 20+ Years Enterprise IT</span>
+            <p>
+              Tech Simpld is maintained by a Systems Engineer managing virtual machines and enterprise storage architecture across five data centers. Every tutorial and configuration on this site is tested first-hand in our physical Proxmox VE home lab and daily Obsidian production vaults.
+            </p>
+            <div class="author-bio-links">
+              <a href="../about.html">Lab Architecture &amp; Mission &rarr;</a>
+              <a href="../tools.html">Interactive Home Lab Web Tools &rarr;</a>
+            </div>
+          </div>
+        </div>
+
       </article>
 
       <!-- Sidebar Column -->
@@ -394,6 +446,15 @@ async def verify_catalog_links(url_list: list[str], gotify_token: str, gotify_ur
           <a href="https://youtube.com/@TechSimpld" target="_blank" id="sidebarYoutubeBtn" class="btn btn-outline btn-sm" style="width: 100%;">
             Visit YouTube Channel
           </a>
+        </div>
+        <div class="sidebar-widget">
+          <h4 class="widget-title">Related Tutorials</h4>
+          <ul style="list-style: none; padding: 0; margin: 0; font-size: 0.9rem; line-height: 1.8;">
+            <li><a href="local-llm-vs-cloud-ai-ollama-claude.html" style="color: var(--accent-cyan);">Local LLM vs. Cloud AI Guide</a></li>
+            <li><a href="gotify-self-hosted-push-notifications.html" style="color: var(--text-primary);">Gotify Self-Hosted Push Alerts</a></li>
+            <li><a href="budget-proxmox-home-lab-setup.html" style="color: var(--text-primary);">3-Node Proxmox Home Lab Setup</a></li>
+            <li><a href="../tools.html" style="color: var(--accent-yellow, #facc15);">Interactive Home Lab Web Tools</a></li>
+          </ul>
         </div>
       </aside>
 
@@ -419,6 +480,7 @@ async def verify_catalog_links(url_list: list[str], gotify_token: str, gotify_ur
           <li><a href="../about.html">About</a></li>
           <li><a href="../posts.html">Posts</a></li>
           <li><a href="../resources.html">Resources</a></li>
+          <li><a href="../tools.html">Tools</a></li>
           <li><a href="../contact.html">Contact</a></li>
           <li><a href="https://youtube.com/@TechSimpld" target="_blank">YouTube Channel</a></li>
         </ul>

@@ -56,14 +56,19 @@
     "@type": "Article",
     "headline": "How to Use Obsidian in ANY Web Browser: Complete 2026 Docker Guide",
     "image": [
-      "https://techsimpld.com/images/obsidian-in-web-browser.png"
+      "https://techsimpld.com/images/obsidian-in-web-browser.png",
+      "https://techsimpld.com/images/obsidian-docker-step-1.png",
+      "https://techsimpld.com/images/obsidian-docker-step-2.png",
+      "https://techsimpld.com/images/obsidian-docker-step-3.png"
     ],
     "datePublished": "2026-08-10T08:00:00+08:00",
-    "dateModified": "2026-08-10T08:00:00+08:00",
+    "dateModified": "2026-11-02T10:00:00-05:00",
     "author": {
       "@type": "Person",
       "name": "Tech Simpld",
-      "url": "https://techsimpld.com/about.html"
+      "url": "https://techsimpld.com/about.html",
+      "jobTitle": "MCSA Certified Systems Engineer",
+      "sameAs": ["https://youtube.com/@TechSimpld"]
     },
     "publisher": {
       "@type": "Organization",
@@ -118,6 +123,7 @@
         <li><a href="../about.html" class="nav-link">About</a></li>
         <li><a href="../posts.html" class="nav-link active">Posts</a></li>
         <li><a href="../resources.html" class="nav-link">Resources</a></li>
+        <li><a href="../tools.html" class="nav-link">Tools</a></li>
         <li><a href="../contact.html" class="nav-link">Contact</a></li>
         <li><a href="https://youtube.com/@TechSimpld" target="_blank" class="nav-link">YouTube</a></li>
       </ul>
@@ -186,6 +192,13 @@
 
         <!-- Article Content -->
         <div class="prose">
+          <figure class="article-featured-figure">
+            <picture>
+              <source srcset="../images/obsidian-in-web-browser.webp" type="image/webp">
+              <img src="../images/obsidian-in-web-browser.png" alt="Running Obsidian Desktop Inside Any Web Browser via LinuxServer.io Docker Container" width="1200" height="675" loading="eager" decoding="async">
+            </picture>
+            <figcaption class="article-featured-caption">Streaming a full desktop Obsidian instance to any web browser via KasmVNC and Docker Compose.</figcaption>
+          </figure>
           <p>
             <strong>Obsidian</strong> is hands-down one of the most powerful, flexible, and privacy-respecting note-taking tools available today. Because all your notes are stored locally as plain <code>.md</code> Markdown text files directly on your hard drive, you have complete, uncompromising ownership over your thoughts and data. There is no proprietary database lock-in, and you don't have to worry about a cloud company arbitrarily raising their subscription fees and holding your data hostage.
           </p>
@@ -223,7 +236,7 @@
       - PUID=1000
       - PGID=1000
       - TZ=America/New_York
-      - CUSTOM_USER=chucksadmin
+      - CUSTOM_USER=techsimpld
       - PASSWORD=ChangeThisHighlySecurePasswordImmediately123!
     volumes:
       - ./config:/config
@@ -244,6 +257,14 @@
             <li><code>3000 / 3001</code>: The web ports required for HTTP and HTTPS access to the graphical interface.</li>
           </ul>
 
+          <figure class="article-featured-figure">
+            <picture>
+              <source srcset="../images/obsidian-docker-step-1.webp" type="image/webp">
+              <img src="../images/obsidian-docker-step-1.png" alt="GNU nano editor displaying docker-compose.yml for LinuxServer.io Obsidian container with PUID 1000 and ports 3000/3001" width="1280" height="640" loading="lazy" decoding="async">
+            </picture>
+            <figcaption class="article-featured-caption">Defining the LinuxServer.io Obsidian Docker Compose stack with PUID/PGID mapping, HTTP authentication, and persistent volume mounts.</figcaption>
+          </figure>
+
           <h2>Step 2: Set the Correct Linux Folder Permissions</h2>
           <p>
             I cannot stress this enough: Docker containers will frequently fail to launch properly, or worse, silently fail to save your notes, if the underlying host folders don't have the appropriate read/write permissions mapped to the <code>PUID</code> you defined.
@@ -262,6 +283,14 @@ sudo chown -R 1000:1000 ./vaults ./config
 sudo chmod -R 775 ./vaults ./config
 </code></pre>
 
+          <figure class="article-featured-figure">
+            <picture>
+              <source srcset="../images/obsidian-docker-step-3.webp" type="image/webp">
+              <img src="../images/obsidian-docker-step-3.png" alt="Linux terminal verifying the config and vaults directory structure before launching the Obsidian container" width="1280" height="640" loading="lazy" decoding="async">
+            </picture>
+            <figcaption class="article-featured-caption">Verifying the dedicated config and vaults directories on the Linux host prior to assigning ownership permissions.</figcaption>
+          </figure>
+
           <h2>Step 3: Launch Your Container</h2>
           <p>
             With the configuration perfect and permissions locked in, instruct Docker to pull the latest image layer and start your Obsidian container in detached background mode:
@@ -272,6 +301,14 @@ sudo chmod -R 775 ./vaults ./config
           <p>
             Docker will download the latest LinuxServer image package and initialize the headless X11 environment. Give it about 15 to 30 seconds to fully compile the graphical server before attempting to connect.
           </p>
+
+          <figure class="article-featured-figure">
+            <picture>
+              <source srcset="../images/obsidian-docker-step-2.webp" type="image/webp">
+              <img src="../images/obsidian-docker-step-2.png" alt="Terminal output of docker compose up -d starting the Obsidian container and applying chown 1000:1000 permissions" width="1280" height="640" loading="lazy" decoding="async">
+            </picture>
+            <figcaption class="article-featured-caption">Starting the headless Obsidian KasmVNC container in detached mode and confirming UID 1000 read/write ownership on the host volumes.</figcaption>
+          </figure>
 
           <h2>Step 4: Open Obsidian in Your Web Browser</h2>
           <ol>
@@ -314,7 +351,22 @@ sudo chmod -R 775 ./vaults ./config
           <p>
             To continue optimizing your brand new workspace, I highly recommend checking out my <a href="3-obsidian-settings-you-must-change.html">3 Must-Change Obsidian Settings</a> and my <a href="obsidian-plugins-i-use-2026.html">Essential Plugins Guide</a> to finish customizing your vault for maximum efficiency!
           </p>
-        </div></div>
+        </div>
+
+        <div class="author-bio-box">
+          <div class="author-bio-avatar" aria-hidden="true">TS</div>
+          <div class="author-bio-content">
+            <h3>Written by Tech Simpld</h3>
+            <span class="author-bio-role">MCSA Certified Systems Engineer &bull; 20+ Years Enterprise IT</span>
+            <p>
+              Tech Simpld is maintained by a Systems Engineer managing virtual machines and enterprise storage architecture across five data centers. Every tutorial and configuration on this site is tested first-hand in our physical Proxmox VE home lab and daily Obsidian production vaults.
+            </p>
+            <div class="author-bio-links">
+              <a href="../about.html">Lab Architecture &amp; Mission &rarr;</a>
+              <a href="../tools.html">Interactive Home Lab Web Tools &rarr;</a>
+            </div>
+          </div>
+        </div>
 
       </article>
 
@@ -376,6 +428,7 @@ sudo chmod -R 775 ./vaults ./config
           <li><a href="../about.html">About</a></li>
           <li><a href="../posts.html">Posts</a></li>
           <li><a href="../resources.html">Resources</a></li>
+          <li><a href="../tools.html">Tools</a></li>
           <li><a href="../contact.html">Contact</a></li>
           <li><a href="https://youtube.com/@TechSimpld" target="_blank">YouTube Channel</a></li>
         </ul>
