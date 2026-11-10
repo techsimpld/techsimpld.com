@@ -1,0 +1,673 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <!-- Google tag (gtag.js) -->
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { dataLayer.push(arguments); }
+    gtag('consent', 'default', {
+      'ad_storage': 'denied',
+      'analytics_storage': 'denied',
+      'ad_user_data': 'denied',
+      'ad_personalization': 'denied',
+      'wait_for_update': 500
+    });
+  </script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-1KFGHVDB66"></script>
+  <script>
+    gtag('js', new Date());
+    gtag('config', 'G-1KFGHVDB66');
+  </script>
+
+  <!-- Google AdSense -->
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5214277715351322"
+    crossorigin="anonymous"></script>
+
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Watchtower Is Dead: Why Arcane Is the Safer Docker Auto-Update Manager | Tech Simpld</title>
+  <meta name="description"
+    content="Watchtower is officially archived. Learn how to deploy Arcane for controlled Docker updates with configurable release delays, autoheal recovery, and major version protection.">
+  <link rel="canonical" href="https://techsimpld.com/posts/arcane-docker-watchtower-replacement.html">
+  <meta name="robots" content="index, follow">
+
+  <!-- Open Graph / SEO -->
+  <meta property="og:locale" content="en_US">
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="Tech Simpld">
+  <meta property="og:url" content="https://techsimpld.com/posts/arcane-docker-watchtower-replacement.html">
+  <meta property="og:title" content="Watchtower Is Dead: Why Arcane Is the Safer Docker Auto-Update Manager | Tech Simpld">
+  <meta property="og:description"
+    content="Replace archived Watchtower with Arcane. Prevent breaking database changes with release delay windows, per-container toggles, autoheal recovery, and Docker Swarm support.">
+  <meta property="og:image" content="https://techsimpld.com/images/arcane-watchtower-replacement.png">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Watchtower Is Dead: Why Arcane Is the Safer Docker Auto-Update Manager | Tech Simpld">
+  <meta name="twitter:description"
+    content="Deploy Arcane to replace Watchtower. Prevent 3:00 AM production outages with update delays, version pinning, autoheal recovery, and cron schedules.">
+  <meta name="twitter:image" content="https://techsimpld.com/images/arcane-watchtower-replacement.png">
+
+  <!-- Structured Data: Article (JSON-LD) -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "Watchtower Is Dead: Why Arcane Is the Safer Docker Auto-Update Manager",
+    "image": [
+      "https://techsimpld.com/images/arcane-watchtower-replacement.png",
+      "https://techsimpld.com/images/arcane-step-1.png",
+      "https://techsimpld.com/images/arcane-step-2.png",
+      "https://techsimpld.com/images/arcane-step-3.png"
+    ],
+    "datePublished": "2026-11-10T08:00:00-05:00",
+    "dateModified": "2026-11-10T08:00:00-05:00",
+    "author": {
+      "@type": "Person",
+      "name": "Tech Simpld",
+      "jobTitle": "MCSA Certified Systems Engineer",
+      "url": "https://techsimpld.com/about.html",
+      "sameAs": ["https://youtube.com/@TechSimpld"]
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "Tech Simpld",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://techsimpld.com/images/obsidian-vault.png"
+      }
+    },
+    "description": "Discover why the popular Watchtower container updater was archived and how to deploy Arcane for safer Docker automation with update delays, autoheal recovery, and version locks."
+  }
+  </script>
+
+  <!-- Structured Data: FAQPage (JSON-LD) -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "Why was the Watchtower project archived?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "The maintainers of containrrr/watchtower officially archived the repository on GitHub in December 2025. Development and security patches ceased, leaving homelab users vulnerable to container API incompatibilities and unhandled registry changes."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Why is blind automatic updating risky for Docker containers?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Blind automated updaters pull latest image tags indiscriminately. If an upstream database like PostgreSQL releases a major version bump (such as upgrading from 15 to 16), an unmonitored update will replace the binary while leaving data files in the older schema, causing the container to crash with corrupt volume errors at 3:00 AM."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How does Arcane solve the breaking update problem?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Arcane introduces configurable update delay periods (waiting 24 to 48 hours after image release before pulling), version-pinned update boundaries (preventing unexpected major version leaps), per-container update toggles, and autoheal monitoring to restart failed services automatically."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Does Arcane work with Docker Swarm clusters?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes. While tools like Dockhand focus primarily on standalone Docker hosts, Arcane includes built-in support for Docker Swarm clusters, allowing you to orchestrate rolling service updates across swarm nodes."
+        }
+      }
+    ]
+  }
+  </script>
+
+  <!-- DNS Prefetch & Preconnect for Speed -->
+  <link rel="dns-prefetch" href="https://www.googletagmanager.com">
+  <link rel="preconnect" href="https://www.googletagmanager.com" crossorigin>
+  <link rel="dns-prefetch" href="https://pagead2.googlesyndication.com">
+  <link rel="preconnect" href="https://pagead2.googlesyndication.com" crossorigin>
+
+  <!-- Favicons -->
+  <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+  <link rel="alternate icon" type="image/png" href="../favicon.png">
+
+  <!-- Google Fonts Preconnect & Stylesheet -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet"
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap">
+
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="../css/styles.css">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/toolbar/prism-toolbar.min.css" rel="stylesheet">
+</head>
+
+<body>
+
+  <!-- Navigation Header -->
+  <header class="navbar" id="navbar">
+    <div class="nav-container">
+      <a href="../index.html" class="logo-link">
+        Tech Simpld<span class="logo-dot"></span>
+      </a>
+
+      <button class="menu-toggle" id="menuToggle" aria-label="Toggle Navigation Menu">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+
+      <ul class="nav-menu">
+        <li><a href="../index.html" class="nav-link">Home</a></li>
+        <li><a href="../about.html" class="nav-link">About</a></li>
+        <li><a href="../posts.html" class="nav-link active">Posts</a></li>
+        <li><a href="../resources.html" class="nav-link">Resources</a></li>
+        <li><a href="../tools.html" class="nav-link">Tools</a></li>
+        <li><a href="../contact.html" class="nav-link">Contact</a></li>
+        <li><a href="https://youtube.com/@TechSimpld" target="_blank" class="nav-link">YouTube</a></li>
+      </ul>
+
+      <div class="nav-actions">
+        <a href="https://youtube.com/@TechSimpld" target="_blank" class="btn btn-primary btn-sm"
+          id="subscribeHeaderBtn">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+            <path
+              d="M23.498 6.163a3.003 3.003 0 0 0-2.11-2.11C19.517 3.545 12 3.545 12 3.545s-7.517 0-9.388.508a3.003 3.003 0 0 0-2.11 2.11C0 8.033 0 12 0 12s0 3.967.502 5.837a3.003 3.003 0 0 0 2.11 2.11c1.871.508 9.388.508 9.388.508s7.517 0 9.388-.508a3.003 3.003 0 0 0 2.11-2.11C24 15.967 24 12 24 12s0-3.967-.502-5.837zM9.545 15.568V8.432L15.818 12l-6.273 3.568z" />
+          </svg>
+          Subscribe
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content Layout -->
+  <main class="main-layout">
+    <div class="blog-container">
+
+      <!-- Main Article Column -->
+      <article class="blog-main">
+
+        <header class="article-header">
+          <div class="badge">Docker &amp; Containers</div>
+          <h1 class="article-title">Watchtower Is Dead: Why Arcane Is the Safer Docker Auto-Update Manager</h1>
+
+          <div class="article-meta">
+            <div class="article-meta-item">
+              <div class="author-avatar">TS</div>
+              <span>By <strong>Tech Simpld</strong></span>
+            </div>
+            <span>&bull;</span>
+            <div class="article-meta-item">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                stroke-linecap="round" stroke-linejoin="round">
+                <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                <line x1="16" y1="2" x2="16" y2="6"></line>
+                <line x1="8" y1="2" x2="8" y2="6"></line>
+                <line x1="3" y1="10" x2="21" y2="10"></line>
+              </svg>
+              <span>November 10, 2026</span>
+            </div>
+            <span>&bull;</span>
+            <div class="article-meta-item">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="10"></circle>
+                <polyline points="12 6 12 12 16 14"></polyline>
+              </svg>
+              <span>10 Min Read</span>
+            </div>
+          </div>
+        </header>
+
+        <!-- Video Player Container -->
+        <div class="video-container">
+          <iframe src="https://www.youtube-nocookie.com/embed/I1_vosdG4Zw"
+            title="Watchtower is dead, Arcane replaces it"
+            frameborder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            allowfullscreen>
+          </iframe>
+        </div>
+
+        <!-- Article Content -->
+        <div class="prose">
+          <figure class="article-featured-figure">
+            <picture>
+              <source srcset="../images/arcane-watchtower-replacement.webp" type="image/webp">
+              <img src="../images/arcane-watchtower-replacement.png"
+                alt="Arcane Docker management and auto-update dashboard interface showing container status and update delay settings"
+                width="1200" height="675" loading="eager" decoding="async">
+            </picture>
+            <figcaption class="article-featured-caption">Arcane running as a modern web-based Docker update manager with release delay policies and per-container automation switches.</figcaption>
+          </figure>
+
+          <p>
+            For years, setting up a new Docker host followed an almost universal checklist: install Docker, configure your reverse proxy, deploy your application stacks, and install <strong>Watchtower</strong> to pull newer container images while you slept. It felt like automated maintenance bliss.
+          </p>
+          <p>
+            Then came the morning surprises. A routine 3:00 AM update pulled an unannounced major database release (like upgrading PostgreSQL 15 directly to PostgreSQL 16), leaving the container crashed in an endless boot loop because the disk volume required manual table migration. Or an upstream web application pushed a broken build that upstream maintainers reverted within six hours, but Watchtower pulled it immediately during the bug window.
+          </p>
+          <p>
+            In December 2025, the maintainers behind <code>containrrr/watchtower</code> officially archived the GitHub repository. Active development, bug fixes, and security patches ceased entirely.
+          </p>
+          <p>
+            Relying on an unmaintained updater with direct read-write access to your host Docker socket is a severe security and stability hazard. We need an updater that understands maintenance safety: delayed pull policies, version boundary locks, per-container toggles, and automatic container recovery. That tool is <strong>Arcane</strong>.
+          </p>
+
+          <div class="callout callout-warning">
+            <div class="callout-title">The Three Fatal Flaws of Watchtower</div>
+            <p>
+              1. <strong>Project Abandonment:</strong> Repository archived on GitHub in December 2025 with zero ongoing vulnerability patching.<br>
+              2. <strong>Zero Release Delay:</strong> Immediately pulls new images within minutes of release, exposing hosts to day-one upstream bugs.<br>
+              3. <strong>Database Destruction:</strong> Blindly pulls major version tag updates without validating volume schema compatibility.
+            </p>
+          </div>
+
+          <h2>What Is Arcane?</h2>
+          <p>
+            Arcane is an open-source, web-first container management and automated update system designed specifically to eliminate unmonitored production outages. Packaged as <code>ghcr.io/getarcaneapp/manager:latest</code>, Arcane pairs a responsive dashboard with an update scheduling engine.
+          </p>
+          <p>
+            Unlike Watchtower, which acts as a silent background daemon with no graphical overview, Arcane gives you complete visibility into image digests, registry updates, and container health:
+          </p>
+          <ul>
+            <li><strong>Configurable Update Delays:</strong> Specify a mandatory waiting period (such as 24 or 48 hours) after a developer pushes an image before Arcane updates your container. If an upstream bug is identified and recalled, your server never downloads it.</li>
+            <li><strong>Major Version Locking:</strong> Keep critical services pinned to their minor version train (for example, staying within PostgreSQL 15.x releases instead of jumping to 16.0).</li>
+            <li><strong>Per-Container GUI Toggles:</strong> Enable or disable automatic updates per container with a simple switch inside the web interface without modifying YAML labels.</li>
+            <li><strong>Integrated Autoheal:</strong> Monitor container health checks and automatically restart containers that drop into an unhealthy status.</li>
+            <li><strong>Automated Disk Hygiene:</strong> Schedule recurring cron tasks to prune dangling images, stopped containers, and build cache.</li>
+            <li><strong>Docker Swarm Support:</strong> Manage rolling updates across full Docker Swarm clusters in addition to standalone nodes.</li>
+          </ul>
+
+          <h2>Step 1: Deploying Arcane with Docker Compose</h2>
+          <p>
+            To maintain security best practices, do not run management containers under the root user account. We will run Arcane under a standard home lab system user (such as <code>techsimpld</code>) that belongs to the local <code>docker</code> group.
+          </p>
+
+          <h3>1. Verify User and Docker Socket Permissions</h3>
+          <p>
+            Run the following commands on your host to verify your user ID and confirm your account can communicate with the Docker daemon without sudo:
+          </p>
+
+          <pre><code class="language-bash">id -u
+# Example output: 1000
+docker ps</code></pre>
+
+          <h3>2. Generate an Application Encryption Key</h3>
+          <p>
+            Arcane encrypts stored registry credentials and database tokens at rest using a 32-byte secret key. Generate a random 64-character hex string using OpenSSL:
+          </p>
+
+          <pre><code class="language-bash">openssl rand -hex 32</code></pre>
+          <p>
+            Copy the generated string. You will supply this as the <code>APP_KEY</code> environment variable.
+          </p>
+
+          <h3>3. Write the Compose Configuration</h3>
+          <p>
+            Create a dedicated directory for Arcane and create your <code>docker-compose.yml</code> file:
+          </p>
+
+          <pre><code class="language-bash">mkdir -p /opt/arcane
+cd /opt/arcane
+nano docker-compose.yml</code></pre>
+
+          <p>
+            Paste the following configuration:
+          </p>
+
+          <pre><code class="language-yaml">services:
+  arcane:
+    image: ghcr.io/getarcaneapp/manager:latest
+    container_name: arcane
+    restart: unless-stopped
+    ports:
+      - "3552:3552"
+    environment:
+      - APP_KEY=PASTE_YOUR_GENERATED_OPENSSL_HEX_KEY_HERE
+      - PORT=3552
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - arcane_data:/app/data
+
+volumes:
+  arcane_data:
+    driver: local</code></pre>
+
+          <p>
+            Start the Arcane container in the background:
+          </p>
+
+          <pre><code class="language-bash">docker compose up -d</code></pre>
+
+          <p>
+            Verify the logs to confirm the internal SQLite database and web server initialized cleanly:
+          </p>
+
+          <pre><code class="language-bash">docker logs -f arcane</code></pre>
+
+          <p>
+            Open your browser and navigate to <code>http://&lt;your-server-ip&gt;:3552</code> to open the web interface.
+          </p>
+
+          <!-- Step 1 Screenshot -->
+          <figure class="article-featured-figure">
+            <picture>
+              <source srcset="../images/arcane-step-1.webp" type="image/webp">
+              <img src="../images/arcane-step-1.png"
+                alt="Arcane initial dashboard view displaying running containers, memory metrics, and update status"
+                width="1280" height="640" loading="lazy" decoding="async">
+            </picture>
+            <figcaption class="article-featured-caption">Arcane's main overview screen displaying running containers, CPU/RAM usage, and active image tag summaries.</figcaption>
+          </figure>
+
+          <h2>Step 2: Inspecting Image Updates &amp; SHA Tag Comparison</h2>
+          <p>
+            When you click the <strong>Updates</strong> tab in the navigation bar, Arcane displays all running containers and their current image registries. Click the <strong>Check for Updates</strong> button in the upper right corner.
+          </p>
+          <p>
+            Arcane queries the remote container registries (Docker Hub, GitHub Container Registry, Quay, etc.) and compares the remote image manifest against the local image digest stored in your Docker engine.
+          </p>
+
+          <!-- Step 2 Screenshot -->
+          <figure class="article-featured-figure">
+            <picture>
+              <source srcset="../images/arcane-step-2.webp" type="image/webp">
+              <img src="../images/arcane-step-2.png"
+                alt="Arcane updates dashboard displaying pending container updates and comparing local and remote SHA256 tags"
+                width="1280" height="483" loading="lazy" decoding="async">
+            </picture>
+            <figcaption class="article-featured-caption">The Updates tab comparing local SHA256 image hashes against newly published remote registry digests.</figcaption>
+          </figure>
+
+          <h3>Understanding SHA256 Hashes vs. Semantic Version Tags</h3>
+          <p>
+            One subtle detail you will notice in Arcane is how it communicates updates. When developers push a container build to a tag like <code>:latest</code>, the tag string itself does not change, but the underlying <strong>SHA256 digest</strong> changes completely.
+          </p>
+          <p>
+            Arcane shows both: the human-readable tag name and the exact SHA256 fingerprint. You can click <strong>View Tag Details</strong> to inspect the remote commit layers before deciding whether to trigger a manual update or allow scheduled automation to proceed.
+          </p>
+
+          <h2>Step 3: Setting Update Delays, Autoheal, and Cron Schedules</h2>
+          <p>
+            To configure safe automated policies, navigate to <strong>Settings</strong> in the left sidebar and select the <strong>Updates &amp; Maintenance</strong> tab.
+          </p>
+
+          <!-- Step 3 Screenshot -->
+          <figure class="article-featured-figure">
+            <picture>
+              <source srcset="../images/arcane-step-3.webp" type="image/webp">
+              <img src="../images/arcane-step-3.png"
+                alt="Arcane settings screen showing update delay configuration in hours, autoheal toggle, and cron schedules"
+                width="1280" height="640" loading="lazy" decoding="async">
+            </picture>
+            <figcaption class="article-featured-caption">Configuring update delay windows (48 hours), turning on the autoheal daemon, and scheduling automated Docker prunes.</figcaption>
+          </figure>
+
+          <h3>1. Configure the Update Delay Window</h3>
+          <p>
+            Locate the <strong>Update Delay</strong> setting. By default, this is set to 0 hours (immediate updating). Change this value to <strong>24</strong> or <strong>48</strong> hours.
+          </p>
+          <p>
+            When configured with a 48-hour delay, Arcane marks a newly published image as pending, but holds off on deploying it until 48 hours have elapsed since the registry publication timestamp. If an upstream regression causes widespread user complaints, the upstream developer has ample time to issue a hotfix before your server pulls the bad build.
+          </p>
+
+          <h3>2. Enable the Autoheal Daemon</h3>
+          <p>
+            In the settings pane, toggle <strong>Enable Autoheal</strong> to the active position.
+          </p>
+          <p>
+            If a container has a configured Docker <code>HEALTHCHECK</code> in its image (or specified in Compose) and enters an <code>unhealthy</code> state for more than three consecutive check intervals, Arcane automatically restarts the container. This prevents minor network timeouts or memory leaks from taking down self-hosted services permanently while you are away from your desk.
+          </p>
+
+          <h3>3. Schedule Recurring Pruning Jobs</h3>
+          <p>
+            Every time an updater downloads a new container image, the old image layers are orphaned as "dangling" data on your disk. Over six months, this can consume tens of gigabytes of NVMe storage.
+          </p>
+          <p>
+            Arcane features an integrated <strong>Cron Job Scheduler</strong>. You can configure a standard cron expression (for example, <code>0 4 * * 0</code> for every Sunday at 4:00 AM) to automatically run:
+          </p>
+          <pre><code class="language-bash">docker image prune -a --force</code></pre>
+          <p>
+            This safely strips unused images while keeping active container images intact.
+          </p>
+
+          <h3>4. Disabling Updates on Critical Production Containers</h3>
+          <p>
+            Return to the <strong>Updates</strong> tab. For sensitive infrastructure (such as PostgreSQL, MySQL, Vaultwarden, or your primary Traefik/Nginx reverse proxy), toggle the <strong>Auto Update</strong> switch to <strong>Off</strong>.
+          </p>
+          <p>
+            These containers will still be audited for updates, and you will receive notifications when new versions exist, but Arcane will never pull or restart them without manual confirmation from you.
+          </p>
+
+          <h2>Arcane vs. Watchtower vs. What's Up Docker (WUD) vs. Dockhand</h2>
+          <p>
+            Here is how the four major container maintenance and management tools compare across core functional areas:
+          </p>
+
+          <table style="width: 100%; border-collapse: collapse; margin: 1.5rem 0;">
+            <thead>
+              <tr style="border-bottom: 2px solid var(--border-color); text-align: left;">
+                <th style="padding: 0.75rem;">Feature</th>
+                <th style="padding: 0.75rem;">Arcane</th>
+                <th style="padding: 0.75rem;">Watchtower</th>
+                <th style="padding: 0.75rem;">What's Up Docker (WUD)</th>
+                <th style="padding: 0.75rem;">Dockhand</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr style="border-bottom: 1px solid var(--border-color);">
+                <td style="padding: 0.75rem;"><strong>Project Status</strong></td>
+                <td style="padding: 0.75rem;">Active Development</td>
+                <td style="padding: 0.75rem;">Archived (Dec 2025)</td>
+                <td style="padding: 0.75rem;">Active Maintenance</td>
+                <td style="padding: 0.75rem;">Active Development</td>
+              </tr>
+              <tr style="border-bottom: 1px solid var(--border-color);">
+                <td style="padding: 0.75rem;"><strong>Web Dashboard</strong></td>
+                <td style="padding: 0.75rem;">Yes (Dedicated Port 3552)</td>
+                <td style="padding: 0.75rem;">No (CLI / Log Only)</td>
+                <td style="padding: 0.75rem;">Yes (Port 3000)</td>
+                <td style="padding: 0.75rem;">Yes (Port 3000)</td>
+              </tr>
+              <tr style="border-bottom: 1px solid var(--border-color);">
+                <td style="padding: 0.75rem;"><strong>Update Delay Policy</strong></td>
+                <td style="padding: 0.75rem;">Yes (Configurable Hours)</td>
+                <td style="padding: 0.75rem;">No (Immediate Only)</td>
+                <td style="padding: 0.75rem;">No (Immediate Only)</td>
+                <td style="padding: 0.75rem;">Manual trigger only</td>
+              </tr>
+              <tr style="border-bottom: 1px solid var(--border-color);">
+                <td style="padding: 0.75rem;"><strong>Per-Container GUI Toggles</strong></td>
+                <td style="padding: 0.75rem;">Yes (Single Click)</td>
+                <td style="padding: 0.75rem;">No (Requires Labels)</td>
+                <td style="padding: 0.75rem;">Yes (Label &amp; Trigger Based)</td>
+                <td style="padding: 0.75rem;">Manual update button</td>
+              </tr>
+              <tr style="border-bottom: 1px solid var(--border-color);">
+                <td style="padding: 0.75rem;"><strong>Autoheal Integration</strong></td>
+                <td style="padding: 0.75rem;">Built-in</td>
+                <td style="padding: 0.75rem;">No (Requires willfarrell/autoheal)</td>
+                <td style="padding: 0.75rem;">No</td>
+                <td style="padding: 0.75rem;">No</td>
+              </tr>
+              <tr style="border-bottom: 1px solid var(--border-color);">
+                <td style="padding: 0.75rem;"><strong>Docker Swarm Support</strong></td>
+                <td style="padding: 0.75rem;">Yes (Swarm Services)</td>
+                <td style="padding: 0.75rem;">Limited (Rolling issues)</td>
+                <td style="padding: 0.75rem;">Yes</td>
+                <td style="padding: 0.75rem;">Standalone Hosts Only</td>
+              </tr>
+              <tr>
+                <td style="padding: 0.75rem;"><strong>In-Container File Editor</strong></td>
+                <td style="padding: 0.75rem;">No</td>
+                <td style="padding: 0.75rem;">No</td>
+                <td style="padding: 0.75rem;">No</td>
+                <td style="padding: 0.75rem;">Yes (Full File Tree)</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <p>
+            Notice the clear operational division: If you need comprehensive container administration, live file browsing inside containers, and remote host linking, <a href="dockhand-docker-manager-portainer-alternative.html">Dockhand is your best primary manager</a>. But when it comes to automated image updating, maintenance delays, autoheal recovery, and scheduled disk maintenance, <strong>Arcane</strong> is the ideal specialized companion.
+          </p>
+
+          <h2>Step-by-Step: Migrating from Watchtower to Arcane</h2>
+          <p>
+            Retiring Watchtower is straightforward because it operates without writing persistent data. Follow this 3-step migration checklist:
+          </p>
+
+          <h3>1. Stop and Remove the Watchtower Container</h3>
+          <p>
+            Locate your existing Watchtower container and remove it from your host:
+          </p>
+          <pre><code class="language-bash">docker stop watchtower
+docker rm watchtower</code></pre>
+          <p>
+            If you deployed Watchtower via a Docker Compose stack, navigate to that directory and execute <code>docker compose down</code>.
+          </p>
+
+          <h3>2. Clean Up Redundant Watchtower Container Labels</h3>
+          <p>
+            Watchtower relies on container labels such as <code>com.centurylinklabs.watchtower.enable=false</code>. While leaving these labels in your Compose files will not cause errors, removing them keeps your application YAML files clean and standard.
+          </p>
+
+          <h3>3. Launch Arcane and Assign Container Policies</h3>
+          <p>
+            Start your Arcane container as detailed in Step 1, log into the dashboard, set your global update delay to 48 hours, enable autoheal, and review your container list to disable auto-updates on database engines.
+          </p>
+
+          <h2>Frequently Asked Questions</h2>
+          <details style="background: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: 8px; padding: 1rem; margin-bottom: 1rem;">
+            <summary style="font-weight: 700; cursor: pointer; color: var(--text-primary);">Can Arcane monitor containers running across multiple Docker hosts?</summary>
+            <p style="margin-top: 0.75rem; color: var(--text-secondary); line-height: 1.6;">
+              Arcane connects directly to the local Docker socket or a Docker Swarm manager node. To manage multiple independent standalone hosts, you can deploy a lightweight Arcane instance per host or leverage Docker over TLS if you prefer centralized reporting.
+            </p>
+          </details>
+
+          <details style="background: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: 8px; padding: 1rem; margin-bottom: 1rem;">
+            <summary style="font-weight: 700; cursor: pointer; color: var(--text-primary);">What happens if an image update fails midway through pulling?</summary>
+            <p style="margin-top: 0.75rem; color: var(--text-secondary); line-height: 1.6;">
+              Arcane pulls and verifies the complete image layers before stopping the active container. If the registry connection drops or the digest fails verification during download, the existing container remains running without interruption.
+            </p>
+          </details>
+
+          <details style="background: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: 8px; padding: 1rem;">
+            <summary style="font-weight: 700; cursor: pointer; color: var(--text-primary);">Does Arcane send notifications to Discord, Telegram, or Gotify?</summary>
+            <p style="margin-top: 0.75rem; color: var(--text-secondary); line-height: 1.6;">
+              Yes. Arcane includes a webhook notification engine under the Notifications settings menu. You can configure outgoing webhooks to Gotify, Discord, Slack, and generic HTTP endpoints to receive alerts whenever an update is applied or autoheal triggers a restart.
+            </p>
+          </details>
+
+          <h2>Key Takeaways &amp; Next Steps</h2>
+          <p>
+            Retiring Watchtower in favor of Arcane protects your container infrastructure from unmonitored midnight outages. With automated 48-hour release delays, major version locks, autoheal self-recovery, and scheduled image pruning, your self-hosted services stay updated without sacrificing uptime.
+          </p>
+
+          <p>
+            Explore our companion guides and web utilities to build out your homelab:
+          </p>
+          <ul>
+            <li>Replace Portainer with our complete guide to <a href="dockhand-docker-manager-portainer-alternative.html">Dockhand Multi-Server Management</a>.</li>
+            <li>Compare container engines in our <a href="docker-vs-podman.html">Docker vs. Podman In-Depth Guide</a>.</li>
+            <li>Build an unbreachable remote connection with <a href="cloudflare-zero-trust-tunnel-guide.html">Cloudflare Zero Trust Tunnels</a>.</li>
+            <li>Generate clean compose stacks with our <a href="../tools.html#docker">Docker Compose &amp; .env Generator</a>.</li>
+          </ul>
+        </div>
+
+        <div class="author-bio-box">
+          <div class="author-bio-avatar" aria-hidden="true">TS</div>
+          <div class="author-bio-content">
+            <h3>Written by Tech Simpld</h3>
+            <span class="author-bio-role">MCSA Certified Systems Engineer &bull; 20+ Years Enterprise IT</span>
+            <p>
+              Tech Simpld is maintained by a Systems Engineer managing virtual machines and enterprise storage architecture across five data centers. Every tutorial and configuration on this site is tested first-hand in our physical Proxmox VE home lab and daily production vaults.
+            </p>
+            <div class="author-bio-links">
+              <a href="../about.html">Lab Architecture &amp; Mission &rarr;</a>
+              <a href="../tools.html">Interactive Home Lab Web Tools &rarr;</a>
+            </div>
+          </div>
+        </div>
+
+      </article>
+
+      <!-- Sidebar Column -->
+      <aside class="blog-sidebar">
+        <div class="sidebar-widget">
+          <h4 class="widget-title">About Tech Simpld</h4>
+          <p style="font-size: 0.9rem; margin-bottom: 1rem;">
+            Software, home labs, and self-hosted tools simplified. Direct, step-by-step guides with zero fluff.
+          </p>
+          <a href="https://youtube.com/@TechSimpld" target="_blank" class="btn btn-outline btn-sm" style="width: 100%;">
+            Visit YouTube Channel
+          </a>
+        </div>
+
+        <div class="sidebar-widget">
+          <h4 class="widget-title">Related Tutorials</h4>
+          <ul style="list-style: none; padding: 0; margin: 0; font-size: 0.9rem; line-height: 1.8;">
+            <li><a href="dockhand-docker-manager-portainer-alternative.html" style="color: var(--accent-cyan);">Dockhand: Portainer Alternative</a></li>
+            <li><a href="docker-vs-podman.html" style="color: var(--text-primary);">Docker vs. Podman Guide</a></li>
+            <li><a href="uptime-kuma-server-monitoring-setup.html" style="color: var(--text-primary);">Uptime Kuma Server Monitoring</a></li>
+            <li><a href="budget-proxmox-home-lab-setup.html" style="color: var(--accent-yellow, #facc15);">Budget Proxmox Cluster Tour</a></li>
+          </ul>
+        </div>
+      </aside>
+
+    </div>
+  </main>
+
+  <!-- Footer Section -->
+  <footer class="footer">
+    <div class="footer-container">
+      <div>
+        <a href="../index.html" class="footer-logo">
+          Tech Simpld<span class="logo-dot"></span>
+        </a>
+        <p class="footer-desc">
+          Software and productivity, simplified. Clean, no-fluff tutorials and templates for digital creators and builders.
+        </p>
+      </div>
+      <div>
+        <h4 class="footer-heading">Navigation</h4>
+        <ul class="footer-links">
+          <li><a href="../index.html">Home</a></li>
+          <li><a href="../about.html">About</a></li>
+          <li><a href="../posts.html">Posts</a></li>
+          <li><a href="../resources.html">Resources</a></li>
+          <li><a href="../tools.html">Tools</a></li>
+          <li><a href="../contact.html">Contact</a></li>
+          <li><a href="https://youtube.com/@TechSimpld" target="_blank">YouTube Channel</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4 class="footer-heading">Contact &amp; Legal</h4>
+        <ul class="footer-links">
+          <li><a href="mailto:techsimpld@gmail.com">techsimpld@gmail.com</a></li>
+          <li><a href="../privacy-policy.html">Privacy Policy</a></li>
+          <li><a href="../terms-of-service.html">Terms of Service</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div>&copy; 2026 Tech Simpld. All rights reserved. Built for lightning-fast speeds.</div>
+      <div class="footer-socials">
+        <a href="https://youtube.com/@TechSimpld" class="social-link" aria-label="YouTube">YouTube</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="../js/scripts.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-bash.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-yaml.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/toolbar/prism-toolbar.min.js"></script>
+</body>
+
+</html>

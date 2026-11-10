@@ -141,12 +141,12 @@
         <circle cx="11" cy="11" r="8"></circle>
         <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
       </svg>
-      <input type="search" id="postsSearch" class="posts-search-input" placeholder="Search 25 tutorials by keyword (e.g. Proxmox, CouchDB, Dataview)..." autocomplete="off" aria-label="Search tutorials">
+      <input type="search" id="postsSearch" class="posts-search-input" placeholder="Search 27 tutorials by keyword (e.g. Proxmox, CouchDB, Dataview)..." autocomplete="off" aria-label="Search tutorials">
     </div>
 
     <!-- Category Filter Controls -->
     <div class="category-filters">
-      <button class="filter-btn active" data-filter="all">All Topics (25)</button>
+      <button class="filter-btn active" data-filter="all">All Topics (27)</button>
       <button class="filter-btn" data-filter="obsidian">Obsidian &amp; PKM</button>
       <button class="filter-btn" data-filter="proxmox">Proxmox &amp; Home Lab</button>
       <button class="filter-btn" data-filter="docker">Docker &amp; Containers</button>
@@ -154,6 +154,62 @@
     </div>
 
       <div class="tutorials-grid">
+
+        <!-- Post 27: Dockhand Docker Manager Portainer Alternative -->
+        <article class="card" data-category="docker proxmox">
+          <div class="card-image-wrapper">
+            <a href="posts/dockhand-docker-manager-portainer-alternative.html">
+              <picture>
+                <source srcset="images/dockhand-docker-manager.webp" type="image/webp">
+                <img class="card-image" src="images/dockhand-docker-manager.png" alt="Dockhand Docker Manager Portainer Alternative Guide Preview" loading="lazy" decoding="async">
+              </picture>
+            </a>
+          </div>
+          <div class="card-content">
+            <div class="card-meta">
+              <span class="card-category" style="color: var(--accent-cyan);">Docker &amp; Containers</span>
+              <span>-</span>
+              <span style="color: var(--accent-cyan); font-weight: 600;">Available</span>
+            </div>
+            <h3 class="card-title"><a href="posts/dockhand-docker-manager-portainer-alternative.html">Goodbye Portainer: Deploy Dockhand for Modern Multi-Server Docker Management</a></h3>
+            <p class="card-excerpt">
+              Portainer froze Community Edition at 2.45 and closed off version 3.0. Deploy Dockhand and the Hawser agent for unlimited free multi-node Docker management with in-container file editing and CVE security audits.
+            </p>
+            <div class="card-footer"
+              style="border-top: 1px solid var(--border-color); padding-top: 1rem; margin-top: auto; display: flex; justify-content: space-between; align-items: center; width: 100%;">
+              <span class="card-date">November 2026</span>
+              <a href="posts/dockhand-docker-manager-portainer-alternative.html" id="readPostBtn-dockhand-manager" class="btn btn-outline btn-sm">Read Post</a>
+            </div>
+          </div>
+        </article>
+
+        <!-- Post 26: Arcane Docker Watchtower Replacement -->
+        <article class="card" data-category="docker">
+          <div class="card-image-wrapper">
+            <a href="posts/arcane-docker-watchtower-replacement.html">
+              <picture>
+                <source srcset="images/arcane-watchtower-replacement.webp" type="image/webp">
+                <img class="card-image" src="images/arcane-watchtower-replacement.png" alt="Arcane Docker Watchtower Replacement Guide Preview" loading="lazy" decoding="async">
+              </picture>
+            </a>
+          </div>
+          <div class="card-content">
+            <div class="card-meta">
+              <span class="card-category" style="color: var(--accent-cyan);">Docker &amp; Containers</span>
+              <span>-</span>
+              <span style="color: var(--accent-cyan); font-weight: 600;">Available</span>
+            </div>
+            <h3 class="card-title"><a href="posts/arcane-docker-watchtower-replacement.html">Watchtower Is Dead: Why Arcane Is the Safer Docker Auto-Update Manager</a></h3>
+            <p class="card-excerpt">
+              Watchtower was officially archived in December 2025. Replace it with Arcane to prevent 3:00 AM database crashes with release delay windows, autoheal recovery, and major version protection.
+            </p>
+            <div class="card-footer"
+              style="border-top: 1px solid var(--border-color); padding-top: 1rem; margin-top: auto; display: flex; justify-content: space-between; align-items: center; width: 100%;">
+              <span class="card-date">November 2026</span>
+              <a href="posts/arcane-docker-watchtower-replacement.html" id="readPostBtn-arcane-updater" class="btn btn-outline btn-sm">Read Post</a>
+            </div>
+          </div>
+        </article>
 
         <!-- Post 25: AdGuard Home 1.0 Beta Setup Guide -->
         <article class="card" data-category="proxmox networking">

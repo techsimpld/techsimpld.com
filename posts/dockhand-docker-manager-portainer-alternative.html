@@ -1,0 +1,667 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <!-- Google tag (gtag.js) -->
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { dataLayer.push(arguments); }
+    gtag('consent', 'default', {
+      'ad_storage': 'denied',
+      'analytics_storage': 'denied',
+      'ad_user_data': 'denied',
+      'ad_personalization': 'denied',
+      'wait_for_update': 500
+    });
+  </script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-1KFGHVDB66"></script>
+  <script>
+    gtag('js', new Date());
+    gtag('config', 'G-1KFGHVDB66');
+  </script>
+
+  <!-- Google AdSense -->
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5214277715351322"
+    crossorigin="anonymous"></script>
+
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Goodbye Portainer: Deploy Dockhand for Modern Multi-Server Docker Management | Tech Simpld</title>
+  <meta name="description"
+    content="Deploy Dockhand and the Hawser agent to manage multiple Docker hosts for free with zero telemetry. Step-by-step setup, container file editing, Trivy CVE scans, and Gotify alerts.">
+  <link rel="canonical" href="https://techsimpld.com/posts/dockhand-docker-manager-portainer-alternative.html">
+  <meta name="robots" content="index, follow">
+
+  <!-- Open Graph / SEO -->
+  <meta property="og:locale" content="en_US">
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="Tech Simpld">
+  <meta property="og:url" content="https://techsimpld.com/posts/dockhand-docker-manager-portainer-alternative.html">
+  <meta property="og:title" content="Goodbye Portainer: Deploy Dockhand for Modern Multi-Server Docker Management | Tech Simpld">
+  <meta property="og:description"
+    content="Deploy Dockhand and Hawser to control multi-server Docker environments for free. Includes Docker Compose templates, live container file editing, Trivy vulnerability audits, and Gotify push alerts.">
+  <meta property="og:image" content="https://techsimpld.com/images/dockhand-docker-manager.png">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Goodbye Portainer: Deploy Dockhand for Modern Multi-Server Docker Management | Tech Simpld">
+  <meta name="twitter:description"
+    content="Step-by-step walkthrough replacing Portainer with Dockhand and Hawser agent. Multi-node Docker management, in-container file browser, security scanning, and webhook alerts.">
+  <meta name="twitter:image" content="https://techsimpld.com/images/dockhand-docker-manager.png">
+
+  <!-- Structured Data: Article (JSON-LD) -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "Goodbye Portainer: Deploy Dockhand for Modern Multi-Server Docker Management",
+    "image": [
+      "https://techsimpld.com/images/dockhand-docker-manager.png",
+      "https://techsimpld.com/images/dockhand-step-1.png",
+      "https://techsimpld.com/images/dockhand-step-2.png",
+      "https://techsimpld.com/images/dockhand-step-3.png"
+    ],
+    "datePublished": "2026-11-10T08:00:00-05:00",
+    "dateModified": "2026-11-10T08:00:00-05:00",
+    "author": {
+      "@type": "Person",
+      "name": "Tech Simpld",
+      "jobTitle": "MCSA Certified Systems Engineer",
+      "url": "https://techsimpld.com/about.html",
+      "sameAs": ["https://youtube.com/@TechSimpld"]
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "Tech Simpld",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://techsimpld.com/images/obsidian-vault.png"
+      }
+    },
+    "description": "Learn how to replace Portainer with Dockhand and the Hawser agent for self-hosted, multi-server Docker container management with zero telemetry, unlimited free nodes, and integrated vulnerability scanning."
+  }
+  </script>
+
+  <!-- Structured Data: FAQPage (JSON-LD) -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "Why are homelab users moving away from Portainer Community Edition?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Portainer froze its open-source Community Edition (CE) at version 2.45 and transitioned to version 3.0 under a closed-source Business Edition model. Version 3.0 requires an official license key and caps free management at three nodes before requiring per-node subscription fees, prompting home lab builders to switch to fully open-source alternatives like Dockhand."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What is Dockhand and how does it compare to Portainer?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Dockhand is a lightweight, self-hosted web management dashboard for Docker containers. Unlike Portainer, Dockhand includes unlimited free node management, collects zero telemetry, offers an in-container live file browser and editor, and provides built-in vulnerability auditing through Trivy and Grype engines."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How does Dockhand connect to remote Docker servers?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Dockhand connects to remote hosts using a companion agent named Hawser. Hawser runs as a lightweight daemon on remote servers listening on port 2376, secured by a pre-shared secret authentication token, giving Dockhand full container and file management capability across your private local network."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Does Dockhand support container vulnerability scanning?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes. Dockhand has native support for both Trivy and Grype security scanners. You can initiate on-demand or scheduled scans for any running container or base image to identify Common Vulnerabilities and Exposures (CVEs) directly within the dashboard."
+        }
+      }
+    ]
+  }
+  </script>
+
+  <!-- DNS Prefetch & Preconnect for Speed -->
+  <link rel="dns-prefetch" href="https://www.googletagmanager.com">
+  <link rel="preconnect" href="https://www.googletagmanager.com" crossorigin>
+  <link rel="dns-prefetch" href="https://pagead2.googlesyndication.com">
+  <link rel="preconnect" href="https://pagead2.googlesyndication.com" crossorigin>
+
+  <!-- Favicons -->
+  <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+  <link rel="alternate icon" type="image/png" href="../favicon.png">
+
+  <!-- Google Fonts Preconnect & Stylesheet -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet"
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap">
+
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="../css/styles.css">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/toolbar/prism-toolbar.min.css" rel="stylesheet">
+</head>
+
+<body>
+
+  <!-- Navigation Header -->
+  <header class="navbar" id="navbar">
+    <div class="nav-container">
+      <a href="../index.html" class="logo-link">
+        Tech Simpld<span class="logo-dot"></span>
+      </a>
+
+      <button class="menu-toggle" id="menuToggle" aria-label="Toggle Navigation Menu">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+
+      <ul class="nav-menu">
+        <li><a href="../index.html" class="nav-link">Home</a></li>
+        <li><a href="../about.html" class="nav-link">About</a></li>
+        <li><a href="../posts.html" class="nav-link active">Posts</a></li>
+        <li><a href="../resources.html" class="nav-link">Resources</a></li>
+        <li><a href="../tools.html" class="nav-link">Tools</a></li>
+        <li><a href="../contact.html" class="nav-link">Contact</a></li>
+        <li><a href="https://youtube.com/@TechSimpld" target="_blank" class="nav-link">YouTube</a></li>
+      </ul>
+
+      <div class="nav-actions">
+        <a href="https://youtube.com/@TechSimpld" target="_blank" class="btn btn-primary btn-sm"
+          id="subscribeHeaderBtn">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+            <path
+              d="M23.498 6.163a3.003 3.003 0 0 0-2.11-2.11C19.517 3.545 12 3.545 12 3.545s-7.517 0-9.388.508a3.003 3.003 0 0 0-2.11 2.11C0 8.033 0 12 0 12s0 3.967.502 5.837a3.003 3.003 0 0 0 2.11 2.11c1.871.508 9.388.508 9.388.508s7.517 0 9.388-.508a3.003 3.003 0 0 0 2.11-2.11C24 15.967 24 12 24 12s0-3.967-.502-5.837zM9.545 15.568V8.432L15.818 12l-6.273 3.568z" />
+          </svg>
+          Subscribe
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content Layout -->
+  <main class="main-layout">
+    <div class="blog-container">
+
+      <!-- Main Article Column -->
+      <article class="blog-main">
+
+        <header class="article-header">
+          <div class="badge">Docker &amp; Containers</div>
+          <h1 class="article-title">Goodbye Portainer: Deploy Dockhand for Modern Multi-Server Docker Management</h1>
+
+          <div class="article-meta">
+            <div class="article-meta-item">
+              <div class="author-avatar">TS</div>
+              <span>By <strong>Tech Simpld</strong></span>
+            </div>
+            <span>&bull;</span>
+            <div class="article-meta-item">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                stroke-linecap="round" stroke-linejoin="round">
+                <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                <line x1="16" y1="2" x2="16" y2="6"></line>
+                <line x1="8" y1="2" x2="8" y2="6"></line>
+                <line x1="3" y1="10" x2="21" y2="10"></line>
+              </svg>
+              <span>November 10, 2026</span>
+            </div>
+            <span>&bull;</span>
+            <div class="article-meta-item">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="10"></circle>
+                <polyline points="12 6 12 12 16 14"></polyline>
+              </svg>
+              <span>11 Min Read</span>
+            </div>
+          </div>
+        </header>
+
+        <!-- Video Player Container -->
+        <div class="video-container">
+          <iframe src="https://www.youtube-nocookie.com/embed/7aSjFvMFDZ8"
+            title="Goodbye Portainer! This New Docker Manager Changes Everything"
+            frameborder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            allowfullscreen>
+          </iframe>
+        </div>
+
+        <!-- Article Content -->
+        <div class="prose">
+          <figure class="article-featured-figure">
+            <picture>
+              <source srcset="../images/dockhand-docker-manager.webp" type="image/webp">
+              <img src="../images/dockhand-docker-manager.png"
+                alt="Dockhand Docker management interface showing multi-server container control and Hawser agent connections"
+                width="1200" height="675" loading="eager" decoding="async">
+            </picture>
+            <figcaption class="article-featured-caption">Dockhand running as a modern web-based Docker management dashboard with remote Hawser agent nodes and zero commercial licensing walls.</figcaption>
+          </figure>
+
+          <p>
+            For nearly a decade, Portainer was the default web UI for anyone building a home lab or managing containerized workloads on bare-metal servers. It simplified container creation, network bridging, volume management, and image pulls for millions of self-hosters. However, recent commercial pivots have changed that reality.
+          </p>
+          <p>
+            Portainer officially froze its open-source Community Edition (CE) at version 2.45. Moving forward, Portainer 3.0 transitioned to a closed-source Business Edition architecture. To run version 3.0, users are required to sign up for an enterprise account, paste a commercial license key, and accept strict licensing limitations that restrict free installations to three nodes before billing per environment.
+          </p>
+          <p>
+            For homelabbers running three Proxmox nodes, a secondary storage host, and a handful of remote virtual machines, that 3-node wall is an immediate dead end. Fortunately, an open-source tool named <strong>Dockhand</strong> has arrived to solve this problem cleanly. Dockhand provides unlimited free node management, runs with zero telemetry, includes a built-in container file browser and editor, and features native Trivy and Grype vulnerability scanning.
+          </p>
+
+          <div class="callout callout-warning">
+            <div class="callout-title">Why Homelab Users Are Switching Away from Portainer</div>
+            <p>
+              1. <strong>Licensing Walls:</strong> Portainer 3.0 mandates commercial registration and caps free management at 3 environments.<br>
+              2. <strong>Telemetry &amp; Account Binding:</strong> Version 3.0 requires persistent phone-home validation for license checks.<br>
+              3. <strong>Heavy Overhead:</strong> Dockhand starts instantly, maintains a streamlined footprint, and does not require complex RBAC databases just to inspect a local stack.
+            </p>
+          </div>
+
+          <h2>What Is Dockhand?</h2>
+          <p>
+            Dockhand is an open-source, web-based management layer for Docker written specifically for speed, simplicity, and self-hosted privacy. It connects directly to the local Docker socket on your primary host and communicates with remote servers via a dedicated daemon called <strong>Hawser</strong>.
+          </p>
+          <p>
+            Unlike monolithic enterprise dashboards, Dockhand focuses on the exact day-to-day operations homelabbers and DevOps engineers care about:
+          </p>
+          <ul>
+            <li><strong>Zero Telemetry:</strong> No tracking scripts, no cloud logins, and no external registration gates.</li>
+            <li><strong>Unlimited Free Environments:</strong> Connect two, ten, or fifty Docker hosts across your network without encountering license upgrade prompts.</li>
+            <li><strong>Integrated File Explorer:</strong> Browse, download, and edit configuration files directly inside container filesystems without launching an interactive terminal shell.</li>
+            <li><strong>Real-Time Web Terminal &amp; Logs:</strong> Instant shell access and streaming stdout/stderr log output with ANSI color support.</li>
+            <li><strong>Docker Compose Stack Inspection:</strong> View running stacks, inspect underlying Compose definitions, and validate configuration syntax.</li>
+            <li><strong>Built-In Security Auditing:</strong> Run automated Trivy or Grype CVE vulnerability checks on your container images.</li>
+            <li><strong>Gotify &amp; Webhook Alerts:</strong> Route container health notifications and backup statuses to your self-hosted notification relays.</li>
+          </ul>
+
+          <h2>Step 1: Deploying Dockhand with Docker Compose</h2>
+          <p>
+            Dockhand runs as a single container image distributed via Docker Hub as <code>fnsys/dockhand:latest</code>. To deploy it on your primary server, create a dedicated directory and write a <code>docker-compose.yml</code> file.
+          </p>
+
+          <pre><code class="language-bash">mkdir -p /opt/dockhand
+cd /opt/dockhand
+nano docker-compose.yml</code></pre>
+
+          <p>
+            Paste the following Compose configuration. This sets up persistent storage in a local Docker volume, maps port 3000 to the host, and binds the host Docker socket into the container so Dockhand can control local workloads:
+          </p>
+
+          <pre><code class="language-yaml">services:
+  dockhand:
+    image: fnsys/dockhand:latest
+    container_name: dockhand
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - dockhand_data:/app/data
+
+volumes:
+  dockhand_data:
+    driver: local</code></pre>
+
+          <p>
+            Save the file and start the container in detached mode:
+          </p>
+
+          <pre><code class="language-bash">docker compose up -d</code></pre>
+
+          <p>
+            Once started, open your web browser and navigate to <code>http://&lt;your-server-ip&gt;:3000</code>.
+          </p>
+
+          <!-- Step 1 Screenshot -->
+          <figure class="article-featured-figure">
+            <picture>
+              <source srcset="../images/dockhand-step-1.webp" type="image/webp">
+              <img src="../images/dockhand-step-1.png"
+                alt="Dockhand initial setup dashboard showing local Docker socket environment connected"
+                width="1280" height="640" loading="lazy" decoding="async">
+            </picture>
+            <figcaption class="article-featured-caption">Dockhand's primary dashboard showing active containers, memory utilization, and local Docker socket connectivity.</figcaption>
+          </figure>
+
+          <h3>Critical First Step: Initial User Creation &amp; Authentication</h3>
+          <p>
+            When you first access Dockhand, authentication is not locked down by default to allow smooth initial provisioning. <strong>Do not skip creating your administrator account.</strong>
+          </p>
+          <p>
+            Click the <strong>Settings</strong> gear icon in the left-hand navigation pane, navigate to the <strong>Users</strong> tab, and click <strong>Add User</strong>. Create your username and assign a strong passphrase.
+          </p>
+
+          <div class="callout callout-warning">
+            <div class="callout-title">Important: Do Not Enable Auth Toggle Before User Creation</div>
+            <p>
+              In the general settings tab, there is a global toggle to enforce authentication. Never turn this toggle on before you have explicitly created and tested an administrator account in the Users menu. If you enable the toggle first with an empty user database, you will lock yourself out of the web interface and will need to wipe the <code>dockhand_data</code> volume to recover.
+            </p>
+          </div>
+
+          <h3>Connecting the Local Host Environment</h3>
+          <p>
+            After securing user credentials, navigate to <strong>Settings &rarr; Environments</strong>. Click <strong>Add Environment</strong>, label the host as <code>Localhost</code>, and select the local Unix socket radio option (<code>/var/run/docker.sock</code>). Save the environment. You can now return to the main dashboard to view all containers currently executing on your primary machine.
+          </p>
+
+          <h2>Step 2: Connecting Remote Nodes with the Hawser Agent</h2>
+          <p>
+            Managing a single host is convenient, but the real power of Dockhand lies in multi-server administration without license restrictions. Rather than exposing insecure, unauthenticated TCP Docker sockets across your network, Dockhand relies on <strong>Hawser</strong>.
+          </p>
+          <p>
+            Hawser is a lightweight, compiled Go agent designed to run as a systemd background service on remote Linux hosts. It listens on port 2376 and enforces pre-shared secret token authentication.
+          </p>
+
+          <!-- Step 2 Screenshot -->
+          <figure class="article-featured-figure">
+            <picture>
+              <source srcset="../images/dockhand-step-2.webp" type="image/webp">
+              <img src="../images/dockhand-step-2.png"
+                alt="Dockhand multi-server environment view displaying containers running across a remote CouchDB host"
+                width="1280" height="640" loading="lazy" decoding="async">
+            </picture>
+            <figcaption class="article-featured-caption">Inspecting containers across a remote secondary server (an Obsidian CouchDB node) connected through the Hawser agent.</figcaption>
+          </figure>
+
+          <h3>Installing Hawser on Remote Linux Hosts</h3>
+          <p>
+            SSH into your remote server (for example, a secondary Proxmox VM or a dedicated storage host). The Dockhand project provides an automated installation script that registers the systemd daemon:
+          </p>
+
+          <pre><code class="language-bash">curl -fsSL https://raw.githubusercontent.com/Finsys/hawser/main/scripts/install.sh | sudo bash</code></pre>
+
+          <p>
+            The installer sets up the Hawser binary at <code>/usr/local/bin/hawser</code> and writes a default configuration file at <code>/etc/hawser/config</code>. Open this configuration file in your editor:
+          </p>
+
+          <pre><code class="language-bash">sudo nano /etc/hawser/config</code></pre>
+
+          <p>
+            Ensure the port is set to <code>2376</code> and define a secure secret token:
+          </p>
+
+          <pre><code class="language-yaml">port: 2376
+token: "YOUR_SUPER_SECRET_AUTHENTICATION_KEY_HERE"
+docker_socket: "/var/run/docker.sock"</code></pre>
+
+          <p>
+            Restart and enable the Hawser systemd service so it boots automatically:
+          </p>
+
+          <pre><code class="language-bash">sudo systemctl restart hawser
+sudo systemctl enable hawser
+sudo systemctl status hawser</code></pre>
+
+          <h3>Registering the Remote Host in Dockhand</h3>
+          <p>
+            Return to the Dockhand web interface on your primary server:
+          </p>
+          <ol>
+            <li>Click <strong>Settings &rarr; Environments &rarr; Add Environment</strong>.</li>
+            <li>Enter an identifiable name (for instance, <code>Obsidian-CouchDB-Host</code>).</li>
+            <li>Select the <strong>Hawser Agent</strong> connection type.</li>
+            <li>Enter the remote server IP address (e.g., <code>192.168.1.150:2376</code>).</li>
+            <li>Paste the exact shared secret token you defined in <code>/etc/hawser/config</code>.</li>
+            <li>Click <strong>Save Environment</strong>.</li>
+          </ol>
+          <p>
+            Dockhand will perform a handshake with the remote Hawser daemon. Within two seconds, the new host will appear in the environment dropdown menu on your dashboard. You can switch between your primary host and remote nodes instantly with a single mouse click.
+          </p>
+
+          <h2>Step 3: In-Container File Editing and Terminal Access</h2>
+          <p>
+            One of Dockhand's standout features compared to Portainer and Dockge is its live filesystem explorer. In traditional managers, if you need to modify an Nginx configuration file, a JSON database file, or an application secret inside a container volume, you have to execute an interactive shell or SSH into the host and locate the volume mount path.
+          </p>
+          <p>
+            Inside Dockhand, click any container in your list and select the <strong>Files</strong> tab. You are presented with a file tree representing the live container filesystem. You can navigate directories, upload assets, download logs, and click any text file to open an integrated code editor. After making adjustments, clicking <strong>Save</strong> commits the file changes directly into the container storage layer.
+          </p>
+          <p>
+            If you need raw command-line access, click the <strong>Terminal</strong> tab. Dockhand attaches a responsive WebSocket shell using <code>/bin/sh</code> or <code>/bin/bash</code>, complete with tab completion and standard terminal shortcuts.
+          </p>
+
+          <h2>Step 4: Vulnerability Scanning &amp; Gotify Notifications</h2>
+          <p>
+            Keeping container infrastructure patched against zero-day exploits requires ongoing awareness. Dockhand integrates security auditing directly into container views using standard scanners like <strong>Trivy</strong> and <strong>Grype</strong>.
+          </p>
+
+          <!-- Step 3 Screenshot -->
+          <figure class="article-featured-figure">
+            <picture>
+              <source srcset="../images/dockhand-step-3.webp" type="image/webp">
+              <img src="../images/dockhand-step-3.png"
+                alt="Dockhand security tab showing Trivy vulnerability scan results and CVE breakdown for container images"
+                width="1280" height="640" loading="lazy" decoding="async">
+            </picture>
+            <figcaption class="article-featured-caption">Trivy vulnerability scan results inside Dockhand displaying package versions, CVE identifiers, and severity ratings.</figcaption>
+          </figure>
+
+          <h3>Running an Image CVE Scan</h3>
+          <p>
+            From the container inspection view, switch to the <strong>Security</strong> tab. Click <strong>Run Vulnerability Scan</strong>. Dockhand dispatches a scan request against the image layers, comparing installed libraries against updated vulnerability databases.
+          </p>
+          <p>
+            The output breaks down findings by severity (Critical, High, Medium, Low), displaying the affected Debian or Alpine package name, the patched version required, and direct hyperlinks to the National Vulnerability Database (NVD) CVE entry.
+          </p>
+
+          <h3>Setting Up Gotify Webhook Notifications</h3>
+          <p>
+            To receive real-time push alerts on your phone or desktop when containers unexpectedly crash or fail health checks, you can pair Dockhand with a self-hosted Gotify notification server:
+          </p>
+          <ol>
+            <li>Open <strong>Settings &rarr; Notifications</strong>.</li>
+            <li>Select <strong>Gotify</strong> from the provider list.</li>
+            <li>Enter your Gotify instance URL (e.g., <code>https://gotify.yourdomain.com</code>).</li>
+            <li>Enter your Gotify application token.</li>
+            <li>Select event triggers: container status change, failed health checks, and scheduled scan alerts.</li>
+          </ol>
+          <p>
+            Click <strong>Send Test Notification</strong> to verify network connectivity. For a detailed guide on standing up your own lightweight push relay, check our tutorial on <a href="gotify-self-hosted-push-notifications.html">setting up self-hosted push notifications with Gotify</a>.
+          </p>
+
+          <h2>Dockhand vs. Portainer vs. Dockge: Technical Comparison</h2>
+          <p>
+            Choosing the right Docker manager depends on the scope of your home lab and whether you manage single or multiple hosts. Here is how Dockhand stacks up against Portainer CE and Dockge:
+          </p>
+
+          <table style="width: 100%; border-collapse: collapse; margin: 1.5rem 0;">
+            <thead>
+              <tr style="border-bottom: 2px solid var(--border-color); text-align: left;">
+                <th style="padding: 0.75rem;">Feature</th>
+                <th style="padding: 0.75rem;">Dockhand</th>
+                <th style="padding: 0.75rem;">Portainer CE / 3.0</th>
+                <th style="padding: 0.75rem;">Dockge</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr style="border-bottom: 1px solid var(--border-color);">
+                <td style="padding: 0.75rem;"><strong>License Model</strong></td>
+                <td style="padding: 0.75rem;">100% Free &amp; Open Source</td>
+                <td style="padding: 0.75rem;">CE Frozen at 2.45; 3.0 Commercial (3 Node Limit)</td>
+                <td style="padding: 0.75rem;">100% Free &amp; Open Source</td>
+              </tr>
+              <tr style="border-bottom: 1px solid var(--border-color);">
+                <td style="padding: 0.75rem;"><strong>Telemetry</strong></td>
+                <td style="padding: 0.75rem;">Zero (Completely Private)</td>
+                <td style="padding: 0.75rem;">Mandatory License Calls in 3.0</td>
+                <td style="padding: 0.75rem;">Zero</td>
+              </tr>
+              <tr style="border-bottom: 1px solid var(--border-color);">
+                <td style="padding: 0.75rem;"><strong>Multi-Host Management</strong></td>
+                <td style="padding: 0.75rem;">Native via Hawser Agent (Unlimited)</td>
+                <td style="padding: 0.75rem;">Native via Portainer Agent (Capped in 3.0)</td>
+                <td style="padding: 0.75rem;">Host-to-host agent links</td>
+              </tr>
+              <tr style="border-bottom: 1px solid var(--border-color);">
+                <td style="padding: 0.75rem;"><strong>In-Container File Editor</strong></td>
+                <td style="padding: 0.75rem;">Yes (Integrated web file tree)</td>
+                <td style="padding: 0.75rem;">No (Terminal exec only)</td>
+                <td style="padding: 0.75rem;">No (Compose YAML only)</td>
+              </tr>
+              <tr style="border-bottom: 1px solid var(--border-color);">
+                <td style="padding: 0.75rem;"><strong>CVE Vulnerability Scanning</strong></td>
+                <td style="padding: 0.75rem;">Yes (Trivy &amp; Grype built-in)</td>
+                <td style="padding: 0.75rem;">Requires Business Edition</td>
+                <td style="padding: 0.75rem;">No</td>
+              </tr>
+              <tr style="border-bottom: 1px solid var(--border-color);">
+                <td style="padding: 0.75rem;"><strong>Compose Management</strong></td>
+                <td style="padding: 0.75rem;">Stack viewer &amp; validator</td>
+                <td style="padding: 0.75rem;">Custom Stacks &amp; Templates</td>
+                <td style="padding: 0.75rem;">Native Compose-centric UI</td>
+              </tr>
+              <tr>
+                <td style="padding: 0.75rem;"><strong>Resource Footprint</strong></td>
+                <td style="padding: 0.75rem;">Lightweight (~60MB RAM)</td>
+                <td style="padding: 0.75rem;">Medium (~120MB+ RAM)</td>
+                <td style="padding: 0.75rem;">Very Low (~35MB RAM)</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <p>
+            If your primary focus is purely creating Compose files in markdown with reactive live updating on a single node, you might also consider <a href="docker-vs-podman.html">exploring Docker vs Podman architectures</a>. However, if you need a true Portainer replacement that can control multiple servers, audit container security, browse files, and provide centralized management without enterprise licensing fees, Dockhand is the clear winner.
+          </p>
+
+          <h2>Common Pitfalls &amp; Troubleshooting</h2>
+          <ul>
+            <li><strong>Docker Socket Permission Denied (Error 13):</strong> If Dockhand fails to display containers on the local host, verify that the user running the Docker daemon has write permissions on the socket with <code>sudo usermod -aG docker $USER</code>. Confirm that the socket is mounted into the container as <code>/var/run/docker.sock:/var/run/docker.sock</code> in your Compose YAML.</li>
+            <li><strong>Hawser Agent Connection Timeout on Port 2376:</strong> If Dockhand cannot connect to a remote Hawser node, check your remote firewall rules (UFW or firewalld). Port 2376 must be open to your primary Dockhand host: <code>sudo ufw allow from 192.168.1.100 to any port 2376 proto tcp</code>.</li>
+            <li><strong>Token Mismatch Errors:</strong> If Dockhand returns an authentication failure when adding a remote host, verify there are no trailing whitespace characters or unescaped quotes in <code>/etc/hawser/config</code> on the remote server. Restart the service after making edits.</li>
+          </ul>
+
+          <h2>Frequently Asked Questions</h2>
+          <details style="background: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: 8px; padding: 1rem; margin-bottom: 1rem;">
+            <summary style="font-weight: 700; cursor: pointer; color: var(--text-primary);">Can I run Dockhand alongside Portainer while migrating?</summary>
+            <p style="margin-top: 0.75rem; color: var(--text-secondary); line-height: 1.6;">
+              Yes. Because Docker containers and the Docker engine are decoupled from web management dashboards, you can run both Dockhand and Portainer simultaneously on the same host without conflict, provided they are bound to different host ports (e.g., Dockhand on port 3000 and Portainer on port 9443).
+            </p>
+          </details>
+
+          <details style="background: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: 8px; padding: 1rem; margin-bottom: 1rem;">
+            <summary style="font-weight: 700; cursor: pointer; color: var(--text-primary);">Does Dockhand support Docker Swarm clusters?</summary>
+            <p style="margin-top: 0.75rem; color: var(--text-secondary); line-height: 1.6;">
+              Dockhand is currently optimized for standalone Docker engines and multi-node standalone hosts connected via Hawser. If you require advanced Swarm service scheduling and overlay network configuration, tools like Arcane or legacy Portainer CE 2.45 remain options for Swarm-specific deployments.
+            </p>
+          </details>
+
+          <details style="background: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: 8px; padding: 1rem;">
+            <summary style="font-weight: 700; cursor: pointer; color: var(--text-primary);">How are Dockhand container backups handled?</summary>
+            <p style="margin-top: 0.75rem; color: var(--text-secondary); line-height: 1.6;">
+              Dockhand stores all its internal database state, environment records, and user authentication tables inside the mapped <code>/app/data</code> volume. To back up your Dockhand instance, simply create a snapshot or tar archive of the <code>dockhand_data</code> volume while the container is paused or stopped.
+            </p>
+          </details>
+
+          <h2>Key Takeaways &amp; Next Steps</h2>
+          <p>
+            Deploying Dockhand with the Hawser agent restores unrestricted, multi-server Docker management to your home lab. With an in-container file tree, built-in vulnerability auditing, zero telemetry, and no commercial licensing caps, you can build out your container infrastructure with complete peace of mind.
+          </p>
+
+          <p>
+            Explore our companion guides and web utilities to build out your homelab:
+          </p>
+          <ul>
+            <li>Compare container engines in our <a href="docker-vs-podman.html">Docker vs. Podman In-Depth Guide</a>.</li>
+            <li>Monitor host telemetry and container metrics with <a href="uptime-kuma-server-monitoring-setup.html">Uptime Kuma &amp; Monitoring Guides</a>.</li>
+            <li>Keep containers safely updated without breaking changes using <a href="arcane-docker-watchtower-replacement.html">Arcane Docker Auto-Update Manager</a>.</li>
+            <li>Generate clean compose stacks with our <a href="../tools.html#docker">Docker Compose &amp; .env Generator</a>.</li>
+          </ul>
+        </div>
+
+        <div class="author-bio-box">
+          <div class="author-bio-avatar" aria-hidden="true">TS</div>
+          <div class="author-bio-content">
+            <h3>Written by Tech Simpld</h3>
+            <span class="author-bio-role">MCSA Certified Systems Engineer &bull; 20+ Years Enterprise IT</span>
+            <p>
+              Tech Simpld is maintained by a Systems Engineer managing virtual machines and enterprise storage architecture across five data centers. Every tutorial and configuration on this site is tested first-hand in our physical Proxmox VE home lab and daily production vaults.
+            </p>
+            <div class="author-bio-links">
+              <a href="../about.html">Lab Architecture &amp; Mission &rarr;</a>
+              <a href="../tools.html">Interactive Home Lab Web Tools &rarr;</a>
+            </div>
+          </div>
+        </div>
+
+      </article>
+
+      <!-- Sidebar Column -->
+      <aside class="blog-sidebar">
+        <div class="sidebar-widget">
+          <h4 class="widget-title">About Tech Simpld</h4>
+          <p style="font-size: 0.9rem; margin-bottom: 1rem;">
+            Software, home labs, and self-hosted tools simplified. Direct, step-by-step guides with zero fluff.
+          </p>
+          <a href="https://youtube.com/@TechSimpld" target="_blank" class="btn btn-outline btn-sm" style="width: 100%;">
+            Visit YouTube Channel
+          </a>
+        </div>
+
+        <div class="sidebar-widget">
+          <h4 class="widget-title">Related Tutorials</h4>
+          <ul style="list-style: none; padding: 0; margin: 0; font-size: 0.9rem; line-height: 1.8;">
+            <li><a href="docker-vs-podman.html" style="color: var(--accent-cyan);">Docker vs. Podman Guide</a></li>
+            <li><a href="arcane-docker-watchtower-replacement.html" style="color: var(--text-primary);">Arcane: Safe Docker Updates</a></li>
+            <li><a href="budget-proxmox-home-lab-setup.html" style="color: var(--text-primary);">Budget Proxmox Cluster Tour</a></li>
+            <li><a href="gotify-self-hosted-push-notifications.html" style="color: var(--accent-yellow, #facc15);">Gotify Push Notifications</a></li>
+          </ul>
+        </div>
+      </aside>
+
+    </div>
+  </main>
+
+  <!-- Footer Section -->
+  <footer class="footer">
+    <div class="footer-container">
+      <div>
+        <a href="../index.html" class="footer-logo">
+          Tech Simpld<span class="logo-dot"></span>
+        </a>
+        <p class="footer-desc">
+          Software and productivity, simplified. Clean, no-fluff tutorials and templates for digital creators and builders.
+        </p>
+      </div>
+      <div>
+        <h4 class="footer-heading">Navigation</h4>
+        <ul class="footer-links">
+          <li><a href="../index.html">Home</a></li>
+          <li><a href="../about.html">About</a></li>
+          <li><a href="../posts.html">Posts</a></li>
+          <li><a href="../resources.html">Resources</a></li>
+          <li><a href="../tools.html">Tools</a></li>
+          <li><a href="../contact.html">Contact</a></li>
+          <li><a href="https://youtube.com/@TechSimpld" target="_blank">YouTube Channel</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4 class="footer-heading">Contact &amp; Legal</h4>
+        <ul class="footer-links">
+          <li><a href="mailto:techsimpld@gmail.com">techsimpld@gmail.com</a></li>
+          <li><a href="../privacy-policy.html">Privacy Policy</a></li>
+          <li><a href="../terms-of-service.html">Terms of Service</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div>&copy; 2026 Tech Simpld. All rights reserved. Built for lightning-fast speeds.</div>
+      <div class="footer-socials">
+        <a href="https://youtube.com/@TechSimpld" class="social-link" aria-label="YouTube">YouTube</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="../js/scripts.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-bash.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-yaml.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/toolbar/prism-toolbar.min.js"></script>
+</body>
+
+</html>
